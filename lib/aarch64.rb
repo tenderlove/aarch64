@@ -11,16 +11,34 @@ module AArch64
   end
 
   module Instructions
-    class MOVZ
-      def initialize reg, imm
+    class MOVK
+      def initialize reg, imm, shift
         @reg = reg
         @imm = imm
+        @shift = shift
+      end
+
+      def encode
+        insn = 0b0_11_100101_00_0000000000000000_00000
+        insn |= (1 << 31) if @reg.x?
+        insn |= (@shift << 21)
+        insn |= (@imm << 5)
+        insn |= @reg.to_i
+      end
+    end
+
+    class MOVZ
+      def initialize reg, imm, shift
+        @reg = reg
+        @imm = imm
+        @shift = shift
       end
 
       def encode
         insn = 0b0_10_100101_00_0000000000000000_00000
         insn |= (1 << 31) if @reg.x?
         insn |= (@imm << 5)
+        insn |= (@shift << 21)
         insn |= @reg.to_i
       end
     end
@@ -57,15 +75,19 @@ module AArch64
     end
 
     def brk imm
-      @insns << BRK.new(imm)
+      @insns = @insns << BRK.new(imm)
     end
 
     def ret reg = X30
-      @insns << RET.new(reg)
+      @insns = @insns << RET.new(reg)
     end
 
-    def movz reg, imm
-      @insns << MOVZ.new(reg, imm)
+    def movz reg, imm, lsl: 0
+      @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
+    end
+
+    def movk reg, imm, lsl: 0
+      @insns = @insns << MOVK.new(reg, imm, lsl / 16)
     end
 
     def write_to io
