@@ -27,6 +27,22 @@ module AArch64
       end
     end
 
+    class ADCS
+      def initialize d, n, m
+        @d = d
+        @n = n
+        @m = m
+      end
+
+      def encode
+        insn = 0b0_0_1_11010000_00000_000000_00000_00000
+        insn |= (1 << 31) if @d.x?
+        insn |= (@m.to_i << 16)
+        insn |= (@n.to_i << 5)
+        insn |= @d.to_i
+      end
+    end
+
     class B
       def initialize label
         @label = label
@@ -127,6 +143,10 @@ module AArch64
 
     def adc d, n, m
       @insns = @insns << ADC.new(d, n, m)
+    end
+
+    def adcs d, n, m
+      @insns = @insns << ADCS.new(d, n, m)
     end
 
     def b label
