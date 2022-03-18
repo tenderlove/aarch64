@@ -11,6 +11,17 @@ module AArch64
   end
 
   module Instructions
+    class B
+      def initialize label
+        @label = label
+      end
+
+      def encode
+        insn = 0b0_00101_00000000000000000000000000
+        insn |= ((1 << 26) - 1) & (@label.to_i / 4)
+      end
+    end
+
     class BRK
       def initialize imm
         @imm = imm & 0xFFFF
@@ -70,16 +81,40 @@ module AArch64
     include Instructions
     include Registers
 
+    class Label
+      def initialize name
+        @name   = name
+        @offset = nil
+      end
+
+      def set_offset offset
+        @offset = offset
+        freeze
+      end
+
+      def to_i
+        @offset * 4
+      end
+    end
+
     def initialize
       @insns = []
     end
 
-    def brk imm
-      @insns = @insns << BRK.new(imm)
+    def make_label name
+      Label.new name
     end
 
-    def ret reg = X30
-      @insns = @insns << RET.new(reg)
+    def put_label label
+      label.set_offset @insns.length
+    end
+
+    def b label
+      @insns = @insns << B.new(label)
+    end
+
+    def brk imm
+      @insns = @insns << BRK.new(imm)
     end
 
     def movz reg, imm, lsl: 0
@@ -88,6 +123,10 @@ module AArch64
 
     def movk reg, imm, lsl: 0
       @insns = @insns << MOVK.new(reg, imm, lsl / 16)
+    end
+
+    def ret reg = X30
+      @insns = @insns << RET.new(reg)
     end
 
     def write_to io

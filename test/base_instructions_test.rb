@@ -11,6 +11,18 @@ class BaseInstructionsTest < AArch64::Test
     @jit_buffer = StringIO.new
   end
 
+  def test_b
+    asm.b 0x8
+    assert_one_insn "b #8"
+  end
+
+  def test_b_with_label
+    label = asm.make_label :foo
+    asm.b label
+    asm.put_label label
+    assert_one_insn "b #4"
+  end
+
   def test_brk
     asm.brk 1
     assert_one_insn "brk #0x1"
