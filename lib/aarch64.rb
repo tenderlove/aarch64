@@ -19,7 +19,7 @@ module AArch64
 
       def encode
         insn = 0b0_10_100101_00_0000000000000000_00000
-        insn |= (1 << 31)
+        insn |= (1 << 31) if @reg.x?
         insn |= (@imm << 5)
         insn |= @reg.to_i
       end
