@@ -11,6 +11,16 @@ class BaseInstructionsTest < AArch64::Test
     @jit_buffer = StringIO.new
   end
 
+  def test_adc
+    asm.adc X0, X1, X2
+    assert_one_insn "adc x0, x1, x2"
+  end
+
+  def test_adc_w
+    asm.adc W0, W1, W2
+    assert_one_insn "adc w0, w1, w2"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"
