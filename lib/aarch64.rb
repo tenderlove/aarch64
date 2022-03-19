@@ -43,6 +43,26 @@ module AArch64
       end
     end
 
+    class ADDextended
+      def initialize d, n, m, extend, amount
+        @d = d
+        @n = n
+        @m = m
+        @extend = extend
+        @amount = amount
+      end
+
+      def encode
+        insn = 0b0_0_0_01011_00_1_00000_000_000_00000_00000
+        insn |= (1 << 31) if @d.x?
+        insn |= (@m.to_i << 16)
+        insn |= (@extend << 13)
+        insn |= (@amount << 10)
+        insn |= (@n.to_i << 5)
+        insn |= @d.to_i
+      end
+    end
+
     class B
       def initialize label
         @label = label
@@ -147,6 +167,37 @@ module AArch64
 
     def adcs d, n, m
       @insns = @insns << ADCS.new(d, n, m)
+    end
+
+    def add d, n, m, extend:, amount: 0
+      if extend
+        extend = case extend
+                 when :uxtb then 0b000
+                 when :uxth then 0b001
+                 when :uxtw then 0b010
+                 when :uxtx then 0b011
+                 when :sxtb then 0b100
+                 when :sxth then 0b101
+                 when :sxtw then 0b110
+                 when :sxtx then 0b111
+                 else
+                   raise "Unknown extend #{extend}"
+                 end
+
+        if m.x?
+          if (extend & 0x3 != 0x3)
+            raise "Wrong extend"
+          end
+        else
+          if (extend & 0x3 == 0x3)
+            raise "Wrong extend"
+          end
+        end
+
+        @insns = @insns << ADDextended.new(d, n, m, extend, amount)
+      else
+        raise
+      end
     end
 
     def b label

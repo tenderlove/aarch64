@@ -11,6 +11,16 @@ class BaseInstructionsTest < AArch64::Test
     @jit_buffer = StringIO.new
   end
 
+  def test_adc
+    asm.adc X0, X1, X2
+    assert_one_insn "adc x0, x1, x2"
+  end
+
+  def test_adc_w
+    asm.adc W0, W1, W2
+    assert_one_insn "adc w0, w1, w2"
+  end
+
   def test_adcs
     asm.adcs X0, X1, X2
     assert_one_insn "adcs x0, x1, x2"
@@ -21,14 +31,24 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adcs w0, w1, w2"
   end
 
-  def test_adc
-    asm.adc X0, X1, X2
-    assert_one_insn "adc x0, x1, x2"
+  def test_add_extended_register
+    asm.add X0, X1, X2, extend: :sxtx
+    assert_one_insn "add x0, x1, x2, sxtx"
   end
 
-  def test_adc_w
-    asm.adc W0, W1, W2
-    assert_one_insn "adc w0, w1, w2"
+  def test_add_extended_register_amount
+    asm.add X0, X1, X2, extend: :sxtx, amount: 4
+    assert_one_insn "add x0, x1, x2, sxtx #4"
+  end
+
+  def test_add_extended_register
+    asm.add X0, X1, W2, extend: :sxtw
+    assert_one_insn "add x0, x1, w2, sxtw"
+  end
+
+  def test_add_extended_register
+    asm.add W0, W1, W2, extend: :sxtw
+    assert_one_insn "add w0, w1, w2, sxtw"
   end
 
   def test_b
