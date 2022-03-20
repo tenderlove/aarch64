@@ -41,14 +41,29 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "add x0, x1, x2, sxtx #4"
   end
 
-  def test_add_extended_register
+  def test_add_extended_register_w
     asm.add X0, X1, W2, extend: :sxtw
     assert_one_insn "add x0, x1, w2, sxtw"
   end
 
-  def test_add_extended_register
+  def test_add_extended_register_www
     asm.add W0, W1, W2, extend: :sxtw
     assert_one_insn "add w0, w1, w2, sxtw"
+  end
+
+  def test_add_immediate
+    asm.add X0, X1, 0x2a
+    assert_one_insn "add x0, x1, #0x2a"
+  end
+
+  def test_add_immediate_shift
+    asm.add X0, X1, 0x2a, lsl: 12
+    assert_one_insn "add x0, x1, #0x2a, lsl #12"
+  end
+
+  def test_add_immediate_shift_w
+    asm.add W0, W1, 0x2a, lsl: 12
+    assert_one_insn "add w0, w1, #0x2a, lsl #12"
   end
 
   def test_b

@@ -1,12 +1,12 @@
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :x?)
+    class Register < Struct.new(:to_i, :sf, :x?)
       def integer?; false; end
     end
 
     31.times { |i|
-      const_set(:"X#{i}", Register.new(i, true))
-      const_set(:"W#{i}", Register.new(i, false))
+      const_set(:"X#{i}", Register.new(i, 1, true))
+      const_set(:"W#{i}", Register.new(i, 0, false))
     }
   end
 
@@ -60,6 +60,30 @@ module AArch64
         insn |= (@amount << 10)
         insn |= (@n.to_i << 5)
         insn |= @d.to_i
+      end
+    end
+
+    class ADD_addsub_imm
+      def initialize d, n, imm12, sh
+        @rd = d
+        @rn = n
+        @imm12 = imm12
+        @sh = sh
+      end
+
+      def encode
+        ADD_addsub_imm(@rd.sf, @sh, @imm12, @rn.to_i, @rd.to_i)
+      end
+
+      private
+
+      def ADD_addsub_imm sf, sh, imm12, rn, rd
+        insn = 0b0_0_0_100010_0_000000000000_00000_00000
+        insn |= ((sf & 0x1) << 31)
+        insn |= ((sh & 0x1) << 22)
+        insn |= ((imm12 & 0xfff) << 10)
+        insn |= ((rn & 0x1f) << 5)
+        insn |= (rd & 0x1f)
       end
     end
 
@@ -169,7 +193,7 @@ module AArch64
       @insns = @insns << ADCS.new(d, n, m)
     end
 
-    def add d, n, m, extend:, amount: 0
+    def add d, n, m, extend: nil, amount: 0, lsl: 0
       if extend
         extend = case extend
                  when :uxtb then 0b000
@@ -196,7 +220,12 @@ module AArch64
 
         @insns = @insns << ADDextended.new(d, n, m, extend, amount)
       else
-        raise
+        if m.integer?
+          # add immediate
+          @insns = @insns << ADD_addsub_imm.new(d, n, m, lsl / 12)
+        else
+          raise NotImplementedError
+        end
       end
     end
 
