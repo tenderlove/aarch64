@@ -4,8 +4,12 @@ module AArch64
     # Breakpoint instruction
     # BRK  #<imm>
     class BRK
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        BRK(@imm)
       end
 
       private

@@ -11,17 +11,6 @@ module AArch64
   end
 
   module Instructions
-    class BRK
-      def initialize imm
-        @imm = imm & 0xFFFF
-      end
-
-      def encode
-        insn = 0b11010100_001_0000000000000000_000_00
-        insn |= (@imm << 5)
-      end
-    end
-
     class MOVK
       def initialize reg, imm, shift
         @reg = reg
