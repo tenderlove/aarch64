@@ -5,8 +5,16 @@ module AArch64
     # ADD  <Wd|WSP>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # ADD  <Xd|SP>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
     class ADD_addsub_ext
+      def initialize rd, rn, rm, extend, amount
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @extend = extend
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        self.ADD_addsub_ext(@rd.sf, @rm.to_i, @extend, @amount, @rn.to_i, @rd.to_i)
       end
 
       private

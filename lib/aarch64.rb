@@ -11,26 +11,6 @@ module AArch64
   end
 
   module Instructions
-    class ADDextended
-      def initialize d, n, m, extend, amount
-        @d = d
-        @n = n
-        @m = m
-        @extend = extend
-        @amount = amount
-      end
-
-      def encode
-        insn = 0b0_0_0_01011_00_1_00000_000_000_00000_00000
-        insn |= (1 << 31) if @d.x?
-        insn |= (@m.to_i << 16)
-        insn |= (@extend << 13)
-        insn |= (@amount << 10)
-        insn |= (@n.to_i << 5)
-        insn |= @d.to_i
-      end
-    end
-
     class ADD_addsub_imm
       def initialize d, n, imm12, sh
         @rd = d
@@ -186,7 +166,7 @@ module AArch64
           end
         end
 
-        @insns = @insns << ADDextended.new(d, n, m, extend, amount)
+        @insns = @insns << ADD_addsub_ext.new(d, n, m, extend, amount)
       else
         if m.integer?
           # add immediate
