@@ -5,8 +5,14 @@ module AArch64
     # MOVK  <Wd>, #<imm>{, LSL #<shift>}
     # MOVK  <Xd>, #<imm>{, LSL #<shift>}
     class MOVK
+      def initialize reg, imm, shift
+        @reg = reg
+        @imm = imm
+        @shift = shift
+      end
+
       def encode
-        raise NotImplementedError
+        MOVK(@reg.sf, @shift, @imm, @reg.to_i)
       end
 
       private
