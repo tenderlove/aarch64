@@ -254,3 +254,5 @@ module AArch64
     end
   end
 end
+
+require "aarch64/instructions"
