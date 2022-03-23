@@ -11,22 +11,6 @@ module AArch64
   end
 
   module Instructions
-    class ADC
-      def initialize d, n, m
-        @d = d
-        @n = n
-        @m = m
-      end
-
-      def encode
-        insn = 0b0_0_0_11010000_00000_000000_00000_00000
-        insn |= (1 << 31) if @d.x?
-        insn |= (@m.to_i << 16)
-        insn |= (@n.to_i << 5)
-        insn |= @d.to_i
-      end
-    end
-
     class ADCS
       def initialize d, n, m
         @d = d
