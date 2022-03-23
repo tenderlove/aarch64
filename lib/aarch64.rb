@@ -1,3 +1,5 @@
+require "aarch64/instructions"
+
 module AArch64
   module Registers
     class Register < Struct.new(:to_i, :sf, :x?)
@@ -8,19 +10,6 @@ module AArch64
       const_set(:"X#{i}", Register.new(i, 1, true))
       const_set(:"W#{i}", Register.new(i, 0, false))
     }
-  end
-
-  module Instructions
-    class RET
-      def initialize reg
-        @reg = reg
-      end
-
-      def encode
-        insn = 0b1101011_0_0_10_11111_0000_0_0_00000_00000
-        insn |= (@reg.to_i << 5)
-      end
-    end
   end
 
   class Assembler
@@ -124,5 +113,3 @@ module AArch64
     end
   end
 end
-
-require "aarch64/instructions"

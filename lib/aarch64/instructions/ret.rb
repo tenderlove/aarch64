@@ -4,8 +4,12 @@ module AArch64
     # Return from subroutine
     # RET  {<Xn>}
     class RET
+      def initialize reg
+        @reg = reg
+      end
+
       def encode
-        raise NotImplementedError
+        RET(@reg.to_i)
       end
 
       private
