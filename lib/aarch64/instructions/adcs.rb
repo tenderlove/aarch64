@@ -4,8 +4,14 @@ module AArch64
     # Add with Carry, setting flags
     # ADCS  <Wd>, <Wn>, <Wm>
     class ADCS
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.ADCS(@rd.sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
