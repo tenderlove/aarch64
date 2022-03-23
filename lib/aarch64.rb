@@ -11,22 +11,6 @@ module AArch64
   end
 
   module Instructions
-    class MOVZ
-      def initialize reg, imm, shift
-        @reg = reg
-        @imm = imm
-        @shift = shift
-      end
-
-      def encode
-        insn = 0b0_10_100101_00_0000000000000000_00000
-        insn |= (1 << 31) if @reg.x?
-        insn |= (@imm << 5)
-        insn |= (@shift << 21)
-        insn |= @reg.to_i
-      end
-    end
-
     class RET
       def initialize reg
         @reg = reg

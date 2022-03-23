@@ -5,8 +5,14 @@ module AArch64
     # MOVZ  <Wd>, #<imm>{, LSL #<shift>}
     # MOVZ  <Xd>, #<imm>{, LSL #<shift>}
     class MOVZ
+      def initialize reg, imm, shift
+        @reg = reg
+        @imm = imm
+        @shift = shift
+      end
+
       def encode
-        raise NotImplementedError
+        MOVZ(@reg.sf, @shift, @imm, @reg.to_i)
       end
 
       private
