@@ -1,3 +1,5 @@
+require "aarch64/instructions"
+
 module AArch64
   module Registers
     class Register < Struct.new(:to_i, :sf, :x?)
@@ -8,149 +10,6 @@ module AArch64
       const_set(:"X#{i}", Register.new(i, 1, true))
       const_set(:"W#{i}", Register.new(i, 0, false))
     }
-  end
-
-  module Instructions
-    class ADC
-      def initialize d, n, m
-        @d = d
-        @n = n
-        @m = m
-      end
-
-      def encode
-        insn = 0b0_0_0_11010000_00000_000000_00000_00000
-        insn |= (1 << 31) if @d.x?
-        insn |= (@m.to_i << 16)
-        insn |= (@n.to_i << 5)
-        insn |= @d.to_i
-      end
-    end
-
-    class ADCS
-      def initialize d, n, m
-        @d = d
-        @n = n
-        @m = m
-      end
-
-      def encode
-        insn = 0b0_0_1_11010000_00000_000000_00000_00000
-        insn |= (1 << 31) if @d.x?
-        insn |= (@m.to_i << 16)
-        insn |= (@n.to_i << 5)
-        insn |= @d.to_i
-      end
-    end
-
-    class ADDextended
-      def initialize d, n, m, extend, amount
-        @d = d
-        @n = n
-        @m = m
-        @extend = extend
-        @amount = amount
-      end
-
-      def encode
-        insn = 0b0_0_0_01011_00_1_00000_000_000_00000_00000
-        insn |= (1 << 31) if @d.x?
-        insn |= (@m.to_i << 16)
-        insn |= (@extend << 13)
-        insn |= (@amount << 10)
-        insn |= (@n.to_i << 5)
-        insn |= @d.to_i
-      end
-    end
-
-    class ADD_addsub_imm
-      def initialize d, n, imm12, sh
-        @rd = d
-        @rn = n
-        @imm12 = imm12
-        @sh = sh
-      end
-
-      def encode
-        ADD_addsub_imm(@rd.sf, @sh, @imm12, @rn.to_i, @rd.to_i)
-      end
-
-      private
-
-      def ADD_addsub_imm sf, sh, imm12, rn, rd
-        insn = 0b0_0_0_100010_0_000000000000_00000_00000
-        insn |= ((sf & 0x1) << 31)
-        insn |= ((sh & 0x1) << 22)
-        insn |= ((imm12 & 0xfff) << 10)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rd & 0x1f)
-      end
-    end
-
-    class B
-      def initialize label
-        @label = label
-      end
-
-      def encode
-        insn = 0b0_00101_00000000000000000000000000
-        insn |= ((1 << 26) - 1) & (@label.to_i / 4)
-      end
-    end
-
-    class BRK
-      def initialize imm
-        @imm = imm & 0xFFFF
-      end
-
-      def encode
-        insn = 0b11010100_001_0000000000000000_000_00
-        insn |= (@imm << 5)
-      end
-    end
-
-    class MOVK
-      def initialize reg, imm, shift
-        @reg = reg
-        @imm = imm
-        @shift = shift
-      end
-
-      def encode
-        insn = 0b0_11_100101_00_0000000000000000_00000
-        insn |= (1 << 31) if @reg.x?
-        insn |= (@shift << 21)
-        insn |= (@imm << 5)
-        insn |= @reg.to_i
-      end
-    end
-
-    class MOVZ
-      def initialize reg, imm, shift
-        @reg = reg
-        @imm = imm
-        @shift = shift
-      end
-
-      def encode
-        insn = 0b0_10_100101_00_0000000000000000_00000
-        insn |= (1 << 31) if @reg.x?
-        insn |= (@imm << 5)
-        insn |= (@shift << 21)
-        insn |= @reg.to_i
-      end
-    end
-
-    class RET
-      def initialize reg
-        @reg = reg
-      end
-
-      def encode
-        insn = 0b1101011_0_0_10_11111_0000_0_0_00000_00000
-        insn |= (@reg.to_i << 5)
-      end
-    end
   end
 
   class Assembler
@@ -218,7 +77,7 @@ module AArch64
           end
         end
 
-        @insns = @insns << ADDextended.new(d, n, m, extend, amount)
+        @insns = @insns << ADD_addsub_ext.new(d, n, m, extend, amount)
       else
         if m.integer?
           # add immediate
@@ -230,7 +89,7 @@ module AArch64
     end
 
     def b label
-      @insns = @insns << B.new(label)
+      @insns = @insns << B_uncond.new(label)
     end
 
     def brk imm

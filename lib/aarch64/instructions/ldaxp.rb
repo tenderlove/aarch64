@@ -1,0 +1,24 @@
+module AArch64
+  module Instructions
+    # LDAXP -- A64
+    # Load-Acquire Exclusive Pair of Registers
+    # LDAXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
+    # LDAXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
+    class LDAXP
+      def encode
+        raise NotImplementedError
+      end
+
+      private
+
+      def LDAXP sz, rt2, rn, rt
+        insn = 0b1_0_001000_0_1_1_11111_1_00000_00000_00000
+        insn |= ((sz & 0x1) << 30)
+        insn |= ((rt2 & 0x1f) << 10)
+        insn |= ((rn & 0x1f) << 5)
+        insn |= (rt & 0x1f)
+        insn
+      end
+    end
+  end
+end
