@@ -4,8 +4,12 @@ module AArch64
     # Branch
     # B  <label>
     class B_uncond
+      def initialize label
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        B_uncond(@label.to_i / 4)
       end
 
       private

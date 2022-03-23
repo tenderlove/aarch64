@@ -11,17 +11,6 @@ module AArch64
   end
 
   module Instructions
-    class B
-      def initialize label
-        @label = label
-      end
-
-      def encode
-        insn = 0b0_00101_00000000000000000000000000
-        insn |= ((1 << 26) - 1) & (@label.to_i / 4)
-      end
-    end
-
     class BRK
       def initialize imm
         @imm = imm & 0xFFFF
@@ -154,7 +143,7 @@ module AArch64
     end
 
     def b label
-      @insns = @insns << B.new(label)
+      @insns = @insns << B_uncond.new(label)
     end
 
     def brk imm
