@@ -89,6 +89,10 @@ module AArch64
       end
     end
 
+    def addg xd, xn, imm6, imm4
+      @insns = @insns << ADDG.new(xd, xn, imm6, imm4)
+    end
+
     def b label
       @insns = @insns << B_uncond.new(label)
     end

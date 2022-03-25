@@ -76,6 +76,12 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "add x0, x1, x2, lsr #3"
   end
 
+  def test_addg
+    skip "clang doesn't seem to support this one"
+    asm.addg X0, X1, 16, 1
+    assert_one_insn "addg x0, x1, #4, #2"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"

@@ -4,8 +4,15 @@ module AArch64
     # Add with Tag
     # ADDG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
     class ADDG
+      def initialize xd, xn, imm6, imm4
+        @xd   = xd
+        @xn   = xn
+        @imm6 = imm6
+        @imm4 = imm4
+      end
+
       def encode
-        raise NotImplementedError
+        ADDG(@imm6, @imm4, @xn.to_i, @xd.to_i)
       end
 
       private
