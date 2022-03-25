@@ -4,8 +4,14 @@ module AArch64
     # Form PC-relative address to 4KB page
     # ADRP  <Xd>, <label>
     class ADRP
+      def initialize xd, label
+        @xd    = xd
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        label = @label.to_i / 1000
+        ADRP(label, label >> 2, @xd.to_i)
       end
 
       private

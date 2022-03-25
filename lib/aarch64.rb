@@ -122,6 +122,10 @@ module AArch64
       @insns = @insns << ADR.new(xd, label)
     end
 
+    def adrp xd, label
+      @insns = @insns << ADRP.new(xd, label)
+    end
+
     def b label
       @insns = @insns << B_uncond.new(label)
     end

@@ -129,6 +129,11 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adr x3, #4"
   end
 
+  def test_ADRP
+    asm.adrp X3, 4000
+    assert_one_insn "adrp x3, #0x4000"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"
