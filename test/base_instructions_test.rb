@@ -122,6 +122,13 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adds x3, x5, x1, lsr #3"
   end
 
+  def test_ADR
+    label = asm.make_label :foo
+    asm.adr X3, label
+    asm.put_label label
+    assert_one_insn "adr x3, #4"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"

@@ -118,6 +118,10 @@ module AArch64
       end
     end
 
+    def adr xd, label
+      @insns = @insns << ADR.new(xd, label)
+    end
+
     def b label
       @insns = @insns << B_uncond.new(label)
     end

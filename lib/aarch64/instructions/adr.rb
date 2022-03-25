@@ -4,8 +4,14 @@ module AArch64
     # Form PC-relative address
     # ADR  <Xd>, <label>
     class ADR
+      def initialize xd, label
+        @xd    = xd
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        label = @label.to_i
+        ADR(label, label >> 2, @xd.to_i)
       end
 
       private
