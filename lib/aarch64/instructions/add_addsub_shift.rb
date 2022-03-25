@@ -5,8 +5,16 @@ module AArch64
     # ADD  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ADD  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class ADD_addsub_shift
+      def initialize xd, xn, xm, shift, amount
+        @xd     = xd
+        @xn     = xn
+        @xm     = xm
+        @shift  = shift
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        ADD_addsub_shift(@xd.sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
       end
 
       private

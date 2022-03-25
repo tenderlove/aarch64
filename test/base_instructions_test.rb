@@ -66,6 +66,16 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "add w0, w1, #0x2a, lsl #12"
   end
 
+  def test_add_addsub_shift
+    asm.add X0, X1, X2
+    assert_one_insn "add x0, x1, x2"
+  end
+
+  def test_add_addsub_shift_amount
+    asm.add X0, X1, X2, shift: :lsr, amount: 3
+    assert_one_insn "add x0, x1, x2, lsr #3"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"

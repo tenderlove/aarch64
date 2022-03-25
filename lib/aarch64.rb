@@ -52,7 +52,7 @@ module AArch64
       @insns = @insns << ADCS.new(d, n, m)
     end
 
-    def add d, n, m, extend: nil, amount: 0, lsl: 0
+    def add d, n, m, extend: nil, amount: 0, lsl: 0, shift: :lsl
       if extend
         extend = case extend
                  when :uxtb then 0b000
@@ -83,7 +83,8 @@ module AArch64
           # add immediate
           @insns = @insns << ADD_addsub_imm.new(d, n, m, lsl / 12)
         else
-          raise NotImplementedError
+          shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+          @insns = @insns << ADD_addsub_shift.new(d, n, m, shift, amount)
         end
       end
     end
