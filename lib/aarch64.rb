@@ -93,7 +93,7 @@ module AArch64
       @insns = @insns << ADDG.new(xd, xn, imm6, imm4)
     end
 
-    def adds d, n, m, extend: nil, amount: 0, shift: 0
+    def adds d, n, m, extend: nil, amount: 0, lsl: 0, shift: :lsl
       if extend
         extend = case extend
                  when :uxtb then 0b000
@@ -110,9 +110,10 @@ module AArch64
         @insns = @insns << ADDS_addsub_ext.new(d, n, m, extend, amount)
       else
         if m.integer?
-          @insns = @insns << ADDS_addsub_imm.new(d, n, m, shift)
+          @insns = @insns << ADDS_addsub_imm.new(d, n, m, lsl / 12)
         else
-          raise NotImplementedError
+          shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+          @insns = @insns << ADDS_addsub_shift.new(d, n, m, shift, amount)
         end
       end
     end

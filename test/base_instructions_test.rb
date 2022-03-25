@@ -103,8 +103,23 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ADDS_addsub_imm_shift
-    asm.adds X3, X5, 3, shift: 1
+    asm.adds X3, X5, 3, lsl: 12
     assert_one_insn "adds x3, x5, #3, lsl #12"
+  end
+
+  def test_ADDS_addsub_shift
+    asm.adds X3, X5, X1
+    assert_one_insn "adds x3, x5, x1"
+  end
+
+  def test_ADDS_addsub_shift
+    asm.adds X3, X5, X1, shift: :lsr
+    assert_one_insn "adds x3, x5, x1, lsr #0"
+  end
+
+  def test_ADDS_addsub_shift_amount
+    asm.adds X3, X5, X1, shift: :lsr, amount: 3
+    assert_one_insn "adds x3, x5, x1, lsr #3"
   end
 
   def test_b
