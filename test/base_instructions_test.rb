@@ -92,6 +92,21 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adds x3, x5, x9, sxtx #2"
   end
 
+  def test_ADDS_addsub_imm
+    asm.adds X3, X5, 3
+    assert_one_insn "adds x3, x5, #3"
+  end
+
+  def test_ADDS_addsub_imm_w
+    asm.adds W3, W5, 3
+    assert_one_insn "adds w3, w5, #3"
+  end
+
+  def test_ADDS_addsub_imm_shift
+    asm.adds X3, X5, 3, shift: 1
+    assert_one_insn "adds x3, x5, #3, lsl #12"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"
