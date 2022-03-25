@@ -82,6 +82,16 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "addg x0, x1, #4, #2"
   end
 
+  def test_ADDS_addsub_ext_32
+    asm.adds W3, W5, W7, extend: :uxth
+    assert_one_insn "adds w3, w5, w7, uxth"
+  end
+
+  def test_ADDS_addsub_ext
+    asm.adds X3, X5, X9, extend: :sxtx, amount: 2
+    assert_one_insn "adds x3, x5, x9, sxtx #2"
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"
