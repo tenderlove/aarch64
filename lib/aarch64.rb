@@ -221,12 +221,12 @@ module AArch64
       @insns = @insns << AXFLAG.new
     end
 
-    def sbfm d, n, immr, imms
-      @insns = @insns << SBFM.new(d, n, immr, imms)
-    end
-
-    def b label
-      @insns = @insns << B_uncond.new(label)
+    def b label, cond: nil
+      if cond
+        @insns = @insns << B_cond.new(cond, label)
+      else
+        @insns = @insns << B_uncond.new(label)
+      end
     end
 
     def brk imm
@@ -243,6 +243,10 @@ module AArch64
 
     def ret reg = X30
       @insns = @insns << RET.new(reg)
+    end
+
+    def sbfm d, n, immr, imms
+      @insns = @insns << SBFM.new(d, n, immr, imms)
     end
 
     def write_to io

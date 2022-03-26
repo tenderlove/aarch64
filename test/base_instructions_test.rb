@@ -375,8 +375,12 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_B_cond
-    skip "Fixme!"
     # B.<cond>  <label>
+    assert_one_insn "b.pl #4" do |asm|
+      label = asm.make_label :foo
+      asm.b label, cond: :pl
+      asm.put_label label
+    end
   end
 
   def test_BC_cond
