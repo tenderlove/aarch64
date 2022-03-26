@@ -5,8 +5,16 @@ module AArch64
     # ANDS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ANDS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class ANDS_log_shift
+      def initialize xd, xn, xm, shift, amount
+        @xd     = xd
+        @xn     = xn
+        @xm     = xm
+        @shift  = shift
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        ANDS_log_shift(@xd.sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
       end
 
       private

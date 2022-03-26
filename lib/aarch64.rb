@@ -136,8 +136,13 @@ module AArch64
       end
     end
 
-    def ands d, n, m
-      @insns = @insns << ANDS_log_imm.new(d, n, m)
+    def ands d, n, m, shift: :lsl, amount: 0
+      if m.integer?
+        @insns = @insns << ANDS_log_imm.new(d, n, m)
+      else
+        shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+        @insns = @insns << ANDS_log_shift.new(d, n, m, shift, amount)
+      end
     end
 
     def b label

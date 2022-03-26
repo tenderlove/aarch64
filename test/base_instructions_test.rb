@@ -184,9 +184,31 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ANDS_log_shift
-    skip "Fixme!"
     # ANDS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
+    assert_one_insn "ands w3, w1, w2" do |asm|
+      asm.ands W3, W1, W2
+    end
+
+    assert_one_insn "ands w3, w1, w2, lsr #0" do |asm|
+      asm.ands W3, W1, W2, shift: :lsr
+    end
+
+    assert_one_insn "ands w3, w1, w2, lsr #3" do |asm|
+      asm.ands W3, W1, W2, shift: :lsr, amount: 3
+    end
+
     # ANDS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+    assert_one_insn "ands x3, x1, x2" do |asm|
+      asm.ands X3, X1, X2
+    end
+
+    assert_one_insn "ands x3, x1, x2, lsr #0" do |asm|
+      asm.ands X3, X1, X2, shift: :lsr
+    end
+
+    assert_one_insn "ands x3, x1, x2, lsr #3" do |asm|
+      asm.ands X3, X1, X2, shift: :lsr, amount: 3
+    end
   end
 
   def test_ASR_SBFM
