@@ -157,6 +157,10 @@ module AArch64
       @insns = @insns << ASRV.new(d, n, m)
     end
 
+    def at at_op, t
+      @insns = @insns << AT_SYS.new(at_op, t)
+    end
+
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end

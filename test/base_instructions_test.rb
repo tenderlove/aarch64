@@ -268,9 +268,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AT_SYS
-    skip "Fixme!"
     # AT  <at_op>, <Xt>
+    assert_one_insn "at s1e1r, x1" do |asm|
+      asm.at :s1e1r, X1
+    end
+
     # SYS #<op1>, C7, <Cm>, #<op2>, <Xt>
+    assert_one_insn "sys #0, c7, c9, #0, x1" do |asm|
+      asm.at :s1e1rp, X1
+    end
   end
 
   def test_AUTDA
