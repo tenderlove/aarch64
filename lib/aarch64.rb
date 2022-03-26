@@ -197,6 +197,26 @@ module AArch64
       @insns = @insns << HINT.new(0b0011, 0b100)
     end
 
+    def autib d, n
+      @insns = @insns << AUTIB.new(d, n)
+    end
+
+    def autizb d
+      @insns = @insns << AUTIB.new(d, 0b11111)
+    end
+
+    def autib1716
+      @insns = @insns << HINT.new(0b0001, 0b110)
+    end
+
+    def autibsp
+      @insns = @insns << HINT.new(0b0011, 0b111)
+    end
+
+    def autibz
+      @insns = @insns << HINT.new(0b0011, 0b110)
+    end
+
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end

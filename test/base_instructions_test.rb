@@ -329,12 +329,30 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AUTIB
-    skip "Fixme!"
     # AUTIB  <Xd>, <Xn|SP>
+    assert_bytes [0x41, 0x14, 0xc1, 0xda] do |asm|
+      asm.autib X1, X2
+    end
+
     # AUTIZB  <Xd>
+    assert_bytes [0xe1, 0x37, 0xc1, 0xda] do |asm|
+      asm.autizb X1
+    end
+
     # AUTIB1716
+    assert_one_insn "hint #0xe" do |asm|
+      asm.autib1716
+    end
+
     # AUTIBSP
+    assert_one_insn "hint #0x1f" do |asm|
+      asm.autibsp
+    end
+
     # AUTIBZ
+    assert_one_insn "hint #0x1e" do |asm|
+      asm.autibz
+    end
   end
 
   def test_AXFLAG

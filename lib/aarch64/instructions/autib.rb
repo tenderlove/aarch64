@@ -8,8 +8,17 @@ module AArch64
     # AUTIBSP
     # AUTIBZ
     class AUTIB
+      def initialize d, n
+        @d = d
+        @n = n
+      end
+
       def encode
-        raise NotImplementedError
+        if @n.integer?
+          AUTIB(1, @n.to_i, @d.to_i)
+        else
+          AUTIB(0, @n.to_i, @d.to_i)
+        end
       end
 
       private
