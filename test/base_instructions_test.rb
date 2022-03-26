@@ -280,9 +280,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AUTDA
-    skip "Fixme!"
     # AUTDA  <Xd>, <Xn|SP>
+    assert_bytes [0x41, 0x18, 0xc1, 0xda] do |asm|
+      asm.autda X1, X2
+    end
+
     # AUTDZA  <Xd>
+    assert_bytes [0xe1, 0x3b, 0xc1, 0xda] do |asm|
+      asm.autdza X1
+    end
   end
 
   def test_AUTDB
@@ -2814,6 +2820,14 @@ class BaseInstructionsTest < AArch64::Test
   def test_YIELD
     skip "Fixme!"
     # YIELD
+  end
+
+  def assert_bytes bytes
+    asm = Assembler.new
+    yield asm
+    jit_buffer = StringIO.new
+    asm.write_to jit_buffer
+    assert_equal bytes, jit_buffer.string.bytes
   end
 
   def assert_one_insn asm_str

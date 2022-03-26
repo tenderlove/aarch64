@@ -5,8 +5,17 @@ module AArch64
     # AUTDA  <Xd>, <Xn|SP>
     # AUTDZA  <Xd>
     class AUTDA
+      def initialize d, n
+        @d = d
+        @n = n
+      end
+
       def encode
-        raise NotImplementedError
+        if @n.integer?
+          AUTDA(1, @n.to_i, @d.to_i)
+        else
+          AUTDA(0, @n.to_i, @d.to_i)
+        end
       end
 
       private

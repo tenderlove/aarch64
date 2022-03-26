@@ -161,6 +161,14 @@ module AArch64
       @insns = @insns << AT_SYS.new(at_op, t)
     end
 
+    def autda d, n
+      @insns = @insns << AUTDA.new(d, n)
+    end
+
+    def autdza d
+      @insns = @insns << AUTDA.new(d, 0b11111)
+    end
+
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end
