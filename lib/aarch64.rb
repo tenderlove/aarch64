@@ -136,6 +136,10 @@ module AArch64
       end
     end
 
+    def ands d, n, m
+      @insns = @insns << ANDS_log_imm.new(d, n, m)
+    end
+
     def b label
       @insns = @insns << B_uncond.new(label)
     end

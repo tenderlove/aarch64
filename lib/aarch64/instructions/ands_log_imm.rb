@@ -5,8 +5,20 @@ module AArch64
     # ANDS  <Wd>, <Wn>, #<imm>
     # ANDS  <Xd>, <Xn>, #<imm>
     class ANDS_log_imm
+      def initialize d, n, imm
+        @d = d
+        @n = n
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        enc = Utils.encode_mask(@imm) || raise("Can't encode mask #{@imm}")
+
+        if @d.x?
+          ANDS_log_imm(@d.sf, enc.n, enc.immr, enc.imms, @n.to_i, @d.to_i)
+        else
+          ANDS_log_imm(@d.sf, 0, enc.immr, enc.imms, @n.to_i, @d.to_i)
+        end
       end
 
       private

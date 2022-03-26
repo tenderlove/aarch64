@@ -172,9 +172,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ANDS_log_imm
-    skip "Fixme!"
     # ANDS  <Wd>, <Wn>, #<imm>
+    assert_one_insn "ands w3, w1, #1" do |asm|
+      asm.ands W3, W1, 1
+    end
+
     # ANDS  <Xd>, <Xn>, #<imm>
+    assert_one_insn "ands x3, x1, #2" do |asm|
+      asm.ands X3, X1, 2
+    end
   end
 
   def test_ANDS_log_shift
