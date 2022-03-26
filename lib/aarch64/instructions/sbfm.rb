@@ -5,8 +5,15 @@ module AArch64
     # SBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # SBFM  <Xd>, <Xn>, #<immr>, #<imms>
     class SBFM
+      def initialize d, n, immr, imms
+        @d     = d
+        @n     = n
+        @immr  = immr
+        @imms  = imms
+      end
+
       def encode
-        raise NotImplementedError
+        SBFM(@d.sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
       end
 
       private

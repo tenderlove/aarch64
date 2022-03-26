@@ -145,6 +145,14 @@ module AArch64
       end
     end
 
+    def asr d, n, shift
+      @insns = @insns << ASR_SBFM.new(d, n, shift)
+    end
+
+    def sbfm d, n, immr, imms
+      @insns = @insns << SBFM.new(d, n, immr, imms)
+    end
+
     def b label
       @insns = @insns << B_uncond.new(label)
     end

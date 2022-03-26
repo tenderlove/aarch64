@@ -212,11 +212,25 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ASR_SBFM
-    skip "Fixme!"
     # ASR  <Wd>, <Wn>, #<shift>
+    assert_one_insn "asr w3, w1, #3" do |asm|
+      asm.asr W3, W1, 3
+    end
+
     # SBFM <Wd>, <Wn>, #<shift>, #31
+    assert_one_insn "asr w3, w1, #3" do |asm|
+      asm.sbfm W3, W1, 3, 31
+    end
+
     # ASR  <Xd>, <Xn>, #<shift>
+    assert_one_insn "asr x3, x1, #3" do |asm|
+      asm.asr X3, X1, 3
+    end
+
     # SBFM <Xd>, <Xn>, #<shift>, #63
+    assert_one_insn "asr x3, x1, #3" do |asm|
+      asm.sbfm X3, X1, 3, 63
+    end
   end
 
   def test_ASR_ASRV
