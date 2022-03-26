@@ -5,8 +5,14 @@ module AArch64
     # ASRV  <Wd>, <Wn>, <Wm>
     # ASRV  <Xd>, <Xn>, <Xm>
     class ASRV
+      def initialize d, n, m
+        @d = d
+        @n = n
+        @m = m
+      end
+
       def encode
-        raise NotImplementedError
+        ASRV(@d.sf, @m.to_i, @n.to_i, @d.to_i)
       end
 
       private

@@ -152,7 +152,10 @@ module AArch64
         @insns = @insns << ASR_ASRV.new(d, n, m)
       end
     end
-    alias :asrv :asr
+
+    def asrv d, n, m
+      @insns = @insns << ASRV.new(d, n, m)
+    end
 
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)

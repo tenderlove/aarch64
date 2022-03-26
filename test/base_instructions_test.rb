@@ -256,9 +256,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ASRV
-    skip "Fixme!"
     # ASRV  <Wd>, <Wn>, <Wm>
+    assert_one_insn "asr w3, w1, w2" do |asm|
+      asm.asrv W3, W1, W2
+    end
+
     # ASRV  <Xd>, <Xn>, <Xm>
+    assert_one_insn "asr x3, x1, x2" do |asm|
+      asm.asrv X3, X1, X2
+    end
   end
 
   def test_AT_SYS
