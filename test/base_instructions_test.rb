@@ -304,12 +304,28 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AUTIA
-    skip "Fixme!"
     # AUTIA  <Xd>, <Xn|SP>
+    assert_bytes [0x41, 0x10, 0xc1, 0xda] do |asm|
+      asm.autia X1, X2
+    end
     # AUTIZA  <Xd>
+    assert_bytes [0xe1, 0x33, 0xc1, 0xda] do |asm|
+      asm.autiza X1
+    end
     # AUTIA1716
+    assert_one_insn "hint #0xc" do |asm|
+      asm.autia1716
+    end
+
     # AUTIASP
+    assert_one_insn "hint #0x1d" do |asm|
+      asm.autiasp
+    end
+
     # AUTIAZ
+    assert_one_insn "hint #0x1c" do |asm|
+      asm.autiaz
+    end
   end
 
   def test_AUTIB

@@ -4,8 +4,13 @@ module AArch64
     # Hint instruction
     # HINT  #<imm>
     class HINT
+      def initialize crm, op2
+        @crm = crm
+        @op2 = op2
+      end
+
       def encode
-        raise NotImplementedError
+        HINT(@crm, @op2)
       end
 
       private

@@ -8,8 +8,17 @@ module AArch64
     # AUTIASP
     # AUTIAZ
     class AUTIA
+      def initialize d, n
+        @d = d
+        @n = n
+      end
+
       def encode
-        raise NotImplementedError
+        if @n.integer?
+          AUTIA(1, @n.to_i, @d.to_i)
+        else
+          AUTIA(0, @n.to_i, @d.to_i)
+        end
       end
 
       private
