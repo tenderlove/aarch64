@@ -4,11 +4,10 @@ class BaseInstructionsTest < AArch64::Test
   include AArch64
   include AArch64::Registers
 
-  attr_reader :asm, :jit_buffer
+  attr_reader :asm
 
   def setup
     @asm = Assembler.new
-    @jit_buffer = StringIO.new
   end
 
   def test_adc
@@ -134,6 +133,16 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adrp x3, #0x4000"
   end
 
+  def test_AND_log_imm
+    assert_one_insn "and x3, x1, #2" do |asm|
+      asm.and X3, X1, 2
+    end
+
+    assert_one_insn "and w3, w1, #1" do |asm|
+      asm.and W3, W1, 1
+    end
+  end
+
   def test_b
     asm.b 0x8
     assert_one_insn "b #8"
@@ -182,7 +191,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def assert_one_insn asm_str
+    asm = self.asm
+
+    if block_given?
+      asm = Assembler.new
+      yield asm
+    end
+
+    jit_buffer = StringIO.new
     asm.write_to jit_buffer
+    if $DEBUG
+      puts jit_buffer.string.bytes.map { |x| sprintf("%02x", x ) }.join(" ")
+      puts sprintf("%032b", jit_buffer.string.unpack1("L<"))
+    end
     super(jit_buffer.string, asm: asm_str)
   end
 end

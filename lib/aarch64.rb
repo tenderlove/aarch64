@@ -1,4 +1,5 @@
 require "aarch64/instructions"
+require "aarch64/utils"
 
 module AArch64
   module Registers
@@ -124,6 +125,10 @@ module AArch64
 
     def adrp xd, label
       @insns = @insns << ADRP.new(xd, label)
+    end
+
+    def and d, n, imm
+      @insns = @insns << AND_log_imm.new(d, n, imm)
     end
 
     def b label
