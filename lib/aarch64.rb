@@ -217,6 +217,10 @@ module AArch64
       @insns = @insns << HINT.new(0b0011, 0b110)
     end
 
+    def axflag
+      @insns = @insns << AXFLAG.new
+    end
+
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end

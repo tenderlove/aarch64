@@ -5,14 +5,13 @@ module AArch64
     # AXFLAG
     class AXFLAG
       def encode
-        raise NotImplementedError
+        self.AXFLAG
       end
 
       private
 
-      def AXFLAG 
-        insn = 0b1101010100_0_00_000_0100_0000_010_11111
-        insn
+      def AXFLAG
+        0b1101010100_0_00_000_0100_0000_010_11111
       end
     end
   end

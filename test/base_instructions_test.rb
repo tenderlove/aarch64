@@ -356,8 +356,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AXFLAG
-    skip "Fixme!"
     # AXFLAG
+    assert_bytes [0x5f, 0x40, 0x00, 0xd5] do |asm|
+      asm.axflag
+    end
   end
 
   def test_b
