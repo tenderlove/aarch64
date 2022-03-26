@@ -384,8 +384,12 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BC_cond
-    skip "Fixme!"
     # BC.<cond>  <label>
+    assert_bytes [53, 0, 0, 84] do |asm|
+      label = asm.make_label :foo
+      asm.bc label, cond: :pl
+      asm.put_label label
+    end
   end
 
   def test_BFC_BFM

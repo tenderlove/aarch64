@@ -229,6 +229,10 @@ module AArch64
       end
     end
 
+    def bc label, cond:
+      @insns = @insns << BC_cond.new(cond, label)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end

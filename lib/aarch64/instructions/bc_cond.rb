@@ -4,8 +4,13 @@ module AArch64
     # Branch Consistent conditionally
     # BC.<cond>  <label>
     class BC_cond
+      def initialize cond, label
+        @cond  = cond
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        BC_cond(@label.to_i / 4, Utils.cond2bin(@cond))
       end
 
       private
