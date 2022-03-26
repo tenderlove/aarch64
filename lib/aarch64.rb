@@ -127,8 +127,13 @@ module AArch64
       @insns = @insns << ADRP.new(xd, label)
     end
 
-    def and d, n, imm
-      @insns = @insns << AND_log_imm.new(d, n, imm)
+    def and d, n, m, shift: :lsl, amount: 0
+      if m.integer?
+        @insns = @insns << AND_log_imm.new(d, n, m)
+      else
+        shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+        @insns = @insns << AND_log_shift.new(d, n, m, shift, amount)
+      end
     end
 
     def b label
