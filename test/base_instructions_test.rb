@@ -292,9 +292,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_AUTDB
-    skip "Fixme!"
     # AUTDB  <Xd>, <Xn|SP>
+    assert_bytes [0x41, 0x1c, 0xc1, 0xda] do |asm|
+      asm.autdb X1, X2
+    end
+
     # AUTDZB  <Xd>
+    assert_bytes [0xe1, 0x3f, 0xc1, 0xda] do |asm|
+      asm.autdzb X1
+    end
   end
 
   def test_AUTIA

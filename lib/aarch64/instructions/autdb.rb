@@ -5,8 +5,17 @@ module AArch64
     # AUTDB  <Xd>, <Xn|SP>
     # AUTDZB  <Xd>
     class AUTDB
+      def initialize d, n
+        @d = d
+        @n = n
+      end
+
       def encode
-        raise NotImplementedError
+        if @n.integer?
+          AUTDB(1, @n.to_i, @d.to_i)
+        else
+          AUTDB(0, @n.to_i, @d.to_i)
+        end
       end
 
       private
