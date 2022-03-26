@@ -145,9 +145,14 @@ module AArch64
       end
     end
 
-    def asr d, n, shift
-      @insns = @insns << ASR_SBFM.new(d, n, shift)
+    def asr d, n, m
+      if m.integer?
+        @insns = @insns << ASR_SBFM.new(d, n, m)
+      else
+        @insns = @insns << ASR_ASRV.new(d, n, m)
+      end
     end
+    alias :asrv :asr
 
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)

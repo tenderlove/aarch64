@@ -7,8 +7,14 @@ module AArch64
     # ASR  <Xd>, <Xn>, <Xm>
     # ASRV <Xd>, <Xn>, <Xm>
     class ASR_ASRV
+      def initialize d, n, m
+        @d = d
+        @n = n
+        @m = m
+      end
+
       def encode
-        raise NotImplementedError
+        ASR_ASRV(@d.sf, @m.to_i, @n.to_i, @d.to_i)
       end
 
       private
