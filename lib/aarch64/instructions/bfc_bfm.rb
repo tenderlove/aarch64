@@ -3,12 +3,16 @@ module AArch64
     # BFC -- A64
     # Bitfield Clear
     # BFC  <Wd>, #<lsb>, #<width>
-    # BFM <Wd>, WZR, #(-<lsb> MOD 32), #(<width>-1)
     # BFC  <Xd>, #<lsb>, #<width>
-    # BFM <Xd>, XZR, #(-<lsb> MOD 64), #(<width>-1)
     class BFC_BFM
+      def initialize d, lsb, width
+        @d     = d
+        @lsb   = lsb
+        @width = width
+      end
+
       def encode
-        raise NotImplementedError
+        BFC_BFM(@d.sf, @d.sf, -(@lsb % 32), @width - 1, @d.to_i)
       end
 
       private

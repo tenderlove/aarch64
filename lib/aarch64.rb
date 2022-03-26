@@ -233,6 +233,10 @@ module AArch64
       @insns = @insns << BC_cond.new(cond, label)
     end
 
+    def bfc d, lsb, width
+      @insns = @insns << BFC_BFM.new(d, lsb, width)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end
