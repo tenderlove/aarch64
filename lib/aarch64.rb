@@ -241,6 +241,10 @@ module AArch64
       @insns = @insns << BFI_BFM.new(d, lsb, width)
     end
 
+    def bfm d, n, immr, imms
+      @insns = @insns << BFM.new(d, n, immr, imms)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end

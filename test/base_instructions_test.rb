@@ -417,9 +417,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BFM
-    skip "Fixme!"
     # BFM  <Wd>, <Wn>, #<immr>, #<imms>
+    assert_one_insn "bfi w4, w5, #0x14, #0xb" do |asm|
+      asm.bfm W4, W5, 12, 10
+    end
+
     # BFM  <Xd>, <Xn>, #<immr>, #<imms>
+    assert_one_insn "bfi x4, x5, #0x34, #0xb" do |asm|
+      asm.bfm X4, X5, 12, 10
+    end
   end
 
   def test_BFXIL_BFM

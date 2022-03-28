@@ -5,8 +5,15 @@ module AArch64
     # BFM  <Wd>, <Wn>, #<immr>, #<imms>
     # BFM  <Xd>, <Xn>, #<immr>, #<imms>
     class BFM
+      def initialize d, n, immr, imms
+        @d    = d
+        @n    = n
+        @immr = immr
+        @imms = imms
+      end
+
       def encode
-        raise NotImplementedError
+        BFM(@d.sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
       end
 
       private
