@@ -405,11 +405,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BFI_BFM
-    skip "Fixme!"
     # BFI  <Wd>, <Wn>, #<lsb>, #<width>
-    # BFM  <Wd>, <Wn>, #(-<lsb> MOD 32), #(<width>-1)
+    assert_bytes [3, 124, 0, 51] do |asm|
+      asm.bfi W3, 0, 32
+    end
+
     # BFI  <Xd>, <Xn>, #<lsb>, #<width>
-    # BFM  <Xd>, <Xn>, #(-<lsb> MOD 64), #(<width>-1)
+    assert_bytes [0, 32, 123, 179] do |asm|
+      asm.bfi X0, 5, 9
+    end
   end
 
   def test_BFM

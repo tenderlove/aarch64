@@ -3,18 +3,22 @@ module AArch64
     # BFI -- A64
     # Bitfield Insert
     # BFI  <Wd>, <Wn>, #<lsb>, #<width>
-    # BFM  <Wd>, <Wn>, #(-<lsb> MOD 32), #(<width>-1)
     # BFI  <Xd>, <Xn>, #<lsb>, #<width>
-    # BFM  <Xd>, <Xn>, #(-<lsb> MOD 64), #(<width>-1)
     class BFI_BFM
+      def initialize d, lsb, width
+        @d     = d
+        @lsb   = lsb
+        @width = width
+      end
+
       def encode
-        raise NotImplementedError
+        BFI_BFM(@d.sf, @d.sf, -(@lsb % 32), @width - 1, @d.to_i)
       end
 
       private
 
       def BFI_BFM sf, n, immr, imms, rd
-        insn = 0b0_01_100110_0_000000_000000_!= 11111_00000
+        insn = 0b0_01_100110_0_000000_000000_00000_00000
         insn |= ((sf & 0x1) << 31)
         insn |= ((n & 0x1) << 22)
         insn |= ((immr & 0x3f) << 16)
