@@ -3,12 +3,17 @@ module AArch64
     # BFXIL -- A64
     # Bitfield extract and insert at low end
     # BFXIL  <Wd>, <Wn>, #<lsb>, #<width>
-    # BFM  <Wd>, <Wn>, #<lsb>, #(<lsb>+<width>-1)
     # BFXIL  <Xd>, <Xn>, #<lsb>, #<width>
-    # BFM  <Xd>, <Xn>, #<lsb>, #(<lsb>+<width>-1)
     class BFXIL_BFM
+      def initialize d, n, lsb, width
+        @d     = d
+        @n     = n
+        @lsb   = lsb
+        @width = width
+      end
+
       def encode
-        raise NotImplementedError
+        BFXIL_BFM(@d.sf, @d.sf, @lsb, @lsb + @width - 1, @n.to_i, @d.to_i)
       end
 
       private

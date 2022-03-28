@@ -429,11 +429,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BFXIL_BFM
-    skip "Fixme!"
     # BFXIL  <Wd>, <Wn>, #<lsb>, #<width>
-    # BFM  <Wd>, <Wn>, #<lsb>, #(<lsb>+<width>-1)
+    assert_one_insn "bfxil w9, w10, #0, #1" do |asm|
+      asm.bfxil W9, W10, 0, 1
+    end
+
     # BFXIL  <Xd>, <Xn>, #<lsb>, #<width>
-    # BFM  <Xd>, <Xn>, #<lsb>, #(<lsb>+<width>-1)
+    assert_one_insn "bfxil x2, x3, #0x3f, #1" do |asm|
+      asm.bfxil X2, X3, 63, 1
+    end
   end
 
   def test_BIC_log_shift
