@@ -5,8 +5,16 @@ module AArch64
     # BIC  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # BIC  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class BIC_log_shift
+      def initialize d, n, m, shift, amount
+        @d      = d
+        @n      = n
+        @m      = m
+        @shift  = shift
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        BIC_log_shift(@d.sf, @shift, @m.to_i, @amount, @n.to_i, @d.to_i)
       end
 
       private

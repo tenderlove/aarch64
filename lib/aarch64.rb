@@ -249,6 +249,11 @@ module AArch64
       @insns = @insns << BFXIL_BFM.new(d, n, lsb, width)
     end
 
+    def bic d, n, m, shift: :lsl, amount: 0
+      shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+      @insns = @insns << BIC_log_shift.new(d, n, m, shift, amount)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end
