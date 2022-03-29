@@ -307,6 +307,11 @@ module AArch64
       @insns = @insns << BRK.new(imm)
     end
 
+    def bti target
+      target = [:c, :j, :jc].index(target) || raise(NotImplementedError)
+      @insns = @insns << BTI.new(target)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

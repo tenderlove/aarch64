@@ -539,8 +539,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BTI
-    skip "Fixme!"
     # BTI  {<targets>}
+    assert_one_insn "hint #0x20" do |asm|
+      asm.bti :c
+    end
   end
 
   def test_CAS
