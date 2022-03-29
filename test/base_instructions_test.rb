@@ -485,11 +485,25 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BLRA
-    skip "Fixme!"
     # BLRAAZ  <Xn>
+    assert_bytes f("7f 08 3f d6") do |asm|
+      asm.blraaz X3
+    end
+
     # BLRAA  <Xn>, <Xm|SP>
+    assert_bytes f("61 08 3f d7") do |asm|
+      asm.blraa X3, X1
+    end
+
     # BLRABZ  <Xn>
+    assert_bytes f("7f 0c 3f d6") do |asm|
+      asm.blrabz X3
+    end
+
     # BLRAB  <Xn>, <Xm|SP>
+    assert_bytes f("61 0c 3f d7") do |asm|
+      asm.blrab X3, X1
+    end
   end
 
   def test_BR
@@ -2910,6 +2924,10 @@ class BaseInstructionsTest < AArch64::Test
   def test_YIELD
     skip "Fixme!"
     # YIELD
+  end
+
+  def f str
+    str.split(" ").map { |x| x.to_i(16) }
   end
 
   def assert_bytes bytes

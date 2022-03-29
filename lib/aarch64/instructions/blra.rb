@@ -7,8 +7,15 @@ module AArch64
     # BLRABZ  <Xn>
     # BLRAB  <Xn>, <Xm|SP>
     class BLRA
+      def initialize rn, rm, z, m
+        @rn = rn
+        @rm = rm
+        @z  = z
+        @m  = m
+      end
+
       def encode
-        raise NotImplementedError
+        BLRA(@z, @m, @rn.to_i, @rm.to_i)
       end
 
       private
