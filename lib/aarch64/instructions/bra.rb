@@ -7,8 +7,15 @@ module AArch64
     # BRABZ  <Xn>
     # BRAB  <Xn>, <Xm|SP>
     class BRA
+      def initialize rn, rm, z, m
+        @rn = rn
+        @rm = rm
+        @z  = z
+        @m  = m
+      end
+
       def encode
-        raise NotImplementedError
+        BRA(@z, @m, @rn.to_i, @rm.to_i)
       end
 
       private

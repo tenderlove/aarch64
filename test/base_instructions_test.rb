@@ -514,11 +514,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BRA
-    skip "Fixme!"
     # BRAAZ  <Xn>
+    assert_bytes f("7f 08 1f d6") do |asm|
+      asm.braaz X3
+    end
     # BRAA  <Xn>, <Xm|SP>
+    assert_bytes f("61 08 1f d7") do |asm|
+      asm.braa X3, X1
+    end
     # BRABZ  <Xn>
+    assert_bytes f("7f 0c 1f d6") do |asm|
+      asm.brabz X3
+    end
     # BRAB  <Xn>, <Xm|SP>
+    assert_bytes f("61 0c 1f d7") do |asm|
+      asm.brab X3, X1
+    end
   end
 
   def test_BRK
