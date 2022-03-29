@@ -453,9 +453,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BICS
-    skip "Fixme!"
     # BICS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
+    assert_one_insn "bics w2, w7, w9" do |asm|
+      asm.bics W2, W7, W9
+    end
+
     # BICS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+    assert_one_insn "bics x13, x20, x14, lsl #47" do |asm|
+      asm.bics X13, X20, X14, shift: :lsl, amount: 47
+    end
   end
 
   def test_BL

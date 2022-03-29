@@ -5,8 +5,16 @@ module AArch64
     # BICS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # BICS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class BICS
+      def initialize d, n, m, shift, amount
+        @d      = d
+        @n      = n
+        @m      = m
+        @shift  = shift
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        BICS(@d.sf, @shift, @m.to_i, @amount, @n.to_i, @d.to_i)
       end
 
       private
