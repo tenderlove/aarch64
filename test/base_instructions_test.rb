@@ -507,8 +507,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BR
-    skip "Fixme!"
     # BR  <Xn>
+    assert_one_insn "br x3" do |asm|
+      asm.br X3
+    end
   end
 
   def test_BRA

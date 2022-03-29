@@ -283,6 +283,10 @@ module AArch64
       @insns = @insns << BLRA.new(rn, rm, 1, 1)
     end
 
+    def br rn
+      @insns = @insns << BR.new(rn)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end
