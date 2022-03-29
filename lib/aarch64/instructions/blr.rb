@@ -4,8 +4,12 @@ module AArch64
     # Branch with Link to Register
     # BLR  <Xn>
     class BLR
+      def initialize n
+        @n = n
+      end
+
       def encode
-        raise NotImplementedError
+        BLR(@n.to_i)
       end
 
       private
