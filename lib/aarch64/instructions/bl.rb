@@ -4,8 +4,12 @@ module AArch64
     # Branch with Link
     # BL  <label>
     class BL
+      def initialize label
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        BL(@label.to_i / 4)
       end
 
       private

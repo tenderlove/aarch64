@@ -259,6 +259,10 @@ module AArch64
       @insns = @insns << BICS.new(d, n, m, shift, amount)
     end
 
+    def bl label
+      @insns = @insns << BL.new(label)
+    end
+
     def brk imm
       @insns = @insns << BRK.new(imm)
     end

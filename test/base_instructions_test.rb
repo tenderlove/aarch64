@@ -465,8 +465,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_BL
-    skip "Fixme!"
     # BL  <label>
+    assert_one_insn "bl #4" do |asm|
+      label = asm.make_label :foo
+      asm.bl label
+      asm.put_label label
+    end
+
+    assert_bytes [0x00,0x00,0x00,0x94] do |asm|
+      asm.bl 0
+    end
   end
 
   def test_BLR
