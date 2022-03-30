@@ -762,16 +762,48 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_CCMP_imm
-    skip "Fixme!"
+  def test_CCMP_imm_reg
     # CCMP  <Wn>, #<imm>, #<nzcv>, <cond>
     # CCMP  <Xn>, #<imm>, #<nzcv>, <cond>
-  end
-
-  def test_CCMP_reg
-    skip "Fixme!"
     # CCMP  <Wn>, <Wm>, #<nzcv>, <cond>
     # CCMP  <Xn>, <Xm>, #<nzcv>, <cond>
+
+    assert_one_insn "ccmp w1, #0x1f, #0, eq" do |asm|
+      asm.ccmp w1, 31, 0, :eq
+    end
+    assert_one_insn "ccmp w3, #0, #0xf, hs" do |asm|
+      asm.ccmp w3, 0, 15, :hs
+    end
+    assert_one_insn "ccmp wzr, #0xf, #0xd, hs" do |asm|
+      asm.ccmp wzr, 15, 13, :hs
+    end
+    assert_one_insn "ccmp x9, #0x1f, #0, le" do |asm|
+      asm.ccmp x9, 31, 0, :le
+    end
+    assert_one_insn "ccmp x3, #0, #0xf, gt" do |asm|
+      asm.ccmp x3, 0, 15, :gt
+    end
+    assert_one_insn "ccmp xzr, #5, #7, ne" do |asm|
+      asm.ccmp xzr, 5, 7, :ne
+    end
+    assert_one_insn "ccmp w1, wzr, #0, eq" do |asm|
+      asm.ccmp w1, wzr, 0, :eq
+    end
+    assert_one_insn "ccmp w3, w0, #0xf, hs" do |asm|
+      asm.ccmp w3, w0, 15, :hs
+    end
+    assert_one_insn "ccmp wzr, w15, #0xd, hs" do |asm|
+      asm.ccmp wzr, w15, 13, :hs
+    end
+    assert_one_insn "ccmp x9, xzr, #0, le" do |asm|
+      asm.ccmp x9, xzr, 0, :le
+    end
+    assert_one_insn "ccmp x3, x0, #0xf, gt" do |asm|
+      asm.ccmp x3, x0, 15, :gt
+    end
+    assert_one_insn "ccmp xzr, x5, #7, ne" do |asm|
+      asm.ccmp xzr, x5, 7, :ne
+    end
   end
 
   def test_CFINV

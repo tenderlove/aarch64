@@ -5,8 +5,15 @@ module AArch64
     # CCMP  <Wn>, <Wm>, #<nzcv>, <cond>
     # CCMP  <Xn>, <Xm>, #<nzcv>, <cond>
     class CCMP_reg
+      def initialize rn, rm, nzcv, cond
+        @rn   = rn
+        @rm   = rm
+        @nzcv = nzcv
+        @cond = cond
+      end
+
       def encode
-        raise NotImplementedError
+        CCMP_reg(@rn.sf, @rm.to_i, Utils.cond2bin(@cond), @rn.to_i, @nzcv)
       end
 
       private

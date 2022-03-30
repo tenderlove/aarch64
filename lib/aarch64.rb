@@ -399,6 +399,14 @@ module AArch64
       end
     end
 
+    def ccmp rn, rm, nzcv, cond
+      if rm.integer?
+        @insns = @insns << CCMP_imm.new(rn, rm, nzcv, cond)
+      else
+        @insns = @insns << CCMP_reg.new(rn, rm, nzcv, cond)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
