@@ -807,8 +807,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CFINV
-    skip "Fixme!"
     # CFINV
+    assert_bytes f("1f 40 00 d5") do |asm|
+      asm.cfinv
+    end
   end
 
   def test_CFP_SYS

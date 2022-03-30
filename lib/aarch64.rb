@@ -407,6 +407,10 @@ module AArch64
       end
     end
 
+    def cfinv
+      @insns = @insns << CFINV.new
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

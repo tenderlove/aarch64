@@ -5,12 +5,12 @@ module AArch64
     # CFINV
     class CFINV
       def encode
-        raise NotImplementedError
+        self.CFINV
       end
 
       private
 
-      def CFINV 
+      def CFINV
         insn = 0b1101010100_0_0_0_000_0100_0000_000_11111
         insn
       end
