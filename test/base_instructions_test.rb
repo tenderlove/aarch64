@@ -546,15 +546,41 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CAS
-    skip "Fixme!"
     # CAS  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASA  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASAL  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASL  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+
+    assert_bytes [0x41,0x7c,0xa0,0x88] do |asm|
+      asm.cas     W0, W1, [X2]
+    end
+    assert_bytes [0x41,0x7c,0xe0,0x88] do |asm|
+      asm.casa    W0, W1, [X2]
+    end
+    assert_bytes [0x41,0xfc,0xa0,0x88] do |asm|
+      asm.casl    W0, W1, [X2]
+    end
+    assert_bytes [0x41,0xfc,0xe0,0x88] do |asm|
+      asm.casal   W0, W1, [X2]
+    end
+
     # CAS  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASA  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASAL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
+
+    assert_bytes [0x41,0x7c,0xa0,0xc8] do |asm|
+      asm.cas     X0, X1, [X2]
+    end
+    assert_bytes [0x41,0x7c,0xe0,0xc8] do |asm|
+      asm.casa    X0, X1, [X2]
+    end
+    assert_bytes [0x41,0xfc,0xa0,0xc8] do |asm|
+      asm.casl    X0, X1, [X2]
+    end
+    assert_bytes [0x41,0xfc,0xe0,0xc8] do |asm|
+      asm.casal   X0, X1, [X2]
+    end
   end
 
   def test_CASB

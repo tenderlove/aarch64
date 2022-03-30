@@ -11,14 +11,23 @@ module AArch64
     # CASAL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     class CAS
+      def initialize s, t, n, l, o0
+        @s  = s
+        @t  = t
+        @n  = n
+        @l  = l
+        @o0 = o0
+      end
+
       def encode
-        raise NotImplementedError
+        CAS(@s.sf, @l, @s.to_i, @o0, @n.to_i, @t.to_i)
       end
 
       private
 
-      def CAS l, rs, o0, rn, rt
-        insn = 0b1x_0010001_0_1_00000_0_11111_00000_00000
+      def CAS x, l, rs, o0, rn, rt
+        insn = 0b10_0010001_0_1_00000_0_11111_00000_00000
+        insn |= ((x & 0x1) << 30)
         insn |= ((l & 0x1) << 22)
         insn |= ((rs & 0x1f) << 16)
         insn |= ((o0 & 0x1) << 15)

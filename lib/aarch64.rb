@@ -312,6 +312,22 @@ module AArch64
       @insns = @insns << BTI.new(target)
     end
 
+    def cas s, t, n_list
+      @insns = @insns << CAS.new(s, t, n_list[0], 0, 0)
+    end
+
+    def casa s, t, n_list
+      @insns = @insns << CAS.new(s, t, n_list[0], 1, 0)
+    end
+
+    def casl s, t, n_list
+      @insns = @insns << CAS.new(s, t, n_list[0], 0, 1)
+    end
+
+    def casal s, t, n_list
+      @insns = @insns << CAS.new(s, t, n_list[0], 1, 1)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
