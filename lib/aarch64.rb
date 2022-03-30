@@ -345,6 +345,22 @@ module AArch64
       @insns = @insns << CASB.new(rs, rt, rn_list[0], 0, 1)
     end
 
+    def casah rs, rt, rn_list
+      @insns = @insns << CASH.new(rs, rt, rn_list[0], 1, 0)
+    end
+
+    def casalh rs, rt, rn_list
+      @insns = @insns << CASH.new(rs, rt, rn_list[0], 1, 1)
+    end
+
+    def cash rs, rt, rn_list
+      @insns = @insns << CASH.new(rs, rt, rn_list[0], 0, 0)
+    end
+
+    def caslh rs, rt, rn_list
+      @insns = @insns << CASH.new(rs, rt, rn_list[0], 0, 1)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

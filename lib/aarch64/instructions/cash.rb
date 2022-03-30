@@ -7,8 +7,16 @@ module AArch64
     # CASH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASLH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     class CASH
+      def initialize rs, rt, rn, l, o0
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @l  = l
+        @o0 = o0
+      end
+
       def encode
-        raise NotImplementedError
+        CASH(@l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
       end
 
       private

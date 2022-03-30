@@ -609,11 +609,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CASH
-    skip "Fixme!"
     # CASAH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x41,0x7c,0xe0,0x48] do |asm|
+      asm.casah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x7f,0xe2,0x48] do |asm|
+      asm.casah w2, w3, [sp]
+    end
     # CASALH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x41,0xfc,0xe0,0x48] do |asm|
+      asm.casalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0xff,0xe2,0x48] do |asm|
+      asm.casalh w2, w3, [sp]
+    end
     # CASH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x41,0x7c,0xa0,0x48] do |asm|
+      asm.cash w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x7f,0xa2,0x48] do |asm|
+      asm.cash w2, w3, [sp]
+    end
     # CASLH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x41,0xfc,0xa0,0x48] do |asm|
+      asm.caslh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0xff,0xa2,0x48] do |asm|
+      asm.caslh w2, w3, [sp]
+    end
   end
 
   def test_CASP
