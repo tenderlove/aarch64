@@ -381,6 +381,10 @@ module AArch64
       @insns = @insns << CBNZ.new(rt, label)
     end
 
+    def cbz rt, label
+      @insns = @insns << CBZ.new(rt, label)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

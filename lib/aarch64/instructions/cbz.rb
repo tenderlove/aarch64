@@ -5,8 +5,13 @@ module AArch64
     # CBZ  <Wt>, <label>
     # CBZ  <Xt>, <label>
     class CBZ
+      def initialize rt, label
+        @rt    = rt
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        CBZ(@rt.sf, @label.to_i / 4, @rt.to_i)
       end
 
       private

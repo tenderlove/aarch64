@@ -704,9 +704,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CBZ
-    skip "Fixme!"
     # CBZ  <Wt>, <label>
     # CBZ  <Xt>, <label>
+    assert_bytes [0x05,0x00,0x00,0x34] do |asm|
+      asm.cbz w5, 0
+    end
+    assert_bytes [0xf4,0xff,0x7f,0x34] do |asm|
+      asm.cbz w20, 1048572
+    end
+    assert_one_insn "cbz x3, #4" do |asm|
+      label = asm.make_label :foo
+      asm.cbz X3, label
+      asm.put_label label
+    end
   end
 
   def test_CCMN_imm
