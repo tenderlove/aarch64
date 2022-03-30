@@ -377,6 +377,10 @@ module AArch64
       @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 1)
     end
 
+    def cbnz rt, label
+      @insns = @insns << CBNZ.new(rt, label)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
