@@ -814,9 +814,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CFP_SYS
-    skip "Fixme!"
     # CFP  RCTX, <Xt>
     # SYS #3, C7, C3, #4, <Xt>
+    assert_bytes f("83 73 0b d5") do |asm|
+      asm.cfp_rcfx x3
+    end
   end
 
   def test_CINC_CSINC

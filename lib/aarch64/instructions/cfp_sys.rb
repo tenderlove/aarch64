@@ -5,8 +5,12 @@ module AArch64
     # CFP  RCTX, <Xt>
     # SYS #3, C7, C3, #4, <Xt>
     class CFP_SYS
+      def initialize rt
+        @rt = rt
+      end
+
       def encode
-        raise NotImplementedError
+        CFP_SYS(@rt.to_i)
       end
 
       private
