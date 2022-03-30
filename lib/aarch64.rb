@@ -16,6 +16,12 @@ module AArch64
 
     SP = Register.new(31, 1, false, true)
     def sp; SP; end
+
+    XZR = Register.new(31, 1, true, true)
+    def xzr; XZR; end
+
+    WZR = Register.new(31, 0, false, true)
+    def wzr; WZR; end
   end
 
   class Assembler
@@ -383,6 +389,14 @@ module AArch64
 
     def cbz rt, label
       @insns = @insns << CBZ.new(rt, label)
+    end
+
+    def ccmn rn, rm, nzcv, cond
+      if rm.integer?
+        @insns = @insns << CCMN_imm.new(rn, rm, nzcv, cond)
+      else
+        @insns = @insns << CCMN_reg.new(rn, rm, nzcv, cond)
+      end
     end
 
     def movz reg, imm, lsl: 0

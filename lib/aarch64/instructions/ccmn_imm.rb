@@ -5,8 +5,15 @@ module AArch64
     # CCMN  <Wn>, #<imm>, #<nzcv>, <cond>
     # CCMN  <Xn>, #<imm>, #<nzcv>, <cond>
     class CCMN_imm
+      def initialize rn, imm, nzcv, cond
+        @rn   = rn
+        @imm  = imm
+        @nzcv = nzcv
+        @cond = cond
+      end
+
       def encode
-        raise NotImplementedError
+        CCMN_imm(@rn.sf, @imm, Utils.cond2bin(@cond), @rn.to_i, @nzcv)
       end
 
       private
