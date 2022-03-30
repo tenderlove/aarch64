@@ -443,6 +443,10 @@ module AArch64
       @insns = @insns << CLREX.new(imm)
     end
 
+    def cls rd, rn
+      @insns = @insns << CLS_int.new(rd, rn)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

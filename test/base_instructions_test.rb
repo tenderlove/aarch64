@@ -926,9 +926,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CLS_int
-    skip "Fixme!"
     # CLS  <Wd>, <Wn>
     # CLS  <Xd>, <Xn>
+    assert_bytes [0xa3,0x14,0xc0,0x5a] do |asm|
+      asm.cls	w3, w5
+    end
+    assert_bytes [0xb4,0x14,0xc0,0xda] do |asm|
+      asm.cls	x20, x5
+    end
   end
 
   def test_CLZ_int

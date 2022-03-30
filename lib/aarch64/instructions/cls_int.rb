@@ -5,8 +5,13 @@ module AArch64
     # CLS  <Wd>, <Wn>
     # CLS  <Xd>, <Xn>
     class CLS_int
+      def initialize rd, rn
+        @rd = rd
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        CLS_int(@rd.sf, @rn.to_i, @rd.to_i)
       end
 
       private
