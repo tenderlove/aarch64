@@ -5,8 +5,13 @@ module AArch64
     # CLZ  <Wd>, <Wn>
     # CLZ  <Xd>, <Xn>
     class CLZ_int
+      def initialize rd, rn
+        @rd = rd
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        CLZ_int(@rd.sf, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -937,9 +937,17 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CLZ_int
-    skip "Fixme!"
     # CLZ  <Wd>, <Wn>
     # CLZ  <Xd>, <Xn>
+    assert_bytes [0x78,0x10,0xc0,0x5a] do |asm|
+      asm.clz	w24, w3
+    end
+    assert_bytes [0x9a,0x10,0xc0,0xda] do |asm|
+      asm.clz	x26, x4
+    end
+    assert_bytes [0xf8,0x13,0xc0,0x5a] do |asm|
+      asm.clz	w24, wzr
+    end
   end
 
   def test_CMN_ADDS_addsub_ext

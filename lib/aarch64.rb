@@ -447,6 +447,10 @@ module AArch64
       @insns = @insns << CLS_int.new(rd, rn)
     end
 
+    def clz rd, rn
+      @insns = @insns << CLZ_int.new(rd, rn)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
