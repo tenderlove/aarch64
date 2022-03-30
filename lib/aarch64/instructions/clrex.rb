@@ -4,8 +4,12 @@ module AArch64
     # Clear Exclusive
     # CLREX  {#<imm>}
     class CLREX
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        CLREX(@imm)
       end
 
       private

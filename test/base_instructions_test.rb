@@ -910,8 +910,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CLREX
-    skip "Fixme!"
     # CLREX  {#<imm>}
+    assert_bytes [0x5f,0x3f,0x03,0xd5] do |asm|
+      asm.clrex
+    end
+    assert_bytes [0x5f,0x30,0x03,0xd5] do |asm|
+      asm.clrex   0
+    end
+    assert_bytes [0x5f,0x37,0x03,0xd5] do |asm|
+      asm.clrex   7
+    end
+    assert_bytes [0x5f,0x3f,0x03,0xd5] do |asm|
+      asm.clrex
+    end
   end
 
   def test_CLS_int

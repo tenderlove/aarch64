@@ -439,6 +439,10 @@ module AArch64
       @insns = @insns << CSINV.new(rd, rn, rm, cond)
     end
 
+    def clrex imm = 15
+      @insns = @insns << CLREX.new(imm)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
