@@ -111,7 +111,7 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adds x3, x5, x1"
   end
 
-  def test_ADDS_addsub_shift
+  def test_ADDS_addsub_shift_ok
     asm.adds X3, X5, X1, shift: :lsr
     assert_one_insn "adds x3, x5, x1, lsr #0"
   end
