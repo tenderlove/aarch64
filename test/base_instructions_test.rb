@@ -822,11 +822,47 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CINC_CSINC
-    skip "Fixme!"
     # CINC  <Wd>, <Wn>, <cond>
     # CSINC <Wd>, <Wn>, <Wn>, invert(<cond>)
     # CINC  <Xd>, <Xn>, <cond>
     # CSINC <Xd>, <Xn>, <Xn>, invert(<cond>)
+
+    assert_one_insn "cinc w3, w5, gt" do |asm|
+      asm.cinc w3, w5, :gt
+    end
+    assert_one_insn "cinc wzr, w4, le" do |asm|
+      asm.cinc wzr, w4, :le
+    end
+    assert_one_insn "cinc x3, x5, gt" do |asm|
+      asm.cinc x3, x5, :gt
+    end
+    assert_one_insn "cinc xzr, x4, le" do |asm|
+      asm.cinc xzr, x4, :le
+    end
+    assert_one_insn "csinc w1, w0, w19, ne" do |asm|
+      asm.csinc w1, w0, w19, :ne
+    end
+    assert_one_insn "csinc wzr, w5, w9, eq" do |asm|
+      asm.csinc wzr, w5, w9, :eq
+    end
+    assert_one_insn "csinc w9, wzr, w30, gt" do |asm|
+      asm.csinc w9, wzr, w30, :gt
+    end
+    assert_one_insn "csinc w1, w28, wzr, mi" do |asm|
+      asm.csinc w1, w28, wzr, :mi
+    end
+    assert_one_insn "csinc x19, x23, x29, lt" do |asm|
+      asm.csinc x19, x23, x29, :lt
+    end
+    assert_one_insn "csinc xzr, x3, x4, ge" do |asm|
+      asm.csinc xzr, x3, x4, :ge
+    end
+    assert_one_insn "csinc x5, xzr, x6, hs" do |asm|
+      asm.csinc x5, xzr, x6, :hs
+    end
+    assert_one_insn "csinc x7, x8, xzr, lo" do |asm|
+      asm.csinc x7, x8, xzr, :lo
+    end
   end
 
   def test_CINV_CSINV

@@ -5,8 +5,17 @@ module AArch64
     # CSINC  <Wd>, <Wn>, <Wm>, <cond>
     # CSINC  <Xd>, <Xn>, <Xm>, <cond>
     class CSINC
+      def initialize rd, rn, rm, cond
+        @rd   = rd
+        @rn   = rn
+        @rm   = rm
+        @cond = cond
+      end
+
       def encode
-        raise NotImplementedError
+        cond = Utils.cond2bin(@cond)
+        cond ^= 1 if @rm == @rn
+        CSINC(@rd.sf, @rm.to_i, cond, @rn.to_i, @rd.to_i)
       end
 
       private

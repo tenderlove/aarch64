@@ -415,6 +415,14 @@ module AArch64
       @insns = @insns << CFP_SYS.new(rt)
     end
 
+    def cinc rd, rn, cond
+      @insns = @insns << CSINC.new(rd, rn, rn, cond)
+    end
+
+    def csinc rd, rn, rm, cond
+      @insns = @insns << CSINC.new(rd, rn, rm, cond)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
