@@ -3,6 +3,7 @@ require "helper"
 class BaseInstructionsTest < AArch64::Test
   include AArch64
   include AArch64::Registers
+  include AArch64::Conditions
 
   attr_reader :asm
 
@@ -866,11 +867,46 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CINV_CSINV
-    skip "Fixme!"
     # CINV  <Wd>, <Wn>, <cond>
     # CSINV <Wd>, <Wn>, <Wn>, invert(<cond>)
     # CINV  <Xd>, <Xn>, <cond>
     # CSINV <Xd>, <Xn>, <Xn>, invert(<cond>)
+    assert_bytes [0xa3,0xd0,0x85,0x5a] do |asm|
+      asm.cinv    w3, w5, gt
+    end
+    assert_bytes [0x9f,0xc0,0x84,0x5a] do |asm|
+      asm.cinv    wzr, w4, le
+    end
+    assert_bytes [0xa3,0xd0,0x85,0xda] do |asm|
+      asm.cinv    x3, x5, gt
+    end
+    assert_bytes [0x9f,0xc0,0x84,0xda] do |asm|
+      asm.cinv    xzr, x4, le
+    end
+    assert_bytes [0x01,0x10,0x93,0x5a] do |asm|
+      asm.csinv    w1, w0, w19, ne
+    end
+    assert_bytes [0xbf,0x00,0x89,0x5a] do |asm|
+      asm.csinv    wzr, w5, w9, eq
+    end
+    assert_bytes [0xe9,0xc3,0x9e,0x5a] do |asm|
+      asm.csinv    w9, wzr, w30, gt
+    end
+    assert_bytes [0x81,0x43,0x9f,0x5a] do |asm|
+      asm.csinv    w1, w28, wzr, mi
+    end
+    assert_bytes [0xf3,0xb2,0x9d,0xda] do |asm|
+      asm.csinv    x19, x23, x29, lt
+    end
+    assert_bytes [0x7f,0xa0,0x84,0xda] do |asm|
+      asm.csinv    xzr, x3, x4, ge
+    end
+    assert_bytes [0xe5,0x23,0x86,0xda] do |asm|
+      asm.csinv    x5, xzr, x6, hs
+    end
+    assert_bytes [0x07,0x31,0x9f,0xda] do |asm|
+      asm.csinv    x7, x8, xzr, lo
+    end
   end
 
   def test_CLREX

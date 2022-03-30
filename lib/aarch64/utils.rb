@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AArch64
   module Utils
     EncodedMask = Struct.new(:n, :immr, :imms)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "aarch64/instructions"
 require "aarch64/utils"
 
@@ -22,6 +24,12 @@ module AArch64
 
     WZR = Register.new(31, 0, false, true)
     def wzr; WZR; end
+  end
+
+  module Conditions
+    module_eval Utils::COND_TABLE.keys.map { |key|
+      "def #{key.downcase}; #{key.dump}; end"
+    }.join("\n")
   end
 
   class Assembler
@@ -421,6 +429,14 @@ module AArch64
 
     def csinc rd, rn, rm, cond
       @insns = @insns << CSINC.new(rd, rn, rm, cond)
+    end
+
+    def cinv rd, rn, cond
+      @insns = @insns << CSINV.new(rd, rn, rn, cond)
+    end
+
+    def csinv rd, rn, rm, cond
+      @insns = @insns << CSINV.new(rd, rn, rm, cond)
     end
 
     def movz reg, imm, lsl: 0
