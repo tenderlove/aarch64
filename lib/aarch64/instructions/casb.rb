@@ -7,8 +7,16 @@ module AArch64
     # CASB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASLB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     class CASB
+      def initialize rs, rt, rn, l, o0
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @l  = l
+        @o0 = o0
+      end
+
       def encode
-        raise NotImplementedError
+        CASB(@l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
       end
 
       private

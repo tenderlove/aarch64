@@ -3,14 +3,19 @@ require "aarch64/utils"
 
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :sf, :x?)
+    class Register < Struct.new(:to_i, :sf, :x?, :sp?)
       def integer?; false; end
     end
 
     31.times { |i|
-      const_set(:"X#{i}", Register.new(i, 1, true))
-      const_set(:"W#{i}", Register.new(i, 0, false))
+      x = const_set(:"X#{i}", Register.new(i, 1, true, false))
+      define_method(:"x#{i}") { x }
+      w = const_set(:"W#{i}", Register.new(i, 0, false, false))
+      define_method(:"w#{i}") { w }
     }
+
+    SP = Register.new(31, 1, false, true)
+    def sp; SP; end
   end
 
   class Assembler
@@ -326,6 +331,18 @@ module AArch64
 
     def casal s, t, n_list
       @insns = @insns << CAS.new(s, t, n_list[0], 1, 1)
+    end
+
+    def casb rs, rt, rn_list
+      @insns = @insns << CASB.new(rs, rt, rn_list[0], 0, 0)
+    end
+
+    def casalb rs, rt, rn_list
+      @insns = @insns << CASB.new(rs, rt, rn_list[0], 1, 1)
+    end
+
+    def caslb rs, rt, rn_list
+      @insns = @insns << CASB.new(rs, rt, rn_list[0], 0, 1)
     end
 
     def movz reg, imm, lsl: 0
