@@ -361,6 +361,22 @@ module AArch64
       @insns = @insns << CASH.new(rs, rt, rn_list[0], 0, 1)
     end
 
+    def casp rs, rs1, rt, rt1, rn_list
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 0)
+    end
+
+    def caspa rs, rs1, rt, rt1, rn_list
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 0)
+    end
+
+    def caspl rs, rs1, rt, rt1, rn_list
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 1)
+    end
+
+    def caspal rs, rs1, rt, rt1, rn_list
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 1)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

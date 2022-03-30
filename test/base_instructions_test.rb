@@ -640,15 +640,54 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CASP
-    skip "Fixme!"
-    # CASP  <Ws>, <W(s+1)>, <Wt>, <W(t+1)>, [<Xn|SP>{,#0}]
-    # CASPA  <Ws>, <W(s+1)>, <Wt>, <W(t+1)>, [<Xn|SP>{,#0}]
-    # CASPAL  <Ws>, <W(s+1)>, <Wt>, <W(t+1)>, [<Xn|SP>{,#0}]
-    # CASPL  <Ws>, <W(s+1)>, <Wt>, <W(t+1)>, [<Xn|SP>{,#0}]
-    # CASP  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
-    # CASPA  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
-    # CASPAL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
-    # CASPL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
+    assert_bytes [0xa2,0x7c,0x20,0x08] do |asm|
+      asm.casp w0, w1, w2, w3, [x5]
+    end
+    assert_bytes [0xe6,0x7f,0x24,0x08] do |asm|
+      asm.casp w4, w5, w6, w7, [sp]
+    end
+    assert_bytes [0x42,0x7c,0x20,0x48] do |asm|
+      asm.casp x0, x1, x2, x3, [x2]
+    end
+    assert_bytes [0xe6,0x7f,0x24,0x48] do |asm|
+      asm.casp x4, x5, x6, x7, [sp]
+    end
+    assert_bytes [0xa2,0x7c,0x60,0x08] do |asm|
+      asm.caspa w0, w1, w2, w3, [x5]
+    end
+    assert_bytes [0xe6,0x7f,0x64,0x08] do |asm|
+      asm.caspa w4, w5, w6, w7, [sp]
+    end
+    assert_bytes [0x42,0x7c,0x60,0x48] do |asm|
+      asm.caspa x0, x1, x2, x3, [x2]
+    end
+    assert_bytes [0xe6,0x7f,0x64,0x48] do |asm|
+      asm.caspa x4, x5, x6, x7, [sp]
+    end
+    assert_bytes [0xa2,0xfc,0x20,0x08] do |asm|
+      asm.caspl w0, w1, w2, w3, [x5]
+    end
+    assert_bytes [0xe6,0xff,0x24,0x08] do |asm|
+      asm.caspl w4, w5, w6, w7, [sp]
+    end
+    assert_bytes [0x42,0xfc,0x20,0x48] do |asm|
+      asm.caspl x0, x1, x2, x3, [x2]
+    end
+    assert_bytes [0xe6,0xff,0x24,0x48] do |asm|
+      asm.caspl x4, x5, x6, x7, [sp]
+    end
+    assert_bytes [0xa2,0xfc,0x60,0x08] do |asm|
+      asm.caspal w0, w1, w2, w3, [x5]
+    end
+    assert_bytes [0xe6,0xff,0x64,0x08] do |asm|
+      asm.caspal w4, w5, w6, w7, [sp]
+    end
+    assert_bytes [0x42,0xfc,0x60,0x48] do |asm|
+      asm.caspal x0, x1, x2, x3, [x2]
+    end
+    assert_bytes [0xe6,0xff,0x64,0x48] do |asm|
+      asm.caspal x4, x5, x6, x7, [sp]
+    end
   end
 
   def test_CBNZ
