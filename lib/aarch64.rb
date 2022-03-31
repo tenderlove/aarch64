@@ -16,8 +16,11 @@ module AArch64
       define_method(:"w#{i}") { w }
     }
 
-    SP = Register.new(31, 1, false, true)
+    SP = Register.new(31, 1, true, true)
     def sp; SP; end
+
+    WSP = Register.new(31, 0, false, true)
+    def wsp; WSP; end
 
     XZR = Register.new(31, 1, true, true)
     def xzr; XZR; end
@@ -29,6 +32,36 @@ module AArch64
   module Conditions
     module_eval Utils::COND_TABLE.keys.map { |key|
       "def #{key.downcase}; #{key.dump}; end"
+    }.join("\n")
+  end
+
+  module Extends
+    class Extend < Struct.new(:amount, :type, :name)
+      def extend?; true; end
+      def shift?; false; end
+    end
+
+    module_eval [
+      :uxtb,
+      :uxth,
+      :uxtw,
+      :uxtx,
+      :sxtb,
+      :sxth,
+      :sxtw,
+      :sxtx ].map.with_index { |n, i|
+        "def #{n}(amount = 0); Extend.new(amount, #{i}, :#{n}); end"
+      }.join("\n")
+  end
+
+  module Shifts
+    class Shift < Struct.new(:amount, :type, :name)
+      def extend?; false; end
+      def shift?; true; end
+    end
+
+    module_eval [:lsl, :lsr, :asr].map.with_index { |n, i|
+      "def #{n}(amount = 0); Shift.new(amount, #{i}, :#{n}); end"
     }.join("\n")
   end
 
@@ -113,7 +146,21 @@ module AArch64
       @insns = @insns << ADDG.new(xd, xn, imm6, imm4)
     end
 
-    def adds d, n, m, extend: nil, amount: 0, lsl: 0, shift: :lsl
+    def adds d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
+      if option
+        if option.extend?
+          extend = option.name
+          amount = option.amount
+        else
+          if m.integer?
+            lsl = option.amount
+          else
+            shift = option.name
+            amount = option.amount
+          end
+        end
+      end
+
       if extend
         extend = case extend
                  when :uxtb then 0b000
