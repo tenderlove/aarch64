@@ -508,9 +508,9 @@ module AArch64
 
     def cmn rn, rm, option = nil, extend: nil, amount: 0, shift: :lsl, lsl: 0
       if rn.x?
-        return adds(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+        adds(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
       else
-        return adds(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+        adds(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
       end
     end
 

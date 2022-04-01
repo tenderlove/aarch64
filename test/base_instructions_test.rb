@@ -953,11 +953,127 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CMN_ADDS_addsub_ext
-    skip "Fixme!"
     # CMN  <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # ADDS WZR, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # CMN  <Xn|SP>, <R><m>{, <extend> {#<amount>}}
     # ADDS XZR, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
+    assert_bytes [0x5f,0xc0,0x23,0x2b] do |asm|
+      asm.cmn w2, w3, sxtw
+    end
+    assert_bytes [0x9f,0x08,0x25,0xab] do |asm|
+      asm.cmn      x4, w5, uxtb(2)
+    end
+    assert_bytes [0xff,0x33,0x33,0xab] do |asm|
+      asm.cmn      sp, w19, uxth(4)
+    end
+    assert_bytes [0x3f,0x40,0x34,0xab] do |asm|
+      asm.cmn      x1, w20, uxtw
+    end
+    assert_bytes [0x7f,0x60,0x2d,0xab] do |asm|
+      asm.cmn      x3, x13, uxtx
+    end
+    assert_bytes [0x3f,0x8f,0x34,0xab] do |asm|
+      asm.cmn      x25, w20, sxtb(3)
+    end
+    assert_bytes [0xff,0xa3,0x33,0xab] do |asm|
+      asm.cmn      sp, w19, sxth
+    end
+    assert_bytes [0x5f,0xc0,0x23,0xab] do |asm|
+      asm.cmn      x2, w3, sxtw
+    end
+    assert_bytes [0xbf,0xe8,0x29,0xab] do |asm|
+      asm.cmn      x5, x9, sxtx(2)
+    end
+    assert_bytes [0xff,0x53,0x23,0x2b] do |asm|
+      asm.cmn wsp, w3, lsl(4)
+    end
+    assert_bytes [0x7f,0x8c,0x44,0x31] do |asm|
+      asm.cmn      w3, 291, lsl(12)
+    end
+    assert_bytes [0xff,0x57,0x15,0x31] do |asm|
+      asm.cmn      wsp, 1365
+    end
+    assert_bytes [0xff,0x13,0x51,0xb1] do |asm|
+      asm.cmn      sp, 1092, lsl(12)
+    end
+    assert_bytes [0x1f,0x00,0x03,0x2b] do |asm|
+      asm.cmn      w0, w3
+    end
+    assert_bytes [0xff,0x03,0x04,0x2b] do |asm|
+      asm.cmn      wzr, w4
+    end
+    assert_bytes [0xbf,0x00,0x1f,0x2b] do |asm|
+      asm.cmn      w5, wzr
+    end
+    assert_bytes [0xff,0x43,0x26,0x2b] do |asm|
+      asm.cmn      wsp, w6
+    end
+    assert_bytes [0xdf,0x00,0x07,0x2b] do |asm|
+      asm.cmn      w6, w7
+    end
+    assert_bytes [0x1f,0x3d,0x09,0x2b] do |asm|
+      asm.cmn      w8, w9, lsl(15)
+    end
+    assert_bytes [0x5f,0x7d,0x0b,0x2b] do |asm|
+      asm.cmn      w10, w11, lsl(31)
+    end
+    assert_bytes [0x9f,0x01,0x4d,0x2b] do |asm|
+      asm.cmn      w12, w13, lsr(0)
+    end
+    assert_bytes [0xdf,0x55,0x4f,0x2b] do |asm|
+      asm.cmn      w14, w15, lsr(21)
+    end
+    assert_bytes [0x1f,0x7e,0x51,0x2b] do |asm|
+      asm.cmn      w16, w17, lsr(31)
+    end
+    assert_bytes [0x5f,0x02,0x93,0x2b] do |asm|
+      asm.cmn      w18, w19, asr(0)
+    end
+    assert_bytes [0x9f,0x5a,0x95,0x2b] do |asm|
+      asm.cmn      w20, w21, asr(22)
+    end
+    assert_bytes [0xdf,0x7e,0x97,0x2b] do |asm|
+      asm.cmn      w22, w23, asr(31)
+    end
+    assert_bytes [0x1f,0x00,0x03,0xab] do |asm|
+      asm.cmn      x0, x3
+    end
+    assert_bytes [0xff,0x03,0x04,0xab] do |asm|
+      asm.cmn      xzr, x4
+    end
+    assert_bytes [0xbf,0x00,0x1f,0xab] do |asm|
+      asm.cmn      x5, xzr
+    end
+    assert_bytes [0xff,0x63,0x26,0xab] do |asm|
+      asm.cmn      sp, x6
+    end
+    assert_bytes [0xdf,0x00,0x07,0xab] do |asm|
+      asm.cmn      x6, x7
+    end
+    assert_bytes [0x1f,0x3d,0x09,0xab] do |asm|
+      asm.cmn      x8, x9, lsl(15)
+    end
+    assert_bytes [0x5f,0xfd,0x0b,0xab] do |asm|
+      asm.cmn      x10, x11, lsl(63)
+    end
+    assert_bytes [0x9f,0x01,0x4d,0xab] do |asm|
+      asm.cmn      x12, x13, lsr(0)
+    end
+    assert_bytes [0xdf,0xa5,0x4f,0xab] do |asm|
+      asm.cmn      x14, x15, lsr(41)
+    end
+    assert_bytes [0x1f,0xfe,0x51,0xab] do |asm|
+      asm.cmn      x16, x17, lsr(63)
+    end
+    assert_bytes [0x5f,0x02,0x93,0xab] do |asm|
+      asm.cmn      x18, x19, asr(0)
+    end
+    assert_bytes [0x9f,0xde,0x95,0xab] do |asm|
+      asm.cmn      x20, x21, asr(55)
+    end
+    assert_bytes [0xdf,0xfe,0x97,0xab] do |asm|
+      asm.cmn      x22, x23, asr(63)
+    end
   end
 
   def test_CMN_ADDS_addsub_imm
