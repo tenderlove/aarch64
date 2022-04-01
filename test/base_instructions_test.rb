@@ -4,6 +4,8 @@ class BaseInstructionsTest < AArch64::Test
   include AArch64
   include AArch64::Registers
   include AArch64::Conditions
+  include AArch64::Extends
+  include AArch64::Shifts
 
   attr_reader :asm
 
@@ -959,19 +961,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CMN_ADDS_addsub_imm
-    skip "Fixme!"
     # CMN  <Wn|WSP>, #<imm>{, <shift>}
     # ADDS WZR, <Wn|WSP>, #<imm> {, <shift>}
+    assert_one_insn "cmn wsp, #0x555" do |asm|
+      asm.cmn wsp, 1365
+    end
+    assert_one_insn "cmn wsp, #0x555, lsl #12" do |asm|
+      asm.cmn wsp, 1365, lsl: 12
+    end
+
     # CMN  <Xn|SP>, #<imm>{, <shift>}
     # ADDS XZR, <Xn|SP>, #<imm> {, <shift>}
+    assert_one_insn "cmn x18, #0x555" do |asm|
+      asm.cmn x18, 1365
+    end
+    assert_one_insn "cmn x18, #0x555, lsl #12" do |asm|
+      asm.cmn x18, 1365, lsl: 12
+    end
   end
 
   def test_CMN_ADDS_addsub_shift
-    skip "Fixme!"
     # CMN  <Wn>, <Wm>{, <shift> #<amount>}
-    # ADDS WZR, <Wn>, <Wm> {, <shift> #<amount>}
+    #assert_one_insn "cmn w0, w3" do |asm|
+    #  asm.cmn w0, w3
+    #end
+
+    assert_bytes f("ff 63 23 ab") do |asm|
+      asm.cmn sp, x3
+    end
+
+    [:lsl].each do |shift|
+      4.times do |i|
+        str = if i == 0
+                "cmn wsp, w3"
+              else
+                "cmn wsp, w3, #{shift} ##{i}"
+              end
+        assert_one_insn str do |asm|
+          asm.cmn wsp, w3, shift: shift, amount: i
+        end
+      end
+    end
+
     # CMN  <Xn>, <Xm>{, <shift> #<amount>}
-    # ADDS XZR, <Xn>, <Xm> {, <shift> #<amount>}
+    [:lsl, :lsr, :asr].each do |shift|
+      4.times do |i|
+        str = if i == 0
+                if shift == :lsl
+                  "cmn x18, x19"
+                else
+                  "cmn x18, x19, #{shift} #0"
+                end
+              else
+                "cmn x18, x19, #{shift} ##{i}"
+              end
+        assert_one_insn str do |asm|
+          asm.cmn x18, x19, shift: shift, amount: i
+        end
+      end
+    end
   end
 
   def test_CMP_SUBS_addsub_ext

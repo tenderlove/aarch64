@@ -27,6 +27,13 @@ module AArch64
       assert_equal bytes, jit_buffer.string.bytes
     end
 
+    def assert_insn binary, asm:
+      insns = disasm(binary)
+      assert_equal 1, insns.length
+      insn = insns.first
+      assert_equal asm, [insn.mnemonic, insn.op_str].reject(&:empty?).join(" ")
+    end
+
     def assert_one_insn asm_str
       asm = self.asm
 
@@ -37,11 +44,8 @@ module AArch64
 
       jit_buffer = StringIO.new
       asm.write_to jit_buffer
-      if $DEBUG
-        puts jit_buffer.string.bytes.map { |x| sprintf("%02x", x ) }.join(" ")
-        puts sprintf("%032b", jit_buffer.string.unpack1("L<"))
-      end
-      super(jit_buffer.string, asm: asm_str)
+
+      assert_insn(jit_buffer.string, asm: asm_str)
     end
   end
 end

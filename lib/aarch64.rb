@@ -5,29 +5,29 @@ require "aarch64/utils"
 
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :sf, :x?, :sp?)
+    class Register < Struct.new(:to_i, :sf, :x?, :sp?, :zr?)
       def integer?; false; end
     end
 
-    31.times { |i|
-      x = const_set(:"X#{i}", Register.new(i, 1, true, false))
-      define_method(:"x#{i}") { x }
-      w = const_set(:"W#{i}", Register.new(i, 0, false, false))
-      define_method(:"w#{i}") { w }
-    }
+   31.times { |i|
+     x = const_set(:"X#{i}", Register.new(i, 1, true, false, false))
+     define_method(:"x#{i}") { x }
+     w = const_set(:"W#{i}", Register.new(i, 0, false, false, false))
+     define_method(:"w#{i}") { w }
+   }
 
-    SP = Register.new(31, 1, true, true)
-    def sp; SP; end
+   SP = Register.new(31, 1, true, true, false)
+   def sp; SP; end
 
-    WSP = Register.new(31, 0, false, true)
-    def wsp; WSP; end
+   WSP = Register.new(31, 0, false, true, false)
+   def wsp; WSP; end
 
-    XZR = Register.new(31, 1, true, true)
-    def xzr; XZR; end
+   XZR = Register.new(31, 1, true, false, true)
+   def xzr; XZR; end
 
-    WZR = Register.new(31, 0, false, true)
-    def wzr; WZR; end
-  end
+   WZR = Register.new(31, 0, false, false, true)
+   def wzr; WZR; end
+ end
 
   module Conditions
     module_eval Utils::COND_TABLE.keys.map { |key|
@@ -147,6 +147,14 @@ module AArch64
     end
 
     def adds d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
+      if n.sp? && !m.integer?
+        if n.x?
+          extend ||= :uxtx
+        else
+          extend ||= :uxtw
+        end
+      end
+
       if option
         if option.extend?
           extend = option.name
@@ -496,6 +504,14 @@ module AArch64
 
     def clz rd, rn
       @insns = @insns << CLZ_int.new(rd, rn)
+    end
+
+    def cmn rn, rm, option = nil, extend: nil, amount: 0, shift: :lsl, lsl: 0
+      if rn.x?
+        return adds(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+      else
+        return adds(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+      end
     end
 
     def movz reg, imm, lsl: 0
