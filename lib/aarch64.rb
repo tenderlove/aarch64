@@ -486,11 +486,15 @@ module AArch64
     end
 
     def cinc rd, rn, cond
-      @insns = @insns << CSINC.new(rd, rn, rn, cond)
+      @insns = @insns << CSINC.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
+    end
+
+    def cset rd, cond
+      @insns = @insns << CSINC.new(rd, WZR, WZR, Utils.cond2bin(cond) ^ 1)
     end
 
     def csinc rd, rn, rm, cond
-      @insns = @insns << CSINC.new(rd, rn, rm, cond)
+      @insns = @insns << CSINC.new(rd, rn, rm, Utils.cond2bin(cond))
     end
 
     def cinv rd, rn, cond
