@@ -1295,9 +1295,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CMPP_SUBPS
-    skip "Fixme!"
     # CMPP  <Xn|SP>, <Xm|SP>
+    assert_bytes [0x3f, 0, 0xc2, 0xba] do |asm|
+      asm.cmpp x1, x2
+    end
     # SUBPS XZR, <Xn|SP>, <Xm|SP>
+    assert_bytes [0x3f, 0, 0xc2, 0xba] do |asm|
+      asm.subps xzr, x1, x2
+    end
   end
 
   def test_CNEG_CSNEG
@@ -2412,7 +2417,6 @@ class BaseInstructionsTest < AArch64::Test
     asm.movz W0, 0x2a
     assert_one_insn "movz w0, #0x2a"
   end
-
 
   def test_MRS
     skip "Fixme!"

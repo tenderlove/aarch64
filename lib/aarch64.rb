@@ -522,6 +522,10 @@ module AArch64
       end
     end
 
+    def cmpp xn, xm
+      subps XZR, xn, xm
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
