@@ -59,7 +59,6 @@ module AArch64
     autoload :CRC32C, "aarch64/instructions/crc32c"
     autoload :CSDB, "aarch64/instructions/csdb"
     autoload :CSEL, "aarch64/instructions/csel"
-    autoload :CSETM_CSINV, "aarch64/instructions/csetm_csinv"
     autoload :CSINC, "aarch64/instructions/csinc"
     autoload :CSINV, "aarch64/instructions/csinv"
     autoload :CSNEG, "aarch64/instructions/csneg"

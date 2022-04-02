@@ -13,9 +13,7 @@ module AArch64
       end
 
       def encode
-        cond = Utils.cond2bin(@cond)
-        cond ^= 1 if @rm == @rn
-        CSINV(@rd.sf, @rm.to_i, cond, @rn.to_i, @rd.to_i)
+        CSINV(@rd.sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
       end
 
       private

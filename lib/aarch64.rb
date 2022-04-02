@@ -493,16 +493,21 @@ module AArch64
       @insns = @insns << CSINC.new(rd, WZR, WZR, Utils.cond2bin(cond) ^ 1)
     end
 
+    def csetm rd, cond
+      reg = rd.x? ? XZR : WZR
+      @insns = @insns << CSINV.new(rd, reg, reg, Utils.cond2bin(cond) ^ 1)
+    end
+
     def csinc rd, rn, rm, cond
       @insns = @insns << CSINC.new(rd, rn, rm, Utils.cond2bin(cond))
     end
 
     def cinv rd, rn, cond
-      @insns = @insns << CSINV.new(rd, rn, rn, cond)
+      @insns = @insns << CSINV.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
     end
 
     def csinv rd, rn, rm, cond
-      @insns = @insns << CSINV.new(rd, rn, rm, cond)
+      @insns = @insns << CSINV.new(rd, rn, rm, Utils.cond2bin(cond))
     end
 
     def clrex imm = 15

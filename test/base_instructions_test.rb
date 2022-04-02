@@ -1433,11 +1433,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CSETM_CSINV
-    skip "Fixme!"
     # CSETM  <Wd>, <cond>
     # CSINV <Wd>, WZR, WZR, invert(<cond>)
     # CSETM  <Xd>, <cond>
     # CSINV <Xd>, XZR, XZR, invert(<cond>)
+    assert_bytes [0xf4,0x03,0x9f,0x5a] do |asm|
+      asm.csetm    w20, ne
+    end
+    assert_bytes [0xfe,0xb3,0x9f,0xda] do |asm|
+      asm.csetm    x30, ge
+    end
+    assert_bytes [0xe9,0xa3,0x9f,0x5a] do |asm|
+      asm.csetm    w9, lt
+    end
+    assert_bytes [0xe9,0xa3,0x9f,0xda] do |asm|
+      asm.csetm    x9, lt
+    end
   end
 
   def test_CSINC
