@@ -5,8 +5,15 @@ module AArch64
     # CSNEG  <Wd>, <Wn>, <Wm>, <cond>
     # CSNEG  <Xd>, <Xn>, <Xm>, <cond>
     class CSNEG
+      def initialize rd, rn, rm, cond
+        @rd   = rd
+        @rn   = rn
+        @rm   = rm
+        @cond = cond
+      end
+
       def encode
-        raise NotImplementedError
+        self.CSNEG(@rd.sf, @rm.to_i, Utils.cond2bin(@cond), @rn.to_i, @rd.to_i)
       end
 
       private
