@@ -1387,9 +1387,32 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CSEL
-    skip "Fixme!"
     # CSEL  <Wd>, <Wn>, <Wm>, <cond>
     # CSEL  <Xd>, <Xn>, <Xm>, <cond>
+    assert_bytes [0x01,0x10,0x93,0x1a] do |asm|
+      asm.csel     w1, w0, w19, ne
+    end
+    assert_bytes [0xbf,0x00,0x89,0x1a] do |asm|
+      asm.csel     wzr, w5, w9, eq
+    end
+    assert_bytes [0xe9,0xc3,0x9e,0x1a] do |asm|
+      asm.csel     w9, wzr, w30, gt
+    end
+    assert_bytes [0x81,0x43,0x9f,0x1a] do |asm|
+      asm.csel     w1, w28, wzr, mi
+    end
+    assert_bytes [0xf3,0xb2,0x9d,0x9a] do |asm|
+      asm.csel     x19, x23, x29, lt
+    end
+    assert_bytes [0x7f,0xa0,0x84,0x9a] do |asm|
+      asm.csel     xzr, x3, x4, ge
+    end
+    assert_bytes [0xe5,0x23,0x86,0x9a] do |asm|
+      asm.csel     x5, xzr, x6, hs
+    end
+    assert_bytes [0x07,0x31,0x9f,0x9a] do |asm|
+      asm.csel     x7, x8, xzr, lo
+    end
   end
 
   def test_CSET_CSINC
