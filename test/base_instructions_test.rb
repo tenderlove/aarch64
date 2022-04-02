@@ -1306,11 +1306,26 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CNEG_CSNEG
-    skip "Fixme!"
     # CNEG  <Wd>, <Wn>, <cond>
-    # CSNEG <Wd>, <Wn>, <Wn>, invert(<cond>)
     # CNEG  <Xd>, <Xn>, <cond>
-    # CSNEG <Xd>, <Xn>, <Xn>, invert(<cond>)
+    assert_bytes [0xa3,0xd4,0x85,0x5a] do |asm|
+      asm.cneg    w3, w5, gt
+    end
+    assert_bytes [0x9f,0xc4,0x84,0x5a] do |asm|
+      asm.cneg    wzr, w4, le
+    end
+    assert_bytes [0xe9,0xa7,0x9f,0x5a] do |asm|
+      asm.cneg    w9, wzr, lt
+    end
+    assert_bytes [0xa3,0xd4,0x85,0xda] do |asm|
+      asm.cneg    x3, x5, gt
+    end
+    assert_bytes [0x9f,0xc4,0x84,0xda] do |asm|
+      asm.cneg    xzr, x4, le
+    end
+    assert_bytes [0xe9,0xa7,0x9f,0xda] do |asm|
+      asm.cneg    x9, xzr, lt
+    end
   end
 
   def test_CPP_SYS

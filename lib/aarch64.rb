@@ -526,8 +526,12 @@ module AArch64
       subps XZR, xn, xm
     end
 
+    def cneg rd, rn, cond
+      @insns = @insns << CSNEG.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
+    end
+
     def csneg rd, rn, rm, cond
-      @insns = @insns << CSNEG.new(rd, rn, rm, cond)
+      @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
     end
 
     def movz reg, imm, lsl: 0

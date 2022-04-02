@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.CSNEG(@rd.sf, @rm.to_i, Utils.cond2bin(@cond), @rn.to_i, @rd.to_i)
+        self.CSNEG(@rd.sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
       end
 
       private
