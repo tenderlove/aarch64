@@ -514,6 +514,14 @@ module AArch64
       end
     end
 
+    def cmp rn, rm, option = nil, extend: nil, amount: 0, shift: :lsl, lsl: 0
+      if rn.x?
+        subs(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+      else
+        subs(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

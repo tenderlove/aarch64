@@ -1138,28 +1138,160 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_CMP_SUBS_addsub_ext
-    skip "Fixme!"
-    # CMP  <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
-    # SUBS WZR, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
-    # CMP  <Xn|SP>, <R><m>{, <extend> {#<amount>}}
-    # SUBS XZR, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
-  end
-
-  def test_CMP_SUBS_addsub_imm
-    skip "Fixme!"
-    # CMP  <Wn|WSP>, #<imm>{, <shift>}
-    # SUBS WZR, <Wn|WSP>, #<imm> {, <shift>}
-    # CMP  <Xn|SP>, #<imm>{, <shift>}
-    # SUBS XZR, <Xn|SP>, #<imm> {, <shift>}
-  end
-
-  def test_CMP_SUBS_addsub_shift
-    skip "Fixme!"
-    # CMP  <Wn>, <Wm>{, <shift> #<amount>}
-    # SUBS WZR, <Wn>, <Wm> {, <shift> #<amount>}
-    # CMP  <Xn>, <Xm>{, <shift> #<amount>}
-    # SUBS XZR, <Xn>, <Xm> {, <shift> #<amount>}
+  def test_CMP_SUBS_all
+    assert_bytes [0x9f,0x08,0x25,0xeb] do |asm|
+      asm.cmp      x4, w5, uxtb(2)
+    end
+    assert_bytes [0xff,0x33,0x33,0xeb] do |asm|
+      asm.cmp      sp, w19, uxth(4)
+    end
+    assert_bytes [0x3f,0x40,0x34,0xeb] do |asm|
+      asm.cmp      x1, w20, uxtw
+    end
+    assert_bytes [0x7f,0x60,0x2d,0xeb] do |asm|
+      asm.cmp      x3, x13, uxtx
+    end
+    assert_bytes [0x3f,0x8f,0x34,0xeb] do |asm|
+      asm.cmp      x25, w20, sxtb(3)
+    end
+    assert_bytes [0xff,0xa3,0x33,0xeb] do |asm|
+      asm.cmp      sp, w19, sxth
+    end
+    assert_bytes [0x5f,0xc0,0x23,0xeb] do |asm|
+      asm.cmp      x2, w3, sxtw
+    end
+    assert_bytes [0xbf,0xe8,0x29,0xeb] do |asm|
+      asm.cmp      x5, x9, sxtx(2)
+    end
+    assert_bytes [0xbf,0x00,0x27,0x6b] do |asm|
+      asm.cmp      w5, w7, uxtb
+    end
+    assert_bytes [0xff,0x21,0x31,0x6b] do |asm|
+      asm.cmp      w15, w17, uxth
+    end
+    assert_bytes [0xbf,0x43,0x3f,0x6b] do |asm|
+      asm.cmp      w29, wzr, uxtw
+    end
+    assert_bytes [0x3f,0x62,0x21,0x6b] do |asm|
+      asm.cmp      w17, w1, uxtx
+    end
+    assert_bytes [0xbf,0x84,0x21,0x6b] do |asm|
+      asm.cmp      w5, w1, sxtb(1)
+    end
+    assert_bytes [0xff,0xa3,0x33,0x6b] do |asm|
+      asm.cmp      wsp, w19, sxth
+    end
+    assert_bytes [0x5f,0xc0,0x23,0x6b] do |asm|
+      asm.cmp      w2, w3, sxtw
+    end
+    assert_bytes [0x7f,0xe0,0x25,0x6b] do |asm|
+      asm.cmp      w3, w5, sxtx
+    end
+    assert_bytes [0x9f,0x0e,0x3d,0xeb] do |asm|
+      asm.cmp      x20, w29, uxtb(3)
+    end
+    assert_bytes [0x9f,0x71,0x2d,0xeb] do |asm|
+      asm.cmp      x12, x13, uxtx(4)
+    end
+    assert_bytes [0xff,0x03,0x21,0x6b] do |asm|
+      asm.cmp      wsp, w1, uxtb
+    end
+    assert_bytes [0xff,0x43,0x29,0x6b] do |asm|
+      asm.cmp      wsp, w9
+    end
+    assert_bytes [0x9f,0xb0,0x44,0xf1] do |asm|
+      asm.cmp      x4, 300, lsl(12)
+    end
+    assert_bytes [0xff,0xd3,0x07,0x71] do |asm|
+      asm.cmp      wsp, 500
+    end
+    assert_bytes [0xff,0x23,0x03,0xf1] do |asm|
+      asm.cmp      sp, 200
+    end
+    assert_bytes [0x1f,0x00,0x03,0x6b] do |asm|
+      asm.cmp      w0, w3
+    end
+    assert_bytes [0xff,0x03,0x04,0x6b] do |asm|
+      asm.cmp      wzr, w4
+    end
+    assert_bytes [0xbf,0x00,0x1f,0x6b] do |asm|
+      asm.cmp      w5, wzr
+    end
+    assert_bytes [0xff,0x43,0x26,0x6b] do |asm|
+      asm.cmp      wsp, w6
+    end
+    assert_bytes [0xdf,0x00,0x07,0x6b] do |asm|
+      asm.cmp      w6, w7
+    end
+    assert_bytes [0x1f,0x3d,0x09,0x6b] do |asm|
+      asm.cmp      w8, w9, lsl(15)
+    end
+    assert_bytes [0x5f,0x7d,0x0b,0x6b] do |asm|
+      asm.cmp      w10, w11, lsl(31)
+    end
+    assert_bytes [0x9f,0x01,0x4d,0x6b] do |asm|
+      asm.cmp      w12, w13, lsr(0)
+    end
+    assert_bytes [0xdf,0x55,0x4f,0x6b] do |asm|
+      asm.cmp      w14, w15, lsr(21)
+    end
+    assert_bytes [0x1f,0x7e,0x51,0x6b] do |asm|
+      asm.cmp      w16, w17, lsr(31)
+    end
+    assert_bytes [0x5f,0x02,0x93,0x6b] do |asm|
+      asm.cmp      w18, w19, asr(0)
+    end
+    assert_bytes [0x9f,0x5a,0x95,0x6b] do |asm|
+      asm.cmp      w20, w21, asr(22)
+    end
+    assert_bytes [0xdf,0x7e,0x97,0x6b] do |asm|
+      asm.cmp      w22, w23, asr(31)
+    end
+    assert_bytes [0x1f,0x00,0x03,0xeb] do |asm|
+      asm.cmp      x0, x3
+    end
+    assert_bytes [0xff,0x03,0x04,0xeb] do |asm|
+      asm.cmp      xzr, x4
+    end
+    assert_bytes [0xbf,0x00,0x1f,0xeb] do |asm|
+      asm.cmp      x5, xzr
+    end
+    assert_bytes [0xff,0x63,0x26,0xeb] do |asm|
+      asm.cmp      sp, x6
+    end
+    assert_bytes [0xdf,0x00,0x07,0xeb] do |asm|
+      asm.cmp      x6, x7
+    end
+    assert_bytes [0x1f,0x3d,0x09,0xeb] do |asm|
+      asm.cmp      x8, x9, lsl(15)
+    end
+    assert_bytes [0x5f,0xfd,0x0b,0xeb] do |asm|
+      asm.cmp      x10, x11, lsl(63)
+    end
+    assert_bytes [0x9f,0x01,0x4d,0xeb] do |asm|
+      asm.cmp      x12, x13, lsr(0)
+    end
+    assert_bytes [0xdf,0xa5,0x4f,0xeb] do |asm|
+      asm.cmp      x14, x15, lsr(41)
+    end
+    assert_bytes [0x1f,0xfe,0x51,0xeb] do |asm|
+      asm.cmp      x16, x17, lsr(63)
+    end
+    assert_bytes [0x5f,0x02,0x93,0xeb] do |asm|
+      asm.cmp      x18, x19, asr(0)
+    end
+    assert_bytes [0x9f,0xde,0x95,0xeb] do |asm|
+      asm.cmp      x20, x21, asr(55)
+    end
+    assert_bytes [0xdf,0xfe,0x97,0xeb] do |asm|
+      asm.cmp      x22, x23, asr(63)
+    end
+    assert_bytes [0xff,0x03,0x00,0x6b] do |asm|
+      asm.cmp      wzr, w0
+    end
+    assert_bytes [0xff,0x03,0x00,0xeb] do |asm|
+      asm.cmp     xzr, x0
+    end
   end
 
   def test_CMPP_SUBPS
