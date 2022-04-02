@@ -55,7 +55,6 @@ module AArch64
     autoload :CLREX, "aarch64/instructions/clrex"
     autoload :CLS_int, "aarch64/instructions/cls_int"
     autoload :CLZ_int, "aarch64/instructions/clz_int"
-    autoload :CPP_SYS, "aarch64/instructions/cpp_sys"
     autoload :CPYFP, "aarch64/instructions/cpyfp"
     autoload :CPYFPN, "aarch64/instructions/cpyfpn"
     autoload :CPYFPRN, "aarch64/instructions/cpyfprn"

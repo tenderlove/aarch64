@@ -1330,9 +1330,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CPP_SYS
-    skip "Fixme!"
     # CPP  RCTX, <Xt>
+    assert_bytes [0xe3, 0x73, 0xb, 0xd5] do |asm|
+      asm.cpp :rctx, x3
+    end
+
     # SYS #3, C7, C3, #7, <Xt>
+    assert_bytes [0xe3, 0x73, 0xb, 0xd5] do |asm|
+      asm.sys 3, c7, c3, 7, x3
+    end
   end
 
   def test_CPYFP

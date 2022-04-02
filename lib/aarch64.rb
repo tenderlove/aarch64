@@ -537,6 +537,10 @@ module AArch64
       @insns = @insns << CSNEG.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
     end
 
+    def cpp _, xn
+      sys 3, Names::C7, Names::C3, 7, xn
+    end
+
     def csneg rd, rn, rm, cond
       @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
     end
