@@ -585,6 +585,11 @@ module AArch64
       end
     end
 
+    def subg xd, xn, uimm6, uimm4
+      raise NotImplementedError unless xd.x?
+      @insns = @insns << SUBG.new(xd, xn, uimm6, uimm4)
+    end
+
     def subp xd, xn, xm
       raise NotImplementedError unless xd.x?
       @insns = @insns << SUBP.new(xd, xn, xm)

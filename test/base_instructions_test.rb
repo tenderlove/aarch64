@@ -3279,8 +3279,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SUBG
-    skip "Fixme!"
     # SUBG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
+    assert_bytes [0x41, 0x1c, 0x83, 0xd1] do |asm|
+      asm.subg x1, x2, 3, 0b111
+    end
   end
 
   def test_SUBP

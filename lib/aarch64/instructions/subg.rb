@@ -4,8 +4,15 @@ module AArch64
     # Subtract with Tag
     # SUBG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
     class SUBG
+      def initialize xd, xn, uimm6, uimm4
+        @xd    = xd
+        @xn    = xn
+        @uimm6 = uimm6
+        @uimm4 = uimm4
+      end
+
       def encode
-        raise NotImplementedError
+        self.SUBG(@uimm6, @uimm4, @xn.to_i, @xd.to_i)
       end
 
       private
