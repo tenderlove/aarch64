@@ -4,8 +4,14 @@ module AArch64
     # Subtract Pointer, setting Flags
     # SUBPS  <Xd>, <Xn|SP>, <Xm|SP>
     class SUBPS
+      def initialize xd, xn, xm
+        @xd = xd
+        @xn = xn
+        @xm = xm
+      end
+
       def encode
-        raise NotImplementedError
+        self.SUBPS(@xm.to_i, @xn.to_i, @xd.to_i)
       end
 
       private

@@ -3289,8 +3289,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SUBPS
-    skip "Fixme!"
     # SUBPS  <Xd>, <Xn|SP>, <Xm|SP>
+    assert_bytes [0x41, 0, 0xc3, 0xba] do |asm|
+      asm.subps x1, x2, x3
+    end
   end
 
   def test_SUBS_all

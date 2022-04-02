@@ -585,6 +585,11 @@ module AArch64
       end
     end
 
+    def subps xd, xn, xm
+      raise NotImplementedError unless xd.x?
+      @insns = @insns << SUBPS.new(xd, xn, xm)
+    end
+
     def write_to io
       io.write @insns.map(&:encode).pack("L<*")
     end
