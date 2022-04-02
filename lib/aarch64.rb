@@ -585,6 +585,11 @@ module AArch64
       end
     end
 
+    def subp xd, xn, xm
+      raise NotImplementedError unless xd.x?
+      @insns = @insns << SUBP.new(xd, xn, xm)
+    end
+
     def subps xd, xn, xm
       raise NotImplementedError unless xd.x?
       @insns = @insns << SUBPS.new(xd, xn, xm)

@@ -4,8 +4,14 @@ module AArch64
     # Subtract Pointer
     # SUBP  <Xd>, <Xn|SP>, <Xm|SP>
     class SUBP
+      def initialize xd, xn, xm
+        @xd = xd
+        @xn = xn
+        @xm = xm
+      end
+
       def encode
-        raise NotImplementedError
+        self.SUBP(@xm.to_i, @xn.to_i, @xm.to_i)
       end
 
       private
