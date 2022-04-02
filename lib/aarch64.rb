@@ -573,6 +573,10 @@ module AArch64
       @insns = @insns << CRC32C.new(rd, rn, rm, 0x03)
     end
 
+    def csdb
+      @insns = @insns << CSDB.new
+    end
+
     def csneg rd, rn, rm, cond
       @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
     end

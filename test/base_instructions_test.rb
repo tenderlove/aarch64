@@ -1380,8 +1380,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CSDB
-    skip "Fixme!"
     # CSDB
+    assert_bytes f("9f 22 03 d5") do |asm|
+      asm.csdb
+    end
   end
 
   def test_CSEL

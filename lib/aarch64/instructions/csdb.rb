@@ -5,12 +5,12 @@ module AArch64
     # CSDB
     class CSDB
       def encode
-        raise NotImplementedError
+        self.CSDB
       end
 
       private
 
-      def CSDB 
+      def CSDB
         insn = 0b1101010100_0_00_011_0010_0010_100_11111
         insn
       end
