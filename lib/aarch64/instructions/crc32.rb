@@ -7,8 +7,15 @@ module AArch64
     # CRC32W  <Wd>, <Wn>, <Wm>
     # CRC32X  <Wd>, <Wn>, <Xm>
     class CRC32
+      def initialize rd, rn, rm, sz
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sz = sz
+      end
+
       def encode
-        raise NotImplementedError
+        self.CRC32(@rm.sf, @rm.to_i, @sz, @rn.to_i, @rd.to_i)
       end
 
       private

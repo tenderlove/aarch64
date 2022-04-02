@@ -541,6 +541,38 @@ module AArch64
       sys 3, Names::C7, Names::C3, 7, xn
     end
 
+    def crc32b rd, rn, rm
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x00)
+    end
+
+    def crc32h rd, rn, rm
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x01)
+    end
+
+    def crc32w rd, rn, rm
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x02)
+    end
+
+    def crc32x rd, rn, rm
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x03)
+    end
+
+    def crc32cb rd, rn, rm
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x00)
+    end
+
+    def crc32ch rd, rn, rm
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x01)
+    end
+
+    def crc32cw rd, rn, rm
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x02)
+    end
+
+    def crc32cx rd, rn, rm
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x03)
+    end
+
     def csneg rd, rn, rm, cond
       @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
     end

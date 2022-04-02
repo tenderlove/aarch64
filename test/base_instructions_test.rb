@@ -1342,19 +1342,41 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CRC32
-    skip "Fixme!"
     # CRC32B  <Wd>, <Wn>, <Wm>
     # CRC32H  <Wd>, <Wn>, <Wm>
     # CRC32W  <Wd>, <Wn>, <Wm>
     # CRC32X  <Wd>, <Wn>, <Xm>
+    assert_bytes [0xe5,0x40,0xd4,0x1a] do |asm|
+      asm.crc32b   w5, w7, w20
+    end
+    assert_bytes [0xfc,0x47,0xde,0x1a] do |asm|
+      asm.crc32h   w28, wzr, w30
+    end
+    assert_bytes [0x20,0x48,0xc2,0x1a] do |asm|
+      asm.crc32w   w0, w1, w2
+    end
+    assert_bytes [0x27,0x4d,0xd4,0x9a] do |asm|
+      asm.crc32x   w7, w9, x20
+    end
   end
 
   def test_CRC32C
-    skip "Fixme!"
     # CRC32CB  <Wd>, <Wn>, <Wm>
     # CRC32CH  <Wd>, <Wn>, <Wm>
     # CRC32CW  <Wd>, <Wn>, <Wm>
     # CRC32CX  <Wd>, <Wn>, <Xm>
+    assert_bytes [0xa9,0x50,0xc4,0x1a] do |asm|
+      asm.crc32cb  w9, w5, w4
+    end
+    assert_bytes [0x2d,0x56,0xd9,0x1a] do |asm|
+      asm.crc32ch  w13, w17, w25
+    end
+    assert_bytes [0x7f,0x58,0xc5,0x1a] do |asm|
+      asm.crc32cw  wzr, w3, w5
+    end
+    assert_bytes [0x12,0x5e,0xdf,0x9a] do |asm|
+      asm.crc32cx  w18, w16, xzr
+    end
   end
 
   def test_CSDB
