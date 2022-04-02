@@ -1432,9 +1432,32 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CSINC
-    skip "Fixme!"
     # CSINC  <Wd>, <Wn>, <Wm>, <cond>
     # CSINC  <Xd>, <Xn>, <Xm>, <cond>
+    assert_bytes [0x01,0x14,0x93,0x1a] do |asm|
+      asm.csinc    w1, w0, w19, ne
+    end
+    assert_bytes [0xbf,0x04,0x89,0x1a] do |asm|
+      asm.csinc    wzr, w5, w9, eq
+    end
+    assert_bytes [0xe9,0xc7,0x9e,0x1a] do |asm|
+      asm.csinc    w9, wzr, w30, gt
+    end
+    assert_bytes [0x81,0x47,0x9f,0x1a] do |asm|
+      asm.csinc    w1, w28, wzr, mi
+    end
+    assert_bytes [0xf3,0xb6,0x9d,0x9a] do |asm|
+      asm.csinc    x19, x23, x29, lt
+    end
+    assert_bytes [0x7f,0xa4,0x84,0x9a] do |asm|
+      asm.csinc    xzr, x3, x4, ge
+    end
+    assert_bytes [0xe5,0x27,0x86,0x9a] do |asm|
+      asm.csinc    x5, xzr, x6, hs
+    end
+    assert_bytes [0x07,0x35,0x9f,0x9a] do |asm|
+      asm.csinc    x7, x8, xzr, lo
+    end
   end
 
   def test_CSINV
