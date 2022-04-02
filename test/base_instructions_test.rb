@@ -3260,6 +3260,144 @@ class BaseInstructionsTest < AArch64::Test
     # STZGM  <Xt>, [<Xn|SP>]
   end
 
+  def test_SUB_all
+    assert_bytes [0x82,0x08,0x25,0xcb] do |asm|
+      asm.sub      x2, x4, w5, uxtb(2)
+    end
+    assert_bytes [0xf4,0x33,0x33,0xcb] do |asm|
+      asm.sub      x20, sp, w19, uxth(4)
+    end
+    assert_bytes [0x2c,0x40,0x34,0xcb] do |asm|
+      asm.sub      x12, x1, w20, uxtw
+    end
+    assert_bytes [0x74,0x60,0x2d,0xcb] do |asm|
+      asm.sub      x20, x3, x13, uxtx
+    end
+    assert_bytes [0x31,0x83,0x34,0xcb] do |asm|
+      asm.sub      x17, x25, w20, sxtb
+    end
+    assert_bytes [0xb2,0xa1,0x33,0xcb] do |asm|
+      asm.sub      x18, x13, w19, sxth
+    end
+    assert_bytes [0x5f,0xc0,0x23,0xcb] do |asm|
+      asm.sub      sp, x2, w3, sxtw
+    end
+    assert_bytes [0xa3,0xe0,0x29,0xcb] do |asm|
+      asm.sub      x3, x5, x9, sxtx
+    end
+    assert_bytes [0xa2,0x00,0x27,0x4b] do |asm|
+      asm.sub      w2, w5, w7, uxtb
+    end
+    assert_bytes [0xf5,0x21,0x31,0x4b] do |asm|
+      asm.sub      w21, w15, w17, uxth
+    end
+    assert_bytes [0xbe,0x43,0x3f,0x4b] do |asm|
+      asm.sub      w30, w29, wzr, uxtw
+    end
+    assert_bytes [0x33,0x62,0x21,0x4b] do |asm|
+      asm.sub      w19, w17, w1, uxtx
+    end
+    assert_bytes [0xa2,0x80,0x21,0x4b] do |asm|
+      asm.sub      w2, w5, w1, sxtb
+    end
+    assert_bytes [0xfa,0xa3,0x33,0x4b] do |asm|
+      asm.sub      w26, wsp, w19, sxth
+    end
+    assert_bytes [0x5f,0xc0,0x23,0x4b] do |asm|
+      asm.sub      wsp, w2, w3, sxtw
+    end
+    assert_bytes [0x62,0xe0,0x25,0x4b] do |asm|
+      asm.sub      w2, w3, w5, sxtx
+    end
+    assert_bytes [0x7f,0x70,0x27,0xcb] do |asm|
+      asm.sub      sp, x3, x7, lsl(4)
+    end
+    assert_bytes [0xe0,0xb7,0x3f,0x51] do |asm|
+      asm.sub      w0, wsp, 4077
+    end
+    assert_bytes [0x84,0x8a,0x48,0x51] do |asm|
+      asm.sub      w4, w20, 546, lsl(12)
+    end
+    assert_bytes [0xff,0x83,0x04,0xd1] do |asm|
+      asm.sub      sp, sp, 288
+    end
+    assert_bytes [0x7f,0x42,0x00,0x51] do |asm|
+      asm.sub      wsp, w19, 16
+    end
+    assert_bytes [0xa3,0x00,0x07,0x4b] do |asm|
+      asm.sub      w3, w5, w7
+    end
+    assert_bytes [0x7f,0x00,0x05,0x4b] do |asm|
+      asm.sub      wzr, w3, w5
+    end
+    assert_bytes [0xc4,0x00,0x1f,0x4b] do |asm|
+      asm.sub      w4, w6, wzr
+    end
+    assert_bytes [0xab,0x01,0x0f,0x4b] do |asm|
+      asm.sub      w11, w13, w15
+    end
+    assert_bytes [0x69,0x28,0x1f,0x4b] do |asm|
+      asm.sub      w9, w3, wzr, lsl(10)
+    end
+    assert_bytes [0xb1,0x7f,0x14,0x4b] do |asm|
+      asm.sub      w17, w29, w20, lsl(31)
+    end
+    assert_bytes [0xd5,0x02,0x57,0x4b] do |asm|
+      asm.sub      w21, w22, w23, lsr(0)
+    end
+    assert_bytes [0x38,0x4b,0x5a,0x4b] do |asm|
+      asm.sub      w24, w25, w26, lsr(18)
+    end
+    assert_bytes [0x9b,0x7f,0x5d,0x4b] do |asm|
+      asm.sub      w27, w28, w29, lsr(31)
+    end
+    assert_bytes [0x62,0x00,0x84,0x4b] do |asm|
+      asm.sub      w2, w3, w4, asr(0)
+    end
+    assert_bytes [0xc5,0x54,0x87,0x4b] do |asm|
+      asm.sub      w5, w6, w7, asr(21)
+    end
+    assert_bytes [0x28,0x7d,0x8a,0x4b] do |asm|
+      asm.sub      w8, w9, w10, asr(31)
+    end
+    assert_bytes [0xa3,0x00,0x07,0xcb] do |asm|
+      asm.sub      x3, x5, x7
+    end
+    assert_bytes [0x7f,0x00,0x05,0xcb] do |asm|
+      asm.sub      xzr, x3, x5
+    end
+    assert_bytes [0xc4,0x00,0x1f,0xcb] do |asm|
+      asm.sub      x4, x6, xzr
+    end
+    assert_bytes [0xab,0x01,0x0f,0xcb] do |asm|
+      asm.sub      x11, x13, x15
+    end
+    assert_bytes [0x69,0x28,0x1f,0xcb] do |asm|
+      asm.sub      x9, x3, xzr, lsl(10)
+    end
+    assert_bytes [0xb1,0xff,0x14,0xcb] do |asm|
+      asm.sub      x17, x29, x20, lsl(63)
+    end
+    assert_bytes [0xd5,0x02,0x57,0xcb] do |asm|
+      asm.sub      x21, x22, x23, lsr(0)
+    end
+    assert_bytes [0x38,0x4b,0x5a,0xcb] do |asm|
+      asm.sub      x24, x25, x26, lsr(18)
+    end
+    assert_bytes [0x9b,0xff,0x5d,0xcb] do |asm|
+      asm.sub      x27, x28, x29, lsr(63)
+    end
+    assert_bytes [0x62,0x00,0x84,0xcb] do |asm|
+      asm.sub      x2, x3, x4, asr(0)
+    end
+    assert_bytes [0xc5,0x54,0x87,0xcb] do |asm|
+      asm.sub      x5, x6, x7, asr(21)
+    end
+    assert_bytes [0x28,0xfd,0x8a,0xcb] do |asm|
+      asm.sub      x8, x9, x10, asr(63)
+    end
+  end
+
   def test_SUB_addsub_ext
     skip "Fixme!"
     # SUB  <Wd|WSP>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}

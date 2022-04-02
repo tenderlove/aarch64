@@ -585,6 +585,53 @@ module AArch64
       end
     end
 
+    def sub d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
+      if (d.sp? || n.sp?) && !m.integer?
+        if n.x?
+          extend ||= :uxtx
+        else
+          extend ||= :uxtw
+        end
+      end
+
+      if option
+        if option.extend?
+          extend = option.name
+          amount = option.amount
+        else
+          if m.integer?
+            lsl = option.amount
+          else
+            shift = option.name
+            amount = option.amount
+          end
+        end
+      end
+
+      if extend
+        extend = case extend
+                 when :uxtb then 0b000
+                 when :uxth then 0b001
+                 when :uxtw then 0b010
+                 when :uxtx then 0b011
+                 when :sxtb then 0b100
+                 when :sxth then 0b101
+                 when :sxtw then 0b110
+                 when :sxtx then 0b111
+                 else
+                   raise "Unknown extend #{extend}"
+                 end
+        @insns = @insns << SUB_addsub_ext.new(d, n, m, extend, amount)
+      else
+        if m.integer?
+          @insns = @insns << SUB_addsub_imm.new(d, n, m, lsl / 12)
+        else
+          shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+          @insns = @insns << SUB_addsub_shift.new(d, n, m, shift, amount)
+        end
+      end
+    end
+
     def subg xd, xn, uimm6, uimm4
       raise NotImplementedError unless xd.x?
       @insns = @insns << SUBG.new(xd, xn, uimm6, uimm4)

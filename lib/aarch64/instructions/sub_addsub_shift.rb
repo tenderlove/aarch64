@@ -5,8 +5,16 @@ module AArch64
     # SUB  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # SUB  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class SUB_addsub_shift
+      def initialize rd, rn, rm, shift, amount
+        @rd     = rd
+        @rn     = rn
+        @rm     = rm
+        @shift  = shift
+        @amount = amount
+      end
+
       def encode
-        raise NotImplementedError
+        self.SUB_addsub_shift(@rd.sf, @shift, @rm.to_i, @amount, @rn.to_i, @rd.to_i)
       end
 
       private

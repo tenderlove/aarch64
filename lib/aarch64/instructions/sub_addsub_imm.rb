@@ -5,8 +5,15 @@ module AArch64
     # SUB  <Wd|WSP>, <Wn|WSP>, #<imm>{, <shift>}
     # SUB  <Xd|SP>, <Xn|SP>, #<imm>{, <shift>}
     class SUB_addsub_imm
+      def initialize rd, rn, imm, shift
+        @rd    = rd
+        @rn    = rn
+        @imm   = imm
+        @shift = shift
+      end
+
       def encode
-        raise NotImplementedError
+        self.SUB_addsub_imm(@rd.sf, @shift, @imm, @rn.to_i, @rd.to_i)
       end
 
       private
