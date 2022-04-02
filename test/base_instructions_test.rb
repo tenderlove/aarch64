@@ -1481,9 +1481,32 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_CSINV
-    skip "Fixme!"
     # CSINV  <Wd>, <Wn>, <Wm>, <cond>
     # CSINV  <Xd>, <Xn>, <Xm>, <cond>
+    assert_bytes [0x01,0x10,0x93,0x5a] do |asm|
+      asm.csinv    w1, w0, w19, ne
+    end
+    assert_bytes [0xbf,0x00,0x89,0x5a] do |asm|
+      asm.csinv    wzr, w5, w9, eq
+    end
+    assert_bytes [0xe9,0xc3,0x9e,0x5a] do |asm|
+      asm.csinv    w9, wzr, w30, gt
+    end
+    assert_bytes [0x81,0x43,0x9f,0x5a] do |asm|
+      asm.csinv    w1, w28, wzr, mi
+    end
+    assert_bytes [0xf3,0xb2,0x9d,0xda] do |asm|
+      asm.csinv    x19, x23, x29, lt
+    end
+    assert_bytes [0x7f,0xa0,0x84,0xda] do |asm|
+      asm.csinv    xzr, x3, x4, ge
+    end
+    assert_bytes [0xe5,0x23,0x86,0xda] do |asm|
+      asm.csinv    x5, xzr, x6, hs
+    end
+    assert_bytes [0x07,0x31,0x9f,0xda] do |asm|
+      asm.csinv    x7, x8, xzr, lo
+    end
   end
 
   def test_CSNEG
