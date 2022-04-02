@@ -4,8 +4,16 @@ module AArch64
     # System instruction
     # SYS  #<op1>, <Cn>, <Cm>, #<op2>{, <Xt>}
     class SYS
+      def initialize op1, cn, cm, op2, xt
+        @op1 = op1
+        @cn  = cn
+        @cm  = cm
+        @op2 = op2
+        @xt  = xt
+      end
+
       def encode
-        raise NotImplementedError
+        self.SYS(@op1, @cn, @cm, @op2, @xt.to_i)
       end
 
       private

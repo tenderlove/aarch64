@@ -6,6 +6,7 @@ class BaseInstructionsTest < AArch64::Test
   include AArch64::Conditions
   include AArch64::Extends
   include AArch64::Shifts
+  include AArch64::Names
 
   attr_reader :asm
 
@@ -3655,8 +3656,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SYS
-    skip "Fixme!"
     # SYS  #<op1>, <Cn>, <Cm>, #<op2>{, <Xt>}
+    assert_bytes [0xe5,0x59,0x0f,0xd5] do |asm|
+      asm.sys     7, c5, c9, 7, x5
+    end
+    assert_bytes [0x5f,0xff,0x08,0xd5] do |asm|
+      asm.sys     0, c15, c15, 2
+    end
   end
 
   def test_SYSL

@@ -35,6 +35,13 @@ module AArch64
     }.join("\n")
   end
 
+  module Names
+    module_eval 0x10.times.map { |i|
+      const_set(:"C#{i}", i)
+      "def c#{i}; #{i}; end"
+    }.join("\n")
+  end
+
   module Extends
     class Extend < Struct.new(:amount, :type, :name)
       def extend?; true; end
@@ -657,6 +664,10 @@ module AArch64
     def subps xd, xn, xm
       raise NotImplementedError unless xd.x?
       @insns = @insns << SUBPS.new(xd, xn, xm)
+    end
+
+    def sys op1, cn, cm, op2, xt = XZR
+      @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
     def write_to io
