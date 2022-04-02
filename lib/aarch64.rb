@@ -9,25 +9,25 @@ module AArch64
       def integer?; false; end
     end
 
-   31.times { |i|
-     x = const_set(:"X#{i}", Register.new(i, 1, true, false, false))
-     define_method(:"x#{i}") { x }
-     w = const_set(:"W#{i}", Register.new(i, 0, false, false, false))
-     define_method(:"w#{i}") { w }
-   }
+    31.times { |i|
+      x = const_set(:"X#{i}", Register.new(i, 1, true, false, false))
+      define_method(:"x#{i}") { x }
+      w = const_set(:"W#{i}", Register.new(i, 0, false, false, false))
+      define_method(:"w#{i}") { w }
+    }
 
-   SP = Register.new(31, 1, true, true, false)
-   def sp; SP; end
+    SP = Register.new(31, 1, true, true, false)
+    def sp; SP; end
 
-   WSP = Register.new(31, 0, false, true, false)
-   def wsp; WSP; end
+    WSP = Register.new(31, 0, false, true, false)
+    def wsp; WSP; end
 
-   XZR = Register.new(31, 1, true, false, true)
-   def xzr; XZR; end
+    XZR = Register.new(31, 1, true, false, true)
+    def xzr; XZR; end
 
-   WZR = Register.new(31, 0, false, false, true)
-   def wzr; WZR; end
- end
+    WZR = Register.new(31, 0, false, false, true)
+    def wzr; WZR; end
+  end
 
   module Conditions
     module_eval Utils::COND_TABLE.keys.map { |key|
@@ -528,6 +528,53 @@ module AArch64
 
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
+    end
+
+    def subs d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
+      if n.sp? && !m.integer?
+        if n.x?
+          extend ||= :uxtx
+        else
+          extend ||= :uxtw
+        end
+      end
+
+      if option
+        if option.extend?
+          extend = option.name
+          amount = option.amount
+        else
+          if m.integer?
+            lsl = option.amount
+          else
+            shift = option.name
+            amount = option.amount
+          end
+        end
+      end
+
+      if extend
+        extend = case extend
+                 when :uxtb then 0b000
+                 when :uxth then 0b001
+                 when :uxtw then 0b010
+                 when :uxtx then 0b011
+                 when :sxtb then 0b100
+                 when :sxth then 0b101
+                 when :sxtw then 0b110
+                 when :sxtx then 0b111
+                 else
+                   raise "Unknown extend #{extend}"
+                 end
+        @insns = @insns << SUBS_addsub_ext.new(d, n, m, extend, amount)
+      else
+        if m.integer?
+          @insns = @insns << SUBS_addsub_imm.new(d, n, m, lsl / 12)
+        else
+          shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+          @insns = @insns << SUBS_addsub_shift.new(d, n, m, shift, amount)
+        end
+      end
     end
 
     def write_to io
