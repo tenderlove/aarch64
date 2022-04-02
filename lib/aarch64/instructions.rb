@@ -62,7 +62,6 @@ module AArch64
     autoload :CSINC, "aarch64/instructions/csinc"
     autoload :CSINV, "aarch64/instructions/csinv"
     autoload :CSNEG, "aarch64/instructions/csneg"
-    autoload :DC_SYS, "aarch64/instructions/dc_sys"
     autoload :DCPS1, "aarch64/instructions/dcps1"
     autoload :DCPS2, "aarch64/instructions/dcps2"
     autoload :DCPS3, "aarch64/instructions/dcps3"

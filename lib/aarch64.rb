@@ -594,6 +594,11 @@ module AArch64
       @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
     end
 
+    def dc dc_op, xt
+      op1, cm, op2 = Utils.dc_op(dc_op)
+      sys op1, Names::C7, cm, op2, xt
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

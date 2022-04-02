@@ -1539,9 +1539,32 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DC_SYS
-    skip "Fixme!"
     # DC  <dc_op>, <Xt>
     # SYS #<op1>, C7, <Cm>, #<op2>, <Xt>
+    assert_bytes [0x2c,0x74,0x0b,0xd5] do |asm|
+      asm.dc      :zva, x12
+    end
+    assert_bytes [0x3f,0x76,0x08,0xd5] do |asm|
+      asm.dc      :ivac, xzr
+    end
+    assert_bytes [0x42,0x76,0x08,0xd5] do |asm|
+      asm.dc      :isw, x2
+    end
+    assert_bytes [0x29,0x7a,0x0b,0xd5] do |asm|
+      asm.dc      :cvac, x9
+    end
+    assert_bytes [0x4a,0x7a,0x08,0xd5] do |asm|
+      asm.dc      :csw, x10
+    end
+    assert_bytes [0x20,0x7b,0x0b,0xd5] do |asm|
+      asm.dc      :cvau, x0
+    end
+    assert_bytes [0x23,0x7e,0x0b,0xd5] do |asm|
+      asm.dc      :civac, x3
+    end
+    assert_bytes [0x5e,0x7e,0x08,0xd5] do |asm|
+      asm.dc      :cisw, x30
+    end
   end
 
   def test_DCPS1
