@@ -599,6 +599,18 @@ module AArch64
       sys op1, Names::C7, cm, op2, xt
     end
 
+    def dcps1 imm = 0
+      @insns = @insns << DCPS.new(imm, 0x1)
+    end
+
+    def dcps2 imm = 0
+      @insns = @insns << DCPS.new(imm, 0x2)
+    end
+
+    def dcps3 imm = 0
+      @insns = @insns << DCPS.new(imm, 0x3)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

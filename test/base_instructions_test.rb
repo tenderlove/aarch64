@@ -1567,19 +1567,19 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_DCPS1
-    skip "Fixme!"
+  def test_DCPS
     # DCPS1  {#<imm>}
-  end
-
-  def test_DCPS2
-    skip "Fixme!"
     # DCPS2  {#<imm>}
-  end
-
-  def test_DCPS3
-    skip "Fixme!"
     # DCPS3  {#<imm>}
+    assert_bytes [0x01,0x00,0xa0,0xd4] do |asm|
+      asm.dcps1
+    end
+    assert_bytes [0x02,0x00,0xa0,0xd4] do |asm|
+      asm.dcps2
+    end
+    assert_bytes [0x03,0x00,0xa0,0xd4] do |asm|
+      asm.dcps3
+    end
   end
 
   def test_DGH
