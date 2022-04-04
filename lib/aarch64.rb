@@ -627,6 +627,14 @@ module AArch64
       @insns = @insns << DRPS.new
     end
 
+    def dsb option
+      if Numeric === option
+        @insns = @insns << DSB.new(option)
+      else
+        @insns = @insns << DSB.new(Utils.dmb2imm(option))
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

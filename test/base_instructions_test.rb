@@ -1615,9 +1615,53 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DSB
-    skip "Fixme!"
     # DSB  <option>|#<imm>
     # DSB  <option>nXS|#<imm>
+    assert_bytes [0x9f,0x30,0x03,0xd5] do |asm|
+      asm.dsb     0
+    end
+    assert_bytes [0x9f,0x3c,0x03,0xd5] do |asm|
+      asm.dsb     12
+    end
+    assert_bytes [0x9f,0x3f,0x03,0xd5] do |asm|
+      asm.dsb     :sy
+    end
+    assert_bytes [0x9f,0x31,0x03,0xd5] do |asm|
+      asm.dsb     :oshld
+    end
+    assert_bytes [0x9f,0x32,0x03,0xd5] do |asm|
+      asm.dsb     :oshst
+    end
+    assert_bytes [0x9f,0x33,0x03,0xd5] do |asm|
+      asm.dsb     :osh
+    end
+    assert_bytes [0x9f,0x35,0x03,0xd5] do |asm|
+      asm.dsb     :nshld
+    end
+    assert_bytes [0x9f,0x36,0x03,0xd5] do |asm|
+      asm.dsb     :nshst
+    end
+    assert_bytes [0x9f,0x37,0x03,0xd5] do |asm|
+      asm.dsb     :nsh
+    end
+    assert_bytes [0x9f,0x39,0x03,0xd5] do |asm|
+      asm.dsb     :ishld
+    end
+    assert_bytes [0x9f,0x3a,0x03,0xd5] do |asm|
+      asm.dsb     :ishst
+    end
+    assert_bytes [0x9f,0x3b,0x03,0xd5] do |asm|
+      asm.dsb     :ish
+    end
+    assert_bytes [0x9f,0x3d,0x03,0xd5] do |asm|
+      asm.dsb     :ld
+    end
+    assert_bytes [0x9f,0x3e,0x03,0xd5] do |asm|
+      asm.dsb     :st
+    end
+    assert_bytes [0x9f,0x3f,0x03,0xd5] do |asm|
+      asm.dsb     :sy
+    end
   end
 
   def test_DVP_SYS

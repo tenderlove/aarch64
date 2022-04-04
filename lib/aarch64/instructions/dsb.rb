@@ -5,8 +5,12 @@ module AArch64
     # DSB  <option>|#<imm>
     # DSB  <option>nXS|#<imm>
     class DSB
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.DSB(@imm)
       end
 
       private
