@@ -1590,8 +1590,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DMB
-    skip "Fixme!"
     # DMB  <option>|#<imm>
+    assert_one_insn "dmb nshst" do |asm|
+      asm.dmb 6
+    end
+    assert_one_insn "dmb ishst" do |asm|
+      asm.dmb :ISHST
+    end
+    assert_one_insn "dmb sy" do |asm|
+      asm.dmb :sy
+    end
+    %w{ oshld oshst osh nshld nshst nsh ishld ishst ish ld st sy }.each do |x|
+      assert_one_insn "dmb #{x}" do |asm|
+        asm.dmb x
+      end
+    end
   end
 
   def test_DRPS

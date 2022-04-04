@@ -4,8 +4,12 @@ module AArch64
     # Data Memory Barrier
     # DMB  <option>|#<imm>
     class DMB
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.DMB(@imm)
       end
 
       private

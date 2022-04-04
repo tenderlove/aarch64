@@ -152,5 +152,25 @@ module AArch64
       DC_OP.fetch(v.to_s.upcase)
     end
     module_function :dc_op
+
+    DMB_OPTIONS = {
+      "oshld" => 0b0001,
+      "oshst" => 0b0010,
+      "osh"   => 0b0011,
+      "nshld" => 0b0101,
+      "nshst" => 0b0110,
+      "nsh"   => 0b0111,
+      "ishld" => 0b1001,
+      "ishst" => 0b1010,
+      "ish"   => 0b1011,
+      "ld"    => 0b1101,
+      "st"    => 0b1110,
+      "sy"    => 0b1111,
+    }
+
+    def dmb2imm option
+      DMB_OPTIONS.fetch(option.to_s.downcase)
+    end
+    module_function :dmb2imm
   end
 end
