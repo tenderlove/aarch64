@@ -611,6 +611,10 @@ module AArch64
       @insns = @insns << DCPS.new(imm, 0x3)
     end
 
+    def dgh
+      @insns = @insns << DGH.new
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

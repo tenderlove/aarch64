@@ -1583,8 +1583,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DGH
-    skip "Fixme!"
     # DGH
+    assert_bytes f("df 20 03 d5") do |asm|
+      asm.dgh
+    end
   end
 
   def test_DMB
