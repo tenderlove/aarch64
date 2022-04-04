@@ -1608,8 +1608,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DRPS
-    skip "Fixme!"
     # DRPS
+    assert_bytes f("e0 03 bf d6") do |asm|
+      asm.drps
+    end
   end
 
   def test_DSB

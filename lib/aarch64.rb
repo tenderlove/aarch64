@@ -623,6 +623,10 @@ module AArch64
       end
     end
 
+    def drps
+      @insns = @insns << DRPS.new
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

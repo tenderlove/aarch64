@@ -5,12 +5,12 @@ module AArch64
     # DRPS
     class DRPS
       def encode
-        raise NotImplementedError
+        self.DRPS
       end
 
       private
 
-      def DRPS 
+      def DRPS
         insn = 0b1101011_0101_11111_000000_11111_00000
         insn
       end
