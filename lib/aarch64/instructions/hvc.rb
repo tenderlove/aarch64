@@ -4,8 +4,12 @@ module AArch64
     # Hypervisor Call
     # HVC  #<imm>
     class HVC
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.HVC @imm
       end
 
       private

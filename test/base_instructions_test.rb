@@ -1851,8 +1851,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_HVC
-    skip "Fixme!"
     # HVC  #<imm>
+    assert_bytes [34, 0, 0, 212] do |asm|
+      asm.hvc 0x1
+    end
   end
 
   def test_IC_SYS

@@ -697,6 +697,10 @@ module AArch64
       @insns = @insns << HLT.new(imm)
     end
 
+    def hvc imm
+      @insns = @insns << HVC.new(imm)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
