@@ -4,8 +4,14 @@ module AArch64
     # Insert Random Tag
     # IRG  <Xd|SP>, <Xn|SP>{, <Xm>}
     class IRG
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.IRG(@rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

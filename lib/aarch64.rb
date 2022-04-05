@@ -706,6 +706,10 @@ module AArch64
       sys op1, Names::C7, crm, op2, xt
     end
 
+    def irg rd, rn, rm = XZR
+      @insns = @insns << IRG.new(rd, rn, rm)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

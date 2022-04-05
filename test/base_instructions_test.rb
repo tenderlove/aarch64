@@ -1882,8 +1882,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_IRG
-    skip "Fixme!"
     # IRG  <Xd|SP>, <Xn|SP>{, <Xm>}
+    assert_bytes [97, 16, 223, 154] do |asm|
+      asm.irg x1, x3, xzr
+    end
+    assert_bytes [97, 16, 223, 154] do |asm|
+      asm.irg x1, x3
+    end
+    assert_bytes [225, 19, 223, 154] do |asm|
+      asm.irg x1, sp
+    end
   end
 
   def test_ISB
