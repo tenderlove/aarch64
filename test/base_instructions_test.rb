@@ -2116,8 +2116,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPURH
-    skip "Fixme!"
     # LDAPURH  <Wt>, [<Xn|SP>{, #<simm>}]
+    # ldapurh w1, [x1]
+    assert_bytes [0x21, 00, 0x40, 0x59] do |asm|
+      asm.ldapurh w1, [x1]
+    end
+    # ldapurh w3, [sp]
+    assert_bytes [0xe3, 0x3, 0x40, 0x59] do |asm|
+      asm.ldapurh w3, [sp]
+    end
+    # ldapurh w2, [sp, -12]
+    assert_bytes [0xe2, 0x43, 0x5f, 0x59] do |asm|
+      asm.ldapurh w2, [sp, -12]
+    end
   end
 
   def test_LDAPURSB
