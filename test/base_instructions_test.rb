@@ -1910,15 +1910,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDADD
-    skip "Fixme!"
     # LDADD  <Ws>, <Wt>, [<Xn|SP>]
-    # LDADDA  <Ws>, <Wt>, [<Xn|SP>]
-    # LDADDAL  <Ws>, <Wt>, [<Xn|SP>]
-    # LDADDL  <Ws>, <Wt>, [<Xn|SP>]
     # LDADD  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0x20,0xb8] do |asm|
+      asm.ldadd w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x22,0xb8] do |asm|
+      asm.ldadd w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x00,0x20,0xf8] do |asm|
+      asm.ldadd x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x22,0xf8] do |asm|
+      asm.ldadd x2, x3, [sp]
+    end
+    # LDADDA  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0xa0,0xf8] do |asm|
+      asm.ldadda     x0, x1, [x2]
+    end
+    assert_bytes [0x41,0x00,0xa0,0xb8] do |asm|
+      asm.ldadda w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xa2,0xb8] do |asm|
+      asm.ldadda w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x00,0xa0,0xf8] do |asm|
+      asm.ldadda x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xa2,0xf8] do |asm|
+      asm.ldadda x2, x3, [sp]
+    end
+    # LDADDAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0xe0,0xb8] do |asm|
+      asm.ldaddal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xe2,0xb8] do |asm|
+      asm.ldaddal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x00,0xe0,0xf8] do |asm|
+      asm.ldaddal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xe2,0xf8] do |asm|
+      asm.ldaddal x2, x3, [sp]
+    end
+    # LDADDL  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0x60,0xb8] do |asm|
+      asm.ldaddl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x62,0xb8] do |asm|
+      asm.ldaddl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x00,0x60,0xf8] do |asm|
+      asm.ldaddl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x62,0xf8] do |asm|
+      asm.ldaddl x2, x3, [sp]
+    end
   end
 
   def test_LDADDB

@@ -714,6 +714,38 @@ module AArch64
       @insns = @insns << ISB.new(option)
     end
 
+    def ldadd rs, rt, rn
+      if rs.x?
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b11, 0, 0)
+      else
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b10, 0, 0)
+      end
+    end
+
+    def ldadda rs, rt, rn
+      if rs.x?
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b11, 1, 0)
+      else
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b10, 1, 0)
+      end
+    end
+
+    def ldaddal rs, rt, rn
+      if rs.x?
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b11, 1, 1)
+      else
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b10, 1, 1)
+      end
+    end
+
+    def ldaddl rs, rt, rn
+      if rs.x?
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b11, 0, 1)
+      else
+        @insns = @insns << LDADD.new(rs, rt, rn.first, 0b10, 0, 1)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
