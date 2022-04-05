@@ -2034,9 +2034,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPR
-    skip "Fixme!"
     # LDAPR  <Wt>, [<Xn|SP> {,#0}]
+    # ldapr w2, [x2]
+    assert_bytes [0x42, 0xc0, 0xbf, 0xb8] do |asm|
+      asm.ldapr w2, [x2]
+    end
     # LDAPR  <Xt>, [<Xn|SP> {,#0}]
+    # ldapr x2, [x2]
+    assert_bytes [0x42, 0xc0, 0xbf, 0xf8] do |asm|
+      asm.ldapr x2, [x2]
+    end
+    # ldapr x2, [sp]
+    assert_bytes [0xe2, 0xc3, 0xbf, 0xf8] do |asm|
+      asm.ldapr x2, [sp]
+    end
   end
 
   def test_LDAPRB

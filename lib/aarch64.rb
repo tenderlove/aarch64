@@ -778,6 +778,14 @@ module AArch64
       @insns = @insns << LDADDH.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldapr rt, rn
+      if rt.x?
+        @insns = @insns << LDAPR.new(rt, rn.first, 0b11)
+      else
+        @insns = @insns << LDAPR.new(rt, rn.first, 0b10)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
