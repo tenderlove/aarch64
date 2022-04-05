@@ -1844,8 +1844,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_HLT
-    skip "Fixme!"
     # HLT  #<imm>
+    assert_bytes [0x60,0x0f,0x40,0xd4] do |asm|
+      asm.hlt 0x7b
+    end
   end
 
   def test_HVC

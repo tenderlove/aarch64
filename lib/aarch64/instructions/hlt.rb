@@ -4,8 +4,12 @@ module AArch64
     # Halt instruction
     # HLT  #<imm>
     class HLT
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.HLT(@imm)
       end
 
       private
