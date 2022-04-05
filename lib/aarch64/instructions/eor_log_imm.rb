@@ -5,8 +5,16 @@ module AArch64
     # EOR  <Wd|WSP>, <Wn>, #<imm>
     # EOR  <Xd|SP>, <Xn>, #<imm>
     class EOR_log_imm
+      def initialize rd, rn, n, immr, imms
+        @rd   = rd
+        @rn   = rn
+        @n    = n
+        @immr = immr
+        @imms = imms
+      end
+
       def encode
-        raise NotImplementedError
+        self.EOR_log_imm(@rd.sf, @n, @immr, @imms, @rn.to_i, @rd.to_i)
       end
 
       private

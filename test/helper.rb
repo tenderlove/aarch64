@@ -19,7 +19,7 @@ module AArch64
       yield asm
       jit_buffer = StringIO.new
       asm.write_to jit_buffer
-      if $DEBUG
+      if true
         actual_bin = sprintf("%032b", jit_buffer.string.unpack1("L<")).gsub(/([01]{4})/, '\1_').sub(/_$/, '')
         expected_bin = sprintf("%032b", bytes.pack("C4").unpack1("L<")).gsub(/([01]{4})/, '\1_').sub(/_$/, '')
         assert_equal expected_bin, actual_bin

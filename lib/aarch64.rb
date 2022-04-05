@@ -5,27 +5,27 @@ require "aarch64/utils"
 
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :sf, :x?, :sp?, :zr?)
+    class Register < Struct.new(:to_i, :sf, :x?, :sp?, :zr?, :size)
       def integer?; false; end
     end
 
     31.times { |i|
-      x = const_set(:"X#{i}", Register.new(i, 1, true, false, false))
+      x = const_set(:"X#{i}", Register.new(i, 1, true, false, false, 64))
       define_method(:"x#{i}") { x }
-      w = const_set(:"W#{i}", Register.new(i, 0, false, false, false))
+      w = const_set(:"W#{i}", Register.new(i, 0, false, false, false, 32))
       define_method(:"w#{i}") { w }
     }
 
-    SP = Register.new(31, 1, true, true, false)
+    SP = Register.new(31, 1, true, true, false, 64)
     def sp; SP; end
 
-    WSP = Register.new(31, 0, false, true, false)
+    WSP = Register.new(31, 0, false, true, false, 32)
     def wsp; WSP; end
 
-    XZR = Register.new(31, 1, true, false, true)
+    XZR = Register.new(31, 1, true, false, true, 64)
     def xzr; XZR; end
 
-    WZR = Register.new(31, 0, false, false, true)
+    WZR = Register.new(31, 0, false, false, true, 32)
     def wzr; WZR; end
   end
 
@@ -647,6 +647,22 @@ module AArch64
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
       @insns = @insns << EON.new(d, n, m, shift, amount)
+    end
+
+    def eor rd, rn, rm, options = nil, shift: :lsl, amount: 0
+      if options
+        shift = options.name
+        amount = options.amount
+      end
+
+      if rm.integer?
+        encoding = Utils.encode_mask(rm, rd.size)
+        n = rd.x? ? encoding.n : 0
+        @insns = @insns << EOR_log_imm.new(rd, rn, n, encoding.immr, encoding.imms)
+      else
+        shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
+        @insns = @insns << EOR_log_shift.new(rd, rn, rm, shift, amount)
+      end
     end
 
     def movz reg, imm, lsl: 0

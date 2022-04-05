@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        enc = Utils.encode_mask(@imm) || raise("Can't encode mask #{@imm}")
+        enc = Utils.encode_mask(@imm, @d.size) || raise("Can't encode mask #{@imm}")
 
         if @d.x?
           ANDS_log_imm(@d.sf, enc.n, enc.immr, enc.imms, @n.to_i, @d.to_i)

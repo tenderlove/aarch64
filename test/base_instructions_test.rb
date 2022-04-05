@@ -1707,16 +1707,75 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_EOR_log_imm
-    skip "Fixme!"
-    # EOR  <Wd|WSP>, <Wn>, #<imm>
-    # EOR  <Xd|SP>, <Xn>, #<imm>
+  def test_ands_32
+    assert_bytes f("41 00 12 72") do |asm|
+      asm.ands w1, w2, 0x4000
+    end
   end
 
-  def test_EOR_log_shift
-    skip "Fixme!"
-    # EOR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
-    # EOR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+  def test_EOR_all
+    # EOR  <Wd|WSP>, <Wn>, #<imm>
+    # EOR  <Xd|SP>, <Xn>, #<imm>
+    assert_bytes [0x41,0x00,0x12,0x52] do |asm|
+      asm.eor w1, w2, 0x4000
+    end
+    assert_bytes [0x41,0x00,0x71,0xd2] do |asm|
+      asm.eor x1, x2, 0x8000
+    end
+    assert_bytes [0x41,0x00,0x03,0x4a] do |asm|
+      asm.eor w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x03,0xca] do |asm|
+      asm.eor x1, x2, x3
+    end
+    assert_bytes [0x41,0x14,0x03,0x4a] do |asm|
+      asm.eor w1, w2, w3, lsl(5)
+    end
+    assert_bytes [0x41,0x14,0x03,0xca] do |asm|
+      asm.eor x1, x2, x3, lsl(5)
+    end
+    assert_bytes [0x41,0x14,0x43,0x4a] do |asm|
+      asm.eor w1, w2, w3, lsr(5)
+    end
+    assert_bytes [0x41,0x14,0x43,0xca] do |asm|
+      asm.eor x1, x2, x3, lsr(5)
+    end
+    assert_bytes [0x41,0x14,0x83,0x4a] do |asm|
+      asm.eor w1, w2, w3, asr(5)
+    end
+    assert_bytes [0x41,0x14,0x83,0xca] do |asm|
+      asm.eor x1, x2, x3, asr(5)
+    end
+    assert_bytes [0x41,0x14,0xc3,0x4a] do |asm|
+      asm.eor w1, w2, w3, ror(5)
+    end
+    assert_bytes [0x41,0x14,0xc3,0xca] do |asm|
+      asm.eor x1, x2, x3, ror(5)
+    end
+    assert_bytes [0xc3,0xc8,0x03,0x52] do |asm|
+      asm.eor      w3, w6, 0xe0e0e0e0
+    end
+    assert_bytes [0xff,0xc7,0x00,0x52] do |asm|
+      asm.eor      wsp, wzr, 0x3030303
+    end
+    assert_bytes [0x30,0xc6,0x01,0x52] do |asm|
+      asm.eor      w16, w17, 0x81818181
+    end
+    assert_bytes [0xa3,0x84,0x66,0xd2] do |asm|
+      asm.eor      x3, x5, 0xffffffffc000000
+    end
+    assert_bytes [0xc3,0xc8,0x03,0xd2] do |asm|
+      asm.eor      x3, x6, 0xe0e0e0e0e0e0e0e0
+    end
+    assert_bytes [0xff,0xc7,0x00,0xd2] do |asm|
+      asm.eor      sp, xzr, 0x303030303030303
+    end
+    assert_bytes [0x30,0xc6,0x01,0xd2] do |asm|
+      asm.eor      x16, x17, 0x8181818181818181
+    end
+    assert_bytes [0x30,0x76,0x1d,0x52] do |asm|
+      asm.eor	w16, w17, 0xfffffff9
+    end
   end
 
   def test_ERET

@@ -78,8 +78,8 @@ module AArch64
     end
     module_function :count_leading_ones
 
-    def encode_mask imm
-      size = 64
+    def encode_mask imm, regsize
+      size = regsize
       loop do
         size >>= 1
         mask = (1 << size) - 1
@@ -112,7 +112,7 @@ module AArch64
       imms = (~(size - 1) << 1) | (cto - 1)
       n    = ((imms >> 6) & 1) ^ 1
 
-      EncodedMask.new(n, immr, imms & 0x3F)
+      EncodedMask.new(n, immr & 0x3F, imms & 0x3F)
     end
     module_function :encode_mask
 

@@ -5,8 +5,16 @@ module AArch64
     # EOR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # EOR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class EOR_log_shift
+      def initialize rd, rn, rm, shift, imm6
+        @rd     = rd
+        @rn     = rn
+        @rm     = rm
+        @shift  = shift
+        @imm6   = imm6
+      end
+
       def encode
-        raise NotImplementedError
+        self.EOR_log_shift(@rd.sf, @shift, @rm.to_i, @imm6, @rn.to_i, @rd.to_i)
       end
 
       private
