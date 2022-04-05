@@ -1665,9 +1665,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_DVP_SYS
-    skip "Fixme!"
     # DVP  RCTX, <Xt>
     # SYS #3, C7, C3, #5, <Xt>
+    assert_bytes f("a3 73 0b d5") do |asm|
+      asm.dvp :rctx, x3
+    end
   end
 
   def test_EON

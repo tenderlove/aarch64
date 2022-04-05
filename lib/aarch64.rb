@@ -635,6 +635,10 @@ module AArch64
       end
     end
 
+    def dvp _, xt
+      sys 3, Names::C7, Names::C3, 5, xt
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
