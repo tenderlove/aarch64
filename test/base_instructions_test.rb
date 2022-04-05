@@ -1779,8 +1779,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ERET
-    skip "Fixme!"
     # ERET
+    assert_bytes [0xe0,0x03,0x9f,0xd6] do |asm|
+      asm.eret
+    end
   end
 
   def test_ERETA
