@@ -762,6 +762,22 @@ module AArch64
       @insns = @insns << LDADDB.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldaddah rs, rt, rn
+      @insns = @insns << LDADDH.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def ldaddalh rs, rt, rn
+      @insns = @insns << LDADDH.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def ldaddh rs, rt, rn
+      @insns = @insns << LDADDH.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def ldaddlh rs, rt, rn
+      @insns = @insns << LDADDH.new(rs, rt, rn.first, 0, 1)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

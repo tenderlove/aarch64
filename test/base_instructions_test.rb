@@ -2003,11 +2003,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDADDH
-    skip "Fixme!"
     # LDADDAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0xa0,0x78] do |asm|
+      asm.ldaddah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xa2,0x78] do |asm|
+      asm.ldaddah w2, w3, [sp]
+    end
     # LDADDALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0xe0,0x78] do |asm|
+      asm.ldaddalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0xe2,0x78] do |asm|
+      asm.ldaddalh w2, w3, [sp]
+    end
     # LDADDH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0x20,0x78] do |asm|
+      asm.ldaddh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x22,0x78] do |asm|
+      asm.ldaddh w2, w3, [sp]
+    end
     # LDADDLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x00,0x60,0x78] do |asm|
+      asm.ldaddlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x03,0x62,0x78] do |asm|
+      asm.ldaddlh w2, w3, [sp]
+    end
   end
 
   def test_LDAPR

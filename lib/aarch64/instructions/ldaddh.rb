@@ -7,8 +7,16 @@ module AArch64
     # LDADDH  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDLH  <Ws>, <Wt>, [<Xn|SP>]
     class LDADDH
+      def initialize rs, rt, rn, a, r
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @a  = a
+        @r  = r
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDADDH(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
