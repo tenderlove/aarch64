@@ -5,12 +5,12 @@ module AArch64
     # ESB
     class ESB
       def encode
-        raise NotImplementedError
+        self.ESB
       end
 
       private
 
-      def ESB 
+      def ESB
         insn = 0b1101010100_0_00_011_0010_0010_000_11111
         insn
       end

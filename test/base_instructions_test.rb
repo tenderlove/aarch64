@@ -1797,8 +1797,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ESB
-    skip "Fixme!"
     # ESB
+    assert_bytes [0x1f,0x22,0x03,0xd5] do |asm|
+      asm.esb
+    end
   end
 
   def test_EXTR
