@@ -1837,8 +1837,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_HINT
-    skip "Fixme!"
     # HINT  #<imm>
+    assert_bytes [0xff,0x2f,0x03,0xd5] do |asm|
+      asm.hint 0x7f
+    end
   end
 
   def test_HLT

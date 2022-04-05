@@ -689,6 +689,10 @@ module AArch64
       @insns = @insns << GMI.new(rd, rn, rm)
     end
 
+    def hint imm
+      @insns = @insns << HINT.new(31, imm)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
