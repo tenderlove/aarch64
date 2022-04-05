@@ -67,7 +67,7 @@ module AArch64
       def shift?; true; end
     end
 
-    module_eval [:lsl, :lsr, :asr].map.with_index { |n, i|
+    module_eval [:lsl, :lsr, :asr, :ror].map.with_index { |n, i|
       "def #{n}(amount = 0); Shift.new(amount, #{i}, :#{n}); end"
     }.join("\n")
   end
@@ -637,6 +637,16 @@ module AArch64
 
     def dvp _, xt
       sys 3, Names::C7, Names::C3, 5, xt
+    end
+
+    def eon d, n, m, option = nil, amount: 0, shift: :lsl
+      if option
+        shift = option.name
+        amount = option.amount
+      end
+
+      shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
+      @insns = @insns << EON.new(d, n, m, shift, amount)
     end
 
     def movz reg, imm, lsl: 0

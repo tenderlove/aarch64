@@ -5,8 +5,16 @@ module AArch64
     # EON  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # EON  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class EON
+      def initialize rd, rn, rm, shift, imm
+        @rd    = rd
+        @rn    = rn
+        @rm    = rm
+        @shift = shift
+        @imm   = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.EON(@rd.sf, @shift, @rm.to_i, @imm, @rn.to_i, @rd.to_i)
       end
 
       private

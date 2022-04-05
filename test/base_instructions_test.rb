@@ -1673,9 +1673,38 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_EON
-    skip "Fixme!"
     # EON  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # EON  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+    assert_bytes [0x41,0x00,0x23,0x4a] do |asm|
+      asm.eon w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x23,0xca] do |asm|
+      asm.eon x1, x2, x3
+    end
+    assert_bytes [0x41,0x10,0x23,0x4a] do |asm|
+      asm.eon w1, w2, w3, lsl(4)
+    end
+    assert_bytes [0x41,0x10,0x23,0xca] do |asm|
+      asm.eon x1, x2, x3, lsl(4)
+    end
+    assert_bytes [0x41,0x10,0x63,0x4a] do |asm|
+      asm.eon w1, w2, w3, lsr(4)
+    end
+    assert_bytes [0x41,0x10,0x63,0xca] do |asm|
+      asm.eon x1, x2, x3, lsr(4)
+    end
+    assert_bytes [0x41,0x10,0xa3,0x4a] do |asm|
+      asm.eon w1, w2, w3, asr(4)
+    end
+    assert_bytes [0x41,0x10,0xa3,0xca] do |asm|
+      asm.eon x1, x2, x3, asr(4)
+    end
+    assert_bytes [0x41,0x10,0xe3,0x4a] do |asm|
+      asm.eon w1, w2, w3, ror(4)
+    end
+    assert_bytes [0x41,0x10,0xe3,0xca] do |asm|
+      asm.eon x1, x2, x3, ror(4)
+    end
   end
 
   def test_EOR_log_imm
