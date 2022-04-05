@@ -2100,8 +2100,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPURB
-    skip "Fixme!"
     # LDAPURB  <Wt>, [<Xn|SP>{, #<simm>}]
+    # ldapurb w1, [x1]
+    assert_bytes [0x21, 00, 0x40, 0x19] do |asm|
+      asm.ldapurb w1, [x1]
+    end
+    # ldapurb w2, [sp]
+    assert_bytes [0xe2, 0x3, 0x40, 0x19] do |asm|
+      asm.ldapurb w2, [sp]
+    end
+    # ldapurb w2, [sp, 22]
+    assert_bytes [0xe2, 0x63, 0x41, 0x19] do |asm|
+      asm.ldapurb w2, [sp, 22]
+    end
   end
 
   def test_LDAPURH
