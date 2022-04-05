@@ -5,8 +5,15 @@ module AArch64
     # EXTR  <Wd>, <Wn>, <Wm>, #<lsb>
     # EXTR  <Xd>, <Xn>, <Xm>, #<lsb>
     class EXTR
+      def initialize rd, rn, rm, lsb
+        @rd  = rd
+        @rn  = rn
+        @rm  = rm
+        @lsb = lsb
+      end
+
       def encode
-        raise NotImplementedError
+        self.EXTR(@rd.sf, @rd.sf, @rm.to_i, @lsb, @rn.to_i, @rd.to_i)
       end
 
       private

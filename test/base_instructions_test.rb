@@ -1804,9 +1804,26 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_EXTR
-    skip "Fixme!"
     # EXTR  <Wd>, <Wn>, <Wm>, #<lsb>
     # EXTR  <Xd>, <Xn>, <Xm>, #<lsb>
+    assert_bytes [0x41,0x3c,0x83,0x13] do |asm|
+      asm.extr w1, w2, w3, 15
+    end
+    assert_bytes [0x62,0x04,0xc4,0x93] do |asm|
+      asm.extr x2, x3, x4, 1
+    end
+    assert_bytes [0xa3,0x00,0x87,0x13] do |asm|
+      asm.extr     w3, w5, w7, 0
+    end
+    assert_bytes [0xab,0x7d,0x91,0x13] do |asm|
+      asm.extr     w11, w13, w17, 31
+    end
+    assert_bytes [0xa3,0x3c,0xc7,0x93] do |asm|
+      asm.extr     x3, x5, x7, 15
+    end
+    assert_bytes [0xab,0xfd,0xd1,0x93] do |asm|
+      asm.extr     x11, x13, x17, 63
+    end
   end
 
   def test_GMI
