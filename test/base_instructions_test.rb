@@ -1858,9 +1858,27 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_IC_SYS
-    skip "Fixme!"
     # IC  <ic_op>{, <Xt>}
     # SYS #<op1>, C7, <Cm>, #<op2>{, <Xt>}
+
+    assert_bytes [0x1f,0x71,0x08,0xd5] do |asm|
+      asm.ic :ialluis
+    end
+    assert_bytes [0x1f,0x75,0x08,0xd5] do |asm|
+      asm.ic :iallu
+    end
+    assert_bytes [0x20,0x75,0x0b,0xd5] do |asm|
+      asm.ic :ivau, x0
+    end
+    assert_bytes [0x1f,0x71,0x08,0xd5] do |asm|
+      asm.ic      :ialluis
+    end
+    assert_bytes [0x1f,0x75,0x08,0xd5] do |asm|
+      asm.ic      :iallu
+    end
+    assert_bytes [0x29,0x75,0x0b,0xd5] do |asm|
+      asm.ic      :ivau, x9
+    end
   end
 
   def test_IRG

@@ -79,7 +79,6 @@ module AArch64
     autoload :HINT, "aarch64/instructions/hint"
     autoload :HLT, "aarch64/instructions/hlt"
     autoload :HVC, "aarch64/instructions/hvc"
-    autoload :IC_SYS, "aarch64/instructions/ic_sys"
     autoload :IRG, "aarch64/instructions/irg"
     autoload :ISB, "aarch64/instructions/isb"
     autoload :LD64B, "aarch64/instructions/ld64b"

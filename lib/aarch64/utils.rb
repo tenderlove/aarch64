@@ -172,5 +172,17 @@ module AArch64
       DMB_OPTIONS.fetch(option.to_s.downcase)
     end
     module_function :dmb2imm
+
+    IC_OPTIONS = {
+      #               op1,    CRm,  op2
+      "ialluis" => [0b000, 0b0001, 0b00],
+      "iallu"   => [0b000, 0b0101, 0b00],
+      "ivau"    => [0b011, 0b0101, 0b01],
+    }
+
+    def ic_op name
+      IC_OPTIONS.fetch(name.to_s.downcase)
+    end
+    module_function :ic_op
   end
 end

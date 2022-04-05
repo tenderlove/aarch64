@@ -701,6 +701,11 @@ module AArch64
       @insns = @insns << HVC.new(imm)
     end
 
+    def ic op, xt = SP
+      op1, crm, op2 = Utils.ic_op(op)
+      sys op1, Names::C7, crm, op2, xt
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
