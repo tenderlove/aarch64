@@ -4,8 +4,14 @@ module AArch64
     # Tag Mask Insert
     # GMI  <Xd>, <Xn|SP>, <Xm>
     class GMI
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.GMI(@rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

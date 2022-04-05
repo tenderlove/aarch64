@@ -1827,8 +1827,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_GMI
-    skip "Fixme!"
     # GMI  <Xd>, <Xn|SP>, <Xm>
+    assert_bytes [0x62, 0x14, 0xc4, 0x9a] do |asm|
+      asm.gmi x2, x3, x4
+    end
+    assert_bytes [226, 23, 196, 154] do |asm|
+      asm.gmi x2, sp, x4
+    end
   end
 
   def test_HINT
