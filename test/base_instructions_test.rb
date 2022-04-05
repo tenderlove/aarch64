@@ -1895,8 +1895,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ISB
-    skip "Fixme!"
     # ISB  {<option>|#<imm>}
+    assert_bytes [0xdf,0x3f,0x03,0xd5] do |asm|
+      asm.isb
+    end
+    assert_bytes [0xdf,0x3c,0x03,0xd5] do |asm|
+      asm.isb     12
+    end
   end
 
   def test_LD64B

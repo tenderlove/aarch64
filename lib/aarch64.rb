@@ -710,6 +710,10 @@ module AArch64
       @insns = @insns << IRG.new(rd, rn, rm)
     end
 
+    def isb option = 0b1111
+      @insns = @insns << ISB.new(option)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

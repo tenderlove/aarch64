@@ -4,8 +4,12 @@ module AArch64
     # Instruction Synchronization Barrier
     # ISB  {<option>|#<imm>}
     class ISB
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.ISB @imm
       end
 
       private
