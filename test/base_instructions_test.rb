@@ -2063,8 +2063,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPRH
-    skip "Fixme!"
     # LDAPRH  <Wt>, [<Xn|SP> {,#0}]
+    # ldaprh w1, [x1]
+    assert_bytes [0x21, 0xc0, 0xbf, 0x78] do |asm|
+      asm.ldaprh w1, [x1]
+    end
+    # ldaprh w2, [sp]
+    assert_bytes [0xe2, 0xc3, 0xbf, 0x78] do |asm|
+      asm.ldaprh w2, [sp]
+    end
   end
 
   def test_LDAPUR_gen

@@ -4,8 +4,13 @@ module AArch64
     # Load-Acquire RCpc Register Halfword
     # LDAPRH  <Wt>, [<Xn|SP> {,#0}]
     class LDAPRH
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDAPRH(@rn.to_i, @rt.to_i)
       end
 
       private
