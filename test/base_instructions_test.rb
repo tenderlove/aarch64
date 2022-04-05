@@ -1786,9 +1786,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ERETA
-    skip "Fixme!"
     # ERETAA
     # ERETAB
+    assert_bytes f("ff 0b 9f d6") do |asm|
+      asm.eretaa
+    end
+    assert_bytes f("ff 0f 9f d6") do |asm|
+      asm.eretab
+    end
   end
 
   def test_ESB

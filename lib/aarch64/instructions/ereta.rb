@@ -5,8 +5,12 @@ module AArch64
     # ERETAA
     # ERETAB
     class ERETA
+      def initialize m
+        @m = m
+      end
+
       def encode
-        raise NotImplementedError
+        self.ERETA(@m)
       end
 
       private

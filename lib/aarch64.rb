@@ -669,6 +669,14 @@ module AArch64
       @insns = @insns << ERET.new
     end
 
+    def eretaa
+      @insns = @insns << ERETA.new(0)
+    end
+
+    def eretab
+      @insns = @insns << ERETA.new(1)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
