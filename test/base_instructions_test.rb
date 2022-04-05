@@ -2075,9 +2075,28 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPUR_gen
-    skip "Fixme!"
     # LDAPUR  <Wt>, [<Xn|SP>{, #<simm>}]
+    # ldapur w1, [x1]
+    assert_bytes [0x21, 00, 0x40, 0x99] do |asm|
+      asm.ldapur w1, [x1]
+    end
+    # ldapur w1, [x1, 123]
+    assert_bytes [0x21, 0xb0, 0x47, 0x99] do |asm|
+      asm.ldapur w1, [x1, 123]
+    end
     # LDAPUR  <Xt>, [<Xn|SP>{, #<simm>}]
+    # ldapur x1, [x1]
+    assert_bytes [0x21, 00, 0x40, 0xd9] do |asm|
+      asm.ldapur x1, [x1]
+    end
+    # ldapur x2, [x1, -200]
+    assert_bytes [0x22, 0x80, 0x53, 0xd9] do |asm|
+      asm.ldapur x2, [x1, -200]
+    end
+    # ldapur x2, [sp, 200]
+    assert_bytes [0xe2, 0x83, 0x4c, 0xd9] do |asm|
+      asm.ldapur x2, [sp, 200]
+    end
   end
 
   def test_LDAPURB
