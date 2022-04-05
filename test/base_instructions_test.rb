@@ -2051,8 +2051,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAPRB
-    skip "Fixme!"
     # LDAPRB  <Wt>, [<Xn|SP> {,#0}]
+    # ldaprb w1, [x1]
+    assert_bytes [0x21, 0xc0, 0xbf, 0x38] do |asm|
+      asm.ldaprb w1, [x1]
+    end
+    # ldaprb w1, [sp]
+    assert_bytes [0xe1, 0xc3, 0xbf, 0x38] do |asm|
+      asm.ldaprb w1, [sp]
+    end
   end
 
   def test_LDAPRH

@@ -4,8 +4,13 @@ module AArch64
     # Load-Acquire RCpc Register Byte
     # LDAPRB  <Wt>, [<Xn|SP> {,#0}]
     class LDAPRB
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDAPRB(@rn.to_i, @rt.to_i)
       end
 
       private
