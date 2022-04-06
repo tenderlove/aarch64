@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def tbnz rt, imm, label
+      @insns = @insns << TBNZ.new(rt, imm, label)
+    end
+
     def tbz rt, imm, label
       @insns = @insns << TBZ.new(rt, imm, label)
     end

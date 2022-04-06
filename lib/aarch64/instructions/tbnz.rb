@@ -4,8 +4,14 @@ module AArch64
     # Test bit and Branch if Nonzero
     # TBNZ  <R><t>, #<imm>, <label>
     class TBNZ
+      def initialize rt, imm, label
+        @rt    = rt
+        @imm   = imm
+        @label = label
+      end
+
       def encode
-        raise NotImplementedError
+        self.TBNZ(@rt.sf, @imm, @label.to_i / 4, @rt.to_i)
       end
 
       private

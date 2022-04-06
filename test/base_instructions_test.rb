@@ -4007,8 +4007,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_TBNZ
-    skip "Fixme!"
     # TBNZ  <R><t>, #<imm>, <label>
+    assert_bytes [0x03,0x00,0x44,0x37] do |asm|
+      asm.tbnz	w3, 8, -32768
+    end
+    assert_one_insn "tbnz w3, #5, #4" do |asm|
+      label = asm.make_label :foo
+      asm.tbnz w3, 5, label
+      asm.put_label label
+    end
   end
 
   def test_TBZ
