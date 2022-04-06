@@ -963,6 +963,10 @@ module AArch64
       @insns = @insns << UBFM.new(rd, rn, immr, imms)
     end
 
+    def ubfiz rd, rn, lsb, width
+      ubfm rd, rn, (-lsb) % rd.size, width - 1
+    end
+
     def ubfx rd, rn, lsb, width
       ubfm rd, rn, lsb, lsb + width - 1
     end

@@ -4044,8 +4044,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UBFIZ_UBFM
-    skip "Fixme!"
     # UBFIZ  <Wd>, <Wn>, #<lsb>, #<width>
+    assert_bytes [0x1f,0x00,0x61,0xd3] do |asm|
+      asm.ubfiz xzr, x0, 31, 1
+    end
+    assert_bytes [0xa4,0x28,0x4c,0xd3] do |asm|
+      asm.ubfiz    x4, x5, 52, 11
+    end
+    assert_bytes [0xe4,0x17,0x7f,0xd3] do |asm|
+      asm.ubfiz    x4, xzr, 1, 6
+    end
+    assert_bytes [0xff,0x2b,0x76,0xd3] do |asm|
+      asm.ubfiz    xzr, xzr, 10, 11
+    end
     # UBFM <Wd>, <Wn>, #(-<lsb> MOD 32), #(<width>-1)
     # UBFIZ  <Xd>, <Xn>, #<lsb>, #<width>
     # UBFM <Xd>, <Xn>, #(-<lsb> MOD 64), #(<width>-1)
