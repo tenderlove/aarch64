@@ -3937,8 +3937,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SVC
-    skip "Fixme!"
     # SVC  #<imm>
+    assert_bytes [0x01,0x00,0x00,0xd4] do |asm|
+      asm.svc      0
+    end
   end
 
   def test_SWP

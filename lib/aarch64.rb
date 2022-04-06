@@ -955,6 +955,10 @@ module AArch64
       @insns = @insns << SUBPS.new(xd, xn, xm)
     end
 
+    def svc imm
+      @insns = @insns << SVC.new(imm)
+    end
+
     def swp rs, rt, rn
       size = rs.x? ? 0b11 : 0b10
       @insns = @insns << SWP.new(rs, rt, rn.first, size, 0, 0)

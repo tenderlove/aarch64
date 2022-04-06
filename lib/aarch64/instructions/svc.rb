@@ -4,8 +4,12 @@ module AArch64
     # Supervisor Call
     # SVC  #<imm>
     class SVC
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.SVC(@imm)
       end
 
       private
