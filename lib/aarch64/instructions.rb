@@ -331,8 +331,6 @@ module AArch64
     autoload :UMSUBL, "aarch64/instructions/umsubl"
     autoload :UMULH, "aarch64/instructions/umulh"
     autoload :UMULL_UMADDL, "aarch64/instructions/umull_umaddl"
-    autoload :UXTB_UBFM, "aarch64/instructions/uxtb_ubfm"
-    autoload :UXTH_UBFM, "aarch64/instructions/uxth_ubfm"
     autoload :WFE, "aarch64/instructions/wfe"
     autoload :WFET, "aarch64/instructions/wfet"
     autoload :WFI, "aarch64/instructions/wfi"
