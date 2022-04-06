@@ -6,8 +6,13 @@ module AArch64
     # XPACI  <Xd>
     # XPACLRI
     class XPAC
+      def initialize rd, d
+        @rd = rd
+        @d  = d
+      end
+
       def encode
-        raise NotImplementedError
+        self.XPAC(@d, @rd.to_i)
       end
 
       private

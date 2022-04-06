@@ -4141,10 +4141,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_XPAC
-    skip "Fixme!"
     # XPACD  <Xd>
+    # xpacd x3
+    assert_bytes [0xe3, 0x47, 0xc1, 0xda] do |asm|
+      asm.xpacd x3
+    end
     # XPACI  <Xd>
+    # xpaci x10
+    assert_bytes [0xea, 0x43, 0xc1, 0xda] do |asm|
+      asm.xpaci x10
+    end
     # XPACLRI
+    # xpaclri
+    assert_bytes [0xff, 0x20, 0x3, 0xd5] do |asm|
+      asm.xpaclri
+    end
   end
 
   def test_YIELD

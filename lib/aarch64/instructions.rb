@@ -340,6 +340,7 @@ module AArch64
     autoload :WFIT, "aarch64/instructions/wfit"
     autoload :XAFLAG, "aarch64/instructions/xaflag"
     autoload :XPAC, "aarch64/instructions/xpac"
+    autoload :XPACLRI, "aarch64/instructions/xpaclri"
     autoload :YIELD, "aarch64/instructions/yield"
   end
 end

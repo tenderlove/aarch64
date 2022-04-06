@@ -959,6 +959,18 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def xpacd rd
+      @insns = @insns << XPAC.new(rd, 1)
+    end
+
+    def xpaci rd
+      @insns = @insns << XPAC.new(rd, 0)
+    end
+
+    def xpaclri
+      @insns = @insns << XPACLRI.new
+    end
+
     def yield
       @insns = @insns << YIELD.new
     end
