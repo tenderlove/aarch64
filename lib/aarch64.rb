@@ -955,6 +955,22 @@ module AArch64
       @insns = @insns << SUBPS.new(xd, xn, xm)
     end
 
+    def swpah rs, rt, rn
+      @insns = @insns << SWPH.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def swpalh rs, rt, rn
+      @insns = @insns << SWPH.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def swph rs, rt, rn
+      @insns = @insns << SWPH.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def swplh rs, rt, rn
+      @insns = @insns << SWPH.new(rs, rt, rn.first, 0, 1)
+    end
+
     def sxtb rd, rn
       sbfm rd, rn, 0, 7
     end

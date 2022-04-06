@@ -311,8 +311,6 @@ module AArch64
     autoload :SWP, "aarch64/instructions/swp"
     autoload :SWPB, "aarch64/instructions/swpb"
     autoload :SWPH, "aarch64/instructions/swph"
-    autoload :SXTB_SBFM, "aarch64/instructions/sxtb_sbfm"
-    autoload :SXTH_SBFM, "aarch64/instructions/sxth_sbfm"
     autoload :SYS, "aarch64/instructions/sys"
     autoload :SYSL, "aarch64/instructions/sysl"
     autoload :TBNZ, "aarch64/instructions/tbnz"
