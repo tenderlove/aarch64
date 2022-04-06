@@ -4077,8 +4077,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UDF_perm_undef
-    skip "Fixme!"
     # UDF  #<imm>
+    # udf 234
+    assert_bytes [0xea, 00, 00, 00] do |asm|
+      asm.udf 234
+    end
+    assert_bytes [0x7b, 00, 00, 00] do |asm|
+      asm.udf 123
+    end
   end
 
   def test_UDIV

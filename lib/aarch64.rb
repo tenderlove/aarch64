@@ -967,6 +967,10 @@ module AArch64
       ubfm rd, rn, lsb, lsb + width - 1
     end
 
+    def udf imm
+      @insns = @insns << UDF_perm_undef.new(imm)
+    end
+
     def udiv rd, rn, rm
       @insns = @insns << UDIV.new(rd, rn, rm)
     end

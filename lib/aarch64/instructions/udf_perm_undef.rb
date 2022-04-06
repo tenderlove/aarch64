@@ -4,8 +4,12 @@ module AArch64
     # Permanently Undefined
     # UDF  #<imm>
     class UDF_perm_undef
+      def initialize imm
+        @imm = imm
+      end
+
       def encode
-        raise NotImplementedError
+        self.UDF_perm_undef(@imm)
       end
 
       private
