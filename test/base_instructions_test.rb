@@ -4023,8 +4023,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_TSB
-    skip "Fixme!"
     # TSB CSYNC
+    # tsb CSYNC
+    assert_bytes [0x5f, 0x22, 0x3, 0xd5] do |asm|
+      asm.tsb :csync
+    end
   end
 
   def test_TST_all

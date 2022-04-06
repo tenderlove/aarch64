@@ -5,14 +5,13 @@ module AArch64
     # TSB CSYNC
     class TSB
       def encode
-        raise NotImplementedError
+        self.TSB
       end
 
       private
 
-      def TSB 
-        insn = 0b1101010100_0_00_011_0010_0010_010_11111
-        insn
+      def TSB
+        0b1101010100_0_00_011_0010_0010_010_11111
       end
     end
   end

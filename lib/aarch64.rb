@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def tsb _
+      @insns = @insns << TSB.new
+    end
+
     def tst rn, rm, option = nil, shift: :lsl, amount: 0
       if option
         shift = option.name
