@@ -4,8 +4,12 @@ module AArch64
     # Wait For Event with Timeout
     # WFET  <Xt>
     class WFET
+      def initialize rd
+        @rd = rd
+      end
+
       def encode
-        raise NotImplementedError
+        self.WFET(@rd.to_i)
       end
 
       private

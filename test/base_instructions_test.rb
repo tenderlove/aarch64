@@ -4121,8 +4121,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_WFET
-    skip "Fixme!"
     # WFET  <Xt>
+    # wfet  x3
+    assert_bytes [3, 16, 3, 213] do |asm|
+      asm.wfet x3
+    end
   end
 
   def test_WFI
