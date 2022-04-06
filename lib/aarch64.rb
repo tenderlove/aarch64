@@ -846,6 +846,10 @@ module AArch64
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end
 
+    def stzgm rt, rn
+      @insns = @insns << STZGM.new(rt, rn.first)
+    end
+
     def subs d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
       if n.sp? && !m.integer?
         if n.x?

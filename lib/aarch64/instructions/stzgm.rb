@@ -4,8 +4,13 @@ module AArch64
     # Store Tag and Zero Multiple
     # STZGM  <Xt>, [<Xn|SP>]
     class STZGM
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STZGM(@rn.to_i, @rt.to_i)
       end
 
       private
