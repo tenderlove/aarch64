@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def xaflag
+      @insns = @insns << XAFLAG.new
+    end
+
     def xpacd rd
       @insns = @insns << XPAC.new(rd, 1)
     end

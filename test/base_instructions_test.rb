@@ -4136,8 +4136,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_XAFLAG
-    skip "Fixme!"
     # XAFLAG
+    # xaflag
+    assert_bytes [0x3f, 0x40, 00, 0xd5] do |asm|
+      asm.xaflag
+    end
   end
 
   def test_XPAC
