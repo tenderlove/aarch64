@@ -4,8 +4,16 @@ module AArch64
     # System instruction with result
     # SYSL  <Xt>, #<op1>, <Cn>, <Cm>, #<op2>
     class SYSL
+      def initialize xt, op1, cn, cm, op2
+        @xt  = xt
+        @op1 = op1
+        @cn  = cn
+        @cm  = cm
+        @op2 = op2
+      end
+
       def encode
-        raise NotImplementedError
+        self.SYSL(@op1, @cn.to_i, @cm.to_i, @op2, @xt.to_i)
       end
 
       private

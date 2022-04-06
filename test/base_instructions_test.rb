@@ -4002,8 +4002,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SYSL
-    skip "Fixme!"
     # SYSL  <Xt>, #<op1>, <Cn>, <Cm>, #<op2>
+    assert_bytes [0xe9,0x59,0x2f,0xd5] do |asm|
+      asm.sysl    x9, 7, c5, c9, 7
+    end
+    assert_bytes [0x41,0xff,0x28,0xd5] do |asm|
+      asm.sysl    x1, 0, c15, c15, 2
+    end
   end
 
   def test_TBNZ
