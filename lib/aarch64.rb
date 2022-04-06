@@ -955,6 +955,10 @@ module AArch64
       @insns = @insns << SUBPS.new(xd, xn, xm)
     end
 
+    def sxtw rd, rn
+      sbfm rd, rn, 0, 31
+    end
+
     def sys op1, cn, cm, op2, xt = XZR
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end

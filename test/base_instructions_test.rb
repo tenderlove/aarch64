@@ -3986,8 +3986,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SXTW_SBFM
-    skip "Fixme!"
     # SXTW  <Xd>, <Wn>
+    assert_bytes [0xc3,0x7f,0x40,0x93] do |asm|
+      asm.sxtw     x3, w30
+    end
     # SBFM <Xd>, <Xn>, #0, #31
   end
 
