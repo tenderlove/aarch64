@@ -959,6 +959,14 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def ubfm rd, rn, immr, imms
+      @insns = @insns << UBFM.new(rd, rn, immr, imms)
+    end
+
+    def ubfx rd, rn, lsb, width
+      ubfm rd, rn, lsb, lsb + width - 1
+    end
+
     def wfe
       @insns = @insns << WFE.new
     end

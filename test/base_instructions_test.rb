@@ -4051,18 +4051,29 @@ class BaseInstructionsTest < AArch64::Test
     # UBFM <Xd>, <Xn>, #(-<lsb> MOD 64), #(<width>-1)
   end
 
-  def test_UBFM
-    skip "Fixme!"
-    # UBFM  <Wd>, <Wn>, #<immr>, #<imms>
-    # UBFM  <Xd>, <Xn>, #<immr>, #<imms>
-  end
-
   def test_UBFX_UBFM
-    skip "Fixme!"
     # UBFX  <Wd>, <Wn>, #<lsb>, #<width>
     # UBFM <Wd>, <Wn>, #<lsb>, #(<lsb>+<width>-1)
     # UBFX  <Xd>, <Xn>, #<lsb>, #<width>
     # UBFM <Xd>, <Xn>, #<lsb>, #(<lsb>+<width>-1)
+    assert_bytes [0x41,0x3c,0x01,0x53] do |asm|
+      asm.ubfx w1, w2, 1, 15
+    end
+    assert_bytes [0x41,0x3c,0x41,0xd3] do |asm|
+      asm.ubfx x1, x2, 1, 15
+    end
+    assert_bytes [0x9f,0x00,0x40,0xd3] do |asm|
+      asm.ubfx     xzr, x4, 0, 1
+    end
+    assert_bytes [0x49,0x01,0x00,0x53] do |asm|
+      asm.ubfx     w9, w10, 0, 1
+    end
+    assert_bytes [0x49,0x01,0x00,0x53] do |asm|
+      asm.ubfx    w9, w10, 0, 1
+    end
+    assert_bytes [0xff,0x53,0x4a,0xd3] do |asm|
+      asm.ubfx    xzr, xzr, 10, 11
+    end
   end
 
   def test_UDF_perm_undef

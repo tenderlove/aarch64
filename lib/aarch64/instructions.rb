@@ -324,7 +324,6 @@ module AArch64
     autoload :TST_ANDS_log_shift, "aarch64/instructions/tst_ands_log_shift"
     autoload :UBFIZ_UBFM, "aarch64/instructions/ubfiz_ubfm"
     autoload :UBFM, "aarch64/instructions/ubfm"
-    autoload :UBFX_UBFM, "aarch64/instructions/ubfx_ubfm"
     autoload :UDF_perm_undef, "aarch64/instructions/udf_perm_undef"
     autoload :UDIV, "aarch64/instructions/udiv"
     autoload :UMADDL, "aarch64/instructions/umaddl"

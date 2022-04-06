@@ -5,8 +5,15 @@ module AArch64
     # UBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # UBFM  <Xd>, <Xn>, #<immr>, #<imms>
     class UBFM
+      def initialize rd, rn, immr, imms
+        @rd   = rd
+        @rn   = rn
+        @immr = immr
+        @imms = imms
+      end
+
       def encode
-        raise NotImplementedError
+        self.UBFM(@rd.sf, @rd.sf, @immr, @imms, @rn.to_i, @rd.to_i)
       end
 
       private
