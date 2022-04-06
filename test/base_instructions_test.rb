@@ -4148,8 +4148,9 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_YIELD
-    skip "Fixme!"
     # YIELD
+    assert_bytes [0x3f,0x20,0x03,0xd5] do |asm|
+      asm.yield
+    end
   end
-
 end

@@ -5,12 +5,12 @@ module AArch64
     # YIELD
     class YIELD
       def encode
-        raise NotImplementedError
+        self.YIELD
       end
 
       private
 
-      def YIELD 
+      def YIELD
         insn = 0b1101010100_0_00_011_0010_0000_001_11111
         insn
       end

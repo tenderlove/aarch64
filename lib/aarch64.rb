@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def yield
+      @insns = @insns << YIELD.new
+    end
+
     def write_to io
       io.write @insns.map(&:encode).pack("L<*")
     end
