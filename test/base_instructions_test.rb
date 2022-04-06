@@ -3599,9 +3599,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STXP
-    skip "Fixme!"
     # STXP  <Ws>, <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # STXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
+    assert_bytes [0x22,0x18,0x21,0xc8] do |asm|
+      asm.stxp   w1, x2, x6, [x1]
+    end
+    assert_bytes [0x22,0x18,0x21,0x88] do |asm|
+      asm.stxp   w1, w2, w6, [x1]
+    end
+    assert_bytes [0xcc,0x35,0x2b,0x88] do |asm|
+      asm.stxp     w11, w12, w13, [x14]
+    end
+    assert_bytes [0xf7,0x39,0x3f,0xc8] do |asm|
+      asm.stxp     wzr, x23, x14, [x15]
+    end
   end
 
   def test_STXR
