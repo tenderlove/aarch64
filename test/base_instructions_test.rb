@@ -4115,8 +4115,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UXTB_UBFM
-    skip "Fixme!"
     # UXTB  <Wd>, <Wn>
+    assert_bytes [0x41,0x1c,0x00,0x53] do |asm|
+      asm.uxtb     w1, w2
+    end
     # UBFM <Wd>, <Wn>, #0, #7
   end
 

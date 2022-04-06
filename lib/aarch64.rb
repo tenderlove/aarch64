@@ -967,6 +967,10 @@ module AArch64
       ubfm rd, rn, lsb, lsb + width - 1
     end
 
+    def uxtb rd, rn
+      ubfm rd, rn, 0, 7
+    end
+
     def wfe
       @insns = @insns << WFE.new
     end
