@@ -4,8 +4,15 @@ module AArch64
     # Unsigned Multiply-Add Long
     # UMADDL  <Xd>, <Wn>, <Wm>, <Xa>
     class UMADDL
+      def initialize xd, wn, wm, xa
+        @xd = xd
+        @wn = wn
+        @wm = wm
+        @xa = xa
+      end
+
       def encode
-        raise NotImplementedError
+        self.UMADDL(@wm.to_i, @xa.to_i, @wn.to_i, @xd.to_i)
       end
 
       private

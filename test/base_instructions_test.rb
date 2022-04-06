@@ -4088,8 +4088,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UMADDL
-    skip "Fixme!"
     # UMADDL  <Xd>, <Wn>, <Wm>, <Xa>
+    assert_bytes [0x41,0x10,0xa3,0x9b] do |asm|
+      asm.umaddl x1, w2, w3, x4
+    end
+    assert_bytes [0xa3,0x24,0xa2,0x9b] do |asm|
+      asm.umaddl   x3, w5, w2, x9
+    end
+    assert_bytes [0x5f,0x31,0xab,0x9b] do |asm|
+      asm.umaddl   xzr, w10, w11, x12
+    end
+    assert_bytes [0xed,0x3f,0xae,0x9b] do |asm|
+      asm.umaddl   x13, wzr, w14, x15
+    end
+    assert_bytes [0x30,0x4a,0xbf,0x9b] do |asm|
+      asm.umaddl   x16, w17, wzr, x18
+    end
   end
 
   def test_UMNEGL_UMSUBL
