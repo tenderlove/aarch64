@@ -818,6 +818,14 @@ module AArch64
       end
     end
 
+    def ldapursh rt, rn
+      if rt.x?
+        @insns = @insns << LDAPUR_gen.new(0b01, 0b10, rt, rn.first, rn[1] || 0)
+      else
+        @insns = @insns << LDAPUR_gen.new(0b01, 0b11, rt, rn.first, rn[1] || 0)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
