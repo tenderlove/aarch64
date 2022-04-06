@@ -327,7 +327,6 @@ module AArch64
     autoload :UDF_perm_undef, "aarch64/instructions/udf_perm_undef"
     autoload :UDIV, "aarch64/instructions/udiv"
     autoload :UMADDL, "aarch64/instructions/umaddl"
-    autoload :UMNEGL_UMSUBL, "aarch64/instructions/umnegl_umsubl"
     autoload :UMSUBL, "aarch64/instructions/umsubl"
     autoload :UMULH, "aarch64/instructions/umulh"
     autoload :WFE, "aarch64/instructions/wfe"

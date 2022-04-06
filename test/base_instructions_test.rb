@@ -4107,8 +4107,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UMNEGL_UMSUBL
-    skip "Fixme!"
     # UMNEGL  <Xd>, <Wn>, <Wm>
+    assert_bytes [0x93,0xfe,0xb5,0x9b] do |asm|
+      asm.umnegl   x19, w20, w21
+    end
+    assert_bytes [0xab,0xfd,0xb1,0x9b] do |asm|
+      asm.umnegl   x11, w13, w17
+    end
     # UMSUBL <Xd>, <Wn>, <Wm>, XZR
   end
 
