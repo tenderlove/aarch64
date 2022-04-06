@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def wfe
+      @insns = @insns << WFE.new
+    end
+
     def wfet rd
       @insns = @insns << WFET.new(rd)
     end

@@ -5,12 +5,12 @@ module AArch64
     # WFE
     class WFE
       def encode
-        raise NotImplementedError
+        self.WFE
       end
 
       private
 
-      def WFE 
+      def WFE
         insn = 0b1101010100_0_00_011_0010_0000_010_11111
         insn
       end
