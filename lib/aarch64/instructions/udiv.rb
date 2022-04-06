@@ -5,8 +5,14 @@ module AArch64
     # UDIV  <Wd>, <Wn>, <Wm>
     # UDIV  <Xd>, <Xn>, <Xm>
     class UDIV
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.UDIV(@rd.sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -967,6 +967,10 @@ module AArch64
       ubfm rd, rn, lsb, lsb + width - 1
     end
 
+    def udiv rd, rn, rm
+      @insns = @insns << UDIV.new(rd, rn, rm)
+    end
+
     def umaddl xd, wn, wm, xa
       @insns = @insns << UMADDL.new(xd, wn, wm, xa)
     end

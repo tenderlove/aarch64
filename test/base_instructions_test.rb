@@ -4082,9 +4082,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UDIV
-    skip "Fixme!"
     # UDIV  <Wd>, <Wn>, <Wm>
     # UDIV  <Xd>, <Xn>, <Xm>
+    assert_bytes [0x41,0x08,0xc3,0x1a] do |asm|
+      asm.udiv w1, w2, w3
+    end
+    assert_bytes [0x41,0x08,0xc3,0x9a] do |asm|
+      asm.udiv x1, x2, x3
+    end
+    assert_bytes [0xe0,0x08,0xca,0x1a] do |asm|
+      asm.udiv	w0, w7, w10
+    end
+    assert_bytes [0xc9,0x0a,0xc4,0x9a] do |asm|
+      asm.udiv	x9, x22, x4
+    end
   end
 
   def test_UMADDL
