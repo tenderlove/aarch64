@@ -4,8 +4,12 @@ module AArch64
     # Wait For Interrupt with Timeout
     # WFIT  <Xt>
     class WFIT
+      def initialize rd
+        @rd = rd
+      end
+
       def encode
-        raise NotImplementedError
+        self.WFIT(@rd.to_i)
       end
 
       private

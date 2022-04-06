@@ -4131,8 +4131,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_WFIT
-    skip "Fixme!"
     # WFIT  <Xt>
+    # wfit  x3
+    assert_bytes [35, 16, 3, 213] do |asm|
+      asm.wfit x3
+    end
   end
 
   def test_XAFLAG
