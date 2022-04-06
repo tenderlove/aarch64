@@ -959,6 +959,16 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def tst rn, rm, option = nil, shift: :lsl, amount: 0
+      if option
+        shift = option.name
+        amount = option.amount
+      end
+
+      zr = rn.x? ? XZR : WZR
+      ands zr, rn, rm, shift: shift, amount: amount
+    end
+
     def ubfm rd, rn, immr, imms
       @insns = @insns << UBFM.new(rd, rn, immr, imms)
     end

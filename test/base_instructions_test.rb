@@ -4027,20 +4027,41 @@ class BaseInstructionsTest < AArch64::Test
     # TSB CSYNC
   end
 
-  def test_TST_ANDS_log_imm
-    skip "Fixme!"
+  def test_TST_all
     # TST  <Wn>, #<imm>
+    assert_bytes [0x3f,0x04,0x00,0x72] do |asm|
+      asm.tst	w1, 0x3
+    end
+    assert_bytes [0x3f,0x04,0x40,0xf2] do |asm|
+      asm.tst	x1, 0x3
+    end
+    assert_bytes [0x3f,0x00,0x02,0x6a] do |asm|
+      asm.tst	w1, w2
+    end
+    assert_bytes [0x3f,0x00,0x02,0xea] do |asm|
+      asm.tst	x1, x2
+    end
+    assert_bytes [0x3f,0x08,0x02,0x6a] do |asm|
+      asm.tst	w1, w2, lsl(2)
+    end
+    assert_bytes [0x3f,0x0c,0x02,0xea] do |asm|
+      asm.tst	x1, x2, lsl(3)
+    end
+    assert_bytes [0x7f,0x7c,0x07,0x6a] do |asm|
+      asm.tst	w3, w7, lsl(31)
+    end
+    assert_bytes [0x5f,0x00,0x94,0xea] do |asm|
+      asm.tst	x2, x20, asr(0)
+    end
+    assert_bytes [0x7f,0x7c,0x07,0x6a] do |asm|
+      asm.tst      w3, w7, lsl(31)
+    end
+    assert_bytes [0x5f,0x00,0x94,0xea] do |asm|
+      asm.tst      x2, x20, asr(0)
+    end
     # ANDS WZR, <Wn>, #<imm>
     # TST  <Xn>, #<imm>
     # ANDS XZR, <Xn>, #<imm>
-  end
-
-  def test_TST_ANDS_log_shift
-    skip "Fixme!"
-    # TST  <Wn>, <Wm>{, <shift> #<amount>}
-    # ANDS WZR, <Wn>, <Wm>{, <shift> #<amount>}
-    # TST  <Xn>, <Xm>{, <shift> #<amount>}
-    # ANDS XZR, <Xn>, <Xm>{, <shift> #<amount>}
   end
 
   def test_UBFIZ_UBFM
