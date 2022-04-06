@@ -4017,8 +4017,196 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_TLBI_SYS
-    skip "Fixme!"
-    # TLBI  <tlbi_op>{, <Xt>}
+    # TLBI  <tlbi :_op>{, <Xt>}
+    assert_bytes [0x1f,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vmalle1is
+    end
+    assert_bytes [0x1f,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :alle2is
+    end
+    assert_bytes [0x1f,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :alle3is
+    end
+    assert_bytes [0x20,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vae1is, x0
+    end
+    assert_bytes [0x20,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vae2is, x0
+    end
+    assert_bytes [0x20,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :vae3is, x0
+    end
+    assert_bytes [0x40,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :aside1is, x0
+    end
+    assert_bytes [0x60,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vaae1is, x0
+    end
+    assert_bytes [0x9f,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :alle1is
+    end
+    assert_bytes [0xa0,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vale1is, x0
+    end
+    assert_bytes [0xe0,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vaale1is, x0
+    end
+    assert_bytes [0x1f,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vmalle1
+    end
+    assert_bytes [0x1f,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :alle2
+    end
+    assert_bytes [0xa0,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vale2is, x0
+    end
+    assert_bytes [0xa0,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :vale3is, x0
+    end
+    assert_bytes [0x1f,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :alle3
+    end
+    assert_bytes [0x20,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vae1, x0
+    end
+    assert_bytes [0x20,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vae2, x0
+    end
+    assert_bytes [0x20,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :vae3, x0
+    end
+    assert_bytes [0x40,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :aside1, x0
+    end
+    assert_bytes [0x60,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vaae1, x0
+    end
+    assert_bytes [0xa0,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vale1, x0
+    end
+    assert_bytes [0xa0,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vale2, x0
+    end
+    assert_bytes [0xa0,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :vale3, x0
+    end
+    assert_bytes [0xe0,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vaale1, x0
+    end
+    assert_bytes [0x20,0x84,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2e1, x0
+    end
+    assert_bytes [0xa0,0x84,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2le1, x0
+    end
+    assert_bytes [0x20,0x80,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2e1is, x0
+    end
+    assert_bytes [0xa0,0x80,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2le1is, x0
+    end
+    assert_bytes [0xdf,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vmalls12e1
+    end
+    assert_bytes [0xdf,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vmalls12e1is
+    end
+    assert_bytes [0x24,0x80,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2e1is, x4
+    end
+    assert_bytes [0xa9,0x80,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2le1is, x9
+    end
+    assert_bytes [0x1f,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vmalle1is
+    end
+    assert_bytes [0x1f,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :alle2is
+    end
+    assert_bytes [0x1f,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :alle3is
+    end
+    assert_bytes [0x21,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vae1is, x1
+    end
+    assert_bytes [0x22,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vae2is, x2
+    end
+    assert_bytes [0x23,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :vae3is, x3
+    end
+    assert_bytes [0x45,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :aside1is, x5
+    end
+    assert_bytes [0x69,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vaae1is, x9
+    end
+    assert_bytes [0x9f,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :alle1is
+    end
+    assert_bytes [0xaa,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vale1is, x10
+    end
+    assert_bytes [0xab,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vale2is, x11
+    end
+    assert_bytes [0xad,0x83,0x0e,0xd5] do |asm|
+      asm.tlbi :vale3is, x13
+    end
+    assert_bytes [0xdf,0x83,0x0c,0xd5] do |asm|
+      asm.tlbi :vmalls12e1is
+    end
+    assert_bytes [0xee,0x83,0x08,0xd5] do |asm|
+      asm.tlbi :vaale1is, x14
+    end
+    assert_bytes [0x2f,0x84,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2e1, x15
+    end
+    assert_bytes [0xb0,0x84,0x0c,0xd5] do |asm|
+      asm.tlbi :ipas2le1, x16
+    end
+    assert_bytes [0x1f,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vmalle1
+    end
+    assert_bytes [0x1f,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :alle2
+    end
+    assert_bytes [0x1f,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :alle3
+    end
+    assert_bytes [0x31,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vae1, x17
+    end
+    assert_bytes [0x32,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vae2, x18
+    end
+    assert_bytes [0x33,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :vae3, x19
+    end
+    assert_bytes [0x54,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :aside1, x20
+    end
+    assert_bytes [0x75,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vaae1, x21
+    end
+    assert_bytes [0x9f,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :alle1
+    end
+    assert_bytes [0xb6,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vale1, x22
+    end
+    assert_bytes [0xb7,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vale2, x23
+    end
+    assert_bytes [0xb8,0x87,0x0e,0xd5] do |asm|
+      asm.tlbi :vale3, x24
+    end
+    assert_bytes [0xdf,0x87,0x0c,0xd5] do |asm|
+      asm.tlbi :vmalls12e1
+    end
+    assert_bytes [0xf9,0x87,0x08,0xd5] do |asm|
+      asm.tlbi :vaale1, x25
+    end
     # SYS #<op1>, C8, <Cm>, #<op2>{, <Xt>}
   end
 

@@ -959,6 +959,11 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def tlbi tlbi_op, xt = XZR
+      op1, crm, op2 = Utils.tlbi_op(tlbi_op)
+      sys op1, Names::C8, crm, op2, xt
+    end
+
     def tsb _
       @insns = @insns << TSB.new
     end

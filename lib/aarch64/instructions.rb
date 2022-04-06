@@ -318,7 +318,6 @@ module AArch64
     autoload :SYSL, "aarch64/instructions/sysl"
     autoload :TBNZ, "aarch64/instructions/tbnz"
     autoload :TBZ, "aarch64/instructions/tbz"
-    autoload :TLBI_SYS, "aarch64/instructions/tlbi_sys"
     autoload :TSB, "aarch64/instructions/tsb"
     autoload :UBFM, "aarch64/instructions/ubfm"
     autoload :UDF_perm_undef, "aarch64/instructions/udf_perm_undef"
