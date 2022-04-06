@@ -3954,11 +3954,37 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SWPB
-    skip "Fixme!"
     # SWPAB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0xa0,0x38] do |asm|
+      asm.swpab w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xa2,0x38] do |asm|
+      asm.swpab w2, w3, [sp]
+    end
     # SWPALB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0xe0,0x38] do |asm|
+      asm.swpalb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xe2,0x38] do |asm|
+      asm.swpalb w2, w3, [sp]
+    end
     # SWPB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0x20,0x38] do |asm|
+      asm.swpb  w0, w1, [x2]
+    end
+    assert_bytes [0x41,0x80,0x20,0x38] do |asm|
+      asm.swpb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x22,0x38] do |asm|
+      asm.swpb w2, w3, [sp]
+    end
     # SWPLB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0x60,0x38] do |asm|
+      asm.swplb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x62,0x38] do |asm|
+      asm.swplb w2, w3, [sp]
+    end
   end
 
   def test_SWPH

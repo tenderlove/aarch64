@@ -7,8 +7,16 @@ module AArch64
     # SWPB  <Ws>, <Wt>, [<Xn|SP>]
     # SWPLB  <Ws>, <Wt>, [<Xn|SP>]
     class SWPB
+      def initialize rs, rt, rn, a, r
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @a  = a
+        @r  = r
+      end
+
       def encode
-        raise NotImplementedError
+        self.SWPB(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
