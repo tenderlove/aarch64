@@ -796,26 +796,26 @@ module AArch64
 
     def ldapur rt, rn
       if rt.x?
-        @insns = @insns << LDAPUR_gen.new(0b11, rt, rn.first, rn[1] || 0)
+        @insns = @insns << LDAPUR_gen.new(0b11, 0b01, rt, rn.first, rn[1] || 0)
       else
-        @insns = @insns << LDAPUR_gen.new(0b10, rt, rn.first, rn[1] || 0)
-      end
-    end
-
-    def ldapur rt, rn
-      if rt.x?
-        @insns = @insns << LDAPUR_gen.new(0b11, rt, rn.first, rn[1] || 0)
-      else
-        @insns = @insns << LDAPUR_gen.new(0b10, rt, rn.first, rn[1] || 0)
+        @insns = @insns << LDAPUR_gen.new(0b10, 0b01, rt, rn.first, rn[1] || 0)
       end
     end
 
     def ldapurb rt, rn
-      @insns = @insns << LDAPUR_gen.new(0b00, rt, rn.first, rn[1] || 0)
+      @insns = @insns << LDAPUR_gen.new(0b00, 0b01, rt, rn.first, rn[1] || 0)
     end
 
     def ldapurh rt, rn
-      @insns = @insns << LDAPUR_gen.new(0b01, rt, rn.first, rn[1] || 0)
+      @insns = @insns << LDAPUR_gen.new(0b01, 0b01, rt, rn.first, rn[1] || 0)
+    end
+
+    def ldapursb rt, rn
+      if rt.x?
+        @insns = @insns << LDAPUR_gen.new(0b00, 0b10, rt, rn.first, rn[1] || 0)
+      else
+        @insns = @insns << LDAPUR_gen.new(0b00, 0b11, rt, rn.first, rn[1] || 0)
+      end
     end
 
     def movz reg, imm, lsl: 0
