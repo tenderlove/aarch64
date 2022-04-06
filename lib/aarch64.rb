@@ -955,6 +955,26 @@ module AArch64
       @insns = @insns << SUBPS.new(xd, xn, xm)
     end
 
+    def swp rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << SWP.new(rs, rt, rn.first, size, 0, 0)
+    end
+
+    def swpal rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << SWP.new(rs, rt, rn.first, size, 1, 1)
+    end
+
+    def swpl rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << SWP.new(rs, rt, rn.first, size, 0, 1)
+    end
+
+    def swpa rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << SWP.new(rs, rt, rn.first, size, 1, 0)
+    end
+
     def swpab rs, rt, rn
       @insns = @insns << SWPB.new(rs, rt, rn.first, 1, 0)
     end

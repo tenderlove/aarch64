@@ -3942,11 +3942,64 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SWP
-    skip "Fixme!"
     # SWP  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0x20,0xf8] do |asm|
+      asm.swp   x0, x1, [x2]
+    end
+    assert_bytes [0x41,0x80,0x20,0xb8] do |asm|
+      asm.swp w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x22,0xb8] do |asm|
+      asm.swp w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x80,0x20,0xf8] do |asm|
+      asm.swp x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x22,0xf8] do |asm|
+      asm.swp x2, x3, [sp]
+    end
     # SWPA  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0xa0,0xb8] do |asm|
+      asm.swpa w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xa2,0xb8] do |asm|
+      asm.swpa w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x80,0xa0,0xf8] do |asm|
+      asm.swpa x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xa2,0xf8] do |asm|
+      asm.swpa x2, x3, [sp]
+    end
     # SWPAL  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0xe1,0x83,0xe0,0xf8] do |asm|
+      asm.swpal x0, x1, [sp]
+    end
+    assert_bytes [0x41,0x80,0xe0,0xb8] do |asm|
+      asm.swpal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xe2,0xb8] do |asm|
+      asm.swpal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x80,0xe0,0xf8] do |asm|
+      asm.swpal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0xe2,0xf8] do |asm|
+      asm.swpal x2, x3, [sp]
+    end
     # SWPL  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x80,0x60,0xb8] do |asm|
+      asm.swpl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x62,0xb8] do |asm|
+      asm.swpl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x80,0x60,0xf8] do |asm|
+      asm.swpl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x83,0x62,0xf8] do |asm|
+      asm.swpl x2, x3, [sp]
+    end
     # SWP  <Xs>, <Xt>, [<Xn|SP>]
     # SWPA  <Xs>, <Xt>, [<Xn|SP>]
     # SWPAL  <Xs>, <Xt>, [<Xn|SP>]
