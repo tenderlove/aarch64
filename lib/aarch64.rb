@@ -971,6 +971,10 @@ module AArch64
       @insns = @insns << UMADDL.new(xd, wn, wm, xa)
     end
 
+    def umulh rd, rn, rm
+      @insns = @insns << UMULH.new(rd, rn, rm)
+    end
+
     def umull xd, wn, wm
       umaddl xd, wn, wm, XZR
     end

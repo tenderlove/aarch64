@@ -4,8 +4,14 @@ module AArch64
     # Unsigned Multiply High
     # UMULH  <Xd>, <Xn>, <Xm>
     class UMULH
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.UMULH(@rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
