@@ -4,8 +4,15 @@ module AArch64
     # Unsigned Multiply-Subtract Long
     # UMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
     class UMSUBL
+      def initialize xd, wn, wm, xa
+        @xd = xd
+        @wn = wn
+        @wm = wm
+        @xa = xa
+      end
+
       def encode
-        raise NotImplementedError
+        self.UMSUBL(@wm.to_i, @xa.to_i, @wn.to_i, @xd.to_i)
       end
 
       private
