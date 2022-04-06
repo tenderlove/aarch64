@@ -846,6 +846,10 @@ module AArch64
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end
 
+    def stxrb rs, rt, rn
+      @insns = @insns << STXRB.new(rs, rt, rn.first)
+    end
+
     def stxrh rs, rt, rn
       @insns = @insns << STXRH.new(rs, rt, rn.first)
     end

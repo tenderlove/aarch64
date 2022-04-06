@@ -4,8 +4,14 @@ module AArch64
     # Store Exclusive Register Byte
     # STXRB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     class STXRB
+      def initialize rs, rt, rn
+        @rs = rs
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STXRB(@rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
