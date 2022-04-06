@@ -4012,8 +4012,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_TBZ
-    skip "Fixme!"
     # TBZ  <R><t>, #<imm>, <label>
+    assert_bytes [0xe3,0xff,0x2b,0x36] do |asm|
+      asm.tbz	w3, 5, 32764
+    end
+    assert_one_insn "tbz w3, #5, #4" do |asm|
+      label = asm.make_label :foo
+      asm.tbz w3, 5, label
+      asm.put_label label
+    end
   end
 
   def test_TLBI_SYS
