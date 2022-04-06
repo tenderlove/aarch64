@@ -4126,8 +4126,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_WFI
-    skip "Fixme!"
     # WFI
+    assert_bytes [0x7f,0x20,0x03,0xd5] do |asm|
+      asm.wfi
+    end
   end
 
   def test_WFIT

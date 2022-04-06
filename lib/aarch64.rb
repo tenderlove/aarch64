@@ -959,6 +959,10 @@ module AArch64
       @insns = @insns << SYS.new(op1, cn, cm, op2, xt)
     end
 
+    def wfi
+      @insns = @insns << WFI.new
+    end
+
     def wfit rd
       @insns = @insns << WFIT.new(rd)
     end
