@@ -330,7 +330,6 @@ module AArch64
     autoload :UMNEGL_UMSUBL, "aarch64/instructions/umnegl_umsubl"
     autoload :UMSUBL, "aarch64/instructions/umsubl"
     autoload :UMULH, "aarch64/instructions/umulh"
-    autoload :UMULL_UMADDL, "aarch64/instructions/umull_umaddl"
     autoload :WFE, "aarch64/instructions/wfe"
     autoload :WFET, "aarch64/instructions/wfet"
     autoload :WFI, "aarch64/instructions/wfi"

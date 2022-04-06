@@ -4123,8 +4123,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_UMULL_UMADDL
-    skip "Fixme!"
     # UMULL  <Xd>, <Wn>, <Wm>
+    assert_bytes [0x93,0x7e,0xb5,0x9b] do |asm|
+      asm.umull    x19, w20, w21
+    end
+    assert_bytes [0xab,0x7d,0xb1,0x9b] do |asm|
+      asm.umull    x11, w13, w17
+    end
     # UMADDL <Xd>, <Wn>, <Wm>, XZR
   end
 
