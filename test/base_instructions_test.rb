@@ -2546,8 +2546,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDLARB
-    skip "Fixme!"
     # LDLARB  <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x20,0x7c,0xdf,0x08] do |asm|
+      asm.ldlarb w0, [x1]
+    end
   end
 
   def test_LDLARH
