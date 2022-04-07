@@ -2203,8 +2203,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDARB
-    skip "Fixme!"
     # LDARB  <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0xe4,0xff,0xdf,0x08] do |asm|
+      asm.ldarb  w4, [sp]
+    end
+    assert_bytes [0xfd,0xff,0xdf,0x08] do |asm|
+      asm.ldarb    w29, [sp]
+    end
   end
 
   def test_LDARH

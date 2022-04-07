@@ -90,7 +90,6 @@ module AArch64
     autoload :LDAPRH, "aarch64/instructions/ldaprh"
     autoload :LDAPUR_gen, "aarch64/instructions/ldapur_gen"
     autoload :LDAR, "aarch64/instructions/ldar"
-    autoload :LDARB, "aarch64/instructions/ldarb"
     autoload :LDARH, "aarch64/instructions/ldarh"
     autoload :LDAXP, "aarch64/instructions/ldaxp"
     autoload :LDAXR, "aarch64/instructions/ldaxr"
