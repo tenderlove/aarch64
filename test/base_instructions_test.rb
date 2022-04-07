@@ -2213,8 +2213,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDARH
-    skip "Fixme!"
     # LDARH  <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0xe4,0xff,0xdf,0x48] do |asm|
+      asm.ldarh  w4, [sp]
+    end
+    assert_bytes [0x1e,0xfc,0xdf,0x48] do |asm|
+      asm.ldarh    w30, [x0]
+    end
   end
 
   def test_LDAXP
