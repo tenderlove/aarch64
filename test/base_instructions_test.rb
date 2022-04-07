@@ -2724,25 +2724,174 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDR_imm_gen
-    skip "Fixme!"
     # LDR  <Wt>, [<Xn|SP>], #<simm>
     # LDR  <Xt>, [<Xn|SP>], #<simm>
     # LDR  <Wt>, [<Xn|SP>, #<simm>]!
     # LDR  <Xt>, [<Xn|SP>, #<simm>]!
     # LDR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDR  <Xt>, [<Xn|SP>{, #<pimm>}]
+    assert_bytes [0x85,0x14,0x40,0xb9] do |asm|
+      asm.ldr    w5, [x4, 20]
+    end
+    assert_bytes [0x64,0x00,0x40,0xf9] do |asm|
+      asm.ldr    x4, [x3]
+    end
+    assert_bytes [0xe2,0x13,0x40,0xf9] do |asm|
+      asm.ldr    x2, [sp, 32]
+    end
+    assert_bytes [0xfd,0x8c,0x40,0xf8] do |asm|
+      asm.ldr  x29, [x7, 8], :!
+    end
+    assert_bytes [0xfe,0x8c,0x40,0xf8] do |asm|
+      asm.ldr  x30, [x7, 8], :!
+    end
+    assert_bytes [0xfd,0x84,0x40,0xf8] do |asm|
+      asm.ldr x29, [x7], 8
+    end
+    assert_bytes [0xfe,0x84,0x40,0xf8] do |asm|
+      asm.ldr x30, [x7], 8
+    end
+    assert_bytes [0x00,0x68,0x60,0xb8] do |asm|
+      asm.ldr  w0, [x0, x0]
+    end
+    assert_bytes [0x00,0x78,0x60,0xb8] do |asm|
+      asm.ldr  w0, [x0, x0, lsl(2)]
+    end
+    assert_bytes [0x00,0x68,0x60,0xf8] do |asm|
+      asm.ldr  x0, [x0, x0]
+    end
+    assert_bytes [0x00,0x78,0x60,0xf8] do |asm|
+      asm.ldr  x0, [x0, x0, lsl(3)]
+    end
+    assert_bytes [0x00,0xe8,0x60,0xf8] do |asm|
+      asm.ldr  x0, [x0, x0, sxtx]
+    end
+    assert_bytes [0xe0,0xff,0x7f,0x18] do |asm|
+      asm.ldr     w0, 1048572
+    end
+    assert_bytes [0x0a,0x00,0x80,0x58] do |asm|
+      asm.ldr     x10, -1048576
+    end
+    assert_bytes [0x00,0x00,0x40,0xf9] do |asm|
+      asm.ldr      x0, [x0]
+    end
+    assert_bytes [0xa4,0x03,0x40,0xf9] do |asm|
+      asm.ldr      x4, [x29]
+    end
+    assert_bytes [0x9e,0xfd,0x7f,0xf9] do |asm|
+      asm.ldr      x30, [x12, 32760]
+    end
+    assert_bytes [0xf4,0x07,0x40,0xf9] do |asm|
+      asm.ldr      x20, [sp, 8]
+    end
+    assert_bytes [0xff,0x03,0x40,0xf9] do |asm|
+      asm.ldr      xzr, [sp]
+    end
+    assert_bytes [0xe2,0x03,0x40,0xb9] do |asm|
+      asm.ldr      w2, [sp]
+    end
+    assert_bytes [0xf1,0xff,0x7f,0xb9] do |asm|
+      asm.ldr      w17, [sp, 16380]
+    end
+    assert_bytes [0x4d,0x04,0x40,0xb9] do |asm|
+      asm.ldr      w13, [x2, 4]
+    end
+    assert_bytes [0xe3,0x6b,0x65,0xb8] do |asm|
+      asm.ldr      w3, [sp, x5]
+    end
+    assert_bytes [0xca,0x7b,0x67,0xb8] do |asm|
+      asm.ldr      w10, [x30, x7, lsl(2)]
+    end
+    assert_bytes [0xab,0xeb,0x63,0xb8] do |asm|
+      asm.ldr      w11, [x29, x3, sxtx]
+    end
+    assert_bytes [0x2f,0x4b,0x67,0xb8] do |asm|
+      asm.ldr      w15, [x25, w7, uxtw]
+    end
+    assert_bytes [0x10,0x5b,0x68,0xb8] do |asm|
+      asm.ldr      w16, [x24, w8, uxtw(2)]
+    end
+    assert_bytes [0xd2,0xca,0x6a,0xb8] do |asm|
+      asm.ldr      w18, [x22, w10, sxtw]
+    end
+    assert_bytes [0xe3,0x6b,0x65,0xf8] do |asm|
+      asm.ldr      x3, [sp, x5]
+    end
+    assert_bytes [0x8c,0xeb,0x7f,0xf8] do |asm|
+      asm.ldr      x12, [x28, xzr, sxtx]
+    end
+    assert_bytes [0x6d,0xfb,0x65,0xf8] do |asm|
+      asm.ldr      x13, [x27, x5, sxtx(3)]
+    end
+    assert_bytes [0x2f,0x4b,0x67,0xf8] do |asm|
+      asm.ldr      x15, [x25, w7, uxtw]
+    end
+    assert_bytes [0x10,0x5b,0x68,0xf8] do |asm|
+      asm.ldr      x16, [x24, w8, uxtw(3)]
+    end
+    assert_bytes [0xf1,0xca,0x69,0xf8] do |asm|
+      asm.ldr      x17, [x23, w9, sxtw]
+    end
+    assert_bytes [0xd2,0xca,0x6a,0xf8] do |asm|
+      asm.ldr      x18, [x22, w10, sxtw]
+    end
+    assert_bytes [0xf3,0xf7,0x4f,0xb8] do |asm|
+      asm.ldr      w19, [sp], 255
+    end
+    assert_bytes [0xd4,0x17,0x40,0xb8] do |asm|
+      asm.ldr      w20, [x30], 1
+    end
+    assert_bytes [0x95,0x05,0x50,0xb8] do |asm|
+      asm.ldr      w21, [x12], -256
+    end
+    assert_bytes [0x3f,0xf5,0x4f,0xf8] do |asm|
+      asm.ldr      xzr, [x9], 255
+    end
+    assert_bytes [0x62,0x14,0x40,0xf8] do |asm|
+      asm.ldr      x2, [x3], 1
+    end
+    assert_bytes [0x93,0x05,0x50,0xf8] do |asm|
+      asm.ldr      x19, [x12], -256
+    end
+    assert_bytes [0x83,0x0c,0x40,0xf8] do |asm|
+      asm.ldr      x3, [x4, 0], :!
+    end
+    assert_bytes [0xff,0x0f,0x40,0xf8] do |asm|
+      asm.ldr      xzr, [sp, 0], :!
+    end
+    assert_bytes [0xf3,0xff,0x4f,0xb8] do |asm|
+      asm.ldr      w19, [sp, 255], :!
+    end
+    assert_bytes [0xd4,0x1f,0x40,0xb8] do |asm|
+      asm.ldr      w20, [x30, 1], :!
+    end
+    assert_bytes [0x95,0x0d,0x50,0xb8] do |asm|
+      asm.ldr      w21, [x12, -256], :!
+    end
+    assert_bytes [0x3f,0xfd,0x4f,0xf8] do |asm|
+      asm.ldr      xzr, [x9, 255], :!
+    end
+    assert_bytes [0x62,0x1c,0x40,0xf8] do |asm|
+      asm.ldr      x2, [x3, 1], :!
+    end
+    assert_bytes [0x93,0x0d,0x50,0xf8] do |asm|
+      asm.ldr      x19, [x12, -256], :!
+    end
   end
 
   def test_LDR_lit_gen
-    skip "Fixme!"
     # LDR  <Wt>, <label>
     # LDR  <Xt>, <label>
-  end
-
-  def test_LDR_reg_gen
-    skip "Fixme!"
-    # LDR  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    # LDR  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_one_insn "ldr x1, #4" do |asm|
+      label = asm.make_label :foo
+      asm.ldr x1, label
+      asm.put_label label
+    end
+    assert_one_insn "ldr w1, #4" do |asm|
+      label = asm.make_label :foo
+      asm.ldr w1, label
+      asm.put_label label
+    end
   end
 
   def test_LDRA

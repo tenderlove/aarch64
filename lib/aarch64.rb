@@ -1018,6 +1018,60 @@ module AArch64
       end
     end
 
+    def ldr rt, rn, simm = nil
+      size = rt.x? ? 0b11 : 0b10
+
+      if simm
+        if simm == :!
+          @insns = @insns << LDR_imm_gen.new(rt, rn.first, (rn[1] || 0), size, 0b11)
+        else
+          if simm.integer?
+            @insns = @insns << LDR_imm_gen.new(rt, rn.first, simm, size, 0b01)
+          else
+            raise
+          end
+        end
+      else
+        if rn.is_a?(Array)
+          simm = rn[1] || 0
+          if simm.integer?
+            div = rt.x? ? 8 : 4
+            @insns = @insns << LDR_imm_unsigned.new(rt, rn.first, simm / div, size)
+          else
+            rn, rm, option = *rn
+            option ||= Shifts::Shift.new(0, 0, :lsl)
+            extend = case option.name
+                     when :uxtw then 0b010
+                     when :lsl  then 0b011
+                     when :sxtw then 0b110
+                     when :sxtx then 0b111
+                     else
+                       raise
+                     end
+
+            amount = if rt.x?
+                       if option.amount == 3
+                         1
+                       else
+                         0
+                       end
+                     else
+                       if option.amount == 2
+                         1
+                       else
+                         0
+                       end
+                     end
+
+            @insns = @insns << LDR_reg_gen.new(rt, rn, rm, size, extend, amount)
+          end
+        else
+          size = rt.x? ? 0b01 : 0b00
+          @insns = @insns << LDR_lit_gen.new(rt, rn, size)
+        end
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

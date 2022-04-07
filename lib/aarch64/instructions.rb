@@ -102,6 +102,7 @@ module AArch64
     autoload :LDP_gen, "aarch64/instructions/ldp_gen"
     autoload :LDPSW, "aarch64/instructions/ldpsw"
     autoload :LDR_imm_gen, "aarch64/instructions/ldr_imm_gen"
+    autoload :LDR_imm_unsigned, "aarch64/instructions/ldr_imm_unsigned"
     autoload :LDR_lit_gen, "aarch64/instructions/ldr_lit_gen"
     autoload :LDR_reg_gen, "aarch64/instructions/ldr_reg_gen"
     autoload :LDRA, "aarch64/instructions/ldra"
