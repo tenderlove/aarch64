@@ -92,7 +92,6 @@ module AArch64
     autoload :LDAR, "aarch64/instructions/ldar"
     autoload :LDAXP, "aarch64/instructions/ldaxp"
     autoload :LDAXR, "aarch64/instructions/ldaxr"
-    autoload :LDAXRH, "aarch64/instructions/ldaxrh"
     autoload :LDCLR, "aarch64/instructions/ldclr"
     autoload :LDCLRB, "aarch64/instructions/ldclrb"
     autoload :LDCLRH, "aarch64/instructions/ldclrh"
