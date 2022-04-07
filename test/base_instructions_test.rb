@@ -2673,10 +2673,54 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDPSW
-    skip "Fixme!"
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
+    assert_bytes [0xc2,0x0d,0x42,0x69] do |asm|
+      asm.ldpsw  x2, x3, [x14, 16]
+    end
+    assert_bytes [0xe2,0x0f,0x7e,0x69] do |asm|
+      asm.ldpsw  x2, x3, [sp, -16]
+    end
+    assert_bytes [0xc2,0x0d,0xc2,0x69] do |asm|
+      asm.ldpsw	x2, x3, [x14, 16], :!
+    end
+    assert_bytes [0xe2,0x0f,0xfe,0x69] do |asm|
+      asm.ldpsw	x2, x3, [sp, -16], :!
+    end
+    assert_bytes [0xc2,0x0d,0xc2,0x68] do |asm|
+      asm.ldpsw	x2, x3, [x14], 16
+    end
+    assert_bytes [0xe2,0x0f,0xfe,0x68] do |asm|
+      asm.ldpsw	x2, x3, [sp], -16
+    end
+    assert_bytes [0xe9,0xab,0x40,0x69] do |asm|
+      asm.ldpsw    x9, x10, [sp, 4]
+    end
+    assert_bytes [0x49,0x28,0x60,0x69] do |asm|
+      asm.ldpsw    x9, x10, [x2, -256]
+    end
+    assert_bytes [0xf4,0xfb,0x5f,0x69] do |asm|
+      asm.ldpsw    x20, x30, [sp, 252]
+    end
+    assert_bytes [0xe9,0xab,0xc0,0x68] do |asm|
+      asm.ldpsw    x9, x10, [sp], 4
+    end
+    assert_bytes [0x49,0x28,0xe0,0x68] do |asm|
+      asm.ldpsw    x9, x10, [x2], -256
+    end
+    assert_bytes [0xf4,0xfb,0xdf,0x68] do |asm|
+      asm.ldpsw    x20, x30, [sp], 252
+    end
+    assert_bytes [0xe9,0xab,0xc0,0x69] do |asm|
+      asm.ldpsw    x9, x10, [sp, 4], :!
+    end
+    assert_bytes [0x49,0x28,0xe0,0x69] do |asm|
+      asm.ldpsw    x9, x10, [x2, -256], :!
+    end
+    assert_bytes [0xf4,0xfb,0xdf,0x69] do |asm|
+      asm.ldpsw    x20, x30, [sp, 252], :!
+    end
   end
 
   def test_LDR_imm_gen

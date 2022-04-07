@@ -1001,6 +1001,23 @@ module AArch64
       end
     end
 
+    def ldpsw rt, rt2, rn, imm = nil
+      div = 4
+
+      if imm
+        if imm == :!
+          # pre-index
+          @insns = @insns << LDPSW.new(rt, rt2, rn.first, (rn[1] || 0) / div, 0b011)
+        else
+          # post-index
+          @insns = @insns << LDPSW.new(rt, rt2, rn.first, (imm || 0) / div, 0b001)
+        end
+      else
+        # signed offset
+        @insns = @insns << LDPSW.new(rt, rt2, rn.first, (rn[1] || 0) / div, 0b010)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
