@@ -2186,8 +2186,19 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDAR
-    skip "Fixme!"
     # LDAR  <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0xe4,0xff,0xdf,0x88] do |asm|
+      asm.ldar   w4, [sp]
+    end
+    assert_bytes [0xe4,0xff,0xdf,0xc8] do |asm|
+      asm.ldar   x4, [sp]
+    end
+    assert_bytes [0x3f,0xfc,0xdf,0x88] do |asm|
+      asm.ldar     wzr, [x1]
+    end
+    assert_bytes [0x41,0xfc,0xdf,0xc8] do |asm|
+      asm.ldar     x1, [x2]
+    end
     # LDAR  <Xt>, [<Xn|SP>{,#0}]
   end
 
