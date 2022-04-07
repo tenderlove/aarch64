@@ -852,6 +852,10 @@ module AArch64
       @insns = @insns << LDAXR.new(rt1, xn.first, size)
     end
 
+    def ldaxrb rt1, xn
+      @insns = @insns << LDAXR.new(rt1, xn.first, 0b00)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
