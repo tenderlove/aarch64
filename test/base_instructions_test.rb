@@ -2494,11 +2494,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDEORH
-    skip "Fixme!"
     # LDEORAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0xa0,0x78] do |asm|
+      asm.ldeorah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xa2,0x78] do |asm|
+      asm.ldeorah w2, w3, [sp]
+    end
     # LDEORALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0xe0,0x78] do |asm|
+      asm.ldeoralh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xe2,0x78] do |asm|
+      asm.ldeoralh w2, w3, [sp]
+    end
     # LDEORH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0x20,0x78] do |asm|
+      asm.ldeorh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x22,0x78] do |asm|
+      asm.ldeorh w2, w3, [sp]
+    end
     # LDEORLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0x60,0x78] do |asm|
+      asm.ldeorlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x62,0x78] do |asm|
+      asm.ldeorlh w2, w3, [sp]
+    end
   end
 
   def test_LDG

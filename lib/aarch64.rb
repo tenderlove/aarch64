@@ -948,6 +948,22 @@ module AArch64
       @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 1, 0b00)
     end
 
+    def ldeorah rs, rt, rn
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 1, 0, 0b01)
+    end
+
+    def ldeoralh rs, rt, rn
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 1, 1, 0b01)
+    end
+
+    def ldeorh rs, rt, rn
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 0, 0b01)
+    end
+
+    def ldeorlh rs, rt, rn
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 1, 0b01)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
