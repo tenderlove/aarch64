@@ -983,6 +983,24 @@ module AArch64
       @insns = @insns << LDNP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, opc)
     end
 
+    def ldp rt1, rt2, rn, imm = nil
+      opc = rt1.x? ? 0b10 : 0b00
+      div = rt1.x? ? 8 : 4
+
+      if imm
+        if imm == :!
+          # pre-index
+          @insns = @insns << LDP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, 0b011, opc)
+        else
+          # post-index
+          @insns = @insns << LDP_gen.new(rt1, rt2, rn.first, (imm || 0) / div, 0b001, opc)
+        end
+      else
+        # signed offset
+        @insns = @insns << LDP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, 0b010, opc)
+      end
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
