@@ -2535,9 +2535,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDLAR
-    skip "Fixme!"
     # LDLAR  <Wt>, [<Xn|SP>{,#0}]
     # LDLAR  <Xt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x20,0x7c,0xdf,0x88] do |asm|
+      asm.ldlar  w0, [x1]
+    end
+    assert_bytes [0x20,0x7c,0xdf,0xc8] do |asm|
+      asm.ldlar  x0, [x1]
+    end
   end
 
   def test_LDLARB
