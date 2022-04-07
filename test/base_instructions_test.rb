@@ -2277,15 +2277,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDCLR
-    skip "Fixme!"
     # LDCLR  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLRA  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLRAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLRL  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLR  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x20,0xb8] do |asm|
+      asm.ldclr w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x22,0xb8] do |asm|
+      asm.ldclr w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x10,0x20,0xf8] do |asm|
+      asm.ldclr x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x22,0xf8] do |asm|
+      asm.ldclr x2, x3, [sp]
+    end
     # LDCLRA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xa0,0xb8] do |asm|
+      asm.ldclra w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xa2,0xb8] do |asm|
+      asm.ldclra w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x10,0xa0,0xf8] do |asm|
+      asm.ldclra x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xa2,0xf8] do |asm|
+      asm.ldclra x2, x3, [sp]
+    end
     # LDCLRAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xe0,0xb8] do |asm|
+      asm.ldclral w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xe2,0xb8] do |asm|
+      asm.ldclral w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x10,0xe0,0xf8] do |asm|
+      asm.ldclral x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xe2,0xf8] do |asm|
+      asm.ldclral x2, x3, [sp]
+    end
     # LDCLRL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x60,0xf8] do |asm|
+      asm.ldclrl     x0, x1, [x2]
+    end
+    assert_bytes [0x41,0x10,0x60,0xb8] do |asm|
+      asm.ldclrl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x62,0xb8] do |asm|
+      asm.ldclrl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x10,0x60,0xf8] do |asm|
+      asm.ldclrl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x62,0xf8] do |asm|
+      asm.ldclrl x2, x3, [sp]
+    end
   end
 
   def test_LDCLRB

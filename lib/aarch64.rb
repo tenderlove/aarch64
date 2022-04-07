@@ -860,6 +860,26 @@ module AArch64
       @insns = @insns << LDAXR.new(rt1, xn.first, 0b01)
     end
 
+    def ldclr rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDCLR.new(rs, rt, rn.first, 0, 0, size)
+    end
+
+    def ldclra rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDCLR.new(rs, rt, rn.first, 1, 0, size)
+    end
+
+    def ldclral rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDCLR.new(rs, rt, rn.first, 1, 1, size)
+    end
+
+    def ldclrl rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDCLR.new(rs, rt, rn.first, 0, 1, size)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
