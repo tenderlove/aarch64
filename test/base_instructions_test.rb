@@ -2560,9 +2560,35 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDNP_gen
-    skip "Fixme!"
     # LDNP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # LDNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
+    assert_bytes [0xe3,0x09,0x42,0x28] do |asm|
+      asm.ldnp  w3, w2, [x15, 16]
+    end
+    assert_bytes [0xe4,0x27,0x7f,0xa8] do |asm|
+      asm.ldnp  x4, x9, [sp, -16]
+    end
+    assert_bytes [0xe3,0x09,0x42,0x28] do |asm|
+      asm.ldnp  w3, w2, [x15, 16]
+    end
+    assert_bytes [0xe3,0x17,0x40,0x28] do |asm|
+      asm.ldnp      w3, w5, [sp]
+    end
+    assert_bytes [0xe2,0x7f,0x60,0x28] do |asm|
+      asm.ldnp      w2, wzr, [sp, -256]
+    end
+    assert_bytes [0xe9,0xab,0x40,0x28] do |asm|
+      asm.ldnp      w9, w10, [sp, 4]
+    end
+    assert_bytes [0x55,0xf4,0x5f,0xa8] do |asm|
+      asm.ldnp      x21, x29, [x2, 504]
+    end
+    assert_bytes [0x76,0x5c,0x60,0xa8] do |asm|
+      asm.ldnp      x22, x23, [x3, -512]
+    end
+    assert_bytes [0x98,0xe4,0x40,0xa8] do |asm|
+      asm.ldnp      x24, x25, [x4, 8]
+    end
   end
 
   def test_LDP_gen

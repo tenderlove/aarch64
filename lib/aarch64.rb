@@ -977,6 +977,12 @@ module AArch64
       @insns = @insns << LDLAR.new(rt, rn.first, 0b01)
     end
 
+    def ldnp rt1, rt2, rn
+      opc = rt1.x? ? 0b10 : 0b00
+      div = rt1.x? ? 8 : 4
+      @insns = @insns << LDNP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, opc)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
