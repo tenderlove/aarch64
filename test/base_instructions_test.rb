@@ -2339,11 +2339,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDCLRB
-    skip "Fixme!"
     # LDCLRAB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xa0,0x38] do |asm|
+      asm.ldclrab w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xa2,0x38] do |asm|
+      asm.ldclrab w2, w3, [sp]
+    end
     # LDCLRALB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xe0,0x38] do |asm|
+      asm.ldclralb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xe2,0x38] do |asm|
+      asm.ldclralb w2, w3, [sp]
+    end
     # LDCLRB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x20,0x38] do |asm|
+      asm.ldclrb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x22,0x38] do |asm|
+      asm.ldclrb w2, w3, [sp]
+    end
     # LDCLRLB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x60,0x38] do |asm|
+      asm.ldclrlb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x62,0x38] do |asm|
+      asm.ldclrlb w2, w3, [sp]
+    end
   end
 
   def test_LDCLRH
