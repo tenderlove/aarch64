@@ -5,8 +5,14 @@ module AArch64
     # LDAXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # LDAXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class LDAXP
+      def initialize rt1, rt2, rn
+        @rt1 = rt1
+        @rt2 = rt2
+        @rn  = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDAXP(@rt1.sf, @rt2.to_i, @rn.to_i, @rt1.to_i)
       end
 
       private

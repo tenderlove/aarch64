@@ -843,6 +843,10 @@ module AArch64
       @insns = @insns << LDAR.new(rt, rn.first, 0x01)
     end
 
+    def ldaxp rt1, rt2, xn
+      @insns = @insns << LDAXP.new(rt1, rt2, xn.first)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
