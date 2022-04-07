@@ -2895,11 +2895,58 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDRA
-    skip "Fixme!"
     # LDRAA  <Xt>, [<Xn|SP>{, #<simm>}]
     # LDRAA  <Xt>, [<Xn|SP>{, #<simm>}]!
+    # ldraa x1, [x2]
+    assert_bytes [0x41, 0x4, 0x20, 0xf8] do |asm|
+      asm.ldraa x1, [x2]
+    end
+    # ldraa x1, [x2, #16]
+    assert_bytes [0x41, 0x24, 0x20, 0xf8] do |asm|
+      asm.ldraa x1, [x2, 16]
+    end
+    # ldraa x1, [x2, #-16]
+    assert_bytes [0x41, 0xe4, 0x7f, 0xf8] do |asm|
+      asm.ldraa x1, [x2, -16]
+    end
+    # ldraa x1, [x2]!
+    assert_bytes [0x41, 0xc, 0x20, 0xf8] do |asm|
+      asm.ldraa x1, [x2], :!
+    end
+    # ldraa x1, [x2, 32]!
+    assert_bytes [0x41, 0x4c, 0x20, 0xf8] do |asm|
+      asm.ldraa x1, [x2, 32], :!
+    end
+    # ldraa x1, [x2, -32]!
+    assert_bytes [0x41, 0xcc, 0x7f, 0xf8] do |asm|
+      asm.ldraa x1, [x2, -32], :!
+    end
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]!
+    # ldrab x1, [x2]
+    assert_bytes [0x41, 0x4, 0xa0, 0xf8] do |asm|
+      asm.ldrab x1, [x2]
+    end
+    # ldrab x1, [x2, #16]
+    assert_bytes [0x41, 0x24, 0xa0, 0xf8] do |asm|
+      asm.ldrab x1, [x2, 16]
+    end
+    # ldrab x1, [x2, #-16]
+    assert_bytes [0x41, 0xe4, 0xff, 0xf8] do |asm|
+      asm.ldrab x1, [x2, -16]
+    end
+    # ldrab x1, [x2]!
+    assert_bytes [0x41, 0xc, 0xa0, 0xf8] do |asm|
+      asm.ldrab x1, [x2], :!
+    end
+    # ldrab x1, [x2, #16]!
+    assert_bytes [0x41, 0x2c, 0xa0, 0xf8] do |asm|
+      asm.ldrab x1, [x2, 16], :!
+    end
+    # ldrab x1, [x2, #-16]!
+    assert_bytes [0x41, 0xec, 0xff, 0xf8] do |asm|
+      asm.ldrab x1, [x2, -16], :!
+    end
   end
 
   def test_LDRB_imm

@@ -7,8 +7,17 @@ module AArch64
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]!
     class LDRA
+      def initialize rt, rn, imm9, m, w, s
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+        @m    = m
+        @w    = w
+        @s    = s
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDRA(@m, @s, @imm9, @w, @rn.to_i, @rt.to_i)
       end
 
       private

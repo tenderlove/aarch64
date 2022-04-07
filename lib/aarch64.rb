@@ -1072,6 +1072,18 @@ module AArch64
       end
     end
 
+    def ldraa xt, xn, option = nil
+      imm = xn[1] || 0
+      s = imm < 0 ? 1 : 0
+      a LDRA.new(xt, xn.first, imm / 8, 0, option == :! ? 1 : 0, s)
+    end
+
+    def ldrab xt, xn, option = nil
+      imm = xn[1] || 0
+      s = imm < 0 ? 1 : 0
+      a LDRA.new(xt, xn.first, imm / 8, 1, option == :! ? 1 : 0, s)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
@@ -1407,6 +1419,12 @@ module AArch64
 
     def write_to io
       io.write @insns.map(&:encode).pack("L<*")
+    end
+
+    private
+
+    def a insn
+      @insns = @insns << insn
     end
   end
 end
