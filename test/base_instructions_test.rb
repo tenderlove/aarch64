@@ -2553,8 +2553,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDLARH
-    skip "Fixme!"
     # LDLARH  <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x20,0x7c,0xdf,0x48] do |asm|
+      asm.ldlarh w0, [x1]
+    end
   end
 
   def test_LDNP_gen

@@ -973,6 +973,10 @@ module AArch64
       @insns = @insns << LDLAR.new(rt, rn.first, 0b00)
     end
 
+    def ldlarh rt, rn
+      @insns = @insns << LDLAR.new(rt, rn.first, 0b01)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

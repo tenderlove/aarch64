@@ -98,7 +98,6 @@ module AArch64
     autoload :LDG, "aarch64/instructions/ldg"
     autoload :LDGM, "aarch64/instructions/ldgm"
     autoload :LDLAR, "aarch64/instructions/ldlar"
-    autoload :LDLARH, "aarch64/instructions/ldlarh"
     autoload :LDNP_gen, "aarch64/instructions/ldnp_gen"
     autoload :LDP_gen, "aarch64/instructions/ldp_gen"
     autoload :LDPSW, "aarch64/instructions/ldpsw"
