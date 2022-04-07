@@ -94,7 +94,6 @@ module AArch64
     autoload :LDAXR, "aarch64/instructions/ldaxr"
     autoload :LDCLR, "aarch64/instructions/ldclr"
     autoload :LDCLRB, "aarch64/instructions/ldclrb"
-    autoload :LDCLRH, "aarch64/instructions/ldclrh"
     autoload :LDEOR, "aarch64/instructions/ldeor"
     autoload :LDEORB, "aarch64/instructions/ldeorb"
     autoload :LDEORH, "aarch64/instructions/ldeorh"

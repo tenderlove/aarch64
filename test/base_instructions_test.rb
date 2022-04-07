@@ -2370,11 +2370,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDCLRH
-    skip "Fixme!"
     # LDCLRAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xa0,0x78] do |asm|
+      asm.ldclrah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xa2,0x78] do |asm|
+      asm.ldclrah w2, w3, [sp]
+    end
     # LDCLRALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0xe0,0x78] do |asm|
+      asm.ldclralh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0xe2,0x78] do |asm|
+      asm.ldclralh w2, w3, [sp]
+    end
     # LDCLRH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x20,0x78] do |asm|
+      asm.ldclrh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x22,0x78] do |asm|
+      asm.ldclrh w2, w3, [sp]
+    end
     # LDCLRLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x10,0x60,0x78] do |asm|
+      asm.ldclrlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x13,0x62,0x78] do |asm|
+      asm.ldclrlh w2, w3, [sp]
+    end
   end
 
   def test_LDEOR

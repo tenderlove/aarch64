@@ -896,6 +896,22 @@ module AArch64
       @insns = @insns << LDCLRB.new(rs, rt, rn.first, 0, 1, 0b00)
     end
 
+    def ldclrah rs, rt, rn
+      @insns = @insns << LDCLRB.new(rs, rt, rn.first, 1, 0, 0b01)
+    end
+
+    def ldclralh rs, rt, rn
+      @insns = @insns << LDCLRB.new(rs, rt, rn.first, 1, 1, 0b01)
+    end
+
+    def ldclrh rs, rt, rn
+      @insns = @insns << LDCLRB.new(rs, rt, rn.first, 0, 0, 0b01)
+    end
+
+    def ldclrlh rs, rt, rn
+      @insns = @insns << LDCLRB.new(rs, rt, rn.first, 0, 1, 0b01)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end
