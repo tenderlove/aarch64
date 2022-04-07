@@ -912,6 +912,26 @@ module AArch64
       @insns = @insns << LDCLRB.new(rs, rt, rn.first, 0, 1, 0b01)
     end
 
+    def ldeor rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 0, size)
+    end
+
+    def ldeora rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 1, 0, size)
+    end
+
+    def ldeoral rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 1, 1, size)
+    end
+
+    def ldeorl rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 1, size)
+    end
+
     def movz reg, imm, lsl: 0
       @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
     end

@@ -2401,15 +2401,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDEOR
-    skip "Fixme!"
     # LDEOR  <Ws>, <Wt>, [<Xn|SP>]
     # LDEORA  <Ws>, <Wt>, [<Xn|SP>]
     # LDEORAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDEORL  <Ws>, <Wt>, [<Xn|SP>]
     # LDEOR  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0x20,0xb8] do |asm|
+      asm.ldeor w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x22,0xb8] do |asm|
+      asm.ldeor w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x20,0x20,0xf8] do |asm|
+      asm.ldeor x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x22,0xf8] do |asm|
+      asm.ldeor x2, x3, [sp]
+    end
     # LDEORA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0xa0,0xb8] do |asm|
+      asm.ldeora w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xa2,0xb8] do |asm|
+      asm.ldeora w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x20,0xa0,0xf8] do |asm|
+      asm.ldeora x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xa2,0xf8] do |asm|
+      asm.ldeora x2, x3, [sp]
+    end
     # LDEORAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0xe0,0xf8] do |asm|
+      asm.ldeoral    x0, x1, [x2]
+    end
+    assert_bytes [0x41,0x20,0xe0,0xb8] do |asm|
+      asm.ldeoral w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xe2,0xb8] do |asm|
+      asm.ldeoral w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x20,0xe0,0xf8] do |asm|
+      asm.ldeoral x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0xe2,0xf8] do |asm|
+      asm.ldeoral x2, x3, [sp]
+    end
     # LDEORL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x20,0x60,0xb8] do |asm|
+      asm.ldeorl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x62,0xb8] do |asm|
+      asm.ldeorl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x20,0x60,0xf8] do |asm|
+      asm.ldeorl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x23,0x62,0xf8] do |asm|
+      asm.ldeorl x2, x3, [sp]
+    end
   end
 
   def test_LDEORB
