@@ -3572,12 +3572,6 @@ class BaseInstructionsTest < AArch64::Test
     # ORN  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
   end
 
-  def test_ORR_log_imm
-    skip "Fixme!"
-    # ORR  <Wd|WSP>, <Wn>, #<imm>
-    # ORR  <Xd|SP>, <Xn>, #<imm>
-  end
-
   def test_ORR_log_shift
     # ORR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ORR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
