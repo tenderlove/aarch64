@@ -318,8 +318,9 @@ module AArch64
       @insns = @insns << BFC_BFM.new(d, lsb, width)
     end
 
-    def bfi d, lsb, width
-      @insns = @insns << BFI_BFM.new(d, lsb, width)
+    def bfi rd, rn, lsb, width
+      div = rd.x? ? 64 : 32
+      bfm(rd, rn, -lsb % div, width - 1)
     end
 
     def bfm d, n, immr, imms
