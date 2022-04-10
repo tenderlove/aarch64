@@ -3516,9 +3516,80 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ORR_log_shift
-    skip "Fixme!"
     # ORR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ORR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+    assert_bytes [0x41,0x00,0x12,0x32] do |asm|
+      asm.orr w1, w2, 0x4000
+    end
+    assert_bytes [0x41,0x00,0x71,0xb2] do |asm|
+      asm.orr x1, x2, 0x8000
+    end
+    assert_bytes [0xe8,0x03,0x00,0x32] do |asm|
+      asm.orr w8, wzr, 0x1
+    end
+    assert_bytes [0xe8,0x03,0x40,0xb2] do |asm|
+      asm.orr x8, xzr, 0x1
+    end
+    assert_bytes [0x41,0x00,0x03,0x2a] do |asm|
+      asm.orr w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x03,0xaa] do |asm|
+      asm.orr x1, x2, x3
+    end
+    assert_bytes [0x41,0x18,0x03,0x2a] do |asm|
+      asm.orr w1, w2, w3, lsl(6)
+    end
+    assert_bytes [0x41,0x18,0x03,0xaa] do |asm|
+      asm.orr x1, x2, x3, lsl(6)
+    end
+    assert_bytes [0x41,0x18,0x43,0x2a] do |asm|
+      asm.orr w1, w2, w3, lsr(6)
+    end
+    assert_bytes [0x41,0x18,0x43,0xaa] do |asm|
+      asm.orr x1, x2, x3, lsr(6)
+    end
+    assert_bytes [0x41,0x18,0x83,0x2a] do |asm|
+      asm.orr w1, w2, w3, asr(6)
+    end
+    assert_bytes [0x41,0x18,0x83,0xaa] do |asm|
+      asm.orr x1, x2, x3, asr(6)
+    end
+    assert_bytes [0x41,0x18,0xc3,0x2a] do |asm|
+      asm.orr w1, w2, w3, ror(6)
+    end
+    assert_bytes [0x41,0x18,0xc3,0xaa] do |asm|
+      asm.orr x1, x2, x3, ror(6)
+    end
+    assert_bytes [0x23,0x3d,0x10,0x32] do |asm|
+      asm.orr      w3, w9, 0xffff0000
+    end
+    assert_bytes [0x5f,0x29,0x03,0x32] do |asm|
+      asm.orr      wsp, w10, 0xe00000ff
+    end
+    assert_bytes [0x49,0x25,0x00,0x32] do |asm|
+      asm.orr      w9, w10, 0x3ff
+    end
+    assert_bytes [0x8b,0x31,0x41,0xb2] do |asm|
+      asm.orr      x11, x12, 0x8000000000000fff
+    end
+    assert_bytes [0x23,0x3d,0x10,0xb2] do |asm|
+      asm.orr      x3, x9, 0xffff0000ffff0000
+    end
+    assert_bytes [0x5f,0x29,0x03,0xb2] do |asm|
+      asm.orr      sp, x10, 0xe00000ffe00000ff
+    end
+    assert_bytes [0x49,0x25,0x00,0xb2] do |asm|
+      asm.orr      x9, x10, 0x3ff000003ff
+    end
+    assert_bytes [0x20,0x78,0x1e,0x32] do |asm|
+      asm.orr	w0, w1, 0xfffffffd
+    end
+    assert_bytes [0xe2,0x7c,0x80,0x2a] do |asm|
+      asm.orr      w2, w7, w0, asr(31)
+    end
+    assert_bytes [0x28,0x31,0x0a,0xaa] do |asm|
+      asm.orr      x8, x9, x10, lsl(12)
+    end
   end
 
   def test_PACDA

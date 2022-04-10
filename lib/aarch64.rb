@@ -1124,6 +1124,22 @@ module AArch64
       @insns = @insns << MOVK.new(reg, imm, lsl / 16)
     end
 
+    def orr rd, rn, rm, option = nil, shift: :lsl, amount: 0
+      if rm.integer?
+        encoding = Utils.encode_mask(rm, rd.size)
+        a ORR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms)
+      else
+        if option
+          shift = option.name
+          amount = option.amount
+        end
+
+        shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
+
+        a ORR_log_shift.new(rd, rn, rm, shift, amount)
+      end
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end
