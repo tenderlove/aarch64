@@ -343,7 +343,12 @@ module AArch64
       @insns = @insns << BIC_log_shift.new(d, n, m, shift, amount)
     end
 
-    def bics d, n, m, shift: :lsl, amount: 0
+    def bics d, n, m, option = nil, shift: :lsl, amount: 0
+      if option
+        shift = option.name
+        amount = option.amount
+      end
+
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
       @insns = @insns << BICS.new(d, n, m, shift, amount)
     end

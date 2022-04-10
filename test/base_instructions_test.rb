@@ -513,6 +513,42 @@ class BaseInstructionsTest < AArch64::Test
 
   def test_BICS
     # BICS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
+    assert_bytes [0x41,0x00,0x23,0x6a] do |asm|
+      asm.bics w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x23,0xea] do |asm|
+      asm.bics x1, x2, x3
+    end
+    assert_bytes [0x41,0x0c,0x23,0x6a] do |asm|
+      asm.bics w1, w2, w3, lsl(3)
+    end
+    assert_bytes [0x41,0x0c,0x23,0xea] do |asm|
+      asm.bics x1, x2, x3, lsl(3)
+    end
+    assert_bytes [0x41,0x0c,0x63,0x6a] do |asm|
+      asm.bics w1, w2, w3, lsr(3)
+    end
+    assert_bytes [0x41,0x0c,0x63,0xea] do |asm|
+      asm.bics x1, x2, x3, lsr(3)
+    end
+    assert_bytes [0x41,0x0c,0xa3,0x6a] do |asm|
+      asm.bics w1, w2, w3, asr(3)
+    end
+    assert_bytes [0x41,0x0c,0xa3,0xea] do |asm|
+      asm.bics x1, x2, x3, asr(3)
+    end
+    assert_bytes [0x41,0x0c,0xe3,0x6a] do |asm|
+      asm.bics w1, w2, w3, ror(3)
+    end
+    assert_bytes [0x41,0x0c,0xe3,0xea] do |asm|
+      asm.bics x1, x2, x3, ror(3)
+    end
+    assert_bytes [0xa3,0x00,0x27,0x6a] do |asm|
+      asm.bics     w3, w5, w7
+    end
+    assert_bytes [0xe3,0x07,0x23,0xea] do |asm|
+      asm.bics     x3, xzr, x3, lsl(1)
+    end
     assert_one_insn "bics w2, w7, w9" do |asm|
       asm.bics W2, W7, W9
     end
