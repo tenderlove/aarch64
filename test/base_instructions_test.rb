@@ -2950,10 +2950,55 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDRB_imm
-    skip "Fixme!"
     # LDRB  <Wt>, [<Xn|SP>], #<simm>
     # LDRB  <Wt>, [<Xn|SP>, #<simm>]!
     # LDRB  <Wt>, [<Xn|SP>{, #<pimm>}]
+    assert_bytes [0x64,0x00,0x40,0x39] do |asm|
+      asm.ldrb   w4, [x3]
+    end
+    assert_bytes [0x85,0x50,0x40,0x39] do |asm|
+      asm.ldrb   w5, [x4, 20]
+    end
+    assert_bytes [0x7a,0xe4,0x41,0x39] do |asm|
+      asm.ldrb     w26, [x3, 121]
+    end
+    assert_bytes [0x4c,0x00,0x40,0x39] do |asm|
+      asm.ldrb     w12, [x2]
+    end
+    # ldrb w3, [sp, x5]
+    assert_bytes [0xe3,0x6b,0x65,0x38] do |asm|
+      asm.ldrb     w3, [sp, x5]
+    end
+    assert_bytes [0x69,0x7b,0x66,0x38] do |asm|
+      asm.ldrb     w9, [x27, x6, lsl(0)]
+    end
+    assert_bytes [0xab,0xeb,0x63,0x38] do |asm|
+      asm.ldrb     w11, [x29, x3, sxtx]
+    end
+    assert_bytes [0x4e,0x4b,0x66,0x38] do |asm|
+      asm.ldrb     w14, [x26, w6, uxtw]
+    end
+    assert_bytes [0xf1,0xca,0x69,0x38] do |asm|
+      asm.ldrb     w17, [x23, w9, sxtw]
+    end
+    assert_bytes [0x49,0xf4,0x4f,0x38] do |asm|
+      asm.ldrb     w9, [x2], 255
+    end
+    assert_bytes [0x6a,0x14,0x40,0x38] do |asm|
+      asm.ldrb     w10, [x3], 1
+    end
+    assert_bytes [0x6a,0x04,0x50,0x38] do |asm|
+      asm.ldrb     w10, [x3], -256
+    end
+    assert_bytes [0x49,0xfc,0x4f,0x38] do |asm|
+      asm.ldrb     w9, [x2, 255], :!
+    end
+    assert_bytes [0x6a,0x1c,0x40,0x38] do |asm|
+      asm.ldrb     w10, [x3, 1], :!
+    end
+    assert_bytes [0x6a,0x0c,0x50,0x38] do |asm|
+      asm.ldrb     w10, [x3, -256], :!
+    end
   end
 
   def test_LDRB_reg

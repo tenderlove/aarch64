@@ -5,8 +5,16 @@ module AArch64
     # LDRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
     # LDRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
     class LDRB_reg
+      def initialize rt, rn, rm, s, option
+        @rt     = rt
+        @rn     = rn
+        @rm     = rm
+        @s      = s
+        @option = option
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDRB_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private
