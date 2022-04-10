@@ -333,13 +333,18 @@ module AArch64
       @insns = @insns << BFXIL_BFM.new(d, n, lsb, width)
     end
 
-    def bic d, n, m, shift: :lsl, amount: 0
-      shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+    def bic d, n, m, option = nil, shift: :lsl, amount: 0
+      if option
+        shift = option.name
+        amount = option.amount
+      end
+
+      shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
       @insns = @insns << BIC_log_shift.new(d, n, m, shift, amount)
     end
 
     def bics d, n, m, shift: :lsl, amount: 0
-      shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
+      shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
       @insns = @insns << BICS.new(d, n, m, shift, amount)
     end
 

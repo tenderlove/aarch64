@@ -465,6 +465,42 @@ class BaseInstructionsTest < AArch64::Test
 
   def test_BIC_log_shift
     # BIC  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
+    assert_bytes [0x41,0x00,0x23,0x0a] do |asm|
+      asm.bic w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x23,0x8a] do |asm|
+      asm.bic x1, x2, x3
+    end
+    assert_bytes [0x41,0x0c,0x23,0x0a] do |asm|
+      asm.bic w1, w2, w3, lsl(3)
+    end
+    assert_bytes [0x41,0x0c,0x23,0x8a] do |asm|
+      asm.bic x1, x2, x3, lsl(3)
+    end
+    assert_bytes [0x41,0x0c,0x63,0x0a] do |asm|
+      asm.bic w1, w2, w3, lsr(3)
+    end
+    assert_bytes [0x41,0x0c,0x63,0x8a] do |asm|
+      asm.bic x1, x2, x3, lsr(3)
+    end
+    assert_bytes [0x41,0x0c,0xa3,0x0a] do |asm|
+      asm.bic w1, w2, w3, asr(3)
+    end
+    assert_bytes [0x41,0x0c,0xa3,0x8a] do |asm|
+      asm.bic x1, x2, x3, asr(3)
+    end
+    assert_bytes [0x41,0x0c,0xe3,0x0a] do |asm|
+      asm.bic w1, w2, w3, ror(3)
+    end
+    assert_bytes [0x41,0x0c,0xe3,0x8a] do |asm|
+      asm.bic x1, x2, x3, ror(3)
+    end
+    assert_bytes [0x8d,0xbe,0x2e,0x8a] do |asm|
+      asm.bic      x13, x20, x14, lsl(47)
+    end
+    assert_bytes [0xe2,0x00,0x29,0x0a] do |asm|
+      asm.bic      w2, w7, w9
+    end
     assert_one_insn "bic w2, w7, w9" do |asm|
       asm.bic W2, W7, W9
     end
