@@ -314,8 +314,10 @@ module AArch64
       @insns = @insns << BC_cond.new(cond, label)
     end
 
-    def bfc d, lsb, width
-      @insns = @insns << BFC_BFM.new(d, lsb, width)
+    def bfc rd, lsb, width
+      div = rd.x? ? 64 : 32
+      rn  = rd.x? ? XZR : WZR
+      bfm(rd, rn, -lsb % div, width - 1)
     end
 
     def bfi rd, rn, lsb, width

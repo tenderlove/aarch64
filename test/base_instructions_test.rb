@@ -398,14 +398,26 @@ class BaseInstructionsTest < AArch64::Test
 
   def test_BFC_BFM
     # BFC  <Wd>, #<lsb>, #<width>
-    assert_bytes [0xe3, 0x7f, 0x00, 0x33] do |asm|
-      asm.bfc W3, 0, 32
+    assert_bytes [0xe4,0x17,0x7f,0xb3] do |asm|
+      asm.bfc      x4, 1, 6
+    end
+    assert_bytes [0xff,0x2b,0x76,0xb3] do |asm|
+      asm.bfc      xzr, 10, 11
+    end
+    assert_bytes [0xe3,0x7f,0x00,0x33] do |asm|
+      asm.bfc w3, 0, 32
+    end
+    assert_bytes [0xff,0x03,0x01,0x33] do |asm|
+      asm.bfc wzr, 31, 1
+    end
+    assert_bytes [0xe0,0x23,0x7b,0xb3] do |asm|
+      asm.bfc x0, 5, 9
+    end
+    assert_bytes [0xff,0x03,0x41,0xb3] do |asm|
+      asm.bfc xzr, 63, 1
     end
 
     # BFC  <Xd>, #<lsb>, #<width>
-    assert_bytes [0xe0, 0x23, 0x7b, 0xb3] do |asm|
-      asm.bfc X0, 5, 9
-    end
   end
 
   def test_BFI_BFM
