@@ -3357,43 +3357,95 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MOV_ORR_log_imm
-    skip "Fixme!"
     # MOV  <Wd|WSP>, #<imm>
     # ORR <Wd|WSP>, WZR, #<imm>
     # MOV  <Xd|SP>, #<imm>
     # ORR <Xd|SP>, XZR, #<imm>
-  end
-
-  def test_MOV_MOVN
-    skip "Fixme!"
-    # MOV  <Wd>, #<imm>
-    # MOVN <Wd>, #<imm16>, LSL #<shift>
-    # MOV  <Xd>, #<imm>
-    # MOVN <Xd>, #<imm16>, LSL #<shift>
-  end
-
-  def test_MOV_ORR_log_shift
-    skip "Fixme!"
+    # MOV  <Xd|SP>, #<imm>
     # MOV  <Wd>, <Wm>
     # ORR <Wd>, WZR, <Wm>
     # MOV  <Xd>, <Xm>
     # ORR <Xd>, XZR, <Xm>
-  end
-
-  def test_MOV_ADD_addsub_imm
-    skip "Fixme!"
     # MOV  <Wd|WSP>, <Wn|WSP>
     # ADD <Wd|WSP>, <Wn|WSP>, #0
     # MOV  <Xd|SP>, <Xn|SP>
     # ADD <Xd|SP>, <Xn|SP>, #0
-  end
-
-  def test_MOV_MOVZ
-    skip "Fixme!"
     # MOV  <Wd>, #<imm>
     # MOVZ <Wd>, #<imm16>, LSL #<shift>
     # MOV  <Xd>, #<imm>
     # MOVZ <Xd>, #<imm16>, LSL #<shift>
+    assert_bytes [0x20,0x00,0x80,0x52] do |asm|
+      asm.mov w0, 1
+    end
+    assert_bytes [0x20,0x00,0x80,0xd2] do |asm|
+      asm.mov x0, 1
+    end
+    assert_bytes [0x20,0x00,0xa0,0x52] do |asm|
+      asm.mov w0, 65536
+    end
+    assert_bytes [0x20,0x00,0xa0,0xd2] do |asm|
+      asm.mov x0, 65536
+    end
+    assert_bytes [0x40,0x00,0x80,0x12] do |asm|
+      asm.mov w0, -3
+    end
+    assert_bytes [0x40,0x00,0x80,0x92] do |asm|
+      asm.mov x0, -3
+    end
+    assert_bytes [0x40,0x00,0xa0,0x12] do |asm|
+      asm.mov w0, -131073
+    end
+    assert_bytes [0x40,0x00,0xa0,0x92] do |asm|
+      asm.mov x0, -131073
+    end
+    assert_bytes [0xdf,0x03,0x00,0x91] do |asm|
+      asm.mov      sp, x30
+    end
+    assert_bytes [0x9f,0x02,0x00,0x11] do |asm|
+      asm.mov      wsp, w20
+    end
+    assert_bytes [0xeb,0x03,0x00,0x91] do |asm|
+      asm.mov      x11, sp
+    end
+    assert_bytes [0xf8,0x03,0x00,0x11] do |asm|
+      asm.mov      w24, wsp
+    end
+    assert_bytes [0xe3,0x8f,0x00,0x32] do |asm|
+      asm.mov w3, 983055
+    end
+    assert_bytes [0xea,0xf3,0x01,0xb2] do |asm|
+      asm.mov x10, -6148914691236517206
+    end
+    assert_bytes [0xe3,0x03,0x06,0xaa] do |asm|
+      asm.mov      x3, x6
+    end
+    assert_bytes [0xe3,0x03,0x1f,0xaa] do |asm|
+      asm.mov      x3, xzr
+    end
+    assert_bytes [0xff,0x03,0x02,0x2a] do |asm|
+      asm.mov      wzr, w2
+    end
+    assert_bytes [0xe3,0x03,0x05,0x2a] do |asm|
+      asm.mov      w3, w5
+    end
+    assert_bytes [0xe1,0xff,0x9f,0x52] do |asm|
+      asm.mov     w1, 65535
+    end
+    assert_bytes [0x42,0x9a,0x80,0x12] do |asm|
+      asm.mov     w2, -1235
+    end
+    assert_bytes [0x42,0x9a,0xc0,0xd2] do |asm|
+      asm.mov      x2, 5299989643264
+    end
+    assert_bytes [0xe5,0x03,0x0b,0xaa] do |asm|
+      asm.mov      x5, x11
+    end
+    assert_bytes [0xe1,0x03,0x06,0x2a] do |asm|
+      asm.mov      w1, w6
+    end
+    assert_bytes [0xe1,0x03,0x06,0x2a] do |asm|
+      asm.mov      w1, w6
+    end
   end
 
   def test_MOVK

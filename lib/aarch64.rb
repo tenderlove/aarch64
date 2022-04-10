@@ -1116,8 +1116,47 @@ module AArch64
       end
     end
 
+    def mov rd, rm
+      if rm.integer?
+        if rm < 0
+          rm = ~rm
+          if rm < 65536 || rm % 65536 == 0
+            movn(rd, rm)
+          else
+            orr(rd, rd.x? ? XZR : WZR, ~rm)
+          end
+        else
+          if rm < 65536 || rm % 65536 == 0
+            movz(rd, rm)
+          else
+            orr(rd, rd.x? ? XZR : WZR, rm)
+          end
+        end
+      else
+        if rd.sp? || rm.sp?
+          add rd, rm, 0
+        else
+          orr(rd, rd.x? ? XZR : WZR, rm)
+        end
+      end
+    end
+
+    def movn rd, imm, lsl: 0
+      lsl /= 16
+      while imm > 65535
+        lsl += 1
+        imm >>= 16
+      end
+      a MOVN.new(rd, imm, lsl)
+    end
+
     def movz reg, imm, lsl: 0
-      @insns = @insns << MOVZ.new(reg, imm, lsl / 16)
+      lsl /= 16
+      while imm > 65535
+        lsl += 1
+        imm >>= 16
+      end
+      @insns = @insns << MOVZ.new(reg, imm, lsl)
     end
 
     def movk reg, imm, lsl: 0
