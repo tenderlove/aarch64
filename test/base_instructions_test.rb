@@ -3461,9 +3461,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MOVN
-    skip "Fixme!"
     # MOVN  <Wd>, #<imm>{, LSL #<shift>}
     # MOVN  <Xd>, #<imm>{, LSL #<shift>}
+    # movn x3, 123
+    assert_bytes [0x63, 0xf, 0x80, 0x92] do |asm|
+      asm.movn x3, 123
+    end
+    # movn x3, 1, lsl #16
+    assert_bytes [0x23, 00, 0xa0, 0x92] do |asm|
+      asm.movn x3, 1, lsl: 16
+    end
+    # movn w3, 123
+    assert_bytes [0x63, 0xf, 0x80, 0x12] do |asm|
+      asm.movn w3, 123
+    end
   end
 
   def test_MOVZ
