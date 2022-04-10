@@ -1176,6 +1176,10 @@ module AArch64
       @insns = @insns << MOVK.new(reg, imm, lsl / 16)
     end
 
+    def nop
+      a NOP.new
+    end
+
     def orr rd, rn, rm, option = nil, shift: :lsl, amount: 0
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)

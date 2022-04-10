@@ -3653,8 +3653,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_NOP
-    skip "Fixme!"
     # NOP
+    assert_bytes [0x1f,0x20,0x03,0xd5] do |asm|
+      asm.nop
+    end
   end
 
   def test_ORN_log_shift

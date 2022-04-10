@@ -5,12 +5,12 @@ module AArch64
     # NOP
     class NOP
       def encode
-        raise NotImplementedError
+        self.NOP
       end
 
       private
 
-      def NOP 
+      def NOP
         insn = 0b1101010100_0_00_011_0010_0000_000_11111
         insn
       end
