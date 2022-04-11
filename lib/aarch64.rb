@@ -1134,6 +1134,10 @@ module AArch64
       a MADD.new(rd, rn, rm, ra)
     end
 
+    def mneg rd, rn, rm
+      msub rd, rn, rm, rd.x? ? XZR : WZR
+    end
+
     def mov rd, rm
       if rm.integer?
         if rm < 0

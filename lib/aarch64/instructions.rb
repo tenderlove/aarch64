@@ -154,7 +154,6 @@ module AArch64
     autoload :LSR_LSRV, "aarch64/instructions/lsr_lsrv"
     autoload :LSRV, "aarch64/instructions/lsrv"
     autoload :MADD, "aarch64/instructions/madd"
-    autoload :MNEG_MSUB, "aarch64/instructions/mneg_msub"
     autoload :MOVK, "aarch64/instructions/movk"
     autoload :MOVN, "aarch64/instructions/movn"
     autoload :MOVZ, "aarch64/instructions/movz"

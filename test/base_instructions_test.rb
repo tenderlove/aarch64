@@ -3470,10 +3470,27 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MNEG_MSUB
-    skip "Fixme!"
     # MNEG  <Wd>, <Wn>, <Wm>
     # MSUB <Wd>, <Wn>, <Wm>, WZR
     # MNEG  <Xd>, <Xn>, <Xm>
+    assert_bytes [0xa4,0xfc,0x06,0x1b] do |asm|
+      asm.mneg     w4, w5, w6
+    end
+    assert_bytes [0xa4,0xfc,0x06,0x9b] do |asm|
+      asm.mneg     x4, x5, x6
+    end
+    assert_bytes [0xd5,0xfe,0x17,0x1b] do |asm|
+      asm.mneg     w21, w22, w23
+    end
+    assert_bytes [0x1f,0xff,0x19,0x1b] do |asm|
+      asm.mneg     wzr, w24, w25
+    end
+    assert_bytes [0xfa,0xff,0x1b,0x1b] do |asm|
+      asm.mneg     w26, wzr, w27
+    end
+    assert_bytes [0xbc,0xff,0x1f,0x1b] do |asm|
+      asm.mneg     w28, w29, wzr
+    end
     # MSUB <Xd>, <Xn>, <Xm>, XZR
   end
 
