@@ -1189,6 +1189,10 @@ module AArch64
       end
     end
 
+    def msub rd, rn, rm, ra
+      a MSUB.new(rd, rn, rm, ra)
+    end
+
     def nop
       a NOP.new
     end

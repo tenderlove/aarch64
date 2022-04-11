@@ -4732,9 +4732,38 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MSUB
-    skip "Fixme!"
     # MSUB  <Wd>, <Wn>, <Wm>, <Wa>
     # MSUB  <Xd>, <Xn>, <Xm>, <Xa>
+    assert_bytes [0x41,0x90,0x03,0x1b] do |asm|
+      asm.msub   w1, w2, w3, w4
+    end
+    assert_bytes [0x41,0x90,0x03,0x9b] do |asm|
+      asm.msub   x1, x2, x3, x4
+    end
+    assert_bytes [0x61,0x90,0x07,0x1b] do |asm|
+      asm.msub     w1, w3, w7, w4
+    end
+    assert_bytes [0x1f,0xac,0x09,0x1b] do |asm|
+      asm.msub     wzr, w0, w9, w11
+    end
+    assert_bytes [0xed,0x93,0x04,0x1b] do |asm|
+      asm.msub     w13, wzr, w4, w4
+    end
+    assert_bytes [0xd3,0xf7,0x1f,0x1b] do |asm|
+      asm.msub     w19, w30, wzr, w29
+    end
+    assert_bytes [0x61,0x90,0x07,0x9b] do |asm|
+      asm.msub     x1, x3, x7, x4
+    end
+    assert_bytes [0x1f,0xac,0x09,0x9b] do |asm|
+      asm.msub     xzr, x0, x9, x11
+    end
+    assert_bytes [0xed,0x93,0x04,0x9b] do |asm|
+      asm.msub     x13, xzr, x4, x4
+    end
+    assert_bytes [0xd3,0xf7,0x1f,0x9b] do |asm|
+      asm.msub     x19, x30, xzr, x29
+    end
   end
 
   def test_MUL_MADD

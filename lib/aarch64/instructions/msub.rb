@@ -5,8 +5,15 @@ module AArch64
     # MSUB  <Wd>, <Wn>, <Wm>, <Wa>
     # MSUB  <Xd>, <Xn>, <Xm>, <Xa>
     class MSUB
+      def initialize rd, rn, rm, ra
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @ra = ra
+      end
+
       def encode
-        raise NotImplementedError
+        self.MSUB(@rd.sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
