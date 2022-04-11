@@ -982,6 +982,10 @@ module AArch64
       a LDG.new(xt, xn.first, xn[1] || 0)
     end
 
+    def ldgm xt, xn
+      a LDGM.new(xt, xn.first)
+    end
+
     def ldlar rt, rn
       size = rt.x? ? 0b11 : 0b10
       @insns = @insns << LDLAR.new(rt, rn.first, size)

@@ -2628,8 +2628,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDGM
-    skip "Fixme!"
     # LDGM  <Xt>, [<Xn|SP>]
+    assert_bytes [65, 0, 224, 217] do |asm|
+      asm.ldgm x1, [x2]
+    end
   end
 
   def test_LDLAR
