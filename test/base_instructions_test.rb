@@ -3412,20 +3412,66 @@ class BaseInstructionsTest < AArch64::Test
     # LSLV  <Xd>, <Xn>, <Xm>
   end
 
-  def test_LSR_UBFM
-    skip "Fixme!"
-    # LSR  <Wd>, <Wn>, #<shift>
-    # UBFM <Wd>, <Wn>, #<shift>, #31
-    # LSR  <Xd>, <Xn>, #<shift>
-    # UBFM <Xd>, <Xn>, #<shift>, #63
-  end
-
   def test_LSR_LSRV
-    skip "Fixme!"
     # LSR  <Wd>, <Wn>, <Wm>
     # LSRV <Wd>, <Wn>, <Wm>
     # LSR  <Xd>, <Xn>, <Xm>
     # LSRV <Xd>, <Xn>, <Xm>
+    # LSR  <Wd>, <Wn>, #<shift>
+    # UBFM <Wd>, <Wn>, #<shift>, #31
+    # LSR  <Xd>, <Xn>, #<shift>
+    # UBFM <Xd>, <Xn>, #<shift>, #63
+    assert_bytes [0xc5,0xfc,0x4c,0xd3] do |asm|
+      asm.lsr      x5, x6, 12
+    end
+    assert_bytes [0x43,0x7c,0x00,0x53] do |asm|
+      asm.lsr      w3, w2, 0
+    end
+    assert_bytes [0x49,0x7d,0x1f,0x53] do |asm|
+      asm.lsr      w9, w10, 31
+    end
+    assert_bytes [0xb4,0xfe,0x7f,0xd3] do |asm|
+      asm.lsr      x20, x21, 63
+    end
+    assert_bytes [0xff,0x7f,0x03,0x53] do |asm|
+      asm.lsr      wzr, wzr, 3
+    end
+    assert_bytes [0x93,0xfe,0x40,0xd3] do |asm|
+      asm.lsr      x19, x20, 0
+    end
+    assert_bytes [0x49,0x7d,0x00,0x53] do |asm|
+      asm.lsr      w9, w10, 0
+    end
+    assert_bytes [0x62,0xfc,0x7f,0xd3] do |asm|
+      asm.lsr     x2, x3, 63
+    end
+    assert_bytes [0x93,0xfe,0x40,0xd3] do |asm|
+      asm.lsr     x19, x20, 0
+    end
+    assert_bytes [0x49,0xfd,0x45,0xd3] do |asm|
+      asm.lsr     x9, x10, 5
+    end
+    assert_bytes [0x49,0x7d,0x00,0x53] do |asm|
+      asm.lsr     w9, w10, 0
+    end
+    assert_bytes [0x8b,0x7d,0x1f,0x53] do |asm|
+      asm.lsr     w11, w12, 31
+    end
+    assert_bytes [0xcd,0x7d,0x1d,0x53] do |asm|
+      asm.lsr     w13, w14, 29
+    end
+    assert_bytes [0x51,0x26,0xd3,0x1a] do |asm|
+      asm.lsr	w17, w18, w19
+    end
+    assert_bytes [0xb4,0x26,0xd6,0x9a] do |asm|
+      asm.lsr	x20, x21, x22
+    end
+    assert_bytes [0xac,0x25,0xce,0x1a] do |asm|
+      asm.lsr	w12, w13, w14
+    end
+    assert_bytes [0x0f,0x26,0xd1,0x9a] do |asm|
+      asm.lsr	x15, x16, x17
+    end
   end
 
   def test_LSRV

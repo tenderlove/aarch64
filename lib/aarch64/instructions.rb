@@ -150,8 +150,6 @@ module AArch64
     autoload :LSL_UBFM, "aarch64/instructions/lsl_ubfm"
     autoload :LSL_LSLV, "aarch64/instructions/lsl_lslv"
     autoload :LSLV, "aarch64/instructions/lslv"
-    autoload :LSR_UBFM, "aarch64/instructions/lsr_ubfm"
-    autoload :LSR_LSRV, "aarch64/instructions/lsr_lsrv"
     autoload :LSRV, "aarch64/instructions/lsrv"
     autoload :MADD, "aarch64/instructions/madd"
     autoload :MOVK, "aarch64/instructions/movk"
