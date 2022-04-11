@@ -145,8 +145,6 @@ module AArch64
     autoload :LDURSW, "aarch64/instructions/ldursw"
     autoload :LDXP, "aarch64/instructions/ldxp"
     autoload :LDXR, "aarch64/instructions/ldxr"
-    autoload :LDXRB, "aarch64/instructions/ldxrb"
-    autoload :LDXRH, "aarch64/instructions/ldxrh"
     autoload :LSL_UBFM, "aarch64/instructions/lsl_ubfm"
     autoload :LSL_LSLV, "aarch64/instructions/lsl_lslv"
     autoload :LSLV, "aarch64/instructions/lslv"

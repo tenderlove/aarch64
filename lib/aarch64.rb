@@ -1130,12 +1130,20 @@ module AArch64
       end
     end
 
+    def ldxr rt, rn
+      if rt.x?
+        a LDXR.new(rt, rn.first, 0b11)
+      else
+        a LDXR.new(rt, rn.first, 0b10)
+      end
+    end
+
     def ldxrb rt, rn
-      a LDXRB.new(rt, rn.first)
+      a LDXR.new(rt, rn.first, 0b00)
     end
 
     def ldxrh rt, rn
-      a LDXRH.new(rt, rn.first)
+      a LDXR.new(rt, rn.first, 0b01)
     end
 
     def lsl rd, rn, rm
