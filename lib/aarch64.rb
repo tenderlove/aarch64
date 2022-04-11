@@ -1130,6 +1130,18 @@ module AArch64
       end
     end
 
+    def lsl rd, rn, rm
+      if rm.integer?
+        if rd.x?
+          ubfm rd, rn, -rm % 64, 63 - rm
+        else
+          ubfm rd, rn, -rm % 32, 31 - rm
+        end
+      else
+        lslv rd, rn, rm
+      end
+    end
+
     def lslv rd, rn, rm
       a LSLV.new(rd, rn, rm)
     end

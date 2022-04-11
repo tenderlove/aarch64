@@ -3390,19 +3390,50 @@ class BaseInstructionsTest < AArch64::Test
     # LDXRH  <Wt>, [<Xn|SP>{,#0}]
   end
 
-  def test_LSL_UBFM
-    skip "Fixme!"
+  def test_LSL_LSLV
+    # LSL  <Wd>, <Wn>, <Wm>
+    # LSLV <Wd>, <Wn>, <Wm>
+    # LSL  <Xd>, <Xn>, <Xm>
     # LSL  <Wd>, <Wn>, #<shift>
     # UBFM <Wd>, <Wn>, #(-<shift> MOD 32), #(31-<shift>)
     # LSL  <Xd>, <Xn>, #<shift>
     # UBFM <Xd>, <Xn>, #(-<shift> MOD 64), #(63-<shift>)
-  end
-
-  def test_LSL_LSLV
-    skip "Fixme!"
-    # LSL  <Wd>, <Wn>, <Wm>
-    # LSLV <Wd>, <Wn>, <Wm>
-    # LSL  <Xd>, <Xn>, <Xm>
+    assert_bytes [0x1f,0x00,0x01,0x53] do |asm|
+      asm.lsl  wzr, w0, 31
+    end
+    assert_bytes [0x49,0x01,0x01,0x53] do |asm|
+      asm.lsl      w9, w10, 31
+    end
+    assert_bytes [0xb4,0x02,0x41,0xd3] do |asm|
+      asm.lsl      x20, x21, 63
+    end
+    assert_bytes [0xe1,0x73,0x1d,0x53] do |asm|
+      asm.lsl      w1, wzr, 3
+    end
+    assert_bytes [0x62,0x00,0x41,0xd3] do |asm|
+      asm.lsl      x2, x3, 63
+    end
+    assert_bytes [0x49,0xe9,0x7b,0xd3] do |asm|
+      asm.lsl      x9, x10, 5
+    end
+    assert_bytes [0x8b,0x01,0x01,0x53] do |asm|
+      asm.lsl      w11, w12, 31
+    end
+    assert_bytes [0xcd,0x09,0x03,0x53] do |asm|
+      asm.lsl      w13, w14, 29
+    end
+    assert_bytes [0x8b,0x21,0xcd,0x1a] do |asm|
+      asm.lsl	w11, w12, w13
+    end
+    assert_bytes [0xee,0x21,0xd0,0x9a] do |asm|
+      asm.lsl	x14, x15, x16
+    end
+    assert_bytes [0xe6,0x20,0xc8,0x1a] do |asm|
+      asm.lsl	w6, w7, w8
+    end
+    assert_bytes [0x49,0x21,0xcb,0x9a] do |asm|
+      asm.lsl	x9, x10, x11
+    end
     # LSLV <Xd>, <Xn>, <Xm>
   end
 
