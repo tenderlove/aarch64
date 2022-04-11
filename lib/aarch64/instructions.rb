@@ -112,6 +112,7 @@ module AArch64
     autoload :LDRH_unsigned, "aarch64/instructions/ldrh_unsigned"
     autoload :LDRSB_imm, "aarch64/instructions/ldrsb_imm"
     autoload :LDRSB_reg, "aarch64/instructions/ldrsb_reg"
+    autoload :LDRSB_unsigned, "aarch64/instructions/ldrsb_unsigned"
     autoload :LDRSH_imm, "aarch64/instructions/ldrsh_imm"
     autoload :LDRSH_reg, "aarch64/instructions/ldrsh_reg"
     autoload :LDRSW_imm, "aarch64/instructions/ldrsw_imm"
