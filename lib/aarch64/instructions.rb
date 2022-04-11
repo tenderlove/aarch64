@@ -138,8 +138,6 @@ module AArch64
     autoload :LDUMINB, "aarch64/instructions/lduminb"
     autoload :LDUMINH, "aarch64/instructions/lduminh"
     autoload :LDUR_gen, "aarch64/instructions/ldur_gen"
-    autoload :LDURB, "aarch64/instructions/ldurb"
-    autoload :LDURH, "aarch64/instructions/ldurh"
     autoload :LDURSB, "aarch64/instructions/ldursb"
     autoload :LDURSH, "aarch64/instructions/ldursh"
     autoload :LDURSW, "aarch64/instructions/ldursw"

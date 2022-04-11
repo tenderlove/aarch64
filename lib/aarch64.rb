@@ -1138,6 +1138,14 @@ module AArch64
       end
     end
 
+    def ldurb rt, rn
+      a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b00)
+    end
+
+    def ldurh rt, rn
+      a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b01)
+    end
+
     def ldxr rt, rn
       if rt.x?
         a LDXR.new(rt, rn.first, 0b11)
