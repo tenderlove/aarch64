@@ -1180,6 +1180,17 @@ module AArch64
       a NOP.new
     end
 
+    def orn rd, rn, rm, option = nil, shift: :lsl, amount: 0
+      if option
+        shift = option.name
+        amount = option.amount
+      end
+
+      shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
+
+      a ORN_log_shift.new(rd, rn, rm, shift, amount)
+    end
+
     def orr rd, rn, rm, option = nil, shift: :lsl, amount: 0
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)

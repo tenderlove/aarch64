@@ -3660,9 +3660,44 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ORN_log_shift
-    skip "Fixme!"
     # ORN  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ORN  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
+    assert_bytes [0x41,0x00,0x23,0x2a] do |asm|
+      asm.orn w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x23,0xaa] do |asm|
+      asm.orn x1, x2, x3
+    end
+    assert_bytes [0x41,0x1c,0x23,0x2a] do |asm|
+      asm.orn w1, w2, w3, lsl(7)
+    end
+    assert_bytes [0x41,0x1c,0x23,0xaa] do |asm|
+      asm.orn x1, x2, x3, lsl(7)
+    end
+    assert_bytes [0x41,0x1c,0x63,0x2a] do |asm|
+      asm.orn w1, w2, w3, lsr(7)
+    end
+    assert_bytes [0x41,0x1c,0x63,0xaa] do |asm|
+      asm.orn x1, x2, x3, lsr(7)
+    end
+    assert_bytes [0x41,0x1c,0xa3,0x2a] do |asm|
+      asm.orn w1, w2, w3, asr(7)
+    end
+    assert_bytes [0x41,0x1c,0xa3,0xaa] do |asm|
+      asm.orn x1, x2, x3, asr(7)
+    end
+    assert_bytes [0x41,0x1c,0xe3,0x2a] do |asm|
+      asm.orn w1, w2, w3, ror(7)
+    end
+    assert_bytes [0x41,0x1c,0xe3,0xaa] do |asm|
+      asm.orn x1, x2, x3, ror(7)
+    end
+    assert_bytes [0xa3,0x00,0xa7,0xaa] do |asm|
+      asm.orn      x3, x5, x7, asr(0)
+    end
+    assert_bytes [0xa2,0x00,0x3d,0x2a] do |asm|
+      asm.orn      w2, w5, w29
+    end
   end
 
   def test_ORR_log_shift
