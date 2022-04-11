@@ -3101,16 +3101,50 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_LDRH_imm
-    skip "Fixme!"
-    # LDRH  <Wt>, [<Xn|SP>], #<simm>
-    # LDRH  <Wt>, [<Xn|SP>, #<simm>]!
-    # LDRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-  end
-
   def test_LDRH_reg
-    skip "Fixme!"
     # LDRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_bytes [0xe2,0x43,0x40,0x79] do |asm|
+      asm.ldrh   w2, [sp, 32]
+    end
+    assert_bytes [0x82,0x00,0x40,0x79] do |asm|
+      asm.ldrh     w2, [x4]
+    end
+    assert_bytes [0xca,0x7b,0x67,0x78] do |asm|
+      asm.ldrh     w10, [x30, x7, lsl(1)]
+    end
+    assert_bytes [0x8c,0xeb,0x7f,0x78] do |asm|
+      asm.ldrh     w12, [x28, xzr, sxtx]
+    end
+    assert_bytes [0x4e,0x4b,0x66,0x78] do |asm|
+      asm.ldrh     w14, [x26, w6, uxtw]
+    end
+    assert_bytes [0x2f,0x4b,0x67,0x78] do |asm|
+      asm.ldrh     w15, [x25, w7, uxtw]
+    end
+    assert_bytes [0xf1,0xca,0x69,0x78] do |asm|
+      asm.ldrh     w17, [x23, w9, sxtw]
+    end
+    assert_bytes [0xd2,0xca,0x6a,0x78] do |asm|
+      asm.ldrh     w18, [x22, w10, sxtw]
+    end
+    assert_bytes [0x49,0xf4,0x4f,0x78] do |asm|
+      asm.ldrh     w9, [x2], 255
+    end
+    assert_bytes [0x49,0x14,0x40,0x78] do |asm|
+      asm.ldrh     w9, [x2], 1
+    end
+    assert_bytes [0x6a,0x04,0x50,0x78] do |asm|
+      asm.ldrh     w10, [x3], -256
+    end
+    assert_bytes [0x49,0xfc,0x4f,0x78] do |asm|
+      asm.ldrh     w9, [x2, 255], :!
+    end
+    assert_bytes [0x49,0x1c,0x40,0x78] do |asm|
+      asm.ldrh     w9, [x2, 1], :!
+    end
+    assert_bytes [0x6a,0x0c,0x50,0x78] do |asm|
+      asm.ldrh     w10, [x3, -256], :!
+    end
   end
 
   def test_LDRSB_imm

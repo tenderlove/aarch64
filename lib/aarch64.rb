@@ -1138,6 +1138,38 @@ module AArch64
       end
     end
 
+    def ldrh wt, xn, imm = nil
+      if imm
+        if imm == :!
+          a LDRH_imm.new(wt, xn.first, xn[1], 0b11)
+        else
+          # Post index
+          a LDRH_imm.new(wt, xn.first, imm, 0b01)
+        end
+      else
+        xn, imm, option = *xn
+        imm ||= 0
+        if imm.integer?
+          a LDRH_unsigned.new(wt, xn, imm)
+        else
+          if option
+            option_name = option ? option.name : :lsl
+
+            val = case option_name
+                  when :lsl then 0b011
+                  when :uxtw then 0b010
+                  when :sxtw then 0b110
+                  when :sxtx then 0b111
+                  end
+
+            a LDRH_reg.new(wt, xn, imm, option.shift? ? 1 : 0, val)
+          else
+            a LDRH_reg.new(wt, xn, imm, 0, 0b11)
+          end
+        end
+      end
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)
