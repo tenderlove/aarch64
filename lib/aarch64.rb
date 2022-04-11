@@ -978,6 +978,10 @@ module AArch64
       @insns = @insns << LDEOR.new(rs, rt, rn.first, 0, 1, 0b01)
     end
 
+    def ldg xt, xn
+      a LDG.new(xt, xn.first, xn[1] || 0)
+    end
+
     def ldlar rt, rn
       size = rt.x? ? 0b11 : 0b10
       @insns = @insns << LDLAR.new(rt, rn.first, size)

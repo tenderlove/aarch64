@@ -2617,8 +2617,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDG
-    skip "Fixme!"
     # LDG  <Xt>, [<Xn|SP>{, #<simm>}]
+    # ldg x1, [x2]
+    assert_bytes [65, 0, 96, 217] do |asm|
+      asm.ldg x1, [x2]
+    end
+    assert_bytes [65, 48, 96, 217] do |asm|
+      asm.ldg x1, [x2, 3]
+    end
   end
 
   def test_LDGM

@@ -4,8 +4,14 @@ module AArch64
     # Load Allocation Tag
     # LDG  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDG
+      def initialize xt, xn, imm9
+        @xt   = xt
+        @xn   = xn
+        @imm9 = imm9
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDG(@imm9, @xn.to_i, @xt.to_i)
       end
 
       private
