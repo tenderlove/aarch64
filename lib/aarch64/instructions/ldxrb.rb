@@ -4,8 +4,13 @@ module AArch64
     # Load Exclusive Register Byte
     # LDXRB  <Wt>, [<Xn|SP>{,#0}]
     class LDXRB
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDXRB(@rn.to_i, @rt.to_i)
       end
 
       private

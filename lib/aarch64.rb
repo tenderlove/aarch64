@@ -1130,6 +1130,10 @@ module AArch64
       end
     end
 
+    def ldxrb rt, rn
+      a LDXRB.new(rt, rn.first)
+    end
+
     def ldxrh rt, rn
       a LDXRH.new(rt, rn.first)
     end
