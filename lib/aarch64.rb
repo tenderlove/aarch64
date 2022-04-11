@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "aarch64/instructions"
+require "aarch64/system_registers/mrs_msr_64"
 require "aarch64/utils"
 
 module AArch64
@@ -1174,6 +1175,10 @@ module AArch64
 
     def movk reg, imm, lsl: 0
       @insns = @insns << MOVK.new(reg, imm, lsl / 16)
+    end
+
+    def mrs rt, reg
+      a MRS.new(reg.op0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
     end
 
     def nop

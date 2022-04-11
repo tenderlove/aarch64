@@ -93,7 +93,9 @@ basic_insn_files.each do |filename|
     desc = section.at_css("desc > brief").text.strip
     fname = section["id"].downcase
     files_and_classes << [fname, section["id"]]
-    File.binwrite "lib/aarch64/instructions/#{fname}.rb", make_encode(section["id"], section["title"], desc, asm, section.at_css("regdiagram"))
+    unless File.exist?  "lib/aarch64/instructions/#{fname}.rb"
+      File.binwrite "lib/aarch64/instructions/#{fname}.rb", make_encode(section["id"], section["title"], desc, asm, section.at_css("regdiagram"))
+    end
   end
 end
 

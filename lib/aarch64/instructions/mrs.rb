@@ -4,8 +4,17 @@ module AArch64
     # Move System Register
     # MRS  <Xt>, (<systemreg>|S<op0>_<op1>_<Cn>_<Cm>_<op2>)
     class MRS
+      def initialize o0, op1, crn, crm, op2, rt
+        @o0  = o0
+        @op1 = op1
+        @crn = crn
+        @crm = crm
+        @op2 = op2
+        @rt  = rt
+      end
+
       def encode
-        raise NotImplementedError
+        self.MRS(@o0, @op1, @crn, @crm, @op2, @rt.to_i)
       end
 
       private
