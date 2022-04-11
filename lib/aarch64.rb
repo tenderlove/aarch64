@@ -1130,6 +1130,10 @@ module AArch64
       end
     end
 
+    def lslv rd, rn, rm
+      a LSLV.new(rd, rn, rm)
+    end
+
     def lsr rd, rn, rm
       if rm.integer?
         if rd.x?

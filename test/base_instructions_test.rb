@@ -3407,9 +3407,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LSLV
-    skip "Fixme!"
     # LSLV  <Wd>, <Wn>, <Wm>
     # LSLV  <Xd>, <Xn>, <Xm>
+    # lslv  w1, w2, w3
+    assert_bytes [0x41, 0x20, 0xc3, 0x1a] do |asm|
+      asm.lslv  w1, w2, w3
+    end
+    # lslv  x1, x2, x3
+    assert_bytes [0x41, 0x20, 0xc3, 0x9a] do |asm|
+      asm.lslv  x1, x2, x3
+    end
   end
 
   def test_LSR_LSRV
