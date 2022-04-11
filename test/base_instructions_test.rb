@@ -3435,9 +3435,38 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MADD
-    skip "Fixme!"
     # MADD  <Wd>, <Wn>, <Wm>, <Wa>
     # MADD  <Xd>, <Xn>, <Xm>, <Xa>
+    assert_bytes [0x41,0x10,0x03,0x1b] do |asm|
+      asm.madd   w1, w2, w3, w4
+    end
+    assert_bytes [0x41,0x10,0x03,0x9b] do |asm|
+      asm.madd   x1, x2, x3, x4
+    end
+    assert_bytes [0x61,0x10,0x07,0x1b] do |asm|
+      asm.madd     w1, w3, w7, w4
+    end
+    assert_bytes [0x1f,0x2c,0x09,0x1b] do |asm|
+      asm.madd     wzr, w0, w9, w11
+    end
+    assert_bytes [0xed,0x13,0x04,0x1b] do |asm|
+      asm.madd     w13, wzr, w4, w4
+    end
+    assert_bytes [0xd3,0x77,0x1f,0x1b] do |asm|
+      asm.madd     w19, w30, wzr, w29
+    end
+    assert_bytes [0x61,0x10,0x07,0x9b] do |asm|
+      asm.madd     x1, x3, x7, x4
+    end
+    assert_bytes [0x1f,0x2c,0x09,0x9b] do |asm|
+      asm.madd     xzr, x0, x9, x11
+    end
+    assert_bytes [0xed,0x13,0x04,0x9b] do |asm|
+      asm.madd     x13, xzr, x4, x4
+    end
+    assert_bytes [0xd3,0x77,0x1f,0x9b] do |asm|
+      asm.madd     x19, x30, xzr, x29
+    end
   end
 
   def test_MNEG_MSUB

@@ -1130,6 +1130,10 @@ module AArch64
       end
     end
 
+    def madd rd, rn, rm, ra
+      a MADD.new(rd, rn, rm, ra)
+    end
+
     def mov rd, rm
       if rm.integer?
         if rm < 0
