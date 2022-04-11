@@ -4,8 +4,13 @@ module AArch64
     # Load Exclusive Register Halfword
     # LDXRH  <Wt>, [<Xn|SP>{,#0}]
     class LDXRH
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDXRH(@rn.to_i, @rt.to_i)
       end
 
       private

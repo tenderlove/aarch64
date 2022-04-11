@@ -1130,6 +1130,10 @@ module AArch64
       end
     end
 
+    def ldxrh rt, rn
+      a LDXRH.new(rt, rn.first)
+    end
+
     def lsl rd, rn, rm
       if rm.integer?
         if rd.x?
