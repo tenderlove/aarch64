@@ -3101,12 +3101,6 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_LDRB_reg
-    skip "Fixme!"
-    # LDRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
-    # LDRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
-  end
-
   def test_LDRH_imm
     skip "Fixme!"
     # LDRH  <Wt>, [<Xn|SP>], #<simm>
