@@ -3429,9 +3429,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LSRV
-    skip "Fixme!"
     # LSRV  <Wd>, <Wn>, <Wm>
     # LSRV  <Xd>, <Xn>, <Xm>
+    # lsrv  w1, w2, w3
+    assert_bytes [0x41, 0x24, 0xc3, 0x1a] do |asm|
+      asm.lsrv  w1, w2, w3
+    end
+    # lsrv  x1, x2, x3
+    assert_bytes [0x41, 0x24, 0xc3, 0x9a] do |asm|
+      asm.lsrv  x1, x2, x3
+    end
   end
 
   def test_MADD

@@ -5,8 +5,14 @@ module AArch64
     # LSRV  <Wd>, <Wn>, <Wm>
     # LSRV  <Xd>, <Xn>, <Xm>
     class LSRV
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.LSRV(@rd.sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

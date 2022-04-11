@@ -1130,6 +1130,10 @@ module AArch64
       end
     end
 
+    def lsrv rd, rn, rm
+      a LSRV.new(rd, rn, rm)
+    end
+
     def madd rd, rn, rm, ra
       a MADD.new(rd, rn, rm, ra)
     end
