@@ -4275,11 +4275,460 @@ class BaseInstructionsTest < AArch64::Test
   def test_MSR_imm
     skip "Fixme!"
     # MSR  <pstatefield>, #<imm>
+    assert_bytes [0xbf,0x40,0x00,0xd5] do |asm|
+      asm.msr SPSel, 0
+    end
+    assert_bytes [0xdf,0x40,0x03,0xd5] do |asm|
+      asm.msr DAIFSet, 0
+    end
+    assert_bytes [0x9f,0x40,0x00,0xd5] do |asm|
+      asm.msr PAN, 0
+    end
+    assert_bytes [0x9f,0x41,0x00,0xd5] do |asm|
+      asm.msr PAN, 1
+    end
+    assert_bytes [0x7f,0x40,0x00,0xd5] do |asm|
+      asm.msr     UAO, 0
+    end
+    assert_bytes [0x7f,0x41,0x00,0xd5] do |asm|
+      asm.msr     UAO, 1
+    end
   end
 
   def test_MSR_reg
-    skip "Fixme!"
     # MSR  (<systemreg>|S<op0>_<op1>_<Cn>_<Cm>_<op2>), <Xt>
+    assert_bytes [0x00,0x42,0x18,0xd5] do |asm|
+      asm.msr SPSel, x0
+    end
+    assert_bytes [0x00,0x52,0x18,0xd5] do |asm|
+      asm.msr ESR_EL1, x0
+    end
+    assert_bytes [0x23,0x10,0x18,0xd5] do |asm|
+      asm.msr ACTLR_EL1, x3
+    end
+    assert_bytes [0x23,0x10,0x1c,0xd5] do |asm|
+      asm.msr ACTLR_EL2, x3
+    end
+    assert_bytes [0x23,0x10,0x1e,0xd5] do |asm|
+      asm.msr ACTLR_EL3, x3
+    end
+    assert_bytes [0x03,0x51,0x18,0xd5] do |asm|
+      asm.msr AFSR0_EL1, x3
+    end
+    assert_bytes [0x03,0x51,0x1c,0xd5] do |asm|
+      asm.msr AFSR0_EL2, x3
+    end
+    assert_bytes [0x03,0x51,0x1e,0xd5] do |asm|
+      asm.msr AFSR0_EL3, x3
+    end
+    assert_bytes [0x23,0x51,0x18,0xd5] do |asm|
+      asm.msr AFSR1_EL1, x3
+    end
+    assert_bytes [0x23,0x51,0x1c,0xd5] do |asm|
+      asm.msr AFSR1_EL2, x3
+    end
+    assert_bytes [0x23,0x51,0x1e,0xd5] do |asm|
+      asm.msr AFSR1_EL3, x3
+    end
+    assert_bytes [0x03,0xa3,0x18,0xd5] do |asm|
+      asm.msr AMAIR_EL1, x3
+    end
+    assert_bytes [0x03,0xa3,0x1c,0xd5] do |asm|
+      asm.msr AMAIR_EL2, x3
+    end
+    assert_bytes [0x03,0xa3,0x1e,0xd5] do |asm|
+      asm.msr AMAIR_EL3, x3
+    end
+    assert_bytes [0x03,0xe0,0x1b,0xd5] do |asm|
+      asm.msr CNTFRQ_EL0, x3
+    end
+    assert_bytes [0x03,0xe1,0x1c,0xd5] do |asm|
+      asm.msr CNTHCTL_EL2, x3
+    end
+    assert_bytes [0x23,0xe2,0x1c,0xd5] do |asm|
+      asm.msr CNTHP_CTL_EL2, x3
+    end
+    assert_bytes [0x43,0xe2,0x1c,0xd5] do |asm|
+      asm.msr CNTHP_CVAL_EL2, x3
+    end
+    assert_bytes [0x03,0xe2,0x1c,0xd5] do |asm|
+      asm.msr CNTHP_TVAL_EL2, x3
+    end
+    assert_bytes [0x03,0xe1,0x18,0xd5] do |asm|
+      asm.msr CNTKCTL_EL1, x3
+    end
+    assert_bytes [0x23,0xe2,0x1b,0xd5] do |asm|
+      asm.msr CNTP_CTL_EL0, x3
+    end
+    assert_bytes [0x43,0xe2,0x1b,0xd5] do |asm|
+      asm.msr CNTP_CVAL_EL0, x3
+    end
+    assert_bytes [0x03,0xe2,0x1b,0xd5] do |asm|
+      asm.msr CNTP_TVAL_EL0, x3
+    end
+    assert_bytes [0x63,0xe0,0x1c,0xd5] do |asm|
+      asm.msr CNTVOFF_EL2, x3
+    end
+    assert_bytes [0x23,0xe3,0x1b,0xd5] do |asm|
+      asm.msr CNTV_CTL_EL0, x3
+    end
+    assert_bytes [0x43,0xe3,0x1b,0xd5] do |asm|
+      asm.msr CNTV_CVAL_EL0, x3
+    end
+    assert_bytes [0x03,0xe3,0x1b,0xd5] do |asm|
+      asm.msr CNTV_TVAL_EL0, x3
+    end
+    assert_bytes [0x23,0xd0,0x18,0xd5] do |asm|
+      asm.msr CONTEXTIDR_EL1, x3
+    end
+    assert_bytes [0x43,0x10,0x18,0xd5] do |asm|
+      asm.msr CPACR_EL1, x3
+    end
+    assert_bytes [0x43,0x11,0x1c,0xd5] do |asm|
+      asm.msr CPTR_EL2, x3
+    end
+    assert_bytes [0x43,0x11,0x1e,0xd5] do |asm|
+      asm.msr CPTR_EL3, x3
+    end
+    assert_bytes [0x03,0x00,0x1a,0xd5] do |asm|
+      asm.msr CSSELR_EL1, x3
+    end
+    assert_bytes [0x43,0x42,0x18,0xd5] do |asm|
+      asm.msr CurrentEL, x3
+    end
+    assert_bytes [0x03,0x30,0x1c,0xd5] do |asm|
+      asm.msr DACR32_EL2, x3
+    end
+    assert_bytes [0x03,0x52,0x18,0xd5] do |asm|
+      asm.msr ESR_EL1, x3
+    end
+    assert_bytes [0x03,0x52,0x1c,0xd5] do |asm|
+      asm.msr ESR_EL2, x3
+    end
+    assert_bytes [0x03,0x52,0x1e,0xd5] do |asm|
+      asm.msr ESR_EL3, x3
+    end
+    assert_bytes [0x03,0x60,0x18,0xd5] do |asm|
+      asm.msr FAR_EL1, x3
+    end
+    assert_bytes [0x03,0x60,0x1c,0xd5] do |asm|
+      asm.msr FAR_EL2, x3
+    end
+    assert_bytes [0x03,0x60,0x1e,0xd5] do |asm|
+      asm.msr FAR_EL3, x3
+    end
+    assert_bytes [0x03,0x53,0x1c,0xd5] do |asm|
+      asm.msr FPEXC32_EL2, x3
+    end
+    assert_bytes [0xe3,0x11,0x1c,0xd5] do |asm|
+      asm.msr HACR_EL2, x3
+    end
+    assert_bytes [0x03,0x11,0x1c,0xd5] do |asm|
+      asm.msr HCR_EL2, x3
+    end
+    assert_bytes [0x83,0x60,0x1c,0xd5] do |asm|
+      asm.msr HPFAR_EL2, x3
+    end
+    assert_bytes [0x63,0x11,0x1c,0xd5] do |asm|
+      asm.msr HSTR_EL2, x3
+    end
+    assert_bytes [0x23,0x50,0x1c,0xd5] do |asm|
+      asm.msr IFSR32_EL2, x3
+    end
+    assert_bytes [0x03,0xa2,0x18,0xd5] do |asm|
+      asm.msr MAIR_EL1, x3
+    end
+    assert_bytes [0x03,0xa2,0x1c,0xd5] do |asm|
+      asm.msr MAIR_EL2, x3
+    end
+    assert_bytes [0x03,0xa2,0x1e,0xd5] do |asm|
+      asm.msr MAIR_EL3, x3
+    end
+    assert_bytes [0x23,0x11,0x1c,0xd5] do |asm|
+      asm.msr MDCR_EL2, x3
+    end
+    assert_bytes [0x23,0x13,0x1e,0xd5] do |asm|
+      asm.msr MDCR_EL3, x3
+    end
+    assert_bytes [0x03,0x74,0x18,0xd5] do |asm|
+      asm.msr PAR_EL1, x3
+    end
+    assert_bytes [0x03,0x11,0x1e,0xd5] do |asm|
+      asm.msr SCR_EL3, x3
+    end
+    assert_bytes [0x03,0x10,0x18,0xd5] do |asm|
+      asm.msr SCTLR_EL1, x3
+    end
+    assert_bytes [0x03,0x10,0x1c,0xd5] do |asm|
+      asm.msr SCTLR_EL2, x3
+    end
+    assert_bytes [0x03,0x10,0x1e,0xd5] do |asm|
+      asm.msr SCTLR_EL3, x3
+    end
+    assert_bytes [0x23,0x11,0x1e,0xd5] do |asm|
+      asm.msr SDER32_EL3, x3
+    end
+    assert_bytes [0x43,0x20,0x18,0xd5] do |asm|
+      asm.msr TCR_EL1, x3
+    end
+    assert_bytes [0x43,0x20,0x1c,0xd5] do |asm|
+      asm.msr TCR_EL2, x3
+    end
+    assert_bytes [0x43,0x20,0x1e,0xd5] do |asm|
+      asm.msr TCR_EL3, x3
+    end
+    #assert_bytes [0x03,0x00,0x12,0xd5] do |asm|
+    #  asm.msr TEECR32_EL1, x3
+    #end
+    #assert_bytes [0x03,0x10,0x12,0xd5] do |asm|
+    #  asm.msr TEEHBR32_EL1, x3
+    #end
+    assert_bytes [0x63,0xd0,0x1b,0xd5] do |asm|
+      asm.msr TPIDRRO_EL0, x3
+    end
+    assert_bytes [0x43,0xd0,0x1b,0xd5] do |asm|
+      asm.msr TPIDR_EL0, x3
+    end
+    assert_bytes [0x83,0xd0,0x18,0xd5] do |asm|
+      asm.msr TPIDR_EL1, x3
+    end
+    assert_bytes [0x43,0xd0,0x1c,0xd5] do |asm|
+      asm.msr TPIDR_EL2, x3
+    end
+    assert_bytes [0x43,0xd0,0x1e,0xd5] do |asm|
+      asm.msr TPIDR_EL3, x3
+    end
+    assert_bytes [0x03,0x20,0x18,0xd5] do |asm|
+      asm.msr TTBR0_EL1, x3
+    end
+    assert_bytes [0x03,0x20,0x1c,0xd5] do |asm|
+      asm.msr TTBR0_EL2, x3
+    end
+    assert_bytes [0x03,0x20,0x1e,0xd5] do |asm|
+      asm.msr TTBR0_EL3, x3
+    end
+    assert_bytes [0x23,0x20,0x18,0xd5] do |asm|
+      asm.msr TTBR1_EL1, x3
+    end
+    assert_bytes [0x03,0xc0,0x18,0xd5] do |asm|
+      asm.msr VBAR_EL1, x3
+    end
+    assert_bytes [0x03,0xc0,0x1c,0xd5] do |asm|
+      asm.msr VBAR_EL2, x3
+    end
+    assert_bytes [0x03,0xc0,0x1e,0xd5] do |asm|
+      asm.msr VBAR_EL3, x3
+    end
+    assert_bytes [0xa3,0x00,0x1c,0xd5] do |asm|
+      asm.msr VMPIDR_EL2, x3
+    end
+    assert_bytes [0x03,0x00,0x1c,0xd5] do |asm|
+      asm.msr VPIDR_EL2, x3
+    end
+    assert_bytes [0x43,0x21,0x1c,0xd5] do |asm|
+      asm.msr VTCR_EL2, x3
+    end
+    assert_bytes [0x03,0x21,0x1c,0xd5] do |asm|
+      asm.msr VTTBR_EL2, x3
+    end
+    assert_bytes [0x03,0x42,0x18,0xd5] do |asm|
+      asm.msr  SPSel, x3
+    end
+    #assert_bytes [0x81,0xb6,0x1a,0xd5] do |asm|
+    #  asm.msr  S3_2_C11_C6_4, x1
+    #end
+    #assert_bytes [0x00,0x00,0x00,0xd5] do |asm|
+    #  asm.msr  S0_0_C0_C0_0, x0
+    #end
+    #assert_bytes [0xa2,0x34,0x0a,0xd5] do |asm|
+    #  asm.msr  S1_2_C3_C4_5, x2
+    #end
+    assert_bytes [0x40,0xc0,0x1e,0xd5] do |asm|
+      asm.msr	RMR_EL3, x0
+    end
+    assert_bytes [0x40,0xc0,0x1c,0xd5] do |asm|
+      asm.msr	RMR_EL2, x0
+    end
+    assert_bytes [0x40,0xc0,0x18,0xd5] do |asm|
+      asm.msr	RMR_EL1, x0
+    end
+    assert_bytes [0x83,0x10,0x10,0xd5] do |asm|
+      asm.msr	OSLAR_EL1, x3
+    end
+    assert_bytes [0x03,0x05,0x13,0xd5] do |asm|
+      asm.msr	DBGDTRTX_EL0, x3
+    end
+    assert_bytes [0x00,0xa4,0x18,0xd5] do |asm|
+      asm.msr    LORSA_EL1, x0
+    end
+    assert_bytes [0x20,0xa4,0x18,0xd5] do |asm|
+      asm.msr    LOREA_EL1, x0
+    end
+    assert_bytes [0x40,0xa4,0x18,0xd5] do |asm|
+      asm.msr    LORN_EL1, x0
+    end
+    assert_bytes [0x60,0xa4,0x18,0xd5] do |asm|
+      asm.msr    LORC_EL1, x0
+    end
+    assert_bytes [0x65,0x42,0x18,0xd5] do |asm|
+      asm.msr PAN, x5
+    end
+    assert_bytes [0x20,0x20,0x1c,0xd5] do |asm|
+      asm.msr TTBR1_EL2, x0
+    end
+    assert_bytes [0x20,0xd0,0x1c,0xd5] do |asm|
+      asm.msr CONTEXTIDR_EL2, x0
+    end
+    assert_bytes [0x00,0xe3,0x1c,0xd5] do |asm|
+      asm.msr CNTHV_TVAL_EL2, x0
+    end
+    assert_bytes [0x40,0xe3,0x1c,0xd5] do |asm|
+      asm.msr CNTHV_CVAL_EL2, x0
+    end
+    assert_bytes [0x20,0xe3,0x1c,0xd5] do |asm|
+      asm.msr CNTHV_CTL_EL2, x0
+    end
+    #assert_bytes [0x00,0x10,0x1d,0xd5] do |asm|
+    #  asm.msr SCTLR_EL12, x0
+    #end
+    #assert_bytes [0x40,0x10,0x1d,0xd5] do |asm|
+    #  asm.msr CPACR_EL12, x0
+    #end
+    #assert_bytes [0x00,0x20,0x1d,0xd5] do |asm|
+    #  asm.msr TTBR0_EL12, x0
+    #end
+    #assert_bytes [0x20,0x20,0x1d,0xd5] do |asm|
+    #  asm.msr TTBR1_EL12, x0
+    #end
+    #assert_bytes [0x40,0x20,0x1d,0xd5] do |asm|
+    #  asm.msr TCR_EL12, x0
+    #end
+    #assert_bytes [0x00,0x51,0x1d,0xd5] do |asm|
+    #  asm.msr AFSR0_EL12, x0
+    #end
+    #assert_bytes [0x20,0x51,0x1d,0xd5] do |asm|
+    #  asm.msr AFSR1_EL12, x0
+    #end
+    #assert_bytes [0x00,0x52,0x1d,0xd5] do |asm|
+    #  asm.msr ESR_EL12, x0
+    #end
+    #assert_bytes [0x00,0x60,0x1d,0xd5] do |asm|
+    #  asm.msr FAR_EL12, x0
+    #end
+    #assert_bytes [0x00,0xa2,0x1d,0xd5] do |asm|
+    #  asm.msr MAIR_EL12, x0
+    #end
+    #assert_bytes [0x00,0xa3,0x1d,0xd5] do |asm|
+    #  asm.msr AMAIR_EL12, x0
+    #end
+    #assert_bytes [0x00,0xc0,0x1d,0xd5] do |asm|
+    #  asm.msr VBAR_EL12, x0
+    #end
+    #assert_bytes [0x20,0xd0,0x1d,0xd5] do |asm|
+    #  asm.msr CONTEXTIDR_EL12, x0
+    #end
+    #assert_bytes [0x00,0xe1,0x1d,0xd5] do |asm|
+    #  asm.msr CNTKCTL_EL12, x0
+    #end
+    #assert_bytes [0x00,0xe2,0x1d,0xd5] do |asm|
+    #  asm.msr CNTP_TVAL_EL02, x0
+    #end
+    #assert_bytes [0x20,0xe2,0x1d,0xd5] do |asm|
+    #  asm.msr CNTP_CTL_EL02, x0
+    #end
+    #assert_bytes [0x40,0xe2,0x1d,0xd5] do |asm|
+    #  asm.msr CNTP_CVAL_EL02, x0
+    #end
+    #assert_bytes [0x00,0xe3,0x1d,0xd5] do |asm|
+    #  asm.msr CNTV_TVAL_EL02, x0
+    #end
+    #assert_bytes [0x20,0xe3,0x1d,0xd5] do |asm|
+    #  asm.msr CNTV_CTL_EL02, x0
+    #end
+    #assert_bytes [0x40,0xe3,0x1d,0xd5] do |asm|
+    #  asm.msr CNTV_CVAL_EL02, x0
+    #end
+    #assert_bytes [0x00,0x40,0x1d,0xd5] do |asm|
+    #  asm.msr SPSR_EL12, x0
+    #end
+    #assert_bytes [0x20,0x40,0x1d,0xd5] do |asm|
+    #  asm.msr ELR_EL12, x0
+    #end
+    assert_bytes [0x00,0x9a,0x18,0xd5] do |asm|
+      asm.msr PMBLIMITR_EL1, x0
+    end
+    assert_bytes [0x20,0x9a,0x18,0xd5] do |asm|
+      asm.msr PMBPTR_EL1, x0
+    end
+    assert_bytes [0x60,0x9a,0x18,0xd5] do |asm|
+      asm.msr PMBSR_EL1, x0
+    end
+    assert_bytes [0xe0,0x9a,0x18,0xd5] do |asm|
+      asm.msr PMBIDR_EL1, x0
+    end
+    assert_bytes [0x00,0x99,0x1c,0xd5] do |asm|
+      asm.msr PMSCR_EL2, x0
+    end
+    #assert_bytes [0x00,0x99,0x1d,0xd5] do |asm|
+    #  asm.msr PMSCR_EL12, x0
+    #end
+    assert_bytes [0x00,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSCR_EL1, x0
+    end
+    assert_bytes [0x40,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSICR_EL1, x0
+    end
+    assert_bytes [0x60,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSIRR_EL1, x0
+    end
+    assert_bytes [0x80,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSFCR_EL1, x0
+    end
+    assert_bytes [0xa0,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSEVFR_EL1, x0
+    end
+    assert_bytes [0xc0,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSLATFR_EL1, x0
+    end
+    assert_bytes [0xe0,0x99,0x18,0xd5] do |asm|
+      asm.msr PMSIDR_EL1, x0
+    end
+    assert_bytes [0x81,0x42,0x18,0xd5] do |asm|
+      asm.msr     UAO, x1
+    end
+    assert_bytes [0x20,0x53,0x18,0xd5] do |asm|
+      asm.msr     ERRSELR_EL1, x0
+    end
+    assert_bytes [0x2f,0x53,0x18,0xd5] do |asm|
+      asm.msr     ERRSELR_EL1, x15
+    end
+    assert_bytes [0x39,0x53,0x18,0xd5] do |asm|
+      asm.msr     ERRSELR_EL1, x25
+    end
+    assert_bytes [0x21,0x54,0x18,0xd5] do |asm|
+      asm.msr     ERXCTLR_EL1, x1
+    end
+    assert_bytes [0x42,0x54,0x18,0xd5] do |asm|
+      asm.msr     ERXSTATUS_EL1, x2
+    end
+    assert_bytes [0x63,0x54,0x18,0xd5] do |asm|
+      asm.msr     ERXADDR_EL1, x3
+    end
+    assert_bytes [0x04,0x55,0x18,0xd5] do |asm|
+      asm.msr     ERXMISC0_EL1, x4
+    end
+    assert_bytes [0x25,0x55,0x18,0xd5] do |asm|
+      asm.msr     ERXMISC1_EL1, x5
+    end
+    assert_bytes [0x26,0xc1,0x18,0xd5] do |asm|
+      asm.msr     DISR_EL1, x6
+    end
+    assert_bytes [0x27,0xc1,0x1c,0xd5] do |asm|
+      asm.msr     VDISR_EL2, x7
+    end
+    assert_bytes [0x68,0x52,0x1c,0xd5] do |asm|
+      asm.msr     VSESR_EL2, x8
+    end
   end
 
   def test_MSUB

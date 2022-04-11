@@ -1181,6 +1181,14 @@ module AArch64
       a MRS.new(reg.op0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
     end
 
+    def msr reg, rt
+      if rt.integer?
+        raise NotImplementedError
+      else
+        a MSR_reg.new(reg.op0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
+      end
+    end
+
     def nop
       a NOP.new
     end

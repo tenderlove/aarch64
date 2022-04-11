@@ -4,8 +4,14 @@ module AArch64
     # Move immediate value to Special Register
     # MSR  <pstatefield>, #<imm>
     class MSR_imm
+      def initialize op1, crm, op2
+        @op1 = op1
+        @crm = crm
+        @op2 = op2
+      end
+
       def encode
-        raise NotImplementedError
+        self.MSR_imm(@op1, @crm, @op2)
       end
 
       private

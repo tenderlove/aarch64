@@ -4,8 +4,17 @@ module AArch64
     # Move general-purpose register to System Register
     # MSR  (<systemreg>|S<op0>_<op1>_<Cn>_<Cm>_<op2>), <Xt>
     class MSR_reg
+      def initialize o0, op1, crn, crm, op2, rt
+        @o0  = o0
+        @op1 = op1
+        @crn = crn
+        @crm = crm
+        @op2 = op2
+        @rt  = rt
+      end
+
       def encode
-        raise NotImplementedError
+        self.MSR_reg(@o0, @op1, @crn, @crm, @op2, @rt.to_i)
       end
 
       private
