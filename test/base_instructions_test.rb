@@ -3336,9 +3336,38 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUR_gen
-    skip "Fixme!"
     # LDUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDUR  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x62,0x00,0x40,0xb8] do |asm|
+      asm.ldur    w2, [x3]
+    end
+    assert_bytes [0xe2,0x83,0x41,0xb8] do |asm|
+      asm.ldur    w2, [sp, 24]
+    end
+    assert_bytes [0x62,0x00,0x40,0xf8] do |asm|
+      asm.ldur    x2, [x3]
+    end
+    assert_bytes [0xe2,0x83,0x41,0xf8] do |asm|
+      asm.ldur    x2, [sp, 24]
+    end
+    assert_bytes [0xab,0x83,0x5f,0xf8] do |asm|
+      asm.ldur	x11, [x29, -8]
+    end
+    assert_bytes [0xab,0x73,0x40,0xf8] do |asm|
+      asm.ldur	x11, [x29, 7]
+    end
+    assert_bytes [0x00,0x20,0x40,0xb8] do |asm|
+      asm.ldur	w0, [x0, 2]
+    end
+    assert_bytes [0x00,0x00,0x50,0xb8] do |asm|
+      asm.ldur	w0, [x0, -256]
+    end
+    assert_bytes [0xec,0xf3,0x4f,0xb8] do |asm|
+      asm.ldur     w12, [sp, 255]
+    end
+    assert_bytes [0x9f,0xf1,0x4f,0xf8] do |asm|
+      asm.ldur     xzr, [x12, 255]
+    end
   end
 
   def test_LDURB
