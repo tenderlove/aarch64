@@ -1727,6 +1727,10 @@ module AArch64
       sub rd, rd.zr, rm, option, extend: extend, amount: amount, lsl: lsl, shift: shift
     end
 
+    def negs rd, rm, option = nil, shift: :lsl, amount: 0
+      subs rd, rd.zr, rm, option, shift: shift, amount: amount
+    end
+
     def nop
       a NOP.new
     end

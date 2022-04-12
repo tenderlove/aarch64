@@ -5889,10 +5889,81 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_NEGS_SUBS_addsub_shift
-    skip "Fixme!"
     # NEGS  <Wd>, <Wm>{, <shift> #<amount>}
     # SUBS <Wd>, WZR, <Wm> {, <shift> #<amount>}
     # NEGS  <Xd>, <Xm>{, <shift> #<amount>}
+    assert_bytes [0xf4,0x03,0x04,0x6b] do |asm|
+      asm.negs     w20, w4
+    end
+    assert_bytes [0xf4,0x03,0x04,0xeb] do |asm|
+      asm.negs     x20, x4
+    end
+    assert_bytes [0xfd,0x03,0x1e,0x6b] do |asm|
+      asm.negs     w29, w30
+    end
+    assert_bytes [0xfe,0x03,0x1f,0x6b] do |asm|
+      asm.negs     w30, wzr
+    end
+    assert_bytes [0xfc,0x03,0x1b,0x6b] do |asm|
+      asm.negs     w28, w27
+    end
+    assert_bytes [0xfa,0x77,0x19,0x6b] do |asm|
+      asm.negs     w26, w25, lsl(29)
+    end
+    assert_bytes [0xf8,0x7f,0x17,0x6b] do |asm|
+      asm.negs     w24, w23, lsl(31)
+    end
+    assert_bytes [0xf6,0x03,0x55,0x6b] do |asm|
+      asm.negs     w22, w21, lsr(0)
+    end
+    assert_bytes [0xf4,0x07,0x53,0x6b] do |asm|
+      asm.negs     w20, w19, lsr(1)
+    end
+    assert_bytes [0xf2,0x7f,0x51,0x6b] do |asm|
+      asm.negs     w18, w17, lsr(31)
+    end
+    assert_bytes [0xf0,0x03,0x8f,0x6b] do |asm|
+      asm.negs     w16, w15, asr(0)
+    end
+    assert_bytes [0xee,0x33,0x8d,0x6b] do |asm|
+      asm.negs     w14, w13, asr(12)
+    end
+    assert_bytes [0xec,0x7f,0x8b,0x6b] do |asm|
+      asm.negs     w12, w11, asr(31)
+    end
+    assert_bytes [0xfd,0x03,0x1e,0xeb] do |asm|
+      asm.negs     x29, x30
+    end
+    assert_bytes [0xfe,0x03,0x1f,0xeb] do |asm|
+      asm.negs     x30, xzr
+    end
+    assert_bytes [0xfc,0x03,0x1b,0xeb] do |asm|
+      asm.negs     x28, x27
+    end
+    assert_bytes [0xfa,0x77,0x19,0xeb] do |asm|
+      asm.negs     x26, x25, lsl(29)
+    end
+    assert_bytes [0xf8,0x7f,0x17,0xeb] do |asm|
+      asm.negs     x24, x23, lsl(31)
+    end
+    assert_bytes [0xf6,0x03,0x55,0xeb] do |asm|
+      asm.negs     x22, x21, lsr(0)
+    end
+    assert_bytes [0xf4,0x07,0x53,0xeb] do |asm|
+      asm.negs     x20, x19, lsr(1)
+    end
+    assert_bytes [0xf2,0x7f,0x51,0xeb] do |asm|
+      asm.negs     x18, x17, lsr(31)
+    end
+    assert_bytes [0xf0,0x03,0x8f,0xeb] do |asm|
+      asm.negs     x16, x15, asr(0)
+    end
+    assert_bytes [0xee,0x33,0x8d,0xeb] do |asm|
+      asm.negs     x14, x13, asr(12)
+    end
+    assert_bytes [0xec,0x7f,0x8b,0xeb] do |asm|
+      asm.negs     x12, x11, asr(31)
+    end
     # SUBS <Xd>, XZR, <Xm> {, <shift> #<amount>}
   end
 
