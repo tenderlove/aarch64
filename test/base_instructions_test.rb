@@ -6660,9 +6660,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SETF
-    skip "Fixme!"
     # SETF8  <Wn>
+    # setf8  w3
+    assert_bytes [0x6d, 0x8, 00, 0x3a] do |asm|
+      asm.setf8  w3
+    end
     # SETF16  <Wn>
+    # setf16  w5
+    assert_bytes [0xad, 0x48, 00, 0x3a] do |asm|
+      asm.setf16  w5
+    end
   end
 
   def test_SETGP

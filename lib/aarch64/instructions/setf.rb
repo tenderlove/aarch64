@@ -5,8 +5,13 @@ module AArch64
     # SETF8  <Wn>
     # SETF16  <Wn>
     class SETF
+      def initialize rn, sz
+        @rn = rn
+        @sz = sz
+      end
+
       def encode
-        raise NotImplementedError
+        self.SETF(@sz, @rn.to_i)
       end
 
       private

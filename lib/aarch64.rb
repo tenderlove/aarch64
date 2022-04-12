@@ -1949,6 +1949,14 @@ module AArch64
       a SDIV.new(rd, rn, rm, rd.sf)
     end
 
+    def setf8 rn
+      a SETF.new(rn, 0)
+    end
+
+    def setf16 rn
+      a SETF.new(rn, 1)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
