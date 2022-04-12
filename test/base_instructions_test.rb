@@ -6189,8 +6189,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PACGA
-    skip "Fixme!"
     # PACGA  <Xd>, <Xn>, <Xm|SP>
+    # pacga x1, x2, x3
+    assert_bytes [0x41, 0x30, 0xc3, 0x9a] do |asm|
+      asm.pacga x1, x2, x3
+    end
+    # pacga x1, x2, sp
+    assert_bytes [0x41, 0x30, 0xdf, 0x9a] do |asm|
+      asm.pacga x1, x2, sp
+    end
   end
 
   def test_PACIA

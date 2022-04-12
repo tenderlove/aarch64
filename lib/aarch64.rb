@@ -1786,6 +1786,10 @@ module AArch64
       a PACDB.new(xd, xd.zr, 1)
     end
 
+    def pacga xd, xn, xm
+      a PACGA.new(xd, xn, xm)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end
