@@ -6352,8 +6352,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PRFUM
-    skip "Fixme!"
     # PRFUM (<prfop>|#<imm5>), [<Xn|SP>{, #<simm>}]
+    assert_bytes [0xe5,0x03,0x82,0xf8] do |asm|
+      asm.prfum   :pldl3strm, [sp, 32]
+    end
+    assert_bytes [0xe2,0x03,0x90,0xf8] do |asm|
+      asm.prfum    :pldl2keep, [sp, -256]
+    end
   end
 
   def test_PSB

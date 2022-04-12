@@ -4,8 +4,14 @@ module AArch64
     # Prefetch Memory (unscaled offset)
     # PRFUM (<prfop>|#<imm5>), [<Xn|SP>{, #<simm>}]
     class PRFUM
+      def initialize rt, rn, imm9
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+      end
+
       def encode
-        raise NotImplementedError
+        self.PRFUM(@imm9, @rn.to_i, @rt.to_i)
       end
 
       private

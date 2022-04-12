@@ -1856,6 +1856,13 @@ module AArch64
       end
     end
 
+    def prfum rt, rn
+      if rt.is_a?(Symbol)
+        rt = Utils.prfop(rt)
+      end
+      a PRFUM.new(rt, rn.first, rn[1] || 0)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end
