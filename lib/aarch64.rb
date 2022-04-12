@@ -1322,6 +1322,26 @@ module AArch64
       a LDSETH.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldsmax rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      a LDSMAX.new(rs, rt, rn.first, size, 0, 0)
+    end
+
+    def ldsmaxa rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      a LDSMAX.new(rs, rt, rn.first, size, 1, 0)
+    end
+
+    def ldsmaxal rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      a LDSMAX.new(rs, rt, rn.first, size, 1, 1)
+    end
+
+    def ldsmaxl rs, rt, rn
+      size = rs.x? ? 0b11 : 0b10
+      a LDSMAX.new(rs, rt, rn.first, size, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

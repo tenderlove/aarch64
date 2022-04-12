@@ -3472,15 +3472,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSMAX
-    skip "Fixme!"
     # LDSMAX  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXA  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAX  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0x20,0xb8] do |asm|
+      asm.ldsmax w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x22,0xb8] do |asm|
+      asm.ldsmax w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x40,0x20,0xf8] do |asm|
+      asm.ldsmax x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x22,0xf8] do |asm|
+      asm.ldsmax x2, x3, [sp]
+    end
     # LDSMAXA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0xa0,0xb8] do |asm|
+      asm.ldsmaxa    w0, w1, [x2]
+    end
+    assert_bytes [0x41,0x40,0xa0,0xb8] do |asm|
+      asm.ldsmaxa w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xa2,0xb8] do |asm|
+      asm.ldsmaxa w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x40,0xa0,0xf8] do |asm|
+      asm.ldsmaxa x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xa2,0xf8] do |asm|
+      asm.ldsmaxa x2, x3, [sp]
+    end
     # LDSMAXAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0xe0,0xb8] do |asm|
+      asm.ldsmaxal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xe2,0xb8] do |asm|
+      asm.ldsmaxal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x40,0xe0,0xf8] do |asm|
+      asm.ldsmaxal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xe2,0xf8] do |asm|
+      asm.ldsmaxal x2, x3, [sp]
+    end
     # LDSMAXL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0x60,0xb8] do |asm|
+      asm.ldsmaxl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x62,0xb8] do |asm|
+      asm.ldsmaxl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x40,0x60,0xf8] do |asm|
+      asm.ldsmaxl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x62,0xf8] do |asm|
+      asm.ldsmaxl x2, x3, [sp]
+    end
   end
 
   def test_LDSMAXB
