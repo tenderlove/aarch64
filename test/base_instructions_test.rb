@@ -6468,25 +6468,47 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ROR_EXTR
-    skip "Fixme!"
     # ROR  <Wd>, <Ws>, #<shift>
     # EXTR <Wd>, <Ws>, <Ws>, #<shift>
     # ROR  <Xd>, <Xs>, #<shift>
-    # EXTR <Xd>, <Xs>, <Xs>, #<shift>
-  end
-
-  def test_ROR_RORV
-    skip "Fixme!"
     # ROR  <Wd>, <Wn>, <Wm>
     # RORV <Wd>, <Wn>, <Wm>
     # ROR  <Xd>, <Xn>, <Xm>
     # RORV <Xd>, <Xn>, <Xm>
+    assert_bytes [0x20,0x2c,0xc2,0x1a] do |asm|
+      asm.ror	w0, w1, w2
+    end
+    assert_bytes [0x83,0x2c,0xc5,0x9a] do |asm|
+      asm.ror  x3, x4, x5
+    end
+    assert_bytes [0x38,0x2f,0xda,0x1a] do |asm|
+      asm.ror	w24, w25, w26
+    end
+    assert_bytes [0x9b,0x2f,0xdd,0x9a] do |asm|
+      asm.ror	x27, x28, x29
+    end
+    assert_bytes [0xf3,0x62,0xd7,0x93] do |asm|
+      asm.ror     x19, x23, 24
+    end
+    assert_bytes [0xfd,0xff,0xdf,0x93] do |asm|
+      asm.ror     x29, xzr, 63
+    end
+    assert_bytes [0xa9,0x7d,0x8d,0x13] do |asm|
+      asm.ror     w9, w13, 31
+    end
   end
 
   def test_RORV
-    skip "Fixme!"
     # RORV  <Wd>, <Wn>, <Wm>
     # RORV  <Xd>, <Xn>, <Xm>
+    # rorv  w1, w2, w3
+    assert_bytes [0x41, 0x2c, 0xc3, 0x1a] do |asm|
+      asm.rorv  w1, w2, w3
+    end
+    # rorv  x1, x2, x3
+    assert_bytes [0x41, 0x2c, 0xc3, 0x9a] do |asm|
+      asm.rorv  x1, x2, x3
+    end
   end
 
   def test_SB

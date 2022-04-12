@@ -1909,6 +1909,18 @@ module AArch64
       a RMIF.new(rn, shift, mask)
     end
 
+    def ror rd, rs, shift
+      if shift.integer?
+        extr rd, rs, rs, shift
+      else
+        rorv rd, rs, shift
+      end
+    end
+
+    def rorv rd, rn, rm
+      a RORV.new(rd, rn, rm, rd.sf)
+    end
+
     def sbc rd, rn, rm
       a SBC.new(rd, rn, rm, rd.sf)
     end

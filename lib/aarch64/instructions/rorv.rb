@@ -5,8 +5,15 @@ module AArch64
     # RORV  <Wd>, <Wn>, <Wm>
     # RORV  <Xd>, <Xn>, <Xm>
     class RORV
+      def initialize rd, rn, rm, sf
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sf = sf
+      end
+
       def encode
-        raise NotImplementedError
+        self.RORV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
