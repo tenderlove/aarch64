@@ -3219,20 +3219,82 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_LDRSH_imm
-    skip "Fixme!"
+  def test_LDRSH_reg
+    # LDRSH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    # LDRSH  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     # LDRSH  <Wt>, [<Xn|SP>], #<simm>
     # LDRSH  <Xt>, [<Xn|SP>], #<simm>
     # LDRSH  <Wt>, [<Xn|SP>, #<simm>]!
     # LDRSH  <Xt>, [<Xn|SP>, #<simm>]!
     # LDRSH  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDRSH  <Xt>, [<Xn|SP>{, #<pimm>}]
-  end
-
-  def test_LDRSH_reg
-    skip "Fixme!"
-    # LDRSH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    # LDRSH  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    # ldrsh w3, [sp, 2]
+    assert_bytes [0xe3, 0x7, 0xc0, 0x79] do |asm|
+      asm.ldrsh w3, [sp, 2]
+    end
+    assert_bytes [0xe3,0x43,0xc0,0x79] do |asm|
+      asm.ldrsh  w3, [sp, 0x20]
+    end
+    assert_bytes [0x25,0x31,0x80,0x79] do |asm|
+      asm.ldrsh  x5, [x9, 24]
+    end
+    assert_bytes [0xd7,0xfc,0xff,0x79] do |asm|
+      asm.ldrsh    w23, [x6, 8190]
+    end
+    assert_bytes [0xff,0x07,0xc0,0x79] do |asm|
+      asm.ldrsh    wzr, [sp, 2]
+    end
+    assert_bytes [0x5d,0x04,0x80,0x79] do |asm|
+      asm.ldrsh    x29, [x2, 2]
+    end
+    assert_bytes [0xe3,0x6b,0xe5,0x78] do |asm|
+      asm.ldrsh    w3, [sp, x5]
+    end
+    assert_bytes [0x69,0x6b,0xe6,0x78] do |asm|
+      asm.ldrsh    w9, [x27, x6]
+    end
+    assert_bytes [0x6d,0xfb,0xa5,0x78] do |asm|
+      asm.ldrsh    x13, [x27, x5, sxtx(1)]
+    end
+    assert_bytes [0x10,0x5b,0xe8,0x78] do |asm|
+      asm.ldrsh    w16, [x24, w8, uxtw(1)]
+    end
+    assert_bytes [0x3f,0xf5,0x8f,0x78] do |asm|
+      asm.ldrsh    xzr, [x9], 255
+    end
+    assert_bytes [0x62,0x14,0x80,0x78] do |asm|
+      asm.ldrsh    x2, [x3], 1
+    end
+    assert_bytes [0x93,0x05,0x90,0x78] do |asm|
+      asm.ldrsh    x19, [x12], -256
+    end
+    assert_bytes [0x3f,0xf5,0xcf,0x78] do |asm|
+      asm.ldrsh    wzr, [x9], 255
+    end
+    assert_bytes [0x62,0x14,0xc0,0x78] do |asm|
+      asm.ldrsh    w2, [x3], 1
+    end
+    assert_bytes [0x93,0x05,0xd0,0x78] do |asm|
+      asm.ldrsh    w19, [x12], -256
+    end
+    assert_bytes [0x3f,0xfd,0x8f,0x78] do |asm|
+      asm.ldrsh    xzr, [x9, 255], :!
+    end
+    assert_bytes [0x62,0x1c,0x80,0x78] do |asm|
+      asm.ldrsh    x2, [x3, 1], :!
+    end
+    assert_bytes [0x93,0x0d,0x90,0x78] do |asm|
+      asm.ldrsh    x19, [x12, -256], :!
+    end
+    assert_bytes [0x3f,0xfd,0xcf,0x78] do |asm|
+      asm.ldrsh    wzr, [x9, 255], :!
+    end
+    assert_bytes [0x62,0x1c,0xc0,0x78] do |asm|
+      asm.ldrsh    w2, [x3, 1], :!
+    end
+    assert_bytes [0x93,0x0d,0xd0,0x78] do |asm|
+      asm.ldrsh    w19, [x12, -256], :!
+    end
   end
 
   def test_LDRSW_imm
