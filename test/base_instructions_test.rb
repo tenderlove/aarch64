@@ -6172,9 +6172,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PACDB
-    skip "Fixme!"
     # PACDB  <Xd>, <Xn|SP>
+    # pacdb x1, x3
+    assert_bytes [0x61, 0xc, 0xc1, 0xda] do |asm|
+      asm.pacdb x1, x3
+    end
+    # pacdb x1, sp
+    assert_bytes [0xe1, 0xf, 0xc1, 0xda] do |asm|
+      asm.pacdb x1, sp
+    end
     # PACDZB  <Xd>
+    # pacdzb x3
+    assert_bytes [0xe3, 0x2f, 0xc1, 0xda] do |asm|
+      asm.pacdzb x3
+    end
   end
 
   def test_PACGA

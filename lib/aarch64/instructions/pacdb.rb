@@ -5,8 +5,14 @@ module AArch64
     # PACDB  <Xd>, <Xn|SP>
     # PACDZB  <Xd>
     class PACDB
+      def initialize rd, rn, z
+        @rd = rd
+        @rn = rn
+        @z  = z
+      end
+
       def encode
-        raise NotImplementedError
+        self.PACDB(@z, @rn.to_i, @rd.to_i)
       end
 
       private
