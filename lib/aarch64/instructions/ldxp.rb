@@ -5,8 +5,15 @@ module AArch64
     # LDXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # LDXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class LDXP
+      def initialize rt, rt2, rn, sz
+        @rt  = rt
+        @rt2 = rt2
+        @rn  = rn
+        @sz  = sz
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDXP(@sz, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

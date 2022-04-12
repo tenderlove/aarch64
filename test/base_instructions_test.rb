@@ -4181,9 +4181,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDXP
-    skip "Fixme!"
     # LDXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # LDXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
+    assert_bytes [0x27,0x0d,0x7f,0x88] do |asm|
+      asm.ldxp   w7, w3, [x9]
+    end
+    assert_bytes [0x27,0x0d,0x7f,0xc8] do |asm|
+      asm.ldxp   x7, x3, [x9]
+    end
+    assert_bytes [0xec,0x7f,0x7f,0x88] do |asm|
+      asm.ldxp     w12, wzr, [sp]
+    end
+    assert_bytes [0xed,0x39,0x7f,0xc8] do |asm|
+      asm.ldxp     x13, x14, [x15]
+    end
   end
 
   def test_LDXR
