@@ -1731,6 +1731,10 @@ module AArch64
       subs rd, rd.zr, rm, option, shift: shift, amount: amount
     end
 
+    def ngc rd, rm
+      sbc rd, rd.zr, rm
+    end
+
     def nop
       a NOP.new
     end
