@@ -6512,8 +6512,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SB
-    skip "Fixme!"
     # SB
+    assert_bytes [0xff, 0x30, 0x3, 0xd5] do |asm|
+      asm.sb
+    end
   end
 
   def test_SBC

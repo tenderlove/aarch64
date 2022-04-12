@@ -1921,6 +1921,10 @@ module AArch64
       a RORV.new(rd, rn, rm, rd.sf)
     end
 
+    def sb
+      a SB.new
+    end
+
     def sbc rd, rn, rm
       a SBC.new(rd, rn, rm, rd.sf)
     end
