@@ -1426,6 +1426,11 @@ module AArch64
       a LDSMINH.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldtr rt, rn
+      size = rt.x? ? 0b11 : 0b10
+      a LDTR.new(rt, rn.first, rn[1] || 0, size)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)
