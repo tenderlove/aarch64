@@ -3441,11 +3441,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSETH
-    skip "Fixme!"
     # LDSETAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0xa0,0x78] do |asm|
+      asm.ldsetah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xa2,0x78] do |asm|
+      asm.ldsetah w2, w3, [sp]
+    end
     # LDSETALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0xe0,0x78] do |asm|
+      asm.ldsetalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xe2,0x78] do |asm|
+      asm.ldsetalh w2, w3, [sp]
+    end
     # LDSETH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0x20,0x78] do |asm|
+      asm.ldseth w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x22,0x78] do |asm|
+      asm.ldseth w2, w3, [sp]
+    end
     # LDSETLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0x60,0x78] do |asm|
+      asm.ldsetlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x62,0x78] do |asm|
+      asm.ldsetlh w2, w3, [sp]
+    end
   end
 
   def test_LDSMAX

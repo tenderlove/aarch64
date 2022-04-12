@@ -1306,6 +1306,22 @@ module AArch64
       a LDSETB.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldseth rs, rt, rn
+      a LDSETH.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def ldsetah rs, rt, rn
+      a LDSETH.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def ldsetalh rs, rt, rn
+      a LDSETH.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def ldsetlh rs, rt, rn
+      a LDSETH.new(rs, rt, rn.first, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

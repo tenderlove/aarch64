@@ -7,8 +7,16 @@ module AArch64
     # LDSETH  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETLH  <Ws>, <Wt>, [<Xn|SP>]
     class LDSETH
+      def initialize rs, rt, rn, a, r
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @a  = a
+        @r  = r
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDSETH(@a, @r.to_i, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
