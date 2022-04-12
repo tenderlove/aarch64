@@ -5,8 +5,15 @@ module AArch64
     # SBC  <Wd>, <Wn>, <Wm>
     # SBC  <Xd>, <Xn>, <Xm>
     class SBC
+      def initialize rd, rn, rm, sf
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sf = sf
+      end
+
       def encode
-        raise NotImplementedError
+        self.SBC(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

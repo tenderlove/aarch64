@@ -1766,6 +1766,10 @@ module AArch64
       @insns = @insns << RET.new(reg)
     end
 
+    def sbc rd, rn, rm
+      a SBC.new(rd, rn, rm, rd.sf)
+    end
+
     def sbcs rd, rn, rm
       a SBCS.new(rd, rn, rm, rd.sf)
     end
