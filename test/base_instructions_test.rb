@@ -3534,11 +3534,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSMAXB
-    skip "Fixme!"
     # LDSMAXAB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0xa0,0x38] do |asm|
+      asm.ldsmaxab w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xa2,0x38] do |asm|
+      asm.ldsmaxab w2, w3, [sp]
+    end
     # LDSMAXALB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0xe0,0x38] do |asm|
+      asm.ldsmaxalb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0xe2,0x38] do |asm|
+      asm.ldsmaxalb w2, w3, [sp]
+    end
     # LDSMAXB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0x20,0x38] do |asm|
+      asm.ldsmaxb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x22,0x38] do |asm|
+      asm.ldsmaxb w2, w3, [sp]
+    end
     # LDSMAXLB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x40,0x60,0x38] do |asm|
+      asm.ldsmaxlb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x43,0x62,0x38] do |asm|
+      asm.ldsmaxlb w2, w3, [sp]
+    end
   end
 
   def test_LDSMAXH

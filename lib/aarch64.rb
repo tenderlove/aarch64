@@ -1342,6 +1342,22 @@ module AArch64
       a LDSMAX.new(rs, rt, rn.first, size, 0, 1)
     end
 
+    def ldsmaxab rs, rt, rn
+      a LDSMAXB.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def ldsmaxalb rs, rt, rn
+      a LDSMAXB.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def ldsmaxb rs, rt, rn
+      a LDSMAXB.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def ldsmaxlb rs, rt, rn
+      a LDSMAXB.new(rs, rt, rn.first, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

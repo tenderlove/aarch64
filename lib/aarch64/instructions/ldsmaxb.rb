@@ -7,8 +7,16 @@ module AArch64
     # LDSMAXB  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXLB  <Ws>, <Wt>, [<Xn|SP>]
     class LDSMAXB
+      def initialize rs, rt, rn, a, r
+        @rs = rs
+        @rt = rt
+        @rn = rn
+        @a  = a
+        @r  = r
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDSMAXB(@a, @r.to_i, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
