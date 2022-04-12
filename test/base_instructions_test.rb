@@ -3297,21 +3297,54 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_LDRSW_imm
-    skip "Fixme!"
+  def test_LDRSW_reg
     # LDRSW  <Xt>, [<Xn|SP>], #<simm>
     # LDRSW  <Xt>, [<Xn|SP>, #<simm>]!
     # LDRSW  <Xt>, [<Xn|SP>{, #<pimm>}]
-  end
-
-  def test_LDRSW_lit
-    skip "Fixme!"
     # LDRSW  <Xt>, <label>
-  end
-
-  def test_LDRSW_reg
-    skip "Fixme!"
     # LDRSW  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_bytes [0xe9,0x03,0x82,0xb9] do |asm|
+      asm.ldrsw  x9, [sp, 512]
+    end
+    assert_bytes [0xa2,0x04,0x80,0xb9] do |asm|
+      asm.ldrsw    x2, [x5, 4]
+    end
+    assert_bytes [0xf7,0xff,0xbf,0xb9] do |asm|
+      asm.ldrsw    x23, [sp, 16380]
+    end
+    assert_bytes [0xf1,0xca,0xa9,0xb8] do |asm|
+      asm.ldrsw    x17, [x23, w9, sxtw]
+    end
+    assert_bytes [0xb3,0xda,0xbf,0xb8] do |asm|
+      asm.ldrsw    x19, [x21, wzr, sxtw(2)]
+    end
+    assert_bytes [0x3f,0xf5,0x8f,0xb8] do |asm|
+      asm.ldrsw    xzr, [x9], 255
+    end
+    assert_bytes [0x62,0x14,0x80,0xb8] do |asm|
+      asm.ldrsw    x2, [x3], 1
+    end
+    assert_bytes [0x93,0x05,0x90,0xb8] do |asm|
+      asm.ldrsw    x19, [x12], -256
+    end
+    assert_bytes [0x3f,0xfd,0x8f,0xb8] do |asm|
+      asm.ldrsw    xzr, [x9, 255], :!
+    end
+    assert_bytes [0x62,0x1c,0x80,0xb8] do |asm|
+      asm.ldrsw    x2, [x3, 1], :!
+    end
+    assert_bytes [0x93,0x0d,0x90,0xb8] do |asm|
+      asm.ldrsw    x19, [x12, -256], :!
+    end
+    # ldrsw x1, #4
+    assert_bytes [0x21, 00, 00, 0x98] do |asm|
+      asm.ldrsw x1, 4
+    end
+    assert_one_insn "ldrsw x1, #4" do |asm|
+      label = asm.make_label :foo
+      asm.ldrsw x1, label
+      asm.put_label label
+    end
   end
 
   def test_LDSET

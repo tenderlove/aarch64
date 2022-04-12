@@ -4,8 +4,13 @@ module AArch64
     # Load Register Signed Word (literal)
     # LDRSW  <Xt>, <label>
     class LDRSW_lit
+      def initialize rt, imm19
+        @rt    = rt
+        @imm19 = imm19
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDRSW_lit(@imm19.to_i / 4, @rt.to_i)
       end
 
       private

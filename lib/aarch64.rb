@@ -1235,6 +1235,41 @@ module AArch64
       end
     end
 
+    def ldrsw xt, xn, imm = nil
+      if imm
+        if imm == :!
+          a LDRSW_imm.new(xt, xn.first, xn[1] || 0, 0b11)
+        else
+          a LDRSW_imm.new(xt, xn.first, imm, 0b01)
+        end
+      else
+        if xn.is_a?(Array)
+          xn, imm, option = *xn
+          imm ||= 0
+          if imm.integer?
+            a LDRSW_unsigned.new(xt, xn, imm / 4)
+          else
+            if option
+              option_name = option ? option.name : :lsl
+
+              val = case option_name
+                    when :uxtw then 0b010
+                    when :lsl  then 0b011
+                    when :sxtw then 0b110
+                    when :sxtx then 0b111
+                    end
+
+              a LDRSW_reg.new(xt, xn, imm, option.amount / 2, val)
+            else
+              a LDRSW_reg.new(xt, xn, imm, 0, 0b11)
+            end
+          end
+        else
+          a LDRSW_lit.new(xt, xn)
+        end
+      end
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

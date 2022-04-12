@@ -4,8 +4,16 @@ module AArch64
     # Load Register Signed Word (register)
     # LDRSW  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class LDRSW_reg
+      def initialize rt, rn, rm, s, option
+        @rt     = rt
+        @rn     = rn
+        @rm     = rm
+        @s      = s
+        @option = option
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDRSW_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private
