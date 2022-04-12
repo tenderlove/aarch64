@@ -3740,8 +3740,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDTRB
-    skip "Fixme!"
     # LDTRB  <Wt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x83,0x08,0x41,0x38] do |asm|
+      asm.ldtrb  w3, [x4, 16]
+    end
+    assert_bytes [0x81,0xfa,0x4f,0x38] do |asm|
+      asm.ldtrb    w1, [x20, 255]
+    end
   end
 
   def test_LDTRH
