@@ -1410,6 +1410,22 @@ module AArch64
       a LDSMINB.new(rs, rt, rn.first, 0, 1)
     end
 
+    def ldsminh rs, rt, rn
+      a LDSMINH.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def ldsminah rs, rt, rn
+      a LDSMINH.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def ldsminalh rs, rt, rn
+      a LDSMINH.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def ldsminlh rs, rt, rn
+      a LDSMINH.new(rs, rt, rn.first, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

@@ -3692,11 +3692,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSMINH
-    skip "Fixme!"
     # LDSMINAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0xa0,0x78] do |asm|
+      asm.ldsminah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xa2,0x78] do |asm|
+      asm.ldsminah w2, w3, [sp]
+    end
     # LDSMINALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0xe0,0x78] do |asm|
+      asm.ldsminalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xe2,0x78] do |asm|
+      asm.ldsminalh w2, w3, [sp]
+    end
     # LDSMINH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0x20,0x78] do |asm|
+      asm.ldsminh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x22,0x78] do |asm|
+      asm.ldsminh w2, w3, [sp]
+    end
     # LDSMINLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0x60,0x78] do |asm|
+      asm.ldsminlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x62,0x78] do |asm|
+      asm.ldsminlh w2, w3, [sp]
+    end
   end
 
   def test_LDTR
