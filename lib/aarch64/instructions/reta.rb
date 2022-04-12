@@ -5,8 +5,12 @@ module AArch64
     # RETAA
     # RETAB
     class RETA
+      def initialize m
+        @m = m
+      end
+
       def encode
-        raise NotImplementedError
+        self.RETA(@m)
       end
 
       private

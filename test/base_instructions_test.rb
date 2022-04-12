@@ -6395,9 +6395,15 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_RETA
-    skip "Fixme!"
     # RETAA
-    # RETAB
+    # retaa
+    assert_bytes [0xff, 0xb, 0x5f, 0xd6] do |asm|
+      asm.retaa
+    end
+    # retab
+    assert_bytes [0xff, 0xf, 0x5f, 0xd6] do |asm|
+      asm.retab
+    end
   end
 
   def test_REV
