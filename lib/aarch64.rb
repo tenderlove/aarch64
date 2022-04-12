@@ -1473,6 +1473,22 @@ module AArch64
       a LDUMAX.new(rs, rt, rn.first, size, 0, 1)
     end
 
+    def ldumaxab rs, rt, rn
+      a LDUMAXB.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def ldumaxalb rs, rt, rn
+      a LDUMAXB.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def ldumaxb rs, rt, rn
+      a LDUMAXB.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def ldumaxlb rs, rt, rn
+      a LDUMAXB.new(rs, rt, rn.first, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)
