@@ -6407,9 +6407,26 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_REV
-    skip "Fixme!"
     # REV  <Wd>, <Wn>
     # REV  <Xd>, <Xn>
+    assert_bytes [0x12,0x08,0xc0,0x5a] do |asm|
+      asm.rev	w18, w0
+    end
+    assert_bytes [0x56,0x0c,0xc0,0xda] do |asm|
+      asm.rev	x22, x2
+    end
+    assert_bytes [0xf2,0x0f,0xc0,0xda] do |asm|
+      asm.rev	x18, xzr
+    end
+    assert_bytes [0xe7,0x0b,0xc0,0x5a] do |asm|
+      asm.rev	w7, wzr
+    end
+    assert_bytes [0xf6,0x0f,0xc0,0xda] do |asm|
+      asm.rev	x22, xzr
+    end
+    assert_bytes [0x8d,0x0d,0xc0,0xda] do |asm|
+      asm.rev	x13, x12
+    end
   end
 
   def test_REV16_int

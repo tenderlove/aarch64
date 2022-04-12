@@ -16,6 +16,10 @@ module AArch64
         x? ? 0b10 : 0b11
       end
 
+      def opc2
+        x? ? 0b11 : 0b10
+      end
+
       def zr
         x? ? XZR : WZR
       end
@@ -1885,6 +1889,10 @@ module AArch64
 
     def retab
       a RETA.new(1)
+    end
+
+    def rev rd, rn
+      a REV.new(rd, rn, rd.sf, rd.opc2)
     end
 
     def sbc rd, rn, rm
