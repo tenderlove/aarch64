@@ -3928,15 +3928,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUMIN
-    skip "Fixme!"
     # LDUMIN  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINA  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINL  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMIN  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x20,0xb8] do |asm|
+      asm.ldumin     w0, w1, [x2]
+    end
+    assert_bytes [0x41,0x70,0x20,0xb8] do |asm|
+      asm.ldumin w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x22,0xb8] do |asm|
+      asm.ldumin w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x70,0x20,0xf8] do |asm|
+      asm.ldumin x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x22,0xf8] do |asm|
+      asm.ldumin x2, x3, [sp]
+    end
     # LDUMINA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xa0,0xb8] do |asm|
+      asm.ldumina w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xa2,0xb8] do |asm|
+      asm.ldumina w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x70,0xa0,0xf8] do |asm|
+      asm.ldumina x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xa2,0xf8] do |asm|
+      asm.ldumina x2, x3, [sp]
+    end
     # LDUMINAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xe0,0xb8] do |asm|
+      asm.lduminal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xe2,0xb8] do |asm|
+      asm.lduminal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x70,0xe0,0xf8] do |asm|
+      asm.lduminal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xe2,0xf8] do |asm|
+      asm.lduminal x2, x3, [sp]
+    end
     # LDUMINL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x60,0xb8] do |asm|
+      asm.lduminl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x62,0xb8] do |asm|
+      asm.lduminl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x70,0x60,0xf8] do |asm|
+      asm.lduminl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x62,0xf8] do |asm|
+      asm.lduminl x2, x3, [sp]
+    end
   end
 
   def test_LDUMINB

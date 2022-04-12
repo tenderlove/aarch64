@@ -8,6 +8,9 @@ module AArch64
   module Registers
     class Register < Struct.new(:to_i, :sf, :x?, :sp?, :zr?, :size)
       def integer?; false; end
+      def sizeb
+        x? ? 0b11 : 0b10
+      end
     end
 
     31.times { |i|
@@ -1503,6 +1506,22 @@ module AArch64
 
     def ldumaxlh rs, rt, rn
       a LDUMAXH.new(rs, rt, rn.first, 0, 1)
+    end
+
+    def ldumin rs, rt, rn
+      a LDUMIN.new(rs, rt, rn.first, rs.sizeb, 0, 0)
+    end
+
+    def ldumina rs, rt, rn
+      a LDUMIN.new(rs, rt, rn.first, rs.sizeb, 1, 0)
+    end
+
+    def lduminal rs, rt, rn
+      a LDUMIN.new(rs, rt, rn.first, rs.sizeb, 1, 1)
+    end
+
+    def lduminl rs, rt, rn
+      a LDUMIN.new(rs, rt, rn.first, rs.sizeb, 0, 1)
     end
 
     def ldur rt, rn
