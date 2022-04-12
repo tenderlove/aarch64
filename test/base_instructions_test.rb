@@ -6460,8 +6460,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_RMIF
-    skip "Fixme!"
     # RMIF  <Xn>, #<shift>, #<mask>
+    # rmif x2, #3, #1
+    assert_bytes [0x41, 0x84, 0x1, 0xba] do |asm|
+      asm.rmif x2, 3, 1
+    end
   end
 
   def test_ROR_EXTR

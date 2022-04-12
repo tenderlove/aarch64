@@ -1905,6 +1905,10 @@ module AArch64
 
     alias :rev64 :rev
 
+    def rmif rn, shift, mask
+      a RMIF.new(rn, shift, mask)
+    end
+
     def sbc rd, rn, rm
       a SBC.new(rd, rn, rm, rd.sf)
     end

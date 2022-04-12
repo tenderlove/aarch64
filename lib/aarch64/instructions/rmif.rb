@@ -4,8 +4,14 @@ module AArch64
     # Rotate, Mask Insert Flags
     # RMIF  <Xn>, #<shift>, #<mask>
     class RMIF
+      def initialize rn, imm6, mask
+        @rn   = rn
+        @imm6 = imm6
+        @mask = mask
+      end
+
       def encode
-        raise NotImplementedError
+        self.RMIF(@imm6, @rn.to_i, @mask)
       end
 
       private
