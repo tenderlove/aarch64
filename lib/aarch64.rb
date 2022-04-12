@@ -1715,6 +1715,11 @@ module AArch64
       madd rd, rn, rm, rd.x? ? XZR : WZR
     end
 
+    def mvn rd, rm, option = nil, shift: :lsl, amount: 0
+      zr = rd.x? ? XZR : WZR
+      orn rd, zr, rm, option, shift: shift, amount: amount
+    end
+
     def nop
       a NOP.new
     end

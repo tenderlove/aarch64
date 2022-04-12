@@ -5779,10 +5779,27 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MVN_ORN_log_shift
-    skip "Fixme!"
     # MVN  <Wd>, <Wm>{, <shift> #<amount>}
     # ORN <Wd>, WZR, <Wm>{, <shift> #<amount>}
     # MVN  <Xd>, <Xm>{, <shift> #<amount>}
+    assert_bytes [0xe4,0x03,0x29,0x2a] do |asm|
+      asm.mvn	w4, w9
+    end
+    assert_bytes [0xe2,0x03,0x23,0xaa] do |asm|
+      asm.mvn	x2, x3
+    end
+    assert_bytes [0xe4,0x03,0x29,0x2a] do |asm|
+      asm.mvn	w4, w9
+    end
+    assert_bytes [0xe4,0x07,0x29,0x2a] do |asm|
+      asm.mvn	w4, w9, lsl(1)
+    end
+    assert_bytes [0xe2,0x07,0x23,0xaa] do |asm|
+      asm.mvn	x2, x3, lsl(1)
+    end
+    assert_bytes [0xe4,0x07,0x29,0x2a] do |asm|
+      asm.mvn	w4, w9, lsl(1)
+    end
     # ORN <Xd>, XZR, <Xm>{, <shift> #<amount>}
   end
 
