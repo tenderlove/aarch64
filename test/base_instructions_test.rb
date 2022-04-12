@@ -6585,9 +6585,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SBFM
-    skip "Fixme!"
     # SBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # SBFM  <Xd>, <Xn>, #<immr>, #<imms>
+    # sbfm  w1, w2, 2, 5
+    assert_bytes [0x41, 0x14, 0x2, 0x13] do |asm|
+      asm.sbfm  w1, w2, 2, 5
+    end
+    # sbfm  x1, x2, 2, 5
+    assert_bytes [0x41, 0x14, 0x42, 0x93] do |asm|
+      asm.sbfm  x1, x2, 2, 5
+    end
   end
 
   def test_SBFX_SBFM
