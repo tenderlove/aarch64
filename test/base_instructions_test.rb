@@ -6362,8 +6362,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PSB
-    skip "Fixme!"
     # PSB CSYNC
+    assert_bytes [0x3f,0x22,0x03,0xd5] do |asm|
+      asm.psb :csync
+    end
   end
 
   def test_PSSBB_DSB

@@ -5,12 +5,12 @@ module AArch64
     # PSB CSYNC
     class PSB
       def encode
-        raise NotImplementedError
+        self.PSB
       end
 
       private
 
-      def PSB 
+      def PSB
         insn = 0b1101010100_0_00_011_0010_0010_001_11111
         insn
       end

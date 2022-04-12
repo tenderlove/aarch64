@@ -1863,6 +1863,10 @@ module AArch64
       a PRFUM.new(rt, rn.first, rn[1] || 0)
     end
 
+    def psb _
+      a PSB.new
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end
