@@ -5,8 +5,14 @@ module AArch64
     # RBIT  <Wd>, <Wn>
     # RBIT  <Xd>, <Xn>
     class RBIT_int
+      def initialize rd, rn, sf
+        @rd = rd
+        @rn = rn
+        @sf = sf
+      end
+
       def encode
-        raise NotImplementedError
+        self.RBIT_int(@sf, @rn.to_i, @rd.to_i)
       end
 
       private

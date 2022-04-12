@@ -1871,6 +1871,10 @@ module AArch64
       dsb 4
     end
 
+    def rbit rd, rn
+      a RBIT_int.new(rd, rn, rd.sf)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

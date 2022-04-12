@@ -6378,9 +6378,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_RBIT_int
-    skip "Fixme!"
     # RBIT  <Wd>, <Wn>
     # RBIT  <Xd>, <Xn>
+    assert_bytes [0xe0,0x00,0xc0,0x5a] do |asm|
+      asm.rbit	w0, w7
+    end
+    assert_bytes [0x72,0x00,0xc0,0xda] do |asm|
+      asm.rbit	x18, x3
+    end
   end
 
   def test_RET
