@@ -4,8 +4,14 @@ module AArch64
     # Load Register Signed Word (unprivileged)
     # LDTRSW  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDTRSW
+      def initialize rt, rn, imm9
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDTRSW(@imm9, @rn.to_i, @rt.to_i)
       end
 
       private

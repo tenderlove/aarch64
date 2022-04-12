@@ -3794,8 +3794,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDTRSW
-    skip "Fixme!"
     # LDTRSW  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0xe9,0x0b,0x98,0xb8] do |asm|
+      asm.ldtrsw x9, [sp, -128]
+    end
+    assert_bytes [0xf4,0x09,0x90,0xb8] do |asm|
+      asm.ldtrsw   x20, [x15, -256]
+    end
   end
 
   def test_LDUMAX

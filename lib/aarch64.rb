@@ -1449,6 +1449,10 @@ module AArch64
       a LDTRSH.new(rt, rn.first, rn[1] || 0, opc)
     end
 
+    def ldtrsw rt, rn
+      a LDTRSW.new(rt, rn.first, rn[1] || 0)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)
