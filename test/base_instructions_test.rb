@@ -3348,15 +3348,65 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSET
-    skip "Fixme!"
     # LDSET  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETA  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSET  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0x20,0xf8] do |asm|
+      asm.ldset      x0, x1, [x2]
+    end
+    assert_bytes [0x41,0x30,0x20,0xb8] do |asm|
+      asm.ldset w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x22,0xb8] do |asm|
+      asm.ldset w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x30,0x20,0xf8] do |asm|
+      asm.ldset x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x22,0xf8] do |asm|
+      asm.ldset x2, x3, [sp]
+    end
     # LDSETA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0xa0,0xb8] do |asm|
+      asm.ldseta w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xa2,0xb8] do |asm|
+      asm.ldseta w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x30,0xa0,0xf8] do |asm|
+      asm.ldseta x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xa2,0xf8] do |asm|
+      asm.ldseta x2, x3, [sp]
+    end
     # LDSETAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0xe0,0xb8] do |asm|
+      asm.ldsetal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xe2,0xb8] do |asm|
+      asm.ldsetal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x30,0xe0,0xf8] do |asm|
+      asm.ldsetal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0xe2,0xf8] do |asm|
+      asm.ldsetal x2, x3, [sp]
+    end
     # LDSETL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x30,0x60,0xb8] do |asm|
+      asm.ldsetl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x62,0xb8] do |asm|
+      asm.ldsetl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x30,0x60,0xf8] do |asm|
+      asm.ldsetl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x33,0x62,0xf8] do |asm|
+      asm.ldsetl x2, x3, [sp]
+    end
   end
 
   def test_LDSETB
