@@ -6254,9 +6254,32 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SBCS
-    skip "Fixme!"
     # SBCS  <Wd>, <Wn>, <Wm>
     # SBCS  <Xd>, <Xn>, <Xm>
+    assert_bytes [0x41,0x00,0x03,0x7a] do |asm|
+      asm.sbcs w1, w2, w3
+    end
+    assert_bytes [0x41,0x00,0x03,0xfa] do |asm|
+      asm.sbcs x1, x2, x3
+    end
+    assert_bytes [0x7d,0x03,0x19,0x7a] do |asm|
+      asm.sbcs     w29, w27, w25
+    end
+    assert_bytes [0x7f,0x00,0x04,0x7a] do |asm|
+      asm.sbcs     wzr, w3, w4
+    end
+    assert_bytes [0x14,0x00,0x1f,0x7a] do |asm|
+      asm.sbcs     w20, w0, wzr
+    end
+    assert_bytes [0x7d,0x03,0x19,0xfa] do |asm|
+      asm.sbcs     x29, x27, x25
+    end
+    assert_bytes [0x7f,0x00,0x04,0xfa] do |asm|
+      asm.sbcs     xzr, x3, x4
+    end
+    assert_bytes [0x14,0x00,0x1f,0xfa] do |asm|
+      asm.sbcs     x20, x0, xzr
+    end
   end
 
   def test_SBFIZ_SBFM

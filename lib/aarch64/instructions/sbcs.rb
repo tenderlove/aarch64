@@ -5,8 +5,15 @@ module AArch64
     # SBCS  <Wd>, <Wn>, <Wm>
     # SBCS  <Xd>, <Xn>, <Xm>
     class SBCS
+      def initialize rd, rn, rm, sf
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sf = sf
+      end
+
       def encode
-        raise NotImplementedError
+        self.SBCS(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
