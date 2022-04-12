@@ -6451,8 +6451,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_REV64_REV
-    skip "Fixme!"
     # REV64  <Xd>, <Xn>
+    # rev64 x1, x3
+    assert_bytes [0x61, 0xc, 0xc0, 0xda] do |asm|
+      asm.rev64 x1, x3
+    end
     # REV  <Xd>, <Xn>
   end
 

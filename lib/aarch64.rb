@@ -1903,6 +1903,8 @@ module AArch64
       a REV.new(rd, rn, rd.sf, 0b10)
     end
 
+    alias :rev64 :rev
+
     def sbc rd, rn, rm
       a SBC.new(rd, rn, rm, rd.sf)
     end
