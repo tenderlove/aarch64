@@ -4,8 +4,14 @@ module AArch64
     # Load Register Halfword (unprivileged)
     # LDTRH  <Wt>, [<Xn|SP>{, #<simm>}]
     class LDTRH
+      def initialize rt, rn, imm9
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDTRH(@imm9, @rn.to_i, @rt.to_i)
       end
 
       private
