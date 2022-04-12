@@ -1945,6 +1945,10 @@ module AArch64
       sbfm rd, rn, lsb, lsb + width - 1
     end
 
+    def sdiv rd, rn, rm
+      a SDIV.new(rd, rn, rm, rd.sf)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

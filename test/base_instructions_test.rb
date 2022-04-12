@@ -6643,9 +6643,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SDIV
-    skip "Fixme!"
     # SDIV  <Wd>, <Wn>, <Wm>
     # SDIV  <Xd>, <Xn>, <Xm>
+    assert_bytes [0x41,0x0c,0xc3,0x1a] do |asm|
+      asm.sdiv w1, w2, w3
+    end
+    assert_bytes [0x41,0x0c,0xc3,0x9a] do |asm|
+      asm.sdiv x1, x2, x3
+    end
+    assert_bytes [0xac,0x0e,0xc0,0x1a] do |asm|
+      asm.sdiv	w12, w21, w0
+    end
+    assert_bytes [0x4d,0x0c,0xc1,0x9a] do |asm|
+      asm.sdiv	x13, x2, x1
+    end
   end
 
   def test_SETF

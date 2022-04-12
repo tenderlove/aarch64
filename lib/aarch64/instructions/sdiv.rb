@@ -5,8 +5,15 @@ module AArch64
     # SDIV  <Wd>, <Wn>, <Wm>
     # SDIV  <Xd>, <Xn>, <Xm>
     class SDIV
+      def initialize rd, rn, rm, sf
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sf = sf
+      end
+
       def encode
-        raise NotImplementedError
+        self.SDIV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
