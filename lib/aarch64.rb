@@ -1453,6 +1453,26 @@ module AArch64
       a LDTRSW.new(rt, rn.first, rn[1] || 0)
     end
 
+    def ldumax rs, rt, rn
+      size = rt.x? ? 0b11 : 0b10
+      a LDUMAX.new(rs, rt, rn.first, size, 0, 0)
+    end
+
+    def ldumaxa rs, rt, rn
+      size = rt.x? ? 0b11 : 0b10
+      a LDUMAX.new(rs, rt, rn.first, size, 1, 0)
+    end
+
+    def ldumaxal rs, rt, rn
+      size = rt.x? ? 0b11 : 0b10
+      a LDUMAX.new(rs, rt, rn.first, size, 1, 1)
+    end
+
+    def ldumaxl rs, rt, rn
+      size = rt.x? ? 0b11 : 0b10
+      a LDUMAX.new(rs, rt, rn.first, size, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

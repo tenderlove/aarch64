@@ -3804,15 +3804,62 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUMAX
-    skip "Fixme!"
     # LDUMAX  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXA  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXL  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAX  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0x20,0xb8] do |asm|
+      asm.ldumax w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x22,0xb8] do |asm|
+      asm.ldumax w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x60,0x20,0xf8] do |asm|
+      asm.ldumax x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x22,0xf8] do |asm|
+      asm.ldumax x2, x3, [sp]
+    end
     # LDUMAXA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0xa0,0xb8] do |asm|
+      asm.ldumaxa w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xa2,0xb8] do |asm|
+      asm.ldumaxa w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x60,0xa0,0xf8] do |asm|
+      asm.ldumaxa x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xa2,0xf8] do |asm|
+      asm.ldumaxa x2, x3, [sp]
+    end
     # LDUMAXAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0xe0,0xb8] do |asm|
+      asm.ldumaxal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xe2,0xb8] do |asm|
+      asm.ldumaxal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x60,0xe0,0xf8] do |asm|
+      asm.ldumaxal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xe2,0xf8] do |asm|
+      asm.ldumaxal x2, x3, [sp]
+    end
     # LDUMAXL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0x60,0xb8] do |asm|
+      asm.ldumaxl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x62,0xb8] do |asm|
+      asm.ldumaxl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x60,0x60,0xf8] do |asm|
+      asm.ldumaxl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x62,0xf8] do |asm|
+      asm.ldumaxl x2, x3, [sp]
+    end
   end
 
   def test_LDUMAXB
