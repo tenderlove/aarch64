@@ -3596,15 +3596,62 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDSMIN
-    skip "Fixme!"
     # LDSMIN  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMINA  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMINAL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMINL  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMIN  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0x20,0xb8] do |asm|
+      asm.ldsmin w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x22,0xb8] do |asm|
+      asm.ldsmin w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x50,0x20,0xf8] do |asm|
+      asm.ldsmin x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x22,0xf8] do |asm|
+      asm.ldsmin x2, x3, [sp]
+    end
     # LDSMINA  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0xa0,0xb8] do |asm|
+      asm.ldsmina w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xa2,0xb8] do |asm|
+      asm.ldsmina w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x50,0xa0,0xf8] do |asm|
+      asm.ldsmina x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xa2,0xf8] do |asm|
+      asm.ldsmina x2, x3, [sp]
+    end
     # LDSMINAL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0xe0,0xb8] do |asm|
+      asm.ldsminal w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xe2,0xb8] do |asm|
+      asm.ldsminal w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x50,0xe0,0xf8] do |asm|
+      asm.ldsminal x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0xe2,0xf8] do |asm|
+      asm.ldsminal x2, x3, [sp]
+    end
     # LDSMINL  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [0x41,0x50,0x60,0xb8] do |asm|
+      asm.ldsminl w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x62,0xb8] do |asm|
+      asm.ldsminl w2, w3, [sp]
+    end
+    assert_bytes [0x41,0x50,0x60,0xf8] do |asm|
+      asm.ldsminl x0, x1, [x2]
+    end
+    assert_bytes [0xe3,0x53,0x62,0xf8] do |asm|
+      asm.ldsminl x2, x3, [sp]
+    end
   end
 
   def test_LDSMINB
