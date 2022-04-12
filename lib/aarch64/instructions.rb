@@ -178,7 +178,6 @@ module AArch64
     autoload :RET, "aarch64/instructions/ret"
     autoload :RETA, "aarch64/instructions/reta"
     autoload :REV, "aarch64/instructions/rev"
-    autoload :REV32_int, "aarch64/instructions/rev32_int"
     autoload :REV64_REV, "aarch64/instructions/rev64_rev"
     autoload :RMIF, "aarch64/instructions/rmif"
     autoload :ROR_EXTR, "aarch64/instructions/ror_extr"

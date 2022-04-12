@@ -1899,6 +1899,10 @@ module AArch64
       a REV.new(rd, rn, rd.sf, 0b01)
     end
 
+    def rev32 rd, rn
+      a REV.new(rd, rn, rd.sf, 0b10)
+    end
+
     def sbc rd, rn, rm
       a SBC.new(rd, rn, rm, rd.sf)
     end
