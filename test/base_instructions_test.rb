@@ -4021,11 +4021,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUMINH
-    skip "Fixme!"
     # LDUMINAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xa0,0x78] do |asm|
+      asm.lduminah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xa2,0x78] do |asm|
+      asm.lduminah w2, w3, [sp]
+    end
     # LDUMINALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xe0,0x78] do |asm|
+      asm.lduminalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xe2,0x78] do |asm|
+      asm.lduminalh w2, w3, [sp]
+    end
     # LDUMINH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x20,0x78] do |asm|
+      asm.lduminh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x22,0x78] do |asm|
+      asm.lduminh w2, w3, [sp]
+    end
     # LDUMINLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x60,0x78] do |asm|
+      asm.lduminlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x62,0x78] do |asm|
+      asm.lduminlh w2, w3, [sp]
+    end
   end
 
   def test_LDUR_gen
