@@ -3894,11 +3894,37 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUMAXH
-    skip "Fixme!"
     # LDUMAXAH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0xa0,0x78] do |asm|
+      asm.ldumaxah w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xa2,0x78] do |asm|
+      asm.ldumaxah w2, w3, [sp]
+    end
     # LDUMAXALH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0xe0,0x78] do |asm|
+      asm.ldumaxalh  w0, w1, [x2]
+    end
+    assert_bytes [0x41,0x60,0xe0,0x78] do |asm|
+      asm.ldumaxalh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0xe2,0x78] do |asm|
+      asm.ldumaxalh w2, w3, [sp]
+    end
     # LDUMAXH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0x20,0x78] do |asm|
+      asm.ldumaxh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x22,0x78] do |asm|
+      asm.ldumaxh w2, w3, [sp]
+    end
     # LDUMAXLH  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x60,0x60,0x78] do |asm|
+      asm.ldumaxlh w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x63,0x62,0x78] do |asm|
+      asm.ldumaxlh w2, w3, [sp]
+    end
   end
 
   def test_LDUMIN
