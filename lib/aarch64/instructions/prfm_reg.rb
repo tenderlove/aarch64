@@ -4,8 +4,16 @@ module AArch64
     # Prefetch Memory (register)
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class PRFM_reg
+      def initialize rt, rn, rm, option, s
+        @rt     = rt
+        @rn     = rn
+        @rm     = rm
+        @option = option
+        @s      = s
+      end
+
       def encode
-        raise NotImplementedError
+        self.PRFM_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

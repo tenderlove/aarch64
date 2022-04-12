@@ -1830,6 +1830,32 @@ module AArch64
       a PACIA2.new(0b0011, 0b010)
     end
 
+    def prfm rt, xn
+      if rt.is_a?(Symbol)
+        rt = Utils.prfop(rt)
+      end
+
+      if xn.is_a?(Array)
+        xn, rm, option = *xn
+        rm ||= 0
+        if rm.integer?
+          a PRFM_imm.new(rt, xn, rm / 8)
+        else
+          shift = case option.name
+                  when :uxtw then 0b010
+                  when :lsl  then 0b011
+                  when :sxtw then 0b110
+                  when :sxtx then 0b111
+                  else
+                    raise
+                  end
+          a PRFM_reg.new(rt, xn, rm, shift, option.amount / 3)
+        end
+      else
+        a PRFM_lit.new(rt, xn)
+      end
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

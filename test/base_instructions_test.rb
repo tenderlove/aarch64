@@ -6265,18 +6265,90 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PRFM_imm
-    skip "Fixme!"
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>{, #<pimm>}]
+    # PRFM  (<prfop>|#<imm5>), [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_bytes [0xe5,0x13,0x80,0xf9] do |asm|
+      asm.prfm   :pldl3strm, [sp, 32]
+    end
+    assert_bytes [0xff,0x13,0x80,0xf9] do |asm|
+      asm.prfm	31, [sp, 32]
+    end
+    assert_bytes [0x40,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl1keep, [x2]
+    end
+    assert_bytes [0x41,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl1strm, [x2]
+    end
+    assert_bytes [0x42,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl2keep, [x2]
+    end
+    assert_bytes [0x43,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl2strm, [x2]
+    end
+    assert_bytes [0x44,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl3keep, [x2]
+    end
+    assert_bytes [0x45,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pldl3strm, [x2]
+    end
+    assert_bytes [0x50,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl1keep, [x2]
+    end
+    assert_bytes [0x51,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl1strm, [x2]
+    end
+    assert_bytes [0x52,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl2keep, [x2]
+    end
+    assert_bytes [0x53,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl2strm, [x2]
+    end
+    assert_bytes [0x54,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl3keep, [x2]
+    end
+    assert_bytes [0x55,0x00,0x80,0xf9] do |asm|
+      asm.prfm   :pstl3strm, [x2]
+    end
+    assert_bytes [0x95,0x78,0xa5,0xf8] do |asm|
+      asm.prfm	:pstl3strm, [x4, x5, lsl(3)]
+    end
+    assert_bytes [0x95,0x78,0xa5,0xf8] do |asm|
+      asm.prfm   :pstl3strm, [x4, x5, lsl(3)]
+    end
+    assert_bytes [0xe0,0x07,0x80,0xf9] do |asm|
+      asm.prfm    :pldl1keep, [sp, 8]
+    end
+    assert_bytes [0xa2,0x08,0x80,0xf9] do |asm|
+      asm.prfm    :pldl2keep, [x5, 16]
+    end
+    assert_bytes [0xe8,0x07,0x80,0xf9] do |asm|
+      asm.prfm    :plil1keep, [sp, 8]
+    end
+    assert_bytes [0xaa,0x08,0x80,0xf9] do |asm|
+      asm.prfm    :plil2keep, [x5, 16]
+    end
+    assert_bytes [0xf0,0x07,0x80,0xf9] do |asm|
+      asm.prfm    :pstl1keep, [sp, 8]
+    end
+    assert_bytes [0xb2,0x08,0x80,0xf9] do |asm|
+      asm.prfm    :pstl2keep, [x5, 16]
+    end
+    assert_bytes [0x40,0x4b,0xa6,0xf8] do |asm|
+      asm.prfm     :pldl1keep, [x26, w6, uxtw]
+    end
   end
 
   def test_PRFM_lit
-    skip "Fixme!"
     # PRFM  (<prfop>|#<imm5>), <label>
-  end
-
-  def test_PRFM_reg
-    skip "Fixme!"
-    # PRFM  (<prfop>|#<imm5>), [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    # prfm  plil2keep, #4
+    assert_bytes [0x2a, 00, 00, 0xd8] do |asm|
+      asm.prfm  :plil2keep, 4
+    end
+    assert_one_insn "prfm plil2keep, #4" do |asm|
+      label = asm.make_label :foo
+      asm.prfm :plil2keep, label
+      asm.put_label label
+    end
   end
 
   def test_PRFUM

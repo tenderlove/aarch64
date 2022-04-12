@@ -4,8 +4,14 @@ module AArch64
     # Prefetch Memory (immediate)
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>{, #<pimm>}]
     class PRFM_imm
+      def initialize rt, rn, imm12
+        @rt    = rt
+        @rn    = rn
+        @imm12 = imm12
+      end
+
       def encode
-        raise NotImplementedError
+        self.PRFM_imm(@imm12, @rn.to_i, @rt.to_i)
       end
 
       private

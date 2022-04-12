@@ -270,5 +270,34 @@ module AArch64
       TLBI_OPTIONS.fetch(name.to_s.upcase)
     end
     module_function :tlbi_op
+
+    def prfop sym
+      if sym.to_s =~ /^(\w{3})(\w\w)(\w{4})$/
+        x = case $1
+            when "pld" then (0b00 << 3)
+            when "pli" then (0b01 << 3)
+            when "pst" then (0b10 << 3)
+            else
+              raise "unknown key #{$1}"
+            end
+        y = case $2
+            when "l1" then (0b00 << 1)
+            when "l2" then (0b01 << 1)
+            when "l3" then (0b10 << 1)
+            else
+              raise "unknown key #{$2}"
+            end
+        z = case $3
+            when "keep" then 0b0
+            when "strm" then 0b1
+            else
+              raise "unknown key #{$3}"
+            end
+        x | y | z
+      else
+        raise ArgumentError, sym.to_s
+      end
+    end
+    module_function :prfop
   end
 end
