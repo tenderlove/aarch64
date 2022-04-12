@@ -1810,6 +1810,26 @@ module AArch64
       a PACIA2.new(0b0011, 0b000)
     end
 
+    def pacib xd, xn
+      a PACIB.new(xd, xn, 0)
+    end
+
+    def pacizb xd
+      a PACIB.new(xd, xd.zr, 1)
+    end
+
+    def pacib1716
+      a PACIA2.new(0b0001, 0b010)
+    end
+
+    def pacibsp
+      a PACIA2.new(0b0011, 0b011)
+    end
+
+    def pacibz
+      a PACIA2.new(0b0011, 0b010)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

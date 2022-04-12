@@ -6233,12 +6233,35 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PACIB
-    skip "Fixme!"
     # PACIB  <Xd>, <Xn|SP>
+    # pacib x1, x2
+    assert_bytes [0x41, 0x4, 0xc1, 0xda] do |asm|
+      asm.pacib x1, x2
+    end
+    # pacib x1, sp
+    assert_bytes [0xe1, 0x7, 0xc1, 0xda] do |asm|
+      asm.pacib x1, sp
+    end
     # PACIZB  <Xd>
+    # pacizb x4
+    assert_bytes [0xe4, 0x27, 0xc1, 0xda] do |asm|
+      asm.pacizb x4
+    end
     # PACIB1716
+    # pacib1716
+    assert_bytes [0x5f, 0x21, 0x3, 0xd5] do |asm|
+      asm.pacib1716
+    end
     # PACIBSP
+    # pacibsp
+    assert_bytes [0x7f, 0x23, 0x3, 0xd5] do |asm|
+      asm.pacibsp
+    end
     # PACIBZ
+    # pacibz
+    assert_bytes [0x5f, 0x23, 0x3, 0xd5] do |asm|
+      asm.pacibz
+    end
   end
 
   def test_PRFM_imm
