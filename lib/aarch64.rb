@@ -11,6 +11,10 @@ module AArch64
       def sizeb
         x? ? 0b11 : 0b10
       end
+
+      def opc
+        x? ? 0b10 : 0b11
+      end
     end
 
     31.times { |i|
@@ -1554,6 +1558,10 @@ module AArch64
 
     def lduminlh rs, rt, rn
       a LDUMINH.new(rs, rt, rn.first, 0, 1)
+    end
+
+    def ldursb rt, rn
+      a LDURSB.new(rt, rn.first, rn[1] || 0, rt.opc)
     end
 
     def ldur rt, rn
