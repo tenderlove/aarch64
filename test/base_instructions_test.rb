@@ -6577,10 +6577,30 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SBFIZ_SBFM
-    skip "Fixme!"
     # SBFIZ  <Wd>, <Wn>, #<lsb>, #<width>
     # SBFM <Wd>, <Wn>, #(-<lsb> MOD 32), #(<width>-1)
     # SBFIZ  <Xd>, <Xn>, #<lsb>, #<width>
+    assert_bytes [0x1f,0x00,0x01,0x13] do |asm|
+      asm.sbfiz wzr, w0, 31, 1
+    end
+    assert_bytes [0x1f,0x00,0x61,0x93] do |asm|
+      asm.sbfiz xzr, x0, 31, 1
+    end
+    assert_bytes [0x62,0x00,0x41,0x93] do |asm|
+      asm.sbfiz    x2, x3, 63, 1
+    end
+    assert_bytes [0x49,0xe9,0x7b,0x93] do |asm|
+      asm.sbfiz    x9, x10, 5, 59
+    end
+    assert_bytes [0x8b,0x01,0x01,0x13] do |asm|
+      asm.sbfiz    w11, w12, 31, 1
+    end
+    assert_bytes [0xcd,0x09,0x03,0x13] do |asm|
+      asm.sbfiz    w13, w14, 29, 3
+    end
+    assert_bytes [0xff,0x2b,0x76,0x93] do |asm|
+      asm.sbfiz    xzr, xzr, 10, 11
+    end
     # SBFM <Xd>, <Xn>, #(-<lsb> MOD 64), #(<width>-1)
   end
 

@@ -1933,6 +1933,10 @@ module AArch64
       a SBCS.new(rd, rn, rm, rd.sf)
     end
 
+    def sbfiz rd, rn, lsb, width
+      sbfm rd, rn, -lsb % rd.size, width - 1
+    end
+
     def sbfm d, n, immr, imms
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end
