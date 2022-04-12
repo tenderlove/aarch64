@@ -159,7 +159,6 @@ module AArch64
     autoload :MSR_imm, "aarch64/instructions/msr_imm"
     autoload :MSR_reg, "aarch64/instructions/msr_reg"
     autoload :MSUB, "aarch64/instructions/msub"
-    autoload :MUL_MADD, "aarch64/instructions/mul_madd"
     autoload :MVN_ORN_log_shift, "aarch64/instructions/mvn_orn_log_shift"
     autoload :NEG_SUB_addsub_shift, "aarch64/instructions/neg_sub_addsub_shift"
     autoload :NEGS_SUBS_addsub_shift, "aarch64/instructions/negs_subs_addsub_shift"

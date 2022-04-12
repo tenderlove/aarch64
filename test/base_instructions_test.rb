@@ -5742,10 +5742,39 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MUL_MADD
-    skip "Fixme!"
     # MUL  <Wd>, <Wn>, <Wm>
     # MADD <Wd>, <Wn>, <Wm>, WZR
     # MUL  <Xd>, <Xn>, <Xm>
+    assert_bytes [0xa4,0x7c,0x06,0x1b] do |asm|
+      asm.mul      w4, w5, w6
+    end
+    assert_bytes [0xa4,0x7c,0x06,0x9b] do |asm|
+      asm.mul      x4, x5, x6
+    end
+    assert_bytes [0x83,0x7c,0x05,0x1b] do |asm|
+      asm.mul      w3, w4, w5
+    end
+    assert_bytes [0xdf,0x7c,0x07,0x1b] do |asm|
+      asm.mul      wzr, w6, w7
+    end
+    assert_bytes [0xe8,0x7f,0x09,0x1b] do |asm|
+      asm.mul      w8, wzr, w9
+    end
+    assert_bytes [0x6a,0x7d,0x1f,0x1b] do |asm|
+      asm.mul      w10, w11, wzr
+    end
+    assert_bytes [0xac,0x7d,0x0e,0x9b] do |asm|
+      asm.mul      x12, x13, x14
+    end
+    assert_bytes [0xff,0x7d,0x10,0x9b] do |asm|
+      asm.mul      xzr, x15, x16
+    end
+    assert_bytes [0xf1,0x7f,0x12,0x9b] do |asm|
+      asm.mul      x17, xzr, x18
+    end
+    assert_bytes [0x93,0x7e,0x1f,0x9b] do |asm|
+      asm.mul      x19, x20, xzr
+    end
     # MADD <Xd>, <Xn>, <Xm>, XZR
   end
 

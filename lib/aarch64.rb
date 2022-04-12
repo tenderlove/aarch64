@@ -1711,6 +1711,10 @@ module AArch64
       a MSUB.new(rd, rn, rm, ra)
     end
 
+    def mul rd, rn, rm
+      madd rd, rn, rm, rd.x? ? XZR : WZR
+    end
+
     def nop
       a NOP.new
     end
