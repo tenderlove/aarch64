@@ -5999,10 +5999,33 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_NGCS_SBCS
-    skip "Fixme!"
     # NGCS  <Wd>, <Wm>
     # SBCS <Wd>, WZR, <Wm>
     # NGCS  <Xd>, <Xm>
+    assert_bytes [0xe9,0x03,0x0a,0x7a] do |asm|
+      asm.ngcs     w9, w10
+    end
+    assert_bytes [0xe9,0x03,0x0a,0xfa] do |asm|
+      asm.ngcs     x9, x10
+    end
+    assert_bytes [0xe3,0x03,0x0c,0x7a] do |asm|
+      asm.ngcs     w3, w12
+    end
+    assert_bytes [0xff,0x03,0x09,0x7a] do |asm|
+      asm.ngcs     wzr, w9
+    end
+    assert_bytes [0xf7,0x03,0x1f,0x7a] do |asm|
+      asm.ngcs     w23, wzr
+    end
+    assert_bytes [0xfd,0x03,0x1e,0xfa] do |asm|
+      asm.ngcs     x29, x30
+    end
+    assert_bytes [0xff,0x03,0x00,0xfa] do |asm|
+      asm.ngcs     xzr, x0
+    end
+    assert_bytes [0xe0,0x03,0x1f,0xfa] do |asm|
+      asm.ngcs     x0, xzr
+    end
     # SBCS <Xd>, XZR, <Xm>
   end
 

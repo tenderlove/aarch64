@@ -1735,6 +1735,10 @@ module AArch64
       sbc rd, rd.zr, rm
     end
 
+    def ngcs rd, rm
+      sbcs rd, rd.zr, rm
+    end
+
     def nop
       a NOP.new
     end
