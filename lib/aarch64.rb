@@ -1524,6 +1524,22 @@ module AArch64
       a LDUMIN.new(rs, rt, rn.first, rs.sizeb, 0, 1)
     end
 
+    def lduminab rs, rt, rn
+      a LDUMINB.new(rs, rt, rn.first, 1, 0)
+    end
+
+    def lduminalb rs, rt, rn
+      a LDUMINB.new(rs, rt, rn.first, 1, 1)
+    end
+
+    def lduminb rs, rt, rn
+      a LDUMINB.new(rs, rt, rn.first, 0, 0)
+    end
+
+    def lduminlb rs, rt, rn
+      a LDUMINB.new(rs, rt, rn.first, 0, 1)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

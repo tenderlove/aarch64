@@ -3990,11 +3990,34 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDUMINB
-    skip "Fixme!"
     # LDUMINAB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xa0,0x38] do |asm|
+      asm.lduminab w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xa2,0x38] do |asm|
+      asm.lduminab w2, w3, [sp]
+    end
     # LDUMINALB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0xe0,0x38] do |asm|
+      asm.lduminalb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0xe2,0x38] do |asm|
+      asm.lduminalb w2, w3, [sp]
+    end
     # LDUMINB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x20,0x38] do |asm|
+      asm.lduminb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x22,0x38] do |asm|
+      asm.lduminb w2, w3, [sp]
+    end
     # LDUMINLB  <Ws>, <Wt>, [<Xn|SP>]
+    assert_bytes [0x41,0x70,0x60,0x38] do |asm|
+      asm.lduminlb w0, w1, [x2]
+    end
+    assert_bytes [0xe3,0x73,0x62,0x38] do |asm|
+      asm.lduminlb w2, w3, [sp]
+    end
   end
 
   def test_LDUMINH
