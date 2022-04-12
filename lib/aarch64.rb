@@ -1568,6 +1568,10 @@ module AArch64
       a LDURSH.new(rt, rn.first, rn[1] || 0, rt.opc)
     end
 
+    def ldursw rt, rn
+      a LDURSW.new(rt, rn.first, rn[1] || 0)
+    end
+
     def ldur rt, rn
       if rt.x?
         a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)

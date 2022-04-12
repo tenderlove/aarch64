@@ -4,8 +4,14 @@ module AArch64
     # Load Register Signed Word (unscaled)
     # LDURSW  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDURSW
+      def initialize rt, rn, imm9
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+      end
+
       def encode
-        raise NotImplementedError
+        self.LDURSW(@imm9, @rn.to_i, @rt.to_i)
       end
 
       private

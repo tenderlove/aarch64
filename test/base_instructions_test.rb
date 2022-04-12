@@ -4162,8 +4162,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDURSW
-    skip "Fixme!"
     # LDURSW  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0xe9,0x03,0x98,0xb8] do |asm|
+      asm.ldursw  x9, [sp, -128]
+    end
+    assert_bytes [0x43,0xa1,0x80,0xb8] do |asm|
+      asm.ldursw	x3, [x10, 10]
+    end
+    assert_bytes [0x64,0xf1,0x9f,0xb8] do |asm|
+      asm.ldursw	x4, [x11, -1]
+    end
+    assert_bytes [0xf4,0x01,0x90,0xb8] do |asm|
+      asm.ldursw   x20, [x15, -256]
+    end
+    assert_bytes [0x4d,0x00,0x80,0xb8] do |asm|
+      asm.ldursw   x13, [x2]
+    end
   end
 
   def test_LDXP
