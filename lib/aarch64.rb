@@ -15,6 +15,10 @@ module AArch64
       def opc
         x? ? 0b10 : 0b11
       end
+
+      def zr
+        x? ? XZR : WZR
+      end
     end
 
     31.times { |i|
@@ -1716,8 +1720,11 @@ module AArch64
     end
 
     def mvn rd, rm, option = nil, shift: :lsl, amount: 0
-      zr = rd.x? ? XZR : WZR
-      orn rd, zr, rm, option, shift: shift, amount: amount
+      orn rd, rd.zr, rm, option, shift: shift, amount: amount
+    end
+
+    def neg rd, rm, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl
+      sub rd, rd.zr, rm, option, extend: extend, amount: amount, lsl: lsl, shift: shift
     end
 
     def nop
