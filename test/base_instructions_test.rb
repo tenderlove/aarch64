@@ -3760,9 +3760,20 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LDTRSB
-    skip "Fixme!"
     # LDTRSB  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDTRSB  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x69,0x08,0xc0,0x38] do |asm|
+      asm.ldtrsb w9, [x3]
+    end
+    assert_bytes [0xe2,0x0b,0x88,0x38] do |asm|
+      asm.ldtrsb x2, [sp, 128]
+    end
+    assert_bytes [0xe9,0x08,0x90,0x38] do |asm|
+      asm.ldtrsb   x9, [x7, -256]
+    end
+    assert_bytes [0x33,0x08,0xd0,0x38] do |asm|
+      asm.ldtrsb   w19, [x1, -256]
+    end
   end
 
   def test_LDTRSH
