@@ -186,7 +186,6 @@ module AArch64
     autoload :SBC, "aarch64/instructions/sbc"
     autoload :SBCS, "aarch64/instructions/sbcs"
     autoload :SBFM, "aarch64/instructions/sbfm"
-    autoload :SBFX_SBFM, "aarch64/instructions/sbfx_sbfm"
     autoload :SDIV, "aarch64/instructions/sdiv"
     autoload :SETF, "aarch64/instructions/setf"
     autoload :SETGP, "aarch64/instructions/setgp"

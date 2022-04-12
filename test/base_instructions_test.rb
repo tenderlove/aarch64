@@ -6618,10 +6618,27 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SBFX_SBFM
-    skip "Fixme!"
     # SBFX  <Wd>, <Wn>, #<lsb>, #<width>
     # SBFM <Wd>, <Wn>, #<lsb>, #(<lsb>+<width>-1)
     # SBFX  <Xd>, <Xn>, #<lsb>, #<width>
+    assert_bytes [0x41,0x3c,0x01,0x13] do |asm|
+      asm.sbfx w1, w2, 1, 15
+    end
+    assert_bytes [0x41,0x3c,0x41,0x93] do |asm|
+      asm.sbfx x1, x2, 1, 15
+    end
+    assert_bytes [0x41,0x10,0x43,0x93] do |asm|
+      asm.sbfx     x1, x2, 3, 2
+    end
+    assert_bytes [0x2c,0x01,0x00,0x13] do |asm|
+      asm.sbfx     w12, w9, 0, 1
+    end
+    assert_bytes [0x49,0x01,0x00,0x13] do |asm|
+      asm.sbfx     w9, w10, 0, 1
+    end
+    assert_bytes [0xff,0x53,0x4a,0x93] do |asm|
+      asm.sbfx     xzr, xzr, 10, 11
+    end
     # SBFM <Xd>, <Xn>, #<lsb>, #(<lsb>+<width>-1)
   end
 

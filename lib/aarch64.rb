@@ -1941,6 +1941,10 @@ module AArch64
       @insns = @insns << SBFM.new(d, n, immr, imms)
     end
 
+    def sbfx rd, rn, lsb, width
+      sbfm rd, rn, lsb, lsb + width - 1
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
