@@ -6201,12 +6201,35 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_PACIA
-    skip "Fixme!"
     # PACIA  <Xd>, <Xn|SP>
+    # pacia x1, x2
+    assert_bytes [0x41, 00, 0xc1, 0xda] do |asm|
+      asm.pacia x1, x2
+    end
+    # pacia x1, sp
+    assert_bytes [0xe1, 0x3, 0xc1, 0xda] do |asm|
+      asm.pacia x1, sp
+    end
     # PACIZA  <Xd>
+    # paciza  x3
+    assert_bytes [0xe3, 0x23, 0xc1, 0xda] do |asm|
+      asm.paciza  x3
+    end
     # PACIA1716
+    # pacia1716
+    assert_bytes [0x1f, 0x21, 0x3, 0xd5] do |asm|
+      asm.pacia1716
+    end
     # PACIASP
+    # paciasp
+    assert_bytes [0x3f, 0x23, 0x3, 0xd5] do |asm|
+      asm.paciasp
+    end
     # PACIAZ
+    # paciaz
+    assert_bytes [0x1f, 0x23, 0x3, 0xd5] do |asm|
+      asm.paciaz
+    end
   end
 
   def test_PACIB

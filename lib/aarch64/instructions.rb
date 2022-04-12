@@ -167,6 +167,7 @@ module AArch64
     autoload :PACDB, "aarch64/instructions/pacdb"
     autoload :PACGA, "aarch64/instructions/pacga"
     autoload :PACIA, "aarch64/instructions/pacia"
+    autoload :PACIA2, "aarch64/instructions/pacia2"
     autoload :PACIB, "aarch64/instructions/pacib"
     autoload :PRFM_imm, "aarch64/instructions/prfm_imm"
     autoload :PRFM_lit, "aarch64/instructions/prfm_lit"

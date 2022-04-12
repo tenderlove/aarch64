@@ -1790,6 +1790,26 @@ module AArch64
       a PACGA.new(xd, xn, xm)
     end
 
+    def pacia xd, xn
+      a PACIA.new(xd, xn, 0)
+    end
+
+    def paciza xd
+      a PACIA.new(xd, xd.zr, 1)
+    end
+
+    def pacia1716
+      a PACIA2.new(0b0001, 0b000)
+    end
+
+    def paciasp
+      a PACIA2.new(0b0011, 0b001)
+    end
+
+    def paciaz
+      a PACIA2.new(0b0011, 0b000)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

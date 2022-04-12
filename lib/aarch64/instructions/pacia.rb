@@ -8,8 +8,14 @@ module AArch64
     # PACIASP
     # PACIAZ
     class PACIA
+      def initialize rd, rn, z
+        @rd = rd
+        @rn = rn
+        @z  = z
+      end
+
       def encode
-        raise NotImplementedError
+        self.PACIA(@z, @rn.to_i, @rd.to_i)
       end
 
       private
