@@ -159,7 +159,6 @@ module AArch64
     autoload :MSR_imm, "aarch64/instructions/msr_imm"
     autoload :MSR_reg, "aarch64/instructions/msr_reg"
     autoload :MSUB, "aarch64/instructions/msub"
-    autoload :NGCS_SBCS, "aarch64/instructions/ngcs_sbcs"
     autoload :NOP, "aarch64/instructions/nop"
     autoload :ORN_log_shift, "aarch64/instructions/orn_log_shift"
     autoload :ORR_log_imm, "aarch64/instructions/orr_log_imm"

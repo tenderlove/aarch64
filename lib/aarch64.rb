@@ -1770,6 +1770,14 @@ module AArch64
       end
     end
 
+    def pacda xd, xn
+      a PACDA.new(xd, xn, 0)
+    end
+
+    def pacdza xd
+      a PACDA.new(xd, xd.zr, 1)
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

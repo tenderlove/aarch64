@@ -5,8 +5,14 @@ module AArch64
     # PACDA  <Xd>, <Xn|SP>
     # PACDZA  <Xd>
     class PACDA
+      def initialize rd, rn, z
+        @rd = rd
+        @rn = rn
+        @z  = z
+      end
+
       def encode
-        raise NotImplementedError
+        self.PACDA(@z, @rn.to_i, @rd.to_i)
       end
 
       private
