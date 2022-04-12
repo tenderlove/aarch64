@@ -1867,6 +1867,10 @@ module AArch64
       a PSB.new
     end
 
+    def pssbb
+      dsb 4
+    end
+
     def ret reg = X30
       @insns = @insns << RET.new(reg)
     end

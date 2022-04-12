@@ -174,7 +174,6 @@ module AArch64
     autoload :PRFM_reg, "aarch64/instructions/prfm_reg"
     autoload :PRFUM, "aarch64/instructions/prfum"
     autoload :PSB, "aarch64/instructions/psb"
-    autoload :PSSBB_DSB, "aarch64/instructions/pssbb_dsb"
     autoload :RBIT_int, "aarch64/instructions/rbit_int"
     autoload :RET, "aarch64/instructions/ret"
     autoload :RETA, "aarch64/instructions/reta"
