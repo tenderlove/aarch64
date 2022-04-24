@@ -10,4 +10,10 @@ class NotSupportedYetTest < AArch64::Test
     # SETGM  [<Xd>]!, <Xn>!, <Xs>
     # SETGP  [<Xd>]!, <Xn>!, <Xs>
   end
+
+  def test_SETGPN
+    # SETGEN  [<Xd>]!, <Xn>!, <Xs>
+    # SETGMN  [<Xd>]!, <Xn>!, <Xs>
+    # SETGPN  [<Xd>]!, <Xn>!, <Xs>
+  end
 end
