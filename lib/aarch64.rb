@@ -1957,6 +1957,10 @@ module AArch64
       a SETF.new(rn, 1)
     end
 
+    def sev
+      a SEV.new
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

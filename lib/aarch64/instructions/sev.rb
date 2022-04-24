@@ -5,14 +5,13 @@ module AArch64
     # SEV
     class SEV
       def encode
-        raise NotImplementedError
+        self.SEV
       end
 
       private
 
-      def SEV 
-        insn = 0b1101010100_0_00_011_0010_0000_100_11111
-        insn
+      def SEV
+        0b1101010100_0_00_011_0010_0000_100_11111
       end
     end
   end
