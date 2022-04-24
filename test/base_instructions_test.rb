@@ -6672,13 +6672,6 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_SETP
-    skip "Fixme!"
-    # SETE  [<Xd>]!, <Xn>!, <Xs>
-    # SETM  [<Xd>]!, <Xn>!, <Xs>
-    # SETP  [<Xd>]!, <Xn>!, <Xs>
-  end
-
   def test_SETPN
     skip "Fixme!"
     # SETEN  [<Xd>]!, <Xn>!, <Xs>
