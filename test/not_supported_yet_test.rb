@@ -34,4 +34,10 @@ class NotSupportedYetTest < AArch64::Test
     # SETM  [<Xd>]!, <Xn>!, <Xs>
     # SETP  [<Xd>]!, <Xn>!, <Xs>
   end
+
+  def test_SETPN
+    # SETEN  [<Xd>]!, <Xn>!, <Xs>
+    # SETMN  [<Xd>]!, <Xn>!, <Xs>
+    # SETPN  [<Xd>]!, <Xn>!, <Xs>
+  end
 end
