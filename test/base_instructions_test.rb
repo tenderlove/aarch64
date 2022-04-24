@@ -6672,13 +6672,6 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_SETGPT
-    skip "Fixme!"
-    # SETGET  [<Xd>]!, <Xn>!, <Xs>
-    # SETGMT  [<Xd>]!, <Xn>!, <Xs>
-    # SETGPT  [<Xd>]!, <Xn>!, <Xs>
-  end
-
   def test_SETGPTN
     skip "Fixme!"
     # SETGETN  [<Xd>]!, <Xn>!, <Xs>

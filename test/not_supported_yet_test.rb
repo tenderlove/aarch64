@@ -16,4 +16,10 @@ class NotSupportedYetTest < AArch64::Test
     # SETGMN  [<Xd>]!, <Xn>!, <Xs>
     # SETGPN  [<Xd>]!, <Xn>!, <Xs>
   end
+
+  def test_SETGPT
+    # SETGET  [<Xd>]!, <Xn>!, <Xs>
+    # SETGMT  [<Xd>]!, <Xn>!, <Xs>
+    # SETGPT  [<Xd>]!, <Xn>!, <Xs>
+  end
 end
