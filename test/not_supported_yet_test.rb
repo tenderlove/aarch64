@@ -22,4 +22,10 @@ class NotSupportedYetTest < AArch64::Test
     # SETGMT  [<Xd>]!, <Xn>!, <Xs>
     # SETGPT  [<Xd>]!, <Xn>!, <Xs>
   end
+
+  def test_SETGPTN
+    # SETGETN  [<Xd>]!, <Xn>!, <Xs>
+    # SETGMTN  [<Xd>]!, <Xn>!, <Xs>
+    # SETGPTN  [<Xd>]!, <Xn>!, <Xs>
+  end
 end
