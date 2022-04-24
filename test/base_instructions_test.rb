@@ -6672,13 +6672,6 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_SETGP
-    skip "Fixme!"
-    # SETGE  [<Xd>]!, <Xn>!, <Xs>
-    # SETGM  [<Xd>]!, <Xn>!, <Xs>
-    # SETGP  [<Xd>]!, <Xn>!, <Xs>
-  end
-
   def test_SETGPN
     skip "Fixme!"
     # SETGEN  [<Xd>]!, <Xn>!, <Xs>
