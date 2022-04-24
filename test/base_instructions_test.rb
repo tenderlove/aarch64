@@ -6683,8 +6683,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SEVL
-    skip "Fixme!"
     # SEVL
+    assert_bytes [0xbf,0x20,0x03,0xd5] do |asm|
+      asm.sevl
+    end
+    assert_bytes [0xbf,0x20,0x03,0xd5] do |asm|
+      asm.sevl
+    end
   end
 
   def test_SMADDL

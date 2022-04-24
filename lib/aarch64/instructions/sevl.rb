@@ -5,14 +5,13 @@ module AArch64
     # SEVL
     class SEVL
       def encode
-        raise NotImplementedError
+        self.SEVL
       end
 
       private
 
-      def SEVL 
-        insn = 0b1101010100_0_00_011_0010_0000_101_11111
-        insn
+      def SEVL
+        0b1101010100_0_00_011_0010_0000_101_11111
       end
     end
   end
