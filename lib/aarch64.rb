@@ -2020,6 +2020,14 @@ module AArch64
       a ST64BV0.new(rs, rt, rn.first)
     end
 
+    def stadd rs, rn
+      ldadd rs, rs.zr, rn
+    end
+
+    def staddl rs, rn
+      ldaddl rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
