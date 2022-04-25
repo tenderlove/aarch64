@@ -2154,6 +2154,10 @@ module AArch64
       a STLRH.new(rt, rn.first)
     end
 
+    def stlur rt, rn
+      a STLUR_gen.new(rt, rn.first, rn[1] || 0, rt.sizeb)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

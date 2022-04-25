@@ -7337,9 +7337,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STLUR_gen
-    skip "Fixme!"
     # STLUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STLUR  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x53,0x03,0x00,0x99] do |asm|
+      asm.stlur   w19, [x26]
+    end
+    assert_bytes [0x29,0x00,0x00,0xd9] do |asm|
+      asm.stlur   x9, [x1]
+    end
   end
 
   def test_STLURB
