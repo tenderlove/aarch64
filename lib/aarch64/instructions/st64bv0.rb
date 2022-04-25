@@ -4,8 +4,14 @@ module AArch64
     # Single-copy Atomic 64-byte EL0 Store with Return
     # ST64BV0  <Xs>, <Xt>, [<Xn|SP>]
     class ST64BV0
+      def initialize rs, rt, rn
+        @rs = rs
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.ST64BV0(@rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

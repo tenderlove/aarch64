@@ -6851,8 +6851,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ST64BV0
-    skip "Fixme!"
     # ST64BV0  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [163, 160, 34, 248] do |asm|
+      asm.st64bv0 x2, x3, [x5]
+    end
   end
 
   def test_STADD_LDADD
