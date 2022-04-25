@@ -7144,10 +7144,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STEORH_LDEORH
-    skip "Fixme!"
     # STEORH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x20,0x78] do |asm|
+      asm.steorh w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0x78] do |asm|
+      asm.steorh w2, [sp]
+    end
     # LDEORH <Ws>, WZR, [<Xn|SP>]
     # STEORLH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x60,0x78] do |asm|
+      asm.steorlh w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0x78] do |asm|
+      asm.steorlh w2, [sp]
+    end
     # LDEORLH <Ws>, WZR, [<Xn|SP>]
   end
 
