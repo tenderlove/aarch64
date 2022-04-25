@@ -6840,8 +6840,14 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ST64BV
-    skip "Fixme!"
     # ST64BV  <Xs>, <Xt>, [<Xn|SP>]
+    assert_bytes [227, 179, 34, 248] do |asm|
+      asm.st64bv x2, x3, [sp]
+    end
+
+    assert_bytes [163, 176, 34, 248] do |asm|
+      asm.st64bv x2, x3, [x5]
+    end
   end
 
   def test_ST64BV0

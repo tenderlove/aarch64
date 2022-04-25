@@ -2012,6 +2012,10 @@ module AArch64
       a ST64B.new(rt, rn.first)
     end
 
+    def st64bv rs, rt, rn
+      a ST64BV.new(rs, rt, rn.first)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
