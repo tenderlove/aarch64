@@ -2028,6 +2028,14 @@ module AArch64
       ldaddl rs, rs.zr, rn
     end
 
+    def staddb rs, rn
+      ldaddb rs, rs.zr, rn
+    end
+
+    def staddlb rs, rn
+      ldaddlb rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

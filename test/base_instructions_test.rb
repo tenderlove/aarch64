@@ -6917,10 +6917,24 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STADDB_LDADDB
-    skip "Fixme!"
     # STADDB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x00,0x20,0x38] do |asm|
+      asm.staddb w0, [x2]
+    end
+    assert_bytes [0xff,0x03,0x22,0x38] do |asm|
+      asm.staddb w2, [sp]
+    end
     # LDADDB <Ws>, WZR, [<Xn|SP>]
     # STADDLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x00,0x60,0x38] do |asm|
+      asm.staddlb    w0, [x2]
+    end
+    assert_bytes [0x5f,0x00,0x60,0x38] do |asm|
+      asm.staddlb w0, [x2]
+    end
+    assert_bytes [0xff,0x03,0x62,0x38] do |asm|
+      asm.staddlb w2, [sp]
+    end
     # LDADDLB <Ws>, WZR, [<Xn|SP>]
   end
 
