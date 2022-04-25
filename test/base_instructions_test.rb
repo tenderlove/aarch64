@@ -7399,8 +7399,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STLXRB
-    skip "Fixme!"
     # STLXRB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
+    assert_bytes [0x27,0xfc,0x08,0x08] do |asm|
+      asm.stlxrb w8, w7, [x1]
+    end
+    assert_bytes [0x0f,0xfe,0x0e,0x08] do |asm|
+      asm.stlxrb   w14, w15, [x16]
+    end
   end
 
   def test_STLXRH
