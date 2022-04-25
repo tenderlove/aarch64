@@ -226,6 +226,7 @@ module AArch64
     autoload :STR_imm_unsigned, "aarch64/instructions/str_imm_unsigned"
     autoload :STR_reg_gen, "aarch64/instructions/str_reg_gen"
     autoload :STRB_imm, "aarch64/instructions/strb_imm"
+    autoload :STRB_imm_unsigned, "aarch64/instructions/strb_imm_unsigned"
     autoload :STRB_reg, "aarch64/instructions/strb_reg"
     autoload :STRH_imm, "aarch64/instructions/strh_imm"
     autoload :STRH_reg, "aarch64/instructions/strh_reg"

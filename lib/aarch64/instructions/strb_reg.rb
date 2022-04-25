@@ -5,8 +5,16 @@ module AArch64
     # STRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
     # STRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
     class STRB_reg
+      def initialize rt, rn, rm, option, s
+        @rt     = rt
+        @rn     = rn
+        @rm     = rm
+        @option = option
+        @s      = s
+      end
+
       def encode
-        raise NotImplementedError
+        self.STRB_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private
