@@ -230,7 +230,7 @@ module AArch64
 
     def and d, n, m, shift: :lsl, amount: 0
       if m.integer?
-        enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{@imm}")
+        enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
         @insns = @insns << AND_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
@@ -240,18 +240,23 @@ module AArch64
 
     def ands d, n, m, shift: :lsl, amount: 0
       if m.integer?
-        @insns = @insns << ANDS_log_imm.new(d, n, m)
+        enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
+        @insns = @insns << ANDS_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-        @insns = @insns << ANDS_log_shift.new(d, n, m, shift, amount)
+        @insns = @insns << ANDS_log_shift.new(d, n, m, shift, amount, d.sf)
       end
     end
 
     def asr d, n, m
       if m.integer?
-        @insns = @insns << ASR_SBFM.new(d, n, m)
+        if d.x?
+          sbfm d, n, m, 63
+        else
+          sbfm d, n, m, 31
+        end
       else
-        @insns = @insns << ASR_ASRV.new(d, n, m)
+        asrv d, n, m
       end
     end
 
