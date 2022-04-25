@@ -4,8 +4,13 @@ module AArch64
     # Store-Release Register Byte
     # STLRB  <Wt>, [<Xn|SP>{,#0}]
     class STLRB
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STLRB(@rn.to_i, @rt.to_i)
       end
 
       private
