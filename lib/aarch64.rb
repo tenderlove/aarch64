@@ -2442,6 +2442,14 @@ module AArch64
       a STUR_gen.new(rt, rn.first, rn[1] || 0, rt.sizeb)
     end
 
+    def sturb rt, rn
+      a STUR_gen.new(rt, rn.first, rn[1] || 0, 0b00)
+    end
+
+    def sturh rt, rn
+      a STUR_gen.new(rt, rn.first, rn[1] || 0, 0b01)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

@@ -8088,13 +8088,35 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STURB
-    skip "Fixme!"
     # STURB  <Wt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x64,0x00,0x00,0x38] do |asm|
+      asm.sturb   w4, [x3]
+    end
+    assert_bytes [0x85,0x40,0x01,0x38] do |asm|
+      asm.sturb   w5, [x4, 20]
+    end
+    assert_bytes [0x23,0xf0,0x1f,0x38] do |asm|
+      asm.sturb	w3, [x1, -1]
+    end
+    assert_bytes [0xe9,0x03,0x00,0x38] do |asm|
+      asm.sturb    w9, [sp]
+    end
   end
 
   def test_STURH
-    skip "Fixme!"
     # STURH  <Wt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0xe2,0x03,0x02,0x78] do |asm|
+      asm.sturh   w2, [sp, 32]
+    end
+    assert_bytes [0x44,0x10,0x00,0x78] do |asm|
+      asm.sturh	w4, [x2, 1]
+    end
+    assert_bytes [0x65,0xf0,0x1f,0x78] do |asm|
+      asm.sturh	w5, [x3, -1]
+    end
+    assert_bytes [0x9f,0xf1,0x0f,0x78] do |asm|
+      asm.sturh    wzr, [x12, 255]
+    end
   end
 
   def test_STXP

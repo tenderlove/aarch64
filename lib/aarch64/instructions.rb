@@ -233,8 +233,6 @@ module AArch64
     autoload :STRH_reg, "aarch64/instructions/strh_reg"
     autoload :STTR, "aarch64/instructions/sttr"
     autoload :STUR_gen, "aarch64/instructions/stur_gen"
-    autoload :STURB, "aarch64/instructions/sturb"
-    autoload :STURH, "aarch64/instructions/sturh"
     autoload :STXP, "aarch64/instructions/stxp"
     autoload :STXR, "aarch64/instructions/stxr"
     autoload :STXRB, "aarch64/instructions/stxrb"
