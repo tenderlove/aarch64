@@ -5,8 +5,16 @@ module AArch64
     # STLXP  <Ws>, <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # STLXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class STLXP
+      def initialize rs, rt, rt2, rn, sz
+        @rs  = rs
+        @rt  = rt
+        @rt2 = rt2
+        @rn  = rn
+        @sz  = sz
+      end
+
       def encode
-        raise NotImplementedError
+        self.STLXP(@sz, @rs.to_i, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
