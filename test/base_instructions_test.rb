@@ -7689,10 +7689,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STSETH_LDSETH
-    skip "Fixme!"
     # STSETH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x30,0x20,0x78] do |asm|
+      asm.stseth w0, [x2]
+    end
+    assert_bytes [0xff,0x33,0x22,0x78] do |asm|
+      asm.stseth w2, [sp]
+    end
     # LDSETH <Ws>, WZR, [<Xn|SP>]
     # STSETLH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x30,0x60,0x78] do |asm|
+      asm.stsetlh w0, [x2]
+    end
+    assert_bytes [0xff,0x33,0x62,0x78] do |asm|
+      asm.stsetlh w2, [sp]
+    end
     # LDSETLH <Ws>, WZR, [<Xn|SP>]
   end
 
