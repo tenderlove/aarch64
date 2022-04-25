@@ -6720,9 +6720,13 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SMNEGL_SMSUBL
-    skip "Fixme!"
     # SMNEGL  <Xd>, <Wn>, <Wm>
-    # SMSUBL <Xd>, <Wn>, <Wm>, XZR
+    assert_bytes [0x93,0xfe,0x35,0x9b] do |asm|
+      asm.smnegl   x19, w20, w21
+    end
+    assert_bytes [0xab,0xfd,0x31,0x9b] do |asm|
+      asm.smnegl   x11, w13, w17
+    end
   end
 
   def test_SMSUBL

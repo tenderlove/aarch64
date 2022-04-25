@@ -1973,6 +1973,10 @@ module AArch64
       a SMC.new(imm)
     end
 
+    def smnegl rd, rn, rm
+      smsubl rd, rn, rm, XZR
+    end
+
     def smsubl rd, rn, rm, ra
       a SMSUBL.new(rd, rn, rm, ra)
     end

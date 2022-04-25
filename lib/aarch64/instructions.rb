@@ -200,7 +200,6 @@ module AArch64
     autoload :SEVL, "aarch64/instructions/sevl"
     autoload :SMADDL, "aarch64/instructions/smaddl"
     autoload :SMC, "aarch64/instructions/smc"
-    autoload :SMNEGL_SMSUBL, "aarch64/instructions/smnegl_smsubl"
     autoload :SMSUBL, "aarch64/instructions/smsubl"
     autoload :SMULH, "aarch64/instructions/smulh"
     autoload :SMULL_SMADDL, "aarch64/instructions/smull_smaddl"
