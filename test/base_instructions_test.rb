@@ -7822,10 +7822,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STSMINB_LDSMINB
-    skip "Fixme!"
     # STSMINB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x50,0x20,0x38] do |asm|
+      asm.stsminb w0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x22,0x38] do |asm|
+      asm.stsminb w2, [sp]
+    end
     # LDSMINB <Ws>, WZR, [<Xn|SP>]
     # STSMINLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x50,0x60,0x38] do |asm|
+      asm.stsminlb w0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x62,0x38] do |asm|
+      asm.stsminlb w2, [sp]
+    end
     # LDSMINLB <Ws>, WZR, [<Xn|SP>]
   end
 
