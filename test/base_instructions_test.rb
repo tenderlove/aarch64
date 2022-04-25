@@ -7963,10 +7963,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMAXH_LDUMAXH
-    skip "Fixme!"
     # STUMAXH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x20,0x78] do |asm|
+      asm.stumaxh w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x22,0x78] do |asm|
+      asm.stumaxh w2, [sp]
+    end
     # LDUMAXH <Ws>, WZR, [<Xn|SP>]
     # STUMAXLH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x60,0x78] do |asm|
+      asm.stumaxlh w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x62,0x78] do |asm|
+      asm.stumaxlh w2, [sp]
+    end
     # LDUMAXLH <Ws>, WZR, [<Xn|SP>]
   end
 
