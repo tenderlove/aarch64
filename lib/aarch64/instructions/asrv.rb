@@ -5,14 +5,15 @@ module AArch64
     # ASRV  <Wd>, <Wn>, <Wm>
     # ASRV  <Xd>, <Xn>, <Xm>
     class ASRV
-      def initialize d, n, m
-        @d = d
-        @n = n
-        @m = m
+      def initialize rd, rn, rm, sf
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @sf = sf
       end
 
       def encode
-        ASRV(@d.sf, @m.to_i, @n.to_i, @d.to_i)
+        self.ASRV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

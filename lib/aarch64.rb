@@ -261,7 +261,7 @@ module AArch64
     end
 
     def asrv d, n, m
-      @insns = @insns << ASRV.new(d, n, m)
+      a ASRV.new(d, n, m, d.sf)
     end
 
     def at at_op, t
@@ -352,11 +352,11 @@ module AArch64
     end
 
     def bfm d, n, immr, imms
-      @insns = @insns << BFM.new(d, n, immr, imms)
+      a BFM.new(d, n, immr, imms, d.sf)
     end
 
     def bfxil d, n, lsb, width
-      @insns = @insns << BFXIL_BFM.new(d, n, lsb, width)
+      bfm d, n, lsb, lsb + width - 1
     end
 
     def bic d, n, m, option = nil, shift: :lsl, amount: 0

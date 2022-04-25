@@ -26,7 +26,6 @@ module AArch64
     autoload :B_cond, "aarch64/instructions/b_cond"
     autoload :BC_cond, "aarch64/instructions/bc_cond"
     autoload :BFM, "aarch64/instructions/bfm"
-    autoload :BFXIL_BFM, "aarch64/instructions/bfxil_bfm"
     autoload :BIC_log_shift, "aarch64/instructions/bic_log_shift"
     autoload :BICS, "aarch64/instructions/bics"
     autoload :BL, "aarch64/instructions/bl"

@@ -5,15 +5,16 @@ module AArch64
     # BFM  <Wd>, <Wn>, #<immr>, #<imms>
     # BFM  <Xd>, <Xn>, #<immr>, #<imms>
     class BFM
-      def initialize d, n, immr, imms
+      def initialize d, n, immr, imms, sf
         @d    = d
         @n    = n
         @immr = immr
         @imms = imms
+        @sf = sf
       end
 
       def encode
-        BFM(@d.sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
+        BFM(@sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
       end
 
       private
