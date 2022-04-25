@@ -8008,10 +8008,23 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMINB_LDUMINB
-    skip "Fixme!"
     # STUMINB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x70,0x20,0x38] do |asm|
+      asm.stuminb w0, [x2]
+    end
+    assert_bytes [0xff,0x73,0x22,0x38] do |asm|
+      asm.stuminb w2, [sp]
+    end
     # LDUMINB <Ws>, WZR, [<Xn|SP>]
     # STUMINLB  <Ws>, [<Xn|SP>]
+    # stuminlb  w2, [sp]
+    assert_bytes [0xff, 0x73, 0x62, 0x38] do |asm|
+      asm.stuminlb  w2, [sp]
+    end
+    # stuminlb  w2, [x2]
+    assert_bytes [0x5f, 0x70, 0x62, 0x38] do |asm|
+      asm.stuminlb  w2, [x2]
+    end
     # LDUMINLB <Ws>, WZR, [<Xn|SP>]
   end
 
