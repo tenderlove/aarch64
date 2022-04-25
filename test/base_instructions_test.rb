@@ -7591,22 +7591,44 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_STRB_reg
-    skip "Fixme!"
-    # STRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
-    # STRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
-  end
-
   def test_STRH_imm
-    skip "Fixme!"
     # STRH  <Wt>, [<Xn|SP>], #<simm>
     # STRH  <Wt>, [<Xn|SP>, #<simm>]!
     # STRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-  end
-
-  def test_STRH_reg
-    skip "Fixme!"
     # STRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_bytes [0xe2,0x43,0x00,0x79] do |asm|
+      asm.strh  w2, [sp, 32]
+    end
+    assert_bytes [0x54,0x1d,0x00,0x79] do |asm|
+      asm.strh     w20, [x10, 14]
+    end
+    assert_bytes [0xf1,0xff,0x3f,0x79] do |asm|
+      asm.strh     w17, [sp, 8190]
+    end
+    assert_bytes [0xab,0xeb,0x23,0x78] do |asm|
+      asm.strh     w11, [x29, x3, sxtx]
+    end
+    assert_bytes [0xb3,0xda,0x3f,0x78] do |asm|
+      asm.strh     w19, [x21, wzr, sxtw(1)]
+    end
+    assert_bytes [0x49,0xf4,0x0f,0x78] do |asm|
+      asm.strh     w9, [x2], 255
+    end
+    assert_bytes [0x49,0x14,0x00,0x78] do |asm|
+      asm.strh     w9, [x2], 1
+    end
+    assert_bytes [0x6a,0x04,0x10,0x78] do |asm|
+      asm.strh     w10, [x3], -256
+    end
+    assert_bytes [0x49,0xfc,0x0f,0x78] do |asm|
+      asm.strh     w9, [x2, 255], :!
+    end
+    assert_bytes [0x49,0x1c,0x00,0x78] do |asm|
+      asm.strh     w9, [x2, 1], :!
+    end
+    assert_bytes [0x6a,0x0c,0x10,0x78] do |asm|
+      asm.strh     w10, [x3, -256], :!
+    end
   end
 
   def test_STSET_LDSET

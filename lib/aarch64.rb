@@ -2273,6 +2273,39 @@ module AArch64
       end
     end
 
+    def strh rt, rn, imm = nil
+      if imm
+        if imm == :!
+          # Pre index
+          a STRH_imm.new(rt, rn.first, rn[1] || 0, 0b11)
+        else
+          # Post index
+          a STRH_imm.new(rt, rn.first, imm, 0b01)
+        end
+      else
+        imm = rn[1] || 0
+        if imm.integer?
+          # Unsigned
+          a STRH_imm_unsigned.new(rt, rn.first, imm >> 1)
+        else
+          rn, rm, opt = *rn
+          opt ||= Extends::Extend.new(0, 0, :lsl)
+          extend = case opt.name
+                   when :uxtw then 0b010
+                   when :lsl  then 0b011
+                   when :sxtw then 0b110
+                   when :sxtx then 0b111
+                   else
+                     raise "Unknown type #{opt.name}"
+                   end
+
+          amount = opt.amount > 0 ? 1 : 0
+
+          a STRH_reg.new(rt, rn, rm, extend, amount)
+        end
+      end
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

@@ -4,8 +4,16 @@ module AArch64
     # Store Register Halfword (register)
     # STRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class STRH_reg
+      def initialize rt, rn, rm, option, s
+        @rt     = rt
+        @rn     = rn
+        @rm     = rm
+        @option = option
+        @s      = s
+      end
+
       def encode
-        raise NotImplementedError
+        self.STRH_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private
