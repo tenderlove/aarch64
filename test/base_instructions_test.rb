@@ -7163,10 +7163,48 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STG
-    skip "Fixme!"
     # STG  <Xt|SP>, [<Xn|SP>], #<simm>
     # STG  <Xt|SP>, [<Xn|SP>, #<simm>]!
     # STG  <Xt|SP>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x20,0x08,0x20,0xd9] do |asm|
+      asm.stg x0,  [x1]
+    end
+    assert_bytes [0x21,0x08,0x30,0xd9] do |asm|
+      asm.stg x1,  [x1, -4096]
+    end
+    assert_bytes [0x42,0xf8,0x2f,0xd9] do |asm|
+      asm.stg x2,  [x2, 4080]
+    end
+    assert_bytes [0xe3,0x1b,0x20,0xd9] do |asm|
+      asm.stg x3,  [sp, 16]
+    end
+    assert_bytes [0xff,0x1b,0x20,0xd9] do |asm|
+      asm.stg sp,  [sp, 16]
+    end
+    assert_bytes [0x20,0x0c,0x30,0xd9] do |asm|
+      asm.stg x0,  [x1, -4096], :!
+    end
+    assert_bytes [0x41,0xfc,0x2f,0xd9] do |asm|
+      asm.stg x1,  [x2, 4080], :!
+    end
+    assert_bytes [0xe2,0x1f,0x20,0xd9] do |asm|
+      asm.stg x2,  [sp, 16], :!
+    end
+    assert_bytes [0xff,0x1f,0x20,0xd9] do |asm|
+      asm.stg sp,  [sp, 16], :!
+    end
+    assert_bytes [0x20,0x04,0x30,0xd9] do |asm|
+      asm.stg x0,  [x1], -4096
+    end
+    assert_bytes [0x41,0xf4,0x2f,0xd9] do |asm|
+      asm.stg x1,  [x2], 4080
+    end
+    assert_bytes [0xe2,0x17,0x20,0xd9] do |asm|
+      asm.stg x2,  [sp], 16
+    end
+    assert_bytes [0xff,0x17,0x20,0xd9] do |asm|
+      asm.stg sp,  [sp], 16
+    end
   end
 
   def test_STGM
