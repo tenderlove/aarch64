@@ -206,7 +206,6 @@ module AArch64
     autoload :ST64B, "aarch64/instructions/st64b"
     autoload :ST64BV, "aarch64/instructions/st64bv"
     autoload :ST64BV0, "aarch64/instructions/st64bv0"
-    autoload :STCLR_LDCLR, "aarch64/instructions/stclr_ldclr"
     autoload :STCLRB_LDCLRB, "aarch64/instructions/stclrb_ldclrb"
     autoload :STCLRH_LDCLRH, "aarch64/instructions/stclrh_ldclrh"
     autoload :STEOR_LDEOR, "aarch64/instructions/steor_ldeor"

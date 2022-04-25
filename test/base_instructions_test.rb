@@ -6958,14 +6958,61 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STCLR_LDCLR
-    skip "Fixme!"
     # STCLR  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x20,0xb8] do |asm|
+      asm.stclr w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0xb8] do |asm|
+      asm.stclr w2, [sp]
+    end
+    assert_bytes [0x5f,0x10,0x20,0xf8] do |asm|
+      asm.stclr x0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0xf8] do |asm|
+      asm.stclr x2, [sp]
+    end
     # LDCLR <Ws>, WZR, [<Xn|SP>]
     # STCLRL  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x60,0xb8] do |asm|
+      asm.stclrl w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0xb8] do |asm|
+      asm.stclrl w2, [sp]
+    end
+    assert_bytes [0x5f,0x10,0x60,0xf8] do |asm|
+      asm.stclrl x0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0xf8] do |asm|
+      asm.stclrl x2, [sp]
+    end
     # LDCLRL <Ws>, WZR, [<Xn|SP>]
     # STCLR  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x20,0xb8] do |asm|
+      asm.stclr w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0xb8] do |asm|
+      asm.stclr w2, [sp]
+    end
+    assert_bytes [0x5f,0x10,0x20,0xf8] do |asm|
+      asm.stclr x0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0xf8] do |asm|
+      asm.stclr x2, [sp]
+    end
     # LDCLR <Xs>, XZR, [<Xn|SP>]
     # STCLRL  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x60,0xb8] do |asm|
+      asm.stclrl w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0xb8] do |asm|
+      asm.stclrl w2, [sp]
+    end
+    assert_bytes [0x5f,0x10,0x60,0xf8] do |asm|
+      asm.stclrl x0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0xf8] do |asm|
+      asm.stclrl x2, [sp]
+    end
     # LDCLRL <Xs>, XZR, [<Xn|SP>]
   end
 
