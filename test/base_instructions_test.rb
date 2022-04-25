@@ -6749,8 +6749,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SMULH
-    skip "Fixme!"
     # SMULH  <Xd>, <Xn>, <Xm>
+    assert_bytes [0x41,0x7c,0x43,0x9b] do |asm|
+      asm.smulh x1, x2, x3
+    end
+    assert_bytes [0xbe,0x7f,0x5c,0x9b] do |asm|
+      asm.smulh    x30, x29, x28
+    end
+    assert_bytes [0x7f,0x7f,0x5a,0x9b] do |asm|
+      asm.smulh    xzr, x27, x26
+    end
+    assert_bytes [0xf9,0x7f,0x58,0x9b] do |asm|
+      asm.smulh    x25, xzr, x24
+    end
+    assert_bytes [0xd7,0x7e,0x5f,0x9b] do |asm|
+      asm.smulh    x23, x22, xzr
+    end
   end
 
   def test_SMULL_SMADDL

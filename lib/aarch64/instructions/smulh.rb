@@ -4,8 +4,14 @@ module AArch64
     # Signed Multiply High
     # SMULH  <Xd>, <Xn>, <Xm>
     class SMULH
+      def initialize rd, rn, rm
+        @rd = rd
+        @rn = rn
+        @rm = rm
+      end
+
       def encode
-        raise NotImplementedError
+        self.SMULH(@rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private
