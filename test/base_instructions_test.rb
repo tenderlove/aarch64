@@ -6693,8 +6693,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SMADDL
-    skip "Fixme!"
     # SMADDL  <Xd>, <Wn>, <Wm>, <Xa>
+    assert_bytes [0x41,0x10,0x23,0x9b] do |asm|
+      asm.smaddl x1, w2, w3, x4
+    end
+    assert_bytes [0xa3,0x24,0x22,0x9b] do |asm|
+      asm.smaddl   x3, w5, w2, x9
+    end
+    assert_bytes [0x5f,0x31,0x2b,0x9b] do |asm|
+      asm.smaddl   xzr, w10, w11, x12
+    end
+    assert_bytes [0xed,0x3f,0x2e,0x9b] do |asm|
+      asm.smaddl   x13, wzr, w14, x15
+    end
+    assert_bytes [0x30,0x4a,0x3f,0x9b] do |asm|
+      asm.smaddl   x16, w17, wzr, x18
+    end
   end
 
   def test_SMC
