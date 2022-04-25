@@ -4,8 +4,14 @@ module AArch64
     # Store-Release Exclusive Register Halfword
     # STLXRH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     class STLXRH
+      def initialize rs, rt, rn
+        @rs = rs
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STLXRH(@rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private
