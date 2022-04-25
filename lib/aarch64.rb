@@ -1989,6 +1989,10 @@ module AArch64
       smaddl rd, rn, rm, XZR
     end
 
+    def ssbb
+      dsb 0
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

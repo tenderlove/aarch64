@@ -202,7 +202,6 @@ module AArch64
     autoload :SMC, "aarch64/instructions/smc"
     autoload :SMSUBL, "aarch64/instructions/smsubl"
     autoload :SMULH, "aarch64/instructions/smulh"
-    autoload :SSBB_DSB, "aarch64/instructions/ssbb_dsb"
     autoload :ST2G, "aarch64/instructions/st2g"
     autoload :ST64B, "aarch64/instructions/st64b"
     autoload :ST64BV, "aarch64/instructions/st64bv"
