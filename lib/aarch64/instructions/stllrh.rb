@@ -4,8 +4,13 @@ module AArch64
     # Store LORelease Register Halfword
     # STLLRH  <Wt>, [<Xn|SP>{,#0}]
     class STLLRH
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STLLRH(@rn.to_i, @rt.to_i)
       end
 
       private
