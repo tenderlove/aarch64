@@ -7784,14 +7784,40 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STSMIN_LDSMIN
-    skip "Fixme!"
     # STSMIN  <Ws>, [<Xn|SP>]
     # LDSMIN <Ws>, WZR, [<Xn|SP>]
     # STSMINL  <Ws>, [<Xn|SP>]
     # LDSMINL <Ws>, WZR, [<Xn|SP>]
     # STSMIN  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x50,0x20,0xb8] do |asm|
+      asm.stsmin w0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x22,0xb8] do |asm|
+      asm.stsmin w2, [sp]
+    end
+    assert_bytes [0x5f,0x50,0x20,0xf8] do |asm|
+      asm.stsmin x0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x22,0xf8] do |asm|
+      asm.stsmin x2, [sp]
+    end
     # LDSMIN <Xs>, XZR, [<Xn|SP>]
     # STSMINL  <Xs>, [<Xn|SP>]
+    assert_bytes [0xff,0x53,0x7d,0xf8] do |asm|
+      asm.stsminl     x29, [sp]
+    end
+    assert_bytes [0x5f,0x50,0x60,0xb8] do |asm|
+      asm.stsminl w0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x62,0xb8] do |asm|
+      asm.stsminl w2, [sp]
+    end
+    assert_bytes [0x5f,0x50,0x60,0xf8] do |asm|
+      asm.stsminl x0, [x2]
+    end
+    assert_bytes [0xff,0x53,0x62,0xf8] do |asm|
+      asm.stsminl x2, [sp]
+    end
     # LDSMINL <Xs>, XZR, [<Xn|SP>]
   end
 
