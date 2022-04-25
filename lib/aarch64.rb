@@ -2390,6 +2390,14 @@ module AArch64
       a STTR.new(rt, rn.first, rn[1] || 0, 0b01)
     end
 
+    def stumax rs, rn
+      ldumax rs, rs.zr, rn
+    end
+
+    def stumaxl rs, rn
+      ldumaxl rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

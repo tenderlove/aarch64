@@ -7906,14 +7906,40 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMAX_LDUMAX
-    skip "Fixme!"
     # STUMAX  <Ws>, [<Xn|SP>]
     # LDUMAX <Ws>, WZR, [<Xn|SP>]
     # STUMAXL  <Ws>, [<Xn|SP>]
     # LDUMAXL <Ws>, WZR, [<Xn|SP>]
     # STUMAX  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x20,0xb8] do |asm|
+      asm.stumax      w0, [x2]
+    end
+    assert_bytes [0x5f,0x60,0x20,0xb8] do |asm|
+      asm.stumax w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x22,0xb8] do |asm|
+      asm.stumax w2, [sp]
+    end
+    assert_bytes [0x5f,0x60,0x20,0xf8] do |asm|
+      asm.stumax x0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x22,0xf8] do |asm|
+      asm.stumax x2, [sp]
+    end
     # LDUMAX <Xs>, XZR, [<Xn|SP>]
     # STUMAXL  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x60,0xb8] do |asm|
+      asm.stumaxl w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x62,0xb8] do |asm|
+      asm.stumaxl w2, [sp]
+    end
+    assert_bytes [0x5f,0x60,0x60,0xf8] do |asm|
+      asm.stumaxl x0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x62,0xf8] do |asm|
+      asm.stumaxl x2, [sp]
+    end
     # LDUMAXL <Xs>, XZR, [<Xn|SP>]
   end
 
