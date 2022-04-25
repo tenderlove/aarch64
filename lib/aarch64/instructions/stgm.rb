@@ -4,8 +4,13 @@ module AArch64
     # Store Tag Multiple
     # STGM  <Xt>, [<Xn|SP>]
     class STGM
+      def initialize xt, xn
+        @xt = xt
+        @xn = xn
+      end
+
       def encode
-        raise NotImplementedError
+        self.STGM(@xn.to_i, @xt.to_i)
       end
 
       private

@@ -2111,6 +2111,10 @@ module AArch64
       end
     end
 
+    def stgm rt, rn
+      a STGM.new(rt, rn.first)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

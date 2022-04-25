@@ -7208,8 +7208,16 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STGM
-    skip "Fixme!"
     # STGM  <Xt>, [<Xn|SP>]
+    assert_bytes [0x20,0x00,0xa0,0xd9] do |asm|
+      asm.stgm x0, [x1]
+    end
+    assert_bytes [0xe1,0x03,0xa0,0xd9] do |asm|
+      asm.stgm x1, [sp]
+    end
+    assert_bytes [0x5f,0x00,0xa0,0xd9] do |asm|
+      asm.stgm xzr, [x2]
+    end
   end
 
   def test_STGP
