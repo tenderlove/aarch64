@@ -1969,6 +1969,10 @@ module AArch64
       a SMADDL.new(xd, wn, wm, xa)
     end
 
+    def smc imm
+      a SMC.new(imm)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

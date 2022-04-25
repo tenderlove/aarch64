@@ -6712,8 +6712,11 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SMC
-    skip "Fixme!"
     # SMC  #<imm>
+    # smc  #15
+    assert_bytes [0xe3, 0x1, 00, 0xd4] do |asm|
+      asm.smc 15
+    end
   end
 
   def test_SMNEGL_SMSUBL

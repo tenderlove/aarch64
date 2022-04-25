@@ -4,8 +4,12 @@ module AArch64
     # Secure Monitor Call
     # SMC  #<imm>
     class SMC
+      def initialize imm16
+        @imm16 = imm16
+      end
+
       def encode
-        raise NotImplementedError
+        self.SMC(@imm16)
       end
 
       private
