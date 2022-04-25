@@ -2150,6 +2150,10 @@ module AArch64
       a STLRB.new(rt, rn.first)
     end
 
+    def stlrh rt, rn
+      a STLRH.new(rt, rn.first)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
