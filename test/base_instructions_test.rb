@@ -7433,13 +7433,39 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STP_gen
-    skip "Fixme!"
     # STP  <Wt1>, <Wt2>, [<Xn|SP>], #<imm>
     # STP  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
     # STP  <Wt1>, <Wt2>, [<Xn|SP>, #<imm>]!
     # STP  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # STP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # STP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
+    assert_bytes [0xe3,0x09,0x02,0x29] do |asm|
+      asm.stp    w3, w2, [x15, 16]
+    end
+    assert_bytes [0xe4,0x27,0x3f,0xa9] do |asm|
+      asm.stp    x4, x9, [sp, -16]
+    end
+    assert_bytes [0xe3,0x09,0x82,0x29] do |asm|
+      asm.stp  w3, w2, [x15, 16], :!
+    end
+    assert_bytes [0xe4,0x27,0xbf,0xa9] do |asm|
+      asm.stp  x4, x9, [sp, -16], :!
+    end
+    assert_bytes [0xe3,0x09,0x82,0x28] do |asm|
+      asm.stp  w3, w2, [x15], 16
+    end
+    assert_bytes [0xe4,0x27,0xbf,0xa8] do |asm|
+      asm.stp  x4, x9, [sp], -16
+    end
+    assert_bytes [0xff,0xa7,0x1f,0x29] do |asm|
+      asm.stp      wzr, w9, [sp, 252]
+    end
+    assert_bytes [0xff,0xa7,0x9f,0x28] do |asm|
+      asm.stp      wzr, w9, [sp], 252
+    end
+    assert_bytes [0xff,0xa7,0x9f,0x29] do |asm|
+      asm.stp      wzr, w9, [sp, 252], :!
+    end
   end
 
   def test_STR_imm_gen

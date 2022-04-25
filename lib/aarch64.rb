@@ -2190,6 +2190,23 @@ module AArch64
       a STNP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / (rt.x? ? 8 : 4), rt.opc3)
     end
 
+    def stp rt, rt2, rn, imm = nil
+      div = rt.x? ? 8 : 4
+
+      if imm
+        if imm == :!
+          # Pre index
+          a STP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / div, rt.opc3, 0b011)
+        else
+          # Post index
+          a STP_gen.new(rt, rt2, rn.first, imm / div, rt.opc3, 0b001)
+        end
+      else
+        # Signed offset
+        a STP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / div, rt.opc3, 0b010)
+      end
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
