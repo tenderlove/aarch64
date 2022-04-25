@@ -7708,14 +7708,37 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STSMAX_LDSMAX
-    skip "Fixme!"
     # STSMAX  <Ws>, [<Xn|SP>]
     # LDSMAX <Ws>, WZR, [<Xn|SP>]
     # STSMAXL  <Ws>, [<Xn|SP>]
     # LDSMAXL <Ws>, WZR, [<Xn|SP>]
     # STSMAX  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x40,0x20,0xb8] do |asm|
+      asm.stsmax w0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x22,0xb8] do |asm|
+      asm.stsmax w2, [sp]
+    end
+    assert_bytes [0x5f,0x40,0x20,0xf8] do |asm|
+      asm.stsmax x0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x22,0xf8] do |asm|
+      asm.stsmax x2, [sp]
+    end
     # LDSMAX <Xs>, XZR, [<Xn|SP>]
     # STSMAXL  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x40,0x60,0xb8] do |asm|
+      asm.stsmaxl w0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x62,0xb8] do |asm|
+      asm.stsmaxl w2, [sp]
+    end
+    assert_bytes [0x5f,0x40,0x60,0xf8] do |asm|
+      asm.stsmaxl x0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x62,0xf8] do |asm|
+      asm.stsmaxl x2, [sp]
+    end
     # LDSMAXL <Xs>, XZR, [<Xn|SP>]
   end
 

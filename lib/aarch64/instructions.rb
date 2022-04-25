@@ -231,7 +231,6 @@ module AArch64
     autoload :STRH_imm, "aarch64/instructions/strh_imm"
     autoload :STRH_imm_unsigned, "aarch64/instructions/strh_imm_unsigned"
     autoload :STRH_reg, "aarch64/instructions/strh_reg"
-    autoload :STSMAX_LDSMAX, "aarch64/instructions/stsmax_ldsmax"
     autoload :STSMAXB_LDSMAXB, "aarch64/instructions/stsmaxb_ldsmaxb"
     autoload :STSMAXH_LDSMAXH, "aarch64/instructions/stsmaxh_ldsmaxh"
     autoload :STSMIN_LDSMIN, "aarch64/instructions/stsmin_ldsmin"
