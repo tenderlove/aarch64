@@ -20,6 +20,10 @@ module AArch64
         x? ? 0b11 : 0b10
       end
 
+      def opc3
+        x? ? 0b10 : 0b00
+      end
+
       def zr
         x? ? XZR : WZR
       end
@@ -2180,6 +2184,10 @@ module AArch64
 
     def stlxrh rs, rt, rn
       a STLXRH.new(rs, rt, rn.first)
+    end
+
+    def stnp rt, rt2, rn
+      a STNP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / (rt.x? ? 8 : 4), rt.opc3)
     end
 
     def stxp rs, rt1, rt2, rn

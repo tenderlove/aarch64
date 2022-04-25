@@ -7419,9 +7419,17 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STNP_gen
-    skip "Fixme!"
     # STNP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # STNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
+    assert_bytes [0xe3,0x09,0x02,0x28] do |asm|
+      asm.stnp  w3, w2, [x15, 16]
+    end
+    assert_bytes [0xe4,0x27,0x3f,0xa8] do |asm|
+      asm.stnp  x4, x9, [sp, -16]
+    end
+    assert_bytes [0xff,0xa7,0x1f,0x28] do |asm|
+      asm.stnp      wzr, w9, [sp, 252]
+    end
   end
 
   def test_STP_gen
