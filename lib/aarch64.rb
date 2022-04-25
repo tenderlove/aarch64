@@ -2378,6 +2378,10 @@ module AArch64
       ldsminlh rs, rs.zr, rn
     end
 
+    def sttr rt, rn
+      a STTR.new(rt, rn.first, rn[1] || 0, rt.sizeb)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

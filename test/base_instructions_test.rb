@@ -7863,9 +7863,23 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STTR
-    skip "Fixme!"
     # STTR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STTR  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x85,0x48,0x01,0xb8] do |asm|
+      asm.sttr   w5, [x4, 20]
+    end
+    assert_bytes [0x64,0x08,0x00,0xf8] do |asm|
+      asm.sttr   x4, [x3]
+    end
+    assert_bytes [0xe2,0x0b,0x02,0xf8] do |asm|
+      asm.sttr   x2, [sp, 32]
+    end
+    assert_bytes [0x10,0x08,0x10,0xb8] do |asm|
+      asm.sttr     w16, [x0, -256]
+    end
+    assert_bytes [0xdc,0x19,0x00,0xf8] do |asm|
+      asm.sttr     x28, [x14, 1]
+    end
   end
 
   def test_STTRB
