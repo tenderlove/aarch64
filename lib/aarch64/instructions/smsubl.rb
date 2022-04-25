@@ -4,8 +4,15 @@ module AArch64
     # Signed Multiply-Subtract Long
     # SMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
     class SMSUBL
+      def initialize rd, rn, rm, ra
+        @rd = rd
+        @rn = rn
+        @rm = rm
+        @ra = ra
+      end
+
       def encode
-        raise NotImplementedError
+        self.SMSUBL(@rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

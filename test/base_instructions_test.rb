@@ -6726,8 +6726,22 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SMSUBL
-    skip "Fixme!"
     # SMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
+    assert_bytes [0x41,0x90,0x23,0x9b] do |asm|
+      asm.smsubl x1, w2, w3, x4
+    end
+    assert_bytes [0xa3,0xa4,0x22,0x9b] do |asm|
+      asm.smsubl   x3, w5, w2, x9
+    end
+    assert_bytes [0x5f,0xb1,0x2b,0x9b] do |asm|
+      asm.smsubl   xzr, w10, w11, x12
+    end
+    assert_bytes [0xed,0xbf,0x2e,0x9b] do |asm|
+      asm.smsubl   x13, wzr, w14, x15
+    end
+    assert_bytes [0x30,0xca,0x3f,0x9b] do |asm|
+      asm.smsubl   x16, w17, wzr, x18
+    end
   end
 
   def test_SMULH

@@ -1973,6 +1973,10 @@ module AArch64
       a SMC.new(imm)
     end
 
+    def smsubl rd, rn, rm, ra
+      a SMSUBL.new(rd, rn, rm, ra)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
