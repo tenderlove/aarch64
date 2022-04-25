@@ -8029,10 +8029,23 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMINH_LDUMINH
-    skip "Fixme!"
     # STUMINH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x70,0x20,0x78] do |asm|
+      asm.stuminh w0, [x2]
+    end
+    assert_bytes [0xff,0x73,0x22,0x78] do |asm|
+      asm.stuminh w2, [sp]
+    end
     # LDUMINH <Ws>, WZR, [<Xn|SP>]
     # STUMINLH  <Ws>, [<Xn|SP>]
+    # stuminlh  w0, [x2]
+    assert_bytes [0x5f, 0x70, 0x60, 0x78] do |asm|
+      asm.stuminlh  w0, [x2]
+    end
+    # stuminlh  w0, [sp]
+    assert_bytes [0xff, 0x73, 0x60, 0x78] do |asm|
+      asm.stuminlh  w0, [sp]
+    end
     # LDUMINLH <Ws>, WZR, [<Xn|SP>]
   end
 

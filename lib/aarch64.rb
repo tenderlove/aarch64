@@ -2430,6 +2430,14 @@ module AArch64
       lduminlb rs, rs.zr, rn
     end
 
+    def stuminh rs, rn
+      lduminh rs, rs.zr, rn
+    end
+
+    def stuminlh rs, rn
+      lduminlh rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
