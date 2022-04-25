@@ -2068,6 +2068,14 @@ module AArch64
       ldclrlh rs, rs.zr, rn
     end
 
+    def steor rs, rn
+      ldeor rs, rs.zr, rn
+    end
+
+    def steorl rs, rn
+      ldeorl rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

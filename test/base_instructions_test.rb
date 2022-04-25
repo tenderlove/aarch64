@@ -7058,14 +7058,67 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STEOR_LDEOR
-    skip "Fixme!"
     # STEOR  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x20,0xb8] do |asm|
+      asm.steor w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0xb8] do |asm|
+      asm.steor w2, [sp]
+    end
+    assert_bytes [0x5f,0x20,0x20,0xf8] do |asm|
+      asm.steor x0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0xf8] do |asm|
+      asm.steor x2, [sp]
+    end
     # LDEOR <Ws>, WZR, [<Xn|SP>]
     # STEORL  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x60,0xb8] do |asm|
+      asm.steorl     w0, [x2]
+    end
+    assert_bytes [0x5f,0x20,0x60,0xb8] do |asm|
+      asm.steorl w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0xb8] do |asm|
+      asm.steorl w2, [sp]
+    end
+    assert_bytes [0x5f,0x20,0x60,0xf8] do |asm|
+      asm.steorl x0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0xf8] do |asm|
+      asm.steorl x2, [sp]
+    end
     # LDEORL <Ws>, WZR, [<Xn|SP>]
     # STEOR  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x20,0xb8] do |asm|
+      asm.steor w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0xb8] do |asm|
+      asm.steor w2, [sp]
+    end
+    assert_bytes [0x5f,0x20,0x20,0xf8] do |asm|
+      asm.steor x0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0xf8] do |asm|
+      asm.steor x2, [sp]
+    end
     # LDEOR <Xs>, XZR, [<Xn|SP>]
     # STEORL  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x60,0xb8] do |asm|
+      asm.steorl     w0, [x2]
+    end
+    assert_bytes [0x5f,0x20,0x60,0xb8] do |asm|
+      asm.steorl w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0xb8] do |asm|
+      asm.steorl w2, [sp]
+    end
+    assert_bytes [0x5f,0x20,0x60,0xf8] do |asm|
+      asm.steorl x0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0xf8] do |asm|
+      asm.steorl x2, [sp]
+    end
     # LDEORL <Xs>, XZR, [<Xn|SP>]
   end
 
