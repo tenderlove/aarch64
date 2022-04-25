@@ -7944,10 +7944,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMAXB_LDUMAXB
-    skip "Fixme!"
     # STUMAXB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x20,0x38] do |asm|
+      asm.stumaxb w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x22,0x38] do |asm|
+      asm.stumaxb w2, [sp]
+    end
     # LDUMAXB <Ws>, WZR, [<Xn|SP>]
     # STUMAXLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x60,0x60,0x38] do |asm|
+      asm.stumaxlb w0, [x2]
+    end
+    assert_bytes [0xff,0x63,0x62,0x38] do |asm|
+      asm.stumaxlb w2, [sp]
+    end
     # LDUMAXLB <Ws>, WZR, [<Xn|SP>]
   end
 

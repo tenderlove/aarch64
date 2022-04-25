@@ -2398,6 +2398,14 @@ module AArch64
       ldumaxl rs, rs.zr, rn
     end
 
+    def stumaxb rs, rn
+      ldumaxb rs, rs.zr, rn
+    end
+
+    def stumaxlb rs, rn
+      ldumaxlb rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
