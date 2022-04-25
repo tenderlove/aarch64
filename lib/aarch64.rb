@@ -2370,6 +2370,14 @@ module AArch64
       ldsminlb rs, rs.zr, rn
     end
 
+    def stsminh rs, rn
+      ldsminh rs, rs.zr, rn
+    end
+
+    def stsminlh rs, rn
+      ldsminlh rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
