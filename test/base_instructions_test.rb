@@ -7125,10 +7125,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STEORB_LDEORB
-    skip "Fixme!"
     # STEORB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x20,0x38] do |asm|
+      asm.steorb w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x22,0x38] do |asm|
+      asm.steorb w2, [sp]
+    end
     # LDEORB <Ws>, WZR, [<Xn|SP>]
     # STEORLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x20,0x60,0x38] do |asm|
+      asm.steorlb w0, [x2]
+    end
+    assert_bytes [0xff,0x23,0x62,0x38] do |asm|
+      asm.steorlb w2, [sp]
+    end
     # LDEORLB <Ws>, WZR, [<Xn|SP>]
   end
 
