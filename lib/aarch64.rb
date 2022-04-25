@@ -2115,6 +2115,21 @@ module AArch64
       a STGM.new(rt, rn.first)
     end
 
+    def stgp xt1, xt2, xn, imm = nil
+      if imm
+        if imm == :!
+          # Pre index
+          a STGP.new(xt1, xt2, xn.first, (xn[1] || 0) / 16, 0b011)
+        else
+          # Post index
+          a STGP.new(xt1, xt2, xn.first, imm / 16, 0b001)
+        end
+      else
+        # Signed offset
+        a STGP.new(xt1, xt2, xn.first, (xn[1] || 0) / 16, 0b010)
+      end
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

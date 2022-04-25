@@ -7221,10 +7221,57 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STGP
-    skip "Fixme!"
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
+    assert_bytes [0x40,0x04,0x00,0x69] do |asm|
+      asm.stgp x0, x1, [x2]
+    end
+    assert_bytes [0x40,0x04,0x20,0x69] do |asm|
+      asm.stgp x0, x1, [x2, -1024]
+    end
+    assert_bytes [0x40,0x84,0x1f,0x69] do |asm|
+      asm.stgp x0, x1, [x2, 1008]
+    end
+    assert_bytes [0xe0,0x87,0x00,0x69] do |asm|
+      asm.stgp x0, x1, [sp, 16]
+    end
+    assert_bytes [0x5f,0x84,0x00,0x69] do |asm|
+      asm.stgp xzr, x1, [x2, 16]
+    end
+    assert_bytes [0x40,0xfc,0x00,0x69] do |asm|
+      asm.stgp x0, xzr, [x2, 16]
+    end
+    assert_bytes [0x40,0x04,0xa0,0x69] do |asm|
+      asm.stgp x0, x1, [x2, -1024], :!
+    end
+    assert_bytes [0x40,0x84,0x9f,0x69] do |asm|
+      asm.stgp x0, x1, [x2, 1008], :!
+    end
+    assert_bytes [0xe0,0x87,0x80,0x69] do |asm|
+      asm.stgp x0, x1, [sp, 16], :!
+    end
+    assert_bytes [0x5f,0x84,0x80,0x69] do |asm|
+      asm.stgp xzr, x1, [x2, 16], :!
+    end
+    assert_bytes [0x40,0xfc,0x80,0x69] do |asm|
+      asm.stgp x0, xzr, [x2, 16], :!
+    end
+    assert_bytes [0x40,0x04,0xa0,0x68] do |asm|
+      asm.stgp x0, x1, [x2], -1024
+    end
+    assert_bytes [0x40,0x84,0x9f,0x68] do |asm|
+      asm.stgp x0, x1, [x2], 1008
+    end
+    assert_bytes [0xe0,0x87,0x80,0x68] do |asm|
+      asm.stgp x0, x1, [sp], 16
+    end
+    assert_bytes [0x5f,0x84,0x80,0x68] do |asm|
+      asm.stgp xzr, x1, [x2], 16
+    end
+    assert_bytes [0x40,0xfc,0x80,0x68] do |asm|
+      asm.stgp x0, xzr, [x2], 16
+    end
   end
 
   def test_STLLR
