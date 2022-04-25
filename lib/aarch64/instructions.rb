@@ -216,8 +216,6 @@ module AArch64
     autoload :STLRB, "aarch64/instructions/stlrb"
     autoload :STLRH, "aarch64/instructions/stlrh"
     autoload :STLUR_gen, "aarch64/instructions/stlur_gen"
-    autoload :STLURB, "aarch64/instructions/stlurb"
-    autoload :STLURH, "aarch64/instructions/stlurh"
     autoload :STLXP, "aarch64/instructions/stlxp"
     autoload :STLXR, "aarch64/instructions/stlxr"
     autoload :STLXRB, "aarch64/instructions/stlxrb"
