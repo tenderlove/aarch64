@@ -7982,14 +7982,28 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUMIN_LDUMIN
-    skip "Fixme!"
     # STUMIN  <Ws>, [<Xn|SP>]
     # LDUMIN <Ws>, WZR, [<Xn|SP>]
     # STUMINL  <Ws>, [<Xn|SP>]
     # LDUMINL <Ws>, WZR, [<Xn|SP>]
     # STUMIN  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x70,0x20,0xf8] do |asm|
+      asm.stumin      x0, [x2]
+    end
+    assert_bytes [0x5f,0x70,0x20,0xb8] do |asm|
+      asm.stumin w0, [x2]
+    end
+    assert_bytes [0xff,0x73,0x22,0xb8] do |asm|
+      asm.stumin w2, [sp]
+    end
     # LDUMIN <Xs>, XZR, [<Xn|SP>]
     # STUMINL  <Xs>, [<Xn|SP>]
+    assert_bytes [0x5f,0x70,0x60,0xb8] do |asm|
+      asm.stuminl w0, [x2]
+    end
+    assert_bytes [0xff,0x73,0x62,0xb8] do |asm|
+      asm.stuminl w2, [sp]
+    end
     # LDUMINL <Xs>, XZR, [<Xn|SP>]
   end
 
