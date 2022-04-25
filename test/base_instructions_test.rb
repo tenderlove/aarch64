@@ -7036,10 +7036,24 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STCLRH_LDCLRH
-    skip "Fixme!"
     # STCLRH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x20,0x78] do |asm|
+      asm.stclrh w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0x78] do |asm|
+      asm.stclrh w2, [sp]
+    end
     # LDCLRH <Ws>, WZR, [<Xn|SP>]
     # STCLRLH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x60,0x78] do |asm|
+      asm.stclrlh    w0, [x2]
+    end
+    assert_bytes [0x5f,0x10,0x60,0x78] do |asm|
+      asm.stclrlh w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0x78] do |asm|
+      asm.stclrlh w2, [sp]
+    end
     # LDCLRLH <Ws>, WZR, [<Xn|SP>]
   end
 
