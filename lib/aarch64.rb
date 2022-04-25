@@ -2438,6 +2438,10 @@ module AArch64
       lduminlh rs, rs.zr, rn
     end
 
+    def stur rt, rn
+      a STUR_gen.new(rt, rn.first, rn[1] || 0, rt.sizeb)
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

@@ -8050,9 +8050,41 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STUR_gen
-    skip "Fixme!"
     # STUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STUR  <Xt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x64,0x00,0x00,0xb8] do |asm|
+      asm.stur    w4, [x3]
+    end
+    assert_bytes [0xe2,0x03,0x02,0xb8] do |asm|
+      asm.stur    w2, [sp, 32]
+    end
+    assert_bytes [0x64,0x00,0x00,0xf8] do |asm|
+      asm.stur    x4, [x3]
+    end
+    assert_bytes [0xe2,0x03,0x02,0xf8] do |asm|
+      asm.stur    x2, [sp, 32]
+    end
+    assert_bytes [0x85,0x40,0x01,0xb8] do |asm|
+      asm.stur    w5, [x4, 20]
+    end
+    assert_bytes [0xab,0x83,0x1f,0xf8] do |asm|
+      asm.stur	x11, [x29, -8]
+    end
+    assert_bytes [0xab,0x73,0x00,0xf8] do |asm|
+      asm.stur	x11, [x29, 7]
+    end
+    assert_bytes [0x00,0x20,0x00,0xb8] do |asm|
+      asm.stur	w0, [x0, 2]
+    end
+    assert_bytes [0x00,0x00,0x10,0xb8] do |asm|
+      asm.stur	w0, [x0, -256]
+    end
+    assert_bytes [0x10,0x00,0x10,0xb8] do |asm|
+      asm.stur     w16, [x0, -256]
+    end
+    assert_bytes [0xdc,0x11,0x00,0xf8] do |asm|
+      asm.stur     x28, [x14, 1]
+    end
   end
 
   def test_STURB
