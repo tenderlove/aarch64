@@ -5,20 +5,17 @@ module AArch64
     # AND  <Wd|WSP>, <Wn>, #<imm>
     # AND  <Xd|SP>, <Xn>, #<imm>
     class AND_log_imm
-      def initialize d, n, imm
-        @d = d
-        @n = n
-        @imm = imm
+      def initialize rd, rn, immr, imms, n, sf
+        @rd   = rd
+        @rn   = rn
+        @immr = immr
+        @imms = imms
+        @n    = n
+        @sf   = sf
       end
 
       def encode
-        enc = Utils.encode_mask(@imm, @d.size) || raise("Can't encode mask #{@imm}")
-
-        if @d.x?
-          AND_log_imm(@d.sf, enc.n, enc.immr, enc.imms, @n.to_i, @d.to_i)
-        else
-          AND_log_imm(@d.sf, 0, enc.immr, enc.imms, @n.to_i, @d.to_i)
-        end
+        self.AND_log_imm(@sf, @n, @immr, @imms, @rn.to_i, @rd.to_i)
       end
 
       private

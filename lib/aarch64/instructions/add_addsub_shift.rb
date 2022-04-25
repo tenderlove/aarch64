@@ -5,16 +5,17 @@ module AArch64
     # ADD  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ADD  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class ADD_addsub_shift
-      def initialize xd, xn, xm, shift, amount
+      def initialize xd, xn, xm, shift, amount, sf
         @xd     = xd
         @xn     = xn
         @xm     = xm
         @shift  = shift
         @amount = amount
+        @sf     = sf
       end
 
       def encode
-        ADD_addsub_shift(@xd.sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
+        ADD_addsub_shift(@sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
       end
 
       private

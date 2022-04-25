@@ -125,11 +125,11 @@ module AArch64
     end
 
     def adc d, n, m
-      @insns = @insns << ADC.new(d, n, m)
+      @insns = @insns << ADC.new(d, n, m, d.sf)
     end
 
     def adcs d, n, m
-      @insns = @insns << ADCS.new(d, n, m)
+      @insns = @insns << ADCS.new(d, n, m, d.sf)
     end
 
     def add d, n, m, extend: nil, amount: 0, lsl: 0, shift: :lsl
@@ -157,14 +157,14 @@ module AArch64
           end
         end
 
-        @insns = @insns << ADD_addsub_ext.new(d, n, m, extend, amount)
+        @insns = @insns << ADD_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
           # add immediate
-          @insns = @insns << ADD_addsub_imm.new(d, n, m, lsl / 12)
+          @insns = @insns << ADD_addsub_imm.new(d, n, m, lsl / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          @insns = @insns << ADD_addsub_shift.new(d, n, m, shift, amount)
+          @insns = @insns << ADD_addsub_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end
@@ -209,13 +209,13 @@ module AArch64
                  else
                    raise "Unknown extend #{extend}"
                  end
-        @insns = @insns << ADDS_addsub_ext.new(d, n, m, extend, amount)
+        @insns = @insns << ADDS_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          @insns = @insns << ADDS_addsub_imm.new(d, n, m, lsl / 12)
+          @insns = @insns << ADDS_addsub_imm.new(d, n, m, lsl / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          @insns = @insns << ADDS_addsub_shift.new(d, n, m, shift, amount)
+          @insns = @insns << ADDS_addsub_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end
@@ -230,10 +230,11 @@ module AArch64
 
     def and d, n, m, shift: :lsl, amount: 0
       if m.integer?
-        @insns = @insns << AND_log_imm.new(d, n, m)
+        enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{@imm}")
+        @insns = @insns << AND_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-        @insns = @insns << AND_log_shift.new(d, n, m, shift, amount)
+        @insns = @insns << AND_log_shift.new(d, n, m, shift, amount, d.sf)
       end
     end
 

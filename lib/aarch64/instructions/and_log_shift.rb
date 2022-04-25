@@ -5,16 +5,17 @@ module AArch64
     # AND  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # AND  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class AND_log_shift
-      def initialize xd, xn, xm, shift, amount
+      def initialize xd, xn, xm, shift, amount, sf
         @xd     = xd
         @xn     = xn
         @xm     = xm
         @shift  = shift
         @amount = amount
+        @sf     = sf
       end
 
       def encode
-        AND_log_shift(@xd.sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
+        AND_log_shift(@sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
       end
 
       private

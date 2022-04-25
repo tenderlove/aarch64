@@ -4,15 +4,16 @@ module AArch64
     # Add (immediate)
     # ADD  <Wd|WSP>, <Wn|WSP>, #<imm>{, <shift>}
     class ADD_addsub_imm
-      def initialize d, n, imm12, sh
-        @rd = d
-        @rn = n
+      def initialize rd, rn, imm12, sh, sf
+        @rd    = rd
+        @rn    = rn
         @imm12 = imm12
-        @sh = sh
+        @sh    = sh
+        @sf    = sf
       end
 
       def encode
-        ADD_addsub_imm(@rd.sf, @sh, @imm12, @rn.to_i, @rd.to_i)
+        ADD_addsub_imm(@sf, @sh, @imm12, @rn.to_i, @rd.to_i)
       end
 
       private
