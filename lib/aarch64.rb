@@ -2314,6 +2314,14 @@ module AArch64
       ldsetl rs, rs.zr, rn
     end
 
+    def stsetb rs, rn
+      ldsetb rs, rs.zr, rn
+    end
+
+    def stsetlb rs, rn
+      ldsetlb rs, rs.zr, rn
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
