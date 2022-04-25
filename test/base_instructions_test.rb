@@ -6939,10 +6939,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STADDH_LDADDH
-    skip "Fixme!"
     # STADDH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x00,0x20,0x78] do |asm|
+      asm.staddh w0, [x2]
+    end
+    assert_bytes [0xff,0x03,0x22,0x78] do |asm|
+      asm.staddh w2, [sp]
+    end
     # LDADDH <Ws>, WZR, [<Xn|SP>]
     # STADDLH  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x00,0x60,0x78] do |asm|
+      asm.staddlh w0, [x2]
+    end
+    assert_bytes [0xff,0x03,0x62,0x78] do |asm|
+      asm.staddlh w2, [sp]
+    end
     # LDADDLH <Ws>, WZR, [<Xn|SP>]
   end
 
