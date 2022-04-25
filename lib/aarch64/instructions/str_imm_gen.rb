@@ -9,15 +9,25 @@ module AArch64
     # STR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
     class STR_imm_gen
+      def initialize rt, rn, imm9, opt, size
+        @rt   = rt
+        @rn   = rn
+        @imm9 = imm9
+        @opt  = opt
+        @size = size
+      end
+
       def encode
-        raise NotImplementedError
+        self.STR_imm_gen(@size, @imm9, @opt, @rn.to_i, @rt.to_i)
       end
 
       private
 
-      def STR_imm_gen imm9, rn, rt
-        insn = 0b1x_111_0_00_00_0_000000000_01_00000_00000
+      def STR_imm_gen size, imm9, opt, rn, rt
+        insn = 0b00_111_0_00_00_0_000000000_00_00000_00000
+        insn |= ((size & 0x3) << 30)
         insn |= ((imm9 & 0x1ff) << 12)
+        insn |= ((opt & 0x3) << 10)
         insn |= ((rn & 0x1f) << 5)
         insn |= (rt & 0x1f)
         insn

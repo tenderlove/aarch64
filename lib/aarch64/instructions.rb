@@ -223,6 +223,7 @@ module AArch64
     autoload :STNP_gen, "aarch64/instructions/stnp_gen"
     autoload :STP_gen, "aarch64/instructions/stp_gen"
     autoload :STR_imm_gen, "aarch64/instructions/str_imm_gen"
+    autoload :STR_imm_unsigned, "aarch64/instructions/str_imm_unsigned"
     autoload :STR_reg_gen, "aarch64/instructions/str_reg_gen"
     autoload :STRB_imm, "aarch64/instructions/strb_imm"
     autoload :STRB_reg, "aarch64/instructions/strb_reg"

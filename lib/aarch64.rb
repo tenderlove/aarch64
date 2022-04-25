@@ -2207,6 +2207,39 @@ module AArch64
       end
     end
 
+    def str rt, rn, imm = nil
+      if imm
+        if imm == :!
+          # Post index
+          a STR_imm_gen.new(rt, rn.first, rn[1] || 0, 0b11, rt.sizeb)
+        else
+          # Pre index
+          a STR_imm_gen.new(rt, rn.first, imm || 0, 0b01, rt.sizeb)
+        end
+      else
+        imm = rn[1] || 0
+        if imm.integer?
+          # Unsigned
+          div = rt.x? ? 8 : 4
+          a STR_imm_unsigned.new(rt, rn.first, imm / div, rt.sizeb)
+        else
+          rn, rm, opt = *rn
+          opt ||= Extends::Extend.new(0, 0, :lsl)
+          extend = case opt.name
+                   when :uxtw then 0b010
+                   when :lsl  then 0b011
+                   when :sxtw then 0b110
+                   when :sxtx then 0b111
+                   else
+                     raise "Unknown type #{opt.name}"
+                   end
+
+          amount = opt.amount / (rt.x? ? 3 : 2)
+          a STR_reg_gen.new(rt, rn, rm, extend, amount, rt.sizeb)
+        end
+      end
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end

@@ -7468,20 +7468,88 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
-  def test_STR_imm_gen
-    skip "Fixme!"
+  def test_STR_all
     # STR  <Wt>, [<Xn|SP>], #<simm>
     # STR  <Xt>, [<Xn|SP>], #<simm>
     # STR  <Wt>, [<Xn|SP>, #<simm>]!
     # STR  <Xt>, [<Xn|SP>, #<simm>]!
     # STR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
-  end
-
-  def test_STR_reg_gen
-    skip "Fixme!"
-    # STR  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    # STR  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
+    assert_bytes [0x64,0x00,0x00,0xf9] do |asm|
+      asm.str   x4, [x3]
+    end
+    assert_bytes [0xe2,0x13,0x00,0xf9] do |asm|
+      asm.str   x2, [sp, 32]
+    end
+    assert_bytes [0x85,0x14,0x00,0xb9] do |asm|
+      asm.str   w5, [x4, 20]
+    end
+    assert_bytes [0xfe,0x8c,0x1f,0xf8] do |asm|
+      asm.str  x30, [x7, -8], :!
+    end
+    assert_bytes [0xfd,0x8c,0x1f,0xf8] do |asm|
+      asm.str  x29, [x7, -8], :!
+    end
+    assert_bytes [0xfe,0x84,0x1f,0xf8] do |asm|
+      asm.str x30, [x7], -8
+    end
+    assert_bytes [0xfd,0x84,0x1f,0xf8] do |asm|
+      asm.str x29, [x7], -8
+    end
+    assert_bytes [0xfe,0x03,0x00,0xf9] do |asm|
+      asm.str      x30, [sp]
+    end
+    assert_bytes [0x94,0xfc,0x3f,0xb9] do |asm|
+      asm.str      w20, [x4, 16380]
+    end
+    assert_bytes [0x6d,0xfb,0x25,0xb8] do |asm|
+      asm.str      w13, [x27, x5, sxtx(2)]
+    end
+    assert_bytes [0x4e,0x4b,0x26,0xb8] do |asm|
+      asm.str      w14, [x26, w6, uxtw]
+    end
+    assert_bytes [0x69,0x6b,0x26,0xf8] do |asm|
+      asm.str      x9, [x27, x6]
+    end
+    assert_bytes [0xab,0xeb,0x23,0xf8] do |asm|
+      asm.str      x11, [x29, x3, sxtx]
+    end
+    assert_bytes [0xf3,0xf7,0x0f,0xb8] do |asm|
+      asm.str      w19, [sp], 255
+    end
+    assert_bytes [0xd4,0x17,0x00,0xb8] do |asm|
+      asm.str      w20, [x30], 1
+    end
+    assert_bytes [0x95,0x05,0x10,0xb8] do |asm|
+      asm.str      w21, [x12], -256
+    end
+    assert_bytes [0x3f,0xf5,0x0f,0xf8] do |asm|
+      asm.str      xzr, [x9], 255
+    end
+    assert_bytes [0x62,0x14,0x00,0xf8] do |asm|
+      asm.str      x2, [x3], 1
+    end
+    assert_bytes [0x93,0x05,0x10,0xf8] do |asm|
+      asm.str      x19, [x12], -256
+    end
+    assert_bytes [0xf3,0xff,0x0f,0xb8] do |asm|
+      asm.str      w19, [sp, 255], :!
+    end
+    assert_bytes [0xd4,0x1f,0x00,0xb8] do |asm|
+      asm.str      w20, [x30, 1], :!
+    end
+    assert_bytes [0x95,0x0d,0x10,0xb8] do |asm|
+      asm.str      w21, [x12, -256], :!
+    end
+    assert_bytes [0x3f,0xfd,0x0f,0xf8] do |asm|
+      asm.str      xzr, [x9, 255], :!
+    end
+    assert_bytes [0x62,0x1c,0x00,0xf8] do |asm|
+      asm.str      x2, [x3, 1], :!
+    end
+    assert_bytes [0x93,0x0d,0x10,0xf8] do |asm|
+      asm.str      x19, [x12, -256], :!
+    end
   end
 
   def test_STRB_imm
