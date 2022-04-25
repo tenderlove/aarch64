@@ -1993,6 +1993,21 @@ module AArch64
       dsb 0
     end
 
+    def st2g rt, rn, imm = nil
+      if imm
+        if imm == :!
+          # Pre index
+          a ST2G.new(rt, rn.first, (rn[1] || 0) / 16, 0b11)
+        else
+          # Post index
+          a ST2G.new(rt, rn.first, (imm || 0) / 16, 0b01)
+        end
+      else
+        # Signed offset
+        a ST2G.new(rt, rn.first, (rn[1] || 0) / 16, 0b10)
+      end
+    end
+
     def stxp rs, rt1, rt2, rn
       @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
     end
