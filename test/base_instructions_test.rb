@@ -7743,10 +7743,24 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STSMAXB_LDSMAXB
-    skip "Fixme!"
     # STSMAXB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x40,0x20,0x38] do |asm|
+      asm.stsmaxb     w0, [x2]
+    end
+    assert_bytes [0x5f,0x40,0x20,0x38] do |asm|
+      asm.stsmaxb w0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x22,0x38] do |asm|
+      asm.stsmaxb w2, [sp]
+    end
     # LDSMAXB <Ws>, WZR, [<Xn|SP>]
     # STSMAXLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x40,0x60,0x38] do |asm|
+      asm.stsmaxlb w0, [x2]
+    end
+    assert_bytes [0xff,0x43,0x62,0x38] do |asm|
+      asm.stsmaxlb w2, [sp]
+    end
     # LDSMAXLB <Ws>, WZR, [<Xn|SP>]
   end
 
