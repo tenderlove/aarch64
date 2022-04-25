@@ -7883,13 +7883,26 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STTRB
-    skip "Fixme!"
     # STTRB  <Wt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x64,0x08,0x00,0x38] do |asm|
+      asm.sttrb  w4, [x3]
+    end
+    assert_bytes [0x85,0x48,0x01,0x38] do |asm|
+      asm.sttrb  w5, [x4, 20]
+    end
+    assert_bytes [0xe9,0x0b,0x00,0x38] do |asm|
+      asm.sttrb    w9, [sp]
+    end
   end
 
   def test_STTRH
-    skip "Fixme!"
     # STTRH  <Wt>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0xe2,0x0b,0x02,0x78] do |asm|
+      asm.sttrh  w2, [sp, 32]
+    end
+    assert_bytes [0x9f,0xf9,0x0f,0x78] do |asm|
+      asm.sttrh    wzr, [x12, 255]
+    end
   end
 
   def test_STUMAX_LDUMAX
