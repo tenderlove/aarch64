@@ -2467,6 +2467,20 @@ module AArch64
       @insns = @insns << STXRH.new(rs, rt, rn.first)
     end
 
+    def stz2g rt, rn, imm = nil
+      if imm
+        if imm == :!
+          # Pre index
+          a STZ2G.new(rt, rn.first, (rn[1] || 0) / 16, 0b11)
+        else
+          a STZ2G.new(rt, rn.first, imm / 16, 0b01)
+        end
+      else
+        # Signed offset
+        a STZ2G.new(rt, rn.first, (rn[1] || 0) / 16, 0b10)
+      end
+    end
+
     def stzgm rt, rn
       @insns = @insns << STZGM.new(rt, rn.first)
     end

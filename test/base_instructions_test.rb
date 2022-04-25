@@ -8175,10 +8175,48 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STZ2G
-    skip "Fixme!"
     # STZ2G  <Xt|SP>, [<Xn|SP>], #<simm>
     # STZ2G  <Xt|SP>, [<Xn|SP>, #<simm>]!
     # STZ2G  <Xt|SP>, [<Xn|SP>{, #<simm>}]
+    assert_bytes [0x20,0x08,0xe0,0xd9] do |asm|
+      asm.stz2g x0,  [x1]
+    end
+    assert_bytes [0x21,0x08,0xf0,0xd9] do |asm|
+      asm.stz2g x1,  [x1, -4096]
+    end
+    assert_bytes [0x42,0xf8,0xef,0xd9] do |asm|
+      asm.stz2g x2,  [x2, 4080]
+    end
+    assert_bytes [0xe3,0x1b,0xe0,0xd9] do |asm|
+      asm.stz2g x3,  [sp, 16]
+    end
+    assert_bytes [0xff,0x1b,0xe0,0xd9] do |asm|
+      asm.stz2g sp,  [sp, 16]
+    end
+    assert_bytes [0x20,0x0c,0xf0,0xd9] do |asm|
+      asm.stz2g x0,  [x1, -4096], :!
+    end
+    assert_bytes [0x41,0xfc,0xef,0xd9] do |asm|
+      asm.stz2g x1,  [x2, 4080], :!
+    end
+    assert_bytes [0xe2,0x1f,0xe0,0xd9] do |asm|
+      asm.stz2g x2,  [sp, 16], :!
+    end
+    assert_bytes [0xff,0x1f,0xe0,0xd9] do |asm|
+      asm.stz2g sp,  [sp, 16], :!
+    end
+    assert_bytes [0x20,0x04,0xf0,0xd9] do |asm|
+      asm.stz2g x0,  [x1], -4096
+    end
+    assert_bytes [0x41,0xf4,0xef,0xd9] do |asm|
+      asm.stz2g x1,  [x2], 4080
+    end
+    assert_bytes [0xe2,0x17,0xe0,0xd9] do |asm|
+      asm.stz2g x2,  [sp], 16
+    end
+    assert_bytes [0xff,0x17,0xe0,0xd9] do |asm|
+      asm.stz2g sp,  [sp], 16
+    end
   end
 
   def test_STZG
