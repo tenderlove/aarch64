@@ -7017,10 +7017,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_STCLRB_LDCLRB
-    skip "Fixme!"
     # STCLRB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x20,0x38] do |asm|
+      asm.stclrb w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x22,0x38] do |asm|
+      asm.stclrb w2, [sp]
+    end
     # LDCLRB <Ws>, WZR, [<Xn|SP>]
     # STCLRLB  <Ws>, [<Xn|SP>]
+    assert_bytes [0x5f,0x10,0x60,0x38] do |asm|
+      asm.stclrlb w0, [x2]
+    end
+    assert_bytes [0xff,0x13,0x62,0x38] do |asm|
+      asm.stclrlb w2, [sp]
+    end
     # LDCLRLB <Ws>, WZR, [<Xn|SP>]
   end
 
