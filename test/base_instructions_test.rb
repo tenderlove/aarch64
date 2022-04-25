@@ -1997,8 +1997,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_LD64B
-    skip "Fixme!"
     # LD64B  <Xt>, [<Xn|SP> {,#0}]
+    assert_bytes [98, 208, 63, 248] do |asm|
+      asm.ld64b x2, [x3]
+    end
   end
 
   def test_LDADD

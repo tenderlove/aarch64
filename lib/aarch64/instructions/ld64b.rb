@@ -4,8 +4,13 @@ module AArch64
     # Single-copy Atomic 64-byte Load
     # LD64B  <Xt>, [<Xn|SP> {,#0}]
     class LD64B
+      def initialize rt, rn
+        @rt = rt
+        @rn = rn
+      end
+
       def encode
-        raise NotImplementedError
+        self.LD64B(@rn.to_i, @rt.to_i)
       end
 
       private

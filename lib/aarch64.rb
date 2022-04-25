@@ -743,6 +743,10 @@ module AArch64
       @insns = @insns << ISB.new(option)
     end
 
+    def ld64b rt, rn
+      a LD64B.new(rt, rn.first)
+    end
+
     def ldadd rs, rt, rn
       if rs.x?
         @insns = @insns << LDADD.new(rs, rt, rn.first, 0b11, 0, 0)
