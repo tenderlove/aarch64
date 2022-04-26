@@ -6,46 +6,49 @@ require "aarch64/utils"
 
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :sf, :x?, :sp?, :zr?, :size)
+    class Register < Struct.new(:to_i, :sp?, :zr?)
       def integer?; false; end
-      def sizeb
-        x? ? 0b11 : 0b10
-      end
+    end
 
-      def opc
-        x? ? 0b10 : 0b11
-      end
+    class XRegister < Register
+      def x?; true; end
+      def zr; XZR; end
+      def size; 64; end
+      def sf; 1; end
+      def sizeb; 0b11; end
+      def opc; 0b10; end
+      def opc2; 0b11; end
+      def opc3; 0b10; end
+    end
 
-      def opc2
-        x? ? 0b11 : 0b10
-      end
-
-      def opc3
-        x? ? 0b10 : 0b00
-      end
-
-      def zr
-        x? ? XZR : WZR
-      end
+    class WRegister < Register
+      def x?; false; end
+      def zr; WZR; end
+      def size; 32; end
+      def sf; 0; end
+      def sizeb; 0b10; end
+      def opc; 0b11; end
+      def opc2; 0b10; end
+      def opc3; 0b00; end
     end
 
     31.times { |i|
-      x = const_set(:"X#{i}", Register.new(i, 1, true, false, false, 64))
+      x = const_set(:"X#{i}", XRegister.new(i, false, false))
       define_method(:"x#{i}") { x }
-      w = const_set(:"W#{i}", Register.new(i, 0, false, false, false, 32))
+      w = const_set(:"W#{i}", WRegister.new(i, false, false))
       define_method(:"w#{i}") { w }
     }
 
-    SP = Register.new(31, 1, true, true, false, 64)
+    SP = XRegister.new(31, true, false)
     def sp; SP; end
 
-    WSP = Register.new(31, 0, false, true, false, 32)
+    WSP = WRegister.new(31, true, false)
     def wsp; WSP; end
 
-    XZR = Register.new(31, 1, true, false, true, 64)
+    XZR = XRegister.new(31, false, true)
     def xzr; XZR; end
 
-    WZR = Register.new(31, 0, false, false, true, 32)
+    WZR = WRegister.new(31, false, true)
     def wzr; WZR; end
   end
 
