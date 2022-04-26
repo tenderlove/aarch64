@@ -529,7 +529,7 @@ module AArch64
     end
 
     def cfp_rcfx rt
-      a CFP_SYS.new(rt)
+      sys 3, Names::C7, Names::C3, 4, rt
     end
 
     def cinc rd, rn, cond

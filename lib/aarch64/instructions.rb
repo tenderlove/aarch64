@@ -45,7 +45,6 @@ module AArch64
     autoload :CCMP_imm, "aarch64/instructions/ccmp_imm"
     autoload :CCMP_reg, "aarch64/instructions/ccmp_reg"
     autoload :CFINV, "aarch64/instructions/cfinv"
-    autoload :CFP_SYS, "aarch64/instructions/cfp_sys"
     autoload :CLREX, "aarch64/instructions/clrex"
     autoload :CLS_int, "aarch64/instructions/cls_int"
     autoload :CLZ_int, "aarch64/instructions/clz_int"
