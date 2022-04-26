@@ -3,7 +3,7 @@ $: << File.expand_path("lib")
 require "aarch64/version"
 
 Gem::Specification.new do |s|
-  s.name        = "fisk"
+  s.name        = "aarch64"
   s.version     = AArch64::VERSION
   s.summary     = "Write ARM64 assembly in Ruby!"
   s.description = "Tired of writing Ruby in Ruby? Now you can write ARM64 assembly in Ruby!"
