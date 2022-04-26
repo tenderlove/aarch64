@@ -30,7 +30,7 @@ asm.write_to jit_buffer
 jit_buffer.executable!
 
 # Execute the JIT buffer
-p buffer.to_function([], -Fiddle::TYPE_INT).call.to_s(16) # => f00dcafe
+p jit_buffer.to_function([], -Fiddle::TYPE_INT).call.to_s(16) # => f00dcafe
 ```
 
 The following is the same example, but without the DSL.  The main difference is
@@ -55,7 +55,7 @@ asm.write_to jit_buffer
 jit_buffer.executable!
 
 # Execute the JIT buffer
-p buffer.to_function([], -Fiddle::TYPE_INT).call.to_s(16) # => f00dcafe
+p jit_buffer.to_function([], -Fiddle::TYPE_INT).call.to_s(16) # => f00dcafe
 ```
 
 You can include `AArch64::Registers` if you don't want to use the DSL, but
