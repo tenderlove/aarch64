@@ -16,7 +16,6 @@ module AArch64
     autoload :ANDS_log_imm, "aarch64/instructions/ands_log_imm"
     autoload :ANDS_log_shift, "aarch64/instructions/ands_log_shift"
     autoload :ASRV, "aarch64/instructions/asrv"
-    autoload :AT_SYS, "aarch64/instructions/at_sys"
     autoload :AUTDA, "aarch64/instructions/autda"
     autoload :AUTDB, "aarch64/instructions/autdb"
     autoload :AUTIA, "aarch64/instructions/autia"

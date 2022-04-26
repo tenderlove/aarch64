@@ -268,7 +268,8 @@ module AArch64
     end
 
     def at at_op, t
-      a AT_SYS.new(at_op, t)
+      op = Utils.at_op(at_op)
+      sys op[:op1], Names::C7, op[:crm], op[:op2], t
     end
 
     def autda d, n

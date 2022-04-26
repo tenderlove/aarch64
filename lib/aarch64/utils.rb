@@ -299,5 +299,27 @@ module AArch64
       end
     end
     module_function :prfop
+
+    AT_TABLE = {
+      :s1e1r  => { :op1 => 0b000, :crm => 0b1000, :op2 => 0b000 },
+      :s1e1w  => { :op1 => 0b000, :crm => 0b1000, :op2 => 0b001 },
+      :s1e0r  => { :op1 => 0b000, :crm => 0b1000, :op2 => 0b010 },
+      :s1e0w  => { :op1 => 0b000, :crm => 0b1000, :op2 => 0b011 },
+      :s1e1rp => { :op1 => 0b000, :crm => 0b1001, :op2 => 0b000 },
+      :s1e1wp => { :op1 => 0b000, :crm => 0b1001, :op2 => 0b001 },
+      :s1e2r  => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b000 },
+      :s1e2w  => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b001 },
+      :s12e1r => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b100 },
+      :s12e1w => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b101 },
+      :s12e0r => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b110 },
+      :s12e0w => { :op1 => 0b100, :crm => 0b1000, :op2 => 0b111 },
+      :s1e3r  => { :op1 => 0b110, :crm => 0b1000, :op2 => 0b000 },
+      :s1e3w  => { :op1 => 0b110, :crm => 0b1000, :op2 => 0b001 },
+    }
+
+    def at_op at_op
+      AT_TABLE.fetch at_op
+    end
+    module_function :at_op
   end
 end
