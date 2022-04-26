@@ -3,9 +3,9 @@ require "helper"
 class AllADDSTest < AArch64::Test
   include AArch64
   include AArch64::Registers
-  include AArch64::Conditions
-  include AArch64::Extends
-  include AArch64::Shifts
+  include AArch64::Registers::Methods
+  include AArch64::Extends::Methods
+  include AArch64::Shifts::Methods
 
   def test_all_adds
     assert_bytes [0x82,0x08,0x25,0xab] do |asm|

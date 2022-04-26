@@ -33,36 +33,46 @@ module AArch64
     end
 
     31.times { |i|
-      x = const_set(:"X#{i}", XRegister.new(i, false, false))
-      define_method(:"x#{i}") { x }
-      w = const_set(:"W#{i}", WRegister.new(i, false, false))
-      define_method(:"w#{i}") { w }
+      const_set(:"X#{i}", XRegister.new(i, false, false))
+      const_set(:"W#{i}", WRegister.new(i, false, false))
     }
 
     SP = XRegister.new(31, true, false)
-    def sp; SP; end
-
     WSP = WRegister.new(31, true, false)
-    def wsp; WSP; end
-
     XZR = XRegister.new(31, false, true)
-    def xzr; XZR; end
-
     WZR = WRegister.new(31, false, true)
-    def wzr; WZR; end
+
+    module Methods
+      str = 31.times.map { |i|
+        "def x#{i}; ::AArch64::Registers::X#{i}; end; " +
+          "def w#{i}; ::AArch64::Registers::W#{i}; end"
+      }.join("; ")
+
+      module_eval str, __FILE__, __LINE__
+
+      def sp; SP; end
+      def wsp; WSP; end
+      def xzr; XZR; end
+      def wzr; WZR; end
+    end
   end
 
   module Conditions
-    module_eval Utils::COND_TABLE.keys.map { |key|
-      "def #{key.downcase}; #{key.dump}; end"
-    }.join("\n")
+    module Methods
+      module_eval Utils::COND_TABLE.keys.map { |key|
+        "def #{key.downcase}; #{key.dump}; end"
+      }.join("\n")
+    end
   end
 
   module Names
-    module_eval 0x10.times.map { |i|
-      const_set(:"C#{i}", i)
-      "def c#{i}; #{i}; end"
-    }.join("\n")
+    0x10.times.map { |i| const_set(:"C#{i}", i) }
+
+    module Methods
+      module_eval 0x10.times.map { |i|
+        "def c#{i}; #{i}; end"
+      }.join("\n")
+    end
   end
 
   module Extends
@@ -71,17 +81,19 @@ module AArch64
       def shift?; false; end
     end
 
-    module_eval [
-      :uxtb,
-      :uxth,
-      :uxtw,
-      :uxtx,
-      :sxtb,
-      :sxth,
-      :sxtw,
-      :sxtx ].map.with_index { |n, i|
-        "def #{n}(amount = 0); Extend.new(amount, #{i}, :#{n}); end"
-      }.join("\n")
+    module Methods
+      module_eval [
+        :uxtb,
+        :uxth,
+        :uxtw,
+        :uxtx,
+        :sxtb,
+        :sxth,
+        :sxtw,
+        :sxtx ].map.with_index { |n, i|
+          "def #{n}(amount = 0); Extend.new(amount, #{i}, :#{n}); end"
+        }.join("\n")
+    end
   end
 
   module Shifts
@@ -90,9 +102,11 @@ module AArch64
       def shift?; true; end
     end
 
-    module_eval [:lsl, :lsr, :asr, :ror].map.with_index { |n, i|
-      "def #{n}(amount = 0); Shift.new(amount, #{i}, :#{n}); end"
-    }.join("\n")
+    module Methods
+      module_eval [:lsl, :lsr, :asr, :ror].map.with_index { |n, i|
+        "def #{n}(amount = 0); Shift.new(amount, #{i}, :#{n}); end"
+      }.join("\n")
+    end
   end
 
   class Assembler

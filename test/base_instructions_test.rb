@@ -3,10 +3,11 @@ require "helper"
 class BaseInstructionsTest < AArch64::Test
   include AArch64
   include AArch64::Registers
-  include AArch64::Conditions
-  include AArch64::Extends
-  include AArch64::Shifts
-  include AArch64::Names
+  include AArch64::Registers::Methods
+  include AArch64::Conditions::Methods
+  include AArch64::Extends::Methods
+  include AArch64::Shifts::Methods
+  include AArch64::Names::Methods
   include AArch64::SystemRegisters
 
   attr_reader :asm
