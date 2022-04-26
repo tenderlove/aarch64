@@ -5,14 +5,15 @@ module AArch64
     # LSLV  <Wd>, <Wn>, <Wm>
     # LSLV  <Xd>, <Xn>, <Xm>
     class LSLV
-      def initialize rd, rn, rm
+      def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn
         @rm = rm
+        @sf = sf
       end
 
       def encode
-        self.LSLV(@rd.sf, @rm.to_i, @rn.to_i, @rd.to_i)
+        self.LSLV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

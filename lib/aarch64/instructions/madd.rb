@@ -5,15 +5,16 @@ module AArch64
     # MADD  <Wd>, <Wn>, <Wm>, <Wa>
     # MADD  <Xd>, <Xn>, <Xm>, <Xa>
     class MADD
-      def initialize rd, rn, rm, ra
+      def initialize rd, rn, rm, ra, sf
         @rd = rd
         @rn = rn
         @rm = rm
         @ra = ra
+        @sf = sf
       end
 
       def encode
-        self.MADD(@rd.sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        self.MADD(@sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -5,14 +5,15 @@ module AArch64
     # LDAXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # LDAXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class LDAXP
-      def initialize rt1, rt2, rn
+      def initialize rt1, rt2, rn, sf
         @rt1 = rt1
         @rt2 = rt2
         @rn  = rn
+        @sf  = sf
       end
 
       def encode
-        self.LDAXP(@rt1.sf, @rt2.to_i, @rn.to_i, @rt1.to_i)
+        self.LDAXP(@sf, @rt2.to_i, @rn.to_i, @rt1.to_i)
       end
 
       private

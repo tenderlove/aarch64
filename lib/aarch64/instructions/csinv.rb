@@ -5,15 +5,16 @@ module AArch64
     # CSINV  <Wd>, <Wn>, <Wm>, <cond>
     # CSINV  <Xd>, <Xn>, <Xm>, <cond>
     class CSINV
-      def initialize rd, rn, rm, cond
+      def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn
         @rm   = rm
         @cond = cond
+        @sf   = sf
       end
 
       def encode
-        CSINV(@rd.sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
+        CSINV(@sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -7,15 +7,16 @@ module AArch64
     # CRC32W  <Wd>, <Wn>, <Wm>
     # CRC32X  <Wd>, <Wn>, <Xm>
     class CRC32
-      def initialize rd, rn, rm, sz
+      def initialize rd, rn, rm, sz, sf
         @rd = rd
         @rn = rn
         @rm = rm
         @sz = sz
+        @sf = sf
       end
 
       def encode
-        self.CRC32(@rm.sf, @rm.to_i, @sz, @rn.to_i, @rd.to_i)
+        self.CRC32(@sf, @rm.to_i, @sz, @rn.to_i, @rd.to_i)
       end
 
       private

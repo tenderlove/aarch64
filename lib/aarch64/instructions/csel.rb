@@ -5,15 +5,16 @@ module AArch64
     # CSEL  <Wd>, <Wn>, <Wm>, <cond>
     # CSEL  <Xd>, <Xn>, <Xm>, <cond>
     class CSEL
-      def initialize rd, rn, rm, cond
+      def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn
         @rm   = rm
         @cond = cond
+        @sf   = sf
       end
 
       def encode
-        self.CSEL @rd.sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i
+        self.CSEL @sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i
       end
 
       private

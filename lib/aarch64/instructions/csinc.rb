@@ -5,15 +5,16 @@ module AArch64
     # CSINC  <Wd>, <Wn>, <Wm>, <cond>
     # CSINC  <Xd>, <Xn>, <Xm>, <cond>
     class CSINC
-      def initialize rd, rn, rm, cond
+      def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn
         @rm   = rm
         @cond = cond
+        @sf   = sf
       end
 
       def encode
-        CSINC(@rd.sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
+        CSINC(@sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
       end
 
       private

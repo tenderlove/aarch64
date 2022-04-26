@@ -529,28 +529,28 @@ module AArch64
     end
 
     def cinc rd, rn, cond
-      @insns = @insns << CSINC.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
+      @insns = @insns << CSINC.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
     def cset rd, cond
-      @insns = @insns << CSINC.new(rd, WZR, WZR, Utils.cond2bin(cond) ^ 1)
+      @insns = @insns << CSINC.new(rd, WZR, WZR, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
     def csetm rd, cond
       reg = rd.x? ? XZR : WZR
-      @insns = @insns << CSINV.new(rd, reg, reg, Utils.cond2bin(cond) ^ 1)
+      @insns = @insns << CSINV.new(rd, reg, reg, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
     def csinc rd, rn, rm, cond
-      @insns = @insns << CSINC.new(rd, rn, rm, Utils.cond2bin(cond))
+      @insns = @insns << CSINC.new(rd, rn, rm, Utils.cond2bin(cond), rd.sf)
     end
 
     def cinv rd, rn, cond
-      @insns = @insns << CSINV.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
+      @insns = @insns << CSINV.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
     def csinv rd, rn, rm, cond
-      @insns = @insns << CSINV.new(rd, rn, rm, Utils.cond2bin(cond))
+      @insns = @insns << CSINV.new(rd, rn, rm, Utils.cond2bin(cond), rd.sf)
     end
 
     def clrex imm = 15
@@ -578,7 +578,7 @@ module AArch64
     end
 
     def cneg rd, rn, cond
-      @insns = @insns << CSNEG.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1)
+      @insns = @insns << CSNEG.new(rd, rn, rn, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
     def cpp _, xn
@@ -586,35 +586,35 @@ module AArch64
     end
 
     def crc32b rd, rn, rm
-      @insns = @insns << CRC32.new(rd, rn, rm, 0x00)
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x00, 0b0)
     end
 
     def crc32h rd, rn, rm
-      @insns = @insns << CRC32.new(rd, rn, rm, 0x01)
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x01, 0b0)
     end
 
     def crc32w rd, rn, rm
-      @insns = @insns << CRC32.new(rd, rn, rm, 0x02)
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x02, 0b0)
     end
 
     def crc32x rd, rn, rm
-      @insns = @insns << CRC32.new(rd, rn, rm, 0x03)
+      @insns = @insns << CRC32.new(rd, rn, rm, 0x03, 0b1)
     end
 
     def crc32cb rd, rn, rm
-      @insns = @insns << CRC32C.new(rd, rn, rm, 0x00)
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x00, 0b0)
     end
 
     def crc32ch rd, rn, rm
-      @insns = @insns << CRC32C.new(rd, rn, rm, 0x01)
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x01, 0b0)
     end
 
     def crc32cw rd, rn, rm
-      @insns = @insns << CRC32C.new(rd, rn, rm, 0x02)
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x02, 0b0)
     end
 
     def crc32cx rd, rn, rm
-      @insns = @insns << CRC32C.new(rd, rn, rm, 0x03)
+      @insns = @insns << CRC32C.new(rd, rn, rm, 0x03, 0b1)
     end
 
     def csdb
@@ -622,11 +622,11 @@ module AArch64
     end
 
     def csel rd, rn, rm, cond
-      @insns = @insns << CSEL.new(rd, rn, rm, Utils.cond2bin(cond))
+      @insns = @insns << CSEL.new(rd, rn, rm, Utils.cond2bin(cond), rd.sf)
     end
 
     def csneg rd, rn, rm, cond
-      @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond))
+      @insns = @insns << CSNEG.new(rd, rn, rm, Utils.cond2bin(cond), rd.sf)
     end
 
     def dc dc_op, xt
@@ -681,7 +681,7 @@ module AArch64
       end
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-      @insns = @insns << EON.new(d, n, m, shift, amount)
+      @insns = @insns << EON.new(d, n, m, shift, amount, d.sf)
     end
 
     def eor rd, rn, rm, options = nil, shift: :lsl, amount: 0
@@ -693,10 +693,10 @@ module AArch64
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)
         n = rd.x? ? encoding.n : 0
-        @insns = @insns << EOR_log_imm.new(rd, rn, n, encoding.immr, encoding.imms)
+        @insns = @insns << EOR_log_imm.new(rd, rn, n, encoding.immr, encoding.imms, rd.sf)
       else
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-        @insns = @insns << EOR_log_shift.new(rd, rn, rm, shift, amount)
+        @insns = @insns << EOR_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
       end
     end
 
@@ -717,7 +717,7 @@ module AArch64
     end
 
     def extr rd, rn, rm, lsb
-      @insns = @insns << EXTR.new(rd, rn, rm, lsb)
+      @insns = @insns << EXTR.new(rd, rn, rm, lsb, rd.sf)
     end
 
     def gmi rd, rn, rm
@@ -883,7 +883,7 @@ module AArch64
     end
 
     def ldaxp rt1, rt2, xn
-      @insns = @insns << LDAXP.new(rt1, rt2, xn.first)
+      @insns = @insns << LDAXP.new(rt1, rt2, xn.first, rt1.sf)
     end
 
     def ldaxr rt1, xn
@@ -1639,7 +1639,7 @@ module AArch64
     end
 
     def lslv rd, rn, rm
-      a LSLV.new(rd, rn, rm)
+      a LSLV.new(rd, rn, rm, rd.sf)
     end
 
     def lsr rd, rn, rm
@@ -1655,15 +1655,15 @@ module AArch64
     end
 
     def lsrv rd, rn, rm
-      a LSRV.new(rd, rn, rm)
+      a LSRV.new(rd, rn, rm, rd.sf)
     end
 
     def madd rd, rn, rm, ra
-      a MADD.new(rd, rn, rm, ra)
+      a MADD.new(rd, rn, rm, ra, rd.sf)
     end
 
     def mneg rd, rn, rm
-      msub rd, rn, rm, rd.x? ? XZR : WZR
+      msub rd, rn, rm, rd.zr
     end
 
     def mov rd, rm
@@ -1697,7 +1697,7 @@ module AArch64
         lsl += 1
         imm >>= 16
       end
-      a MOVN.new(rd, imm, lsl)
+      a MOVN.new(rd, imm, lsl, rd.sf)
     end
 
     def movz reg, imm, lsl: 0
@@ -1706,11 +1706,11 @@ module AArch64
         lsl += 1
         imm >>= 16
       end
-      @insns = @insns << MOVZ.new(reg, imm, lsl)
+      @insns = @insns << MOVZ.new(reg, imm, lsl, reg.sf)
     end
 
     def movk reg, imm, lsl: 0
-      @insns = @insns << MOVK.new(reg, imm, lsl / 16)
+      @insns = @insns << MOVK.new(reg, imm, lsl / 16, reg.sf)
     end
 
     def mrs rt, reg

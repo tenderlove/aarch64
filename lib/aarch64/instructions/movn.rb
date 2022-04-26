@@ -5,14 +5,15 @@ module AArch64
     # MOVN  <Wd>, #<imm>{, LSL #<shift>}
     # MOVN  <Xd>, #<imm>{, LSL #<shift>}
     class MOVN
-      def initialize rd, imm16, hw
+      def initialize rd, imm16, hw, sf
         @rd    = rd
         @imm16 = imm16
         @hw    = hw
+        @sf    = sf
       end
 
       def encode
-        self.MOVN(@rd.sf, @hw, @imm16, @rd.to_i)
+        self.MOVN(@sf, @hw, @imm16, @rd.to_i)
       end
 
       private
