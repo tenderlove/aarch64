@@ -5,16 +5,17 @@ module AArch64
     # SUBS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # SUBS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class SUBS_addsub_shift
-      def initialize rd, rn, rm, shift, amount
+      def initialize rd, rn, rm, shift, amount, sf
         @rd     = rd
         @rn     = rn
         @rm     = rm
         @shift  = shift
         @amount = amount
+        @sf     = sf
       end
 
       def encode
-        SUBS_addsub_shift(@rd.sf, @shift, @rm.to_i, @amount, @rn.to_i, @rd.to_i)
+        SUBS_addsub_shift(@sf, @shift, @rm.to_i, @amount, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        BFM(@sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
+        BFM(@sf, @sf, @immr, @imms, @n.to_i, @d.to_i)
       end
 
       private

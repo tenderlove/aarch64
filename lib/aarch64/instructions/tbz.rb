@@ -4,14 +4,15 @@ module AArch64
     # Test bit and Branch if Zero
     # TBZ  <R><t>, #<imm>, <label>
     class TBZ
-      def initialize rt, imm, label
+      def initialize rt, imm, label, sf
         @rt    = rt
         @imm   = imm
         @label = label
+        @sf    = sf
       end
 
       def encode
-        self.TBZ(@rt.sf, @imm, @label.to_i / 4, @rt.to_i)
+        self.TBZ(@sf, @imm, @label.to_i / 4, @rt.to_i)
       end
 
       private

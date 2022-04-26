@@ -5,16 +5,17 @@ module AArch64
     # ORR  <Wd|WSP>, <Wn>, #<imm>
     # ORR  <Xd|SP>, <Xn>, #<imm>
     class ORR_log_imm
-      def initialize rd, rn, n, immr, imms
+      def initialize rd, rn, n, immr, imms, sf
         @rd   = rd
         @rn   = rn
         @n    = n
         @immr = immr
         @imms = imms
+        @sf   = sf
       end
 
       def encode
-        self.ORR_log_imm(@rd.sf, @n, @immr, @imms, @rn.to_i, @rd.to_i)
+        self.ORR_log_imm(@sf, @n, @immr, @imms, @rn.to_i, @rd.to_i)
       end
 
       private

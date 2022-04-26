@@ -5,16 +5,17 @@ module AArch64
     # ORR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ORR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class ORR_log_shift
-      def initialize rd, rn, rm, shift, imm6
+      def initialize rd, rn, rm, shift, imm6, sf
         @rd    = rd
         @rn    = rn
         @rm    = rm
         @shift = shift
         @imm6  = imm6
+        @sf    = sf
       end
 
       def encode
-        self.ORR_log_shift(@rd.sf, @shift, @rm.to_i, @imm6, @rn.to_i, @rd.to_i)
+        self.ORR_log_shift(@sf, @shift, @rm.to_i, @imm6, @rn.to_i, @rd.to_i)
       end
 
       private

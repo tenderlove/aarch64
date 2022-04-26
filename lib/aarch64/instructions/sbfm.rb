@@ -5,15 +5,16 @@ module AArch64
     # SBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # SBFM  <Xd>, <Xn>, #<immr>, #<imms>
     class SBFM
-      def initialize d, n, immr, imms
-        @d     = d
-        @n     = n
-        @immr  = immr
-        @imms  = imms
+      def initialize d, n, immr, imms, sf
+        @d    = d
+        @n    = n
+        @immr = immr
+        @imms = imms
+        @sf   = sf
       end
 
       def encode
-        SBFM(@d.sf, @d.sf, @immr, @imms, @n.to_i, @d.to_i)
+        SBFM(@sf, @sf, @immr, @imms, @n.to_i, @d.to_i)
       end
 
       private

@@ -5,15 +5,16 @@ module AArch64
     # STXP  <Ws>, <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # STXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class STXP
-      def initialize rs, rt1, rt2, rn
+      def initialize rs, rt1, rt2, rn, sf
         @rs  = rs
         @rt1 = rt1
         @rt2 = rt2
         @rn  = rn
+        @sf  = sf
       end
 
       def encode
-        self.STXP(@rt1.sf, @rs.to_i, @rt2.to_i, @rn.to_i, @rt1.to_i)
+        self.STXP(@sf, @rs.to_i, @rt2.to_i, @rn.to_i, @rt1.to_i)
       end
 
       private

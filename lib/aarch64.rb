@@ -1726,11 +1726,11 @@ module AArch64
     end
 
     def msub rd, rn, rm, ra
-      a MSUB.new(rd, rn, rm, ra)
+      a MSUB.new(rd, rn, rm, ra, rd.sf)
     end
 
     def mul rd, rn, rm
-      madd rd, rn, rm, rd.x? ? XZR : WZR
+      madd rd, rn, rm, rd.zr
     end
 
     def mvn rd, rm, option = nil, shift: :lsl, amount: 0
@@ -1765,13 +1765,13 @@ module AArch64
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
 
-      a ORN_log_shift.new(rd, rn, rm, shift, amount)
+      a ORN_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
     end
 
     def orr rd, rn, rm, option = nil, shift: :lsl, amount: 0
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)
-        a ORR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms)
+        a ORR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms, rd.sf)
       else
         if option
           shift = option.name
@@ -1780,7 +1780,7 @@ module AArch64
 
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
 
-        a ORR_log_shift.new(rd, rn, rm, shift, amount)
+        a ORR_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
       end
     end
 
@@ -1948,7 +1948,7 @@ module AArch64
     end
 
     def sbfm d, n, immr, imms
-      @insns = @insns << SBFM.new(d, n, immr, imms)
+      @insns = @insns << SBFM.new(d, n, immr, imms, d.sf)
     end
 
     def sbfx rd, rn, lsb, width
@@ -2453,7 +2453,7 @@ module AArch64
     end
 
     def stxp rs, rt1, rt2, rn
-      @insns = @insns << STXP.new(rs, rt1, rt2, rn.first)
+      @insns = @insns << STXP.new(rs, rt1, rt2, rn.first, rt1.sf)
     end
 
     def stxr rs, rt, rn
@@ -2537,13 +2537,13 @@ module AArch64
                  else
                    raise "Unknown extend #{extend}"
                  end
-        @insns = @insns << SUBS_addsub_ext.new(d, n, m, extend, amount)
+        @insns = @insns << SUBS_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          @insns = @insns << SUBS_addsub_imm.new(d, n, m, lsl / 12)
+          @insns = @insns << SUBS_addsub_imm.new(d, n, m, lsl / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          @insns = @insns << SUBS_addsub_shift.new(d, n, m, shift, amount)
+          @insns = @insns << SUBS_addsub_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end
@@ -2584,13 +2584,13 @@ module AArch64
                  else
                    raise "Unknown extend #{extend}"
                  end
-        @insns = @insns << SUB_addsub_ext.new(d, n, m, extend, amount)
+        @insns = @insns << SUB_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          @insns = @insns << SUB_addsub_imm.new(d, n, m, lsl / 12)
+          @insns = @insns << SUB_addsub_imm.new(d, n, m, lsl / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          @insns = @insns << SUB_addsub_shift.new(d, n, m, shift, amount)
+          @insns = @insns << SUB_addsub_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end
@@ -2687,11 +2687,11 @@ module AArch64
     end
 
     def tbnz rt, imm, label
-      @insns = @insns << TBNZ.new(rt, imm, label)
+      @insns = @insns << TBNZ.new(rt, imm, label, rt.sf)
     end
 
     def tbz rt, imm, label
-      @insns = @insns << TBZ.new(rt, imm, label)
+      @insns = @insns << TBZ.new(rt, imm, label, rt.sf)
     end
 
     def tlbi tlbi_op, xt = XZR
@@ -2709,12 +2709,11 @@ module AArch64
         amount = option.amount
       end
 
-      zr = rn.x? ? XZR : WZR
-      ands zr, rn, rm, shift: shift, amount: amount
+      ands rn.zr, rn, rm, shift: shift, amount: amount
     end
 
     def ubfm rd, rn, immr, imms
-      @insns = @insns << UBFM.new(rd, rn, immr, imms)
+      @insns = @insns << UBFM.new(rd, rn, immr, imms, rd.sf)
     end
 
     def ubfiz rd, rn, lsb, width
@@ -2730,7 +2729,7 @@ module AArch64
     end
 
     def udiv rd, rn, rm
-      @insns = @insns << UDIV.new(rd, rn, rm)
+      @insns = @insns << UDIV.new(rd, rn, rm, rd.sf)
     end
 
     def umaddl xd, wn, wm, xa

@@ -5,14 +5,15 @@ module AArch64
     # UDIV  <Wd>, <Wn>, <Wm>
     # UDIV  <Xd>, <Xn>, <Xm>
     class UDIV
-      def initialize rd, rn, rm
+      def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn
         @rm = rm
+        @sf = sf
       end
 
       def encode
-        self.UDIV(@rd.sf, @rm.to_i, @rn.to_i, @rd.to_i)
+        self.UDIV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

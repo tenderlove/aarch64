@@ -5,15 +5,16 @@ module AArch64
     # MSUB  <Wd>, <Wn>, <Wm>, <Wa>
     # MSUB  <Xd>, <Xn>, <Xm>, <Xa>
     class MSUB
-      def initialize rd, rn, rm, ra
+      def initialize rd, rn, rm, ra, sf
         @rd = rd
         @rn = rn
         @rm = rm
         @ra = ra
+        @sf = sf
       end
 
       def encode
-        self.MSUB(@rd.sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        self.MSUB(@sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

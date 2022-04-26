@@ -5,15 +5,16 @@ module AArch64
     # SUBS  <Wd>, <Wn|WSP>, #<imm>{, <shift>}
     # SUBS  <Xd>, <Xn|SP>, #<imm>{, <shift>}
     class SUBS_addsub_imm
-      def initialize rd, rn, imm, shift
+      def initialize rd, rn, imm, shift, sf
         @rd    = rd
         @rn    = rn
         @imm   = imm
         @shift = shift
+        @sf    = sf
       end
 
       def encode
-        SUBS_addsub_imm(@rd.sf, @shift, @imm, @rn.to_i, @rd.to_i)
+        SUBS_addsub_imm(@sf, @shift, @imm, @rn.to_i, @rd.to_i)
       end
 
       private

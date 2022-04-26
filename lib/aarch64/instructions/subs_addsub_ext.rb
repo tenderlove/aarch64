@@ -5,16 +5,17 @@ module AArch64
     # SUBS  <Wd>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # SUBS  <Xd>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
     class SUBS_addsub_ext
-      def initialize rd, rn, rm, extend, amount
+      def initialize rd, rn, rm, extend, amount, sf
         @rd     = rd
         @rn     = rn
         @rm     = rm
         @extend = extend
         @amount = amount
+        @sf     = sf
       end
 
       def encode
-        SUBS_addsub_ext(@rd.sf, @rm.to_i, @extend, @amount, @rn.to_i, @rd.to_i)
+        SUBS_addsub_ext(@sf, @rm.to_i, @extend, @amount, @rn.to_i, @rd.to_i)
       end
 
       private

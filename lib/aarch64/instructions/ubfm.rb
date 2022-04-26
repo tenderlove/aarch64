@@ -5,15 +5,16 @@ module AArch64
     # UBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # UBFM  <Xd>, <Xn>, #<immr>, #<imms>
     class UBFM
-      def initialize rd, rn, immr, imms
+      def initialize rd, rn, immr, imms, sf
         @rd   = rd
         @rn   = rn
         @immr = immr
         @imms = imms
+        @sf   = sf
       end
 
       def encode
-        self.UBFM(@rd.sf, @rd.sf, @immr, @imms, @rn.to_i, @rd.to_i)
+        self.UBFM(@sf, @sf, @immr, @imms, @rn.to_i, @rd.to_i)
       end
 
       private

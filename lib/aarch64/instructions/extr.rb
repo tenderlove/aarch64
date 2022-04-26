@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.EXTR(@sf, @rd.sf, @rm.to_i, @lsb, @rn.to_i, @rd.to_i)
+        self.EXTR(@sf, @sf, @rm.to_i, @lsb, @rn.to_i, @rd.to_i)
       end
 
       private
