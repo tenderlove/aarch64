@@ -66,3 +66,12 @@ asm.movz X0, 0xCAFE
 asm.movk X0, 0xF00D, lsl: 16
 asm.ret
 ```
+
+## Hacking / Contributing
+
+Hacking on this gem should be similar to most.  Just do:
+
+```
+$ gel install
+$ gel exec rake test
+```
