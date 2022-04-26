@@ -15,6 +15,8 @@ require "jit_buffer"
 # create a JIT buffer
 jit_buffer = JITBuffer.new 4096
 
+asm = AArch64::Assembler.new
+
 # Make some instructions
 asm.pretty do
   asm.movz x0, 0xCAFE
@@ -40,6 +42,7 @@ require "jit_buffer"
 
 # create a JIT buffer
 jit_buffer = JITBuffer.new 4096
+asm = AArch64::Assembler.new
 
 # Make some instructions
 asm.movz AArch64::Registers::X0, 0xCAFE
