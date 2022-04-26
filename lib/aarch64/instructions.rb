@@ -60,7 +60,6 @@ module AArch64
     autoload :DMB, "aarch64/instructions/dmb"
     autoload :DRPS, "aarch64/instructions/drps"
     autoload :DSB, "aarch64/instructions/dsb"
-    autoload :DVP_SYS, "aarch64/instructions/dvp_sys"
     autoload :EON, "aarch64/instructions/eon"
     autoload :EOR_log_imm, "aarch64/instructions/eor_log_imm"
     autoload :EOR_log_shift, "aarch64/instructions/eor_log_shift"
