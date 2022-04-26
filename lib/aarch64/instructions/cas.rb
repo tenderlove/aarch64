@@ -11,16 +11,17 @@ module AArch64
     # CASAL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     class CAS
-      def initialize s, t, n, l, o0
+      def initialize s, t, n, l, o0, sf
         @s  = s
         @t  = t
         @n  = n
         @l  = l
         @o0 = o0
+        @sf = sf
       end
 
       def encode
-        CAS(@s.sf, @l, @s.to_i, @o0, @n.to_i, @t.to_i)
+        CAS(@sf, @l, @s.to_i, @o0, @n.to_i, @t.to_i)
       end
 
       private

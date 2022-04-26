@@ -5,13 +5,14 @@ module AArch64
     # CLZ  <Wd>, <Wn>
     # CLZ  <Xd>, <Xn>
     class CLZ_int
-      def initialize rd, rn
+      def initialize rd, rn, sf
         @rd = rd
         @rn = rn
+        @sf = sf
       end
 
       def encode
-        CLZ_int(@rd.sf, @rn.to_i, @rd.to_i)
+        CLZ_int(@sf, @rn.to_i, @rd.to_i)
       end
 
       private

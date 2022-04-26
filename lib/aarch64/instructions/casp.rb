@@ -11,16 +11,17 @@ module AArch64
     # CASPAL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
     # CASPL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
     class CASP
-      def initialize rs, rt, rn, l, o0
+      def initialize rs, rt, rn, l, o0, sf
         @rs = rs
         @rt = rt
         @rn = rn
         @l  = l
         @o0 = o0
+        @sf = sf
       end
 
       def encode
-        CASP(@rs.sf, @l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
+        CASP(@sf, @l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
       end
 
       private

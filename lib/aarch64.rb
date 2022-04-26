@@ -366,7 +366,7 @@ module AArch64
       end
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-      @insns = @insns << BIC_log_shift.new(d, n, m, shift, amount)
+      a BIC_log_shift.new(d, n, m, shift, amount, d.sf)
     end
 
     def bics d, n, m, option = nil, shift: :lsl, amount: 0
@@ -376,7 +376,7 @@ module AArch64
       end
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-      @insns = @insns << BICS.new(d, n, m, shift, amount)
+      @insns = @insns << BICS.new(d, n, m, shift, amount, d.sf)
     end
 
     def bl label
@@ -433,19 +433,19 @@ module AArch64
     end
 
     def cas s, t, n_list
-      @insns = @insns << CAS.new(s, t, n_list[0], 0, 0)
+      @insns = @insns << CAS.new(s, t, n_list[0], 0, 0, s.sf)
     end
 
     def casa s, t, n_list
-      @insns = @insns << CAS.new(s, t, n_list[0], 1, 0)
+      @insns = @insns << CAS.new(s, t, n_list[0], 1, 0, s.sf)
     end
 
     def casl s, t, n_list
-      @insns = @insns << CAS.new(s, t, n_list[0], 0, 1)
+      @insns = @insns << CAS.new(s, t, n_list[0], 0, 1, s.sf)
     end
 
     def casal s, t, n_list
-      @insns = @insns << CAS.new(s, t, n_list[0], 1, 1)
+      @insns = @insns << CAS.new(s, t, n_list[0], 1, 1, s.sf)
     end
 
     def casb rs, rt, rn_list
@@ -477,42 +477,46 @@ module AArch64
     end
 
     def casp rs, rs1, rt, rt1, rn_list
-      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 0)
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 0, rs.sf)
     end
 
     def caspa rs, rs1, rt, rt1, rn_list
-      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 0)
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 0, rs.sf)
     end
 
     def caspl rs, rs1, rt, rt1, rn_list
-      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 1)
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 0, 1, rs.sf)
     end
 
     def caspal rs, rs1, rt, rt1, rn_list
-      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 1)
+      @insns = @insns << CASP.new(rs, rt, rn_list[0], 1, 1, rs.sf)
     end
 
     def cbnz rt, label
-      @insns = @insns << CBNZ.new(rt, label)
+      @insns = @insns << CBNZ.new(rt, label, rt.sf)
     end
 
     def cbz rt, label
-      @insns = @insns << CBZ.new(rt, label)
+      @insns = @insns << CBZ.new(rt, label, rt.sf)
     end
 
     def ccmn rn, rm, nzcv, cond
+      cond = Utils.cond2bin(cond)
+
       if rm.integer?
-        @insns = @insns << CCMN_imm.new(rn, rm, nzcv, cond)
+        @insns = @insns << CCMN_imm.new(rn, rm, nzcv, cond, rn.sf)
       else
-        @insns = @insns << CCMN_reg.new(rn, rm, nzcv, cond)
+        @insns = @insns << CCMN_reg.new(rn, rm, nzcv, cond, rn.sf)
       end
     end
 
     def ccmp rn, rm, nzcv, cond
+      cond = Utils.cond2bin(cond)
+
       if rm.integer?
-        @insns = @insns << CCMP_imm.new(rn, rm, nzcv, cond)
+        @insns = @insns << CCMP_imm.new(rn, rm, nzcv, cond, rn.sf)
       else
-        @insns = @insns << CCMP_reg.new(rn, rm, nzcv, cond)
+        @insns = @insns << CCMP_reg.new(rn, rm, nzcv, cond, rn.sf)
       end
     end
 
@@ -554,27 +558,19 @@ module AArch64
     end
 
     def cls rd, rn
-      @insns = @insns << CLS_int.new(rd, rn)
+      @insns = @insns << CLS_int.new(rd, rn, rd.sf)
     end
 
     def clz rd, rn
-      @insns = @insns << CLZ_int.new(rd, rn)
+      @insns = @insns << CLZ_int.new(rd, rn, rd.sf)
     end
 
     def cmn rn, rm, option = nil, extend: nil, amount: 0, shift: :lsl, lsl: 0
-      if rn.x?
-        adds(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
-      else
-        adds(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
-      end
+      adds(rn.zr, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
     end
 
     def cmp rn, rm, option = nil, extend: nil, amount: 0, shift: :lsl, lsl: 0
-      if rn.x?
-        subs(XZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
-      else
-        subs(WZR, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
-      end
+      subs(rn.zr, rn, rm, option, extend: extend, amount: amount, shift: shift, lsl: lsl)
     end
 
     def cmpp xn, xm

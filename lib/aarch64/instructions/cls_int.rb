@@ -5,13 +5,14 @@ module AArch64
     # CLS  <Wd>, <Wn>
     # CLS  <Xd>, <Xn>
     class CLS_int
-      def initialize rd, rn
+      def initialize rd, rn, sf
         @rd = rd
         @rn = rn
+        @sf = sf
       end
 
       def encode
-        CLS_int(@rd.sf, @rn.to_i, @rd.to_i)
+        CLS_int(@sf, @rn.to_i, @rd.to_i)
       end
 
       private

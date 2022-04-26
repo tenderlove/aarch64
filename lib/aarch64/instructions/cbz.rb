@@ -5,13 +5,14 @@ module AArch64
     # CBZ  <Wt>, <label>
     # CBZ  <Xt>, <label>
     class CBZ
-      def initialize rt, label
+      def initialize rt, label, sf
         @rt    = rt
         @label = label
+        @sf    = sf
       end
 
       def encode
-        CBZ(@rt.sf, @label.to_i / 4, @rt.to_i)
+        CBZ(@sf, @label.to_i / 4, @rt.to_i)
       end
 
       private

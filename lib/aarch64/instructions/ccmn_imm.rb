@@ -5,15 +5,16 @@ module AArch64
     # CCMN  <Wn>, #<imm>, #<nzcv>, <cond>
     # CCMN  <Xn>, #<imm>, #<nzcv>, <cond>
     class CCMN_imm
-      def initialize rn, imm, nzcv, cond
+      def initialize rn, imm, nzcv, cond, sf
         @rn   = rn
         @imm  = imm
         @nzcv = nzcv
         @cond = cond
+        @sf   = sf
       end
 
       def encode
-        CCMN_imm(@rn.sf, @imm, Utils.cond2bin(@cond), @rn.to_i, @nzcv)
+        CCMN_imm(@sf, @imm, @cond, @rn.to_i, @nzcv)
       end
 
       private
