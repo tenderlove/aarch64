@@ -4521,6 +4521,18 @@ class BaseInstructionsTest < AArch64::Test
   def test_MOVK
     # MOVK  <Wd>, #<imm>{, LSL #<shift>}
     # MOVK  <Xd>, #<imm>{, LSL #<shift>}
+    assert_bytes [0x20,0x00,0x80,0x72] do |asm|
+      asm.movk w0, 1
+    end
+    assert_bytes [0x20,0x00,0x80,0xf2] do |asm|
+      asm.movk x0, 1
+    end
+    assert_bytes [0x20,0x00,0xa0,0x72] do |asm|
+      asm.movk w0, 1, lsl(16)
+    end
+    assert_bytes [0x20,0x00,0xa0,0xf2] do |asm|
+      asm.movk x0, 1, lsl(16)
+    end
     asm.movk X0, 0x2a
     assert_one_insn "movk x0, #0x2a"
   end
@@ -4545,11 +4557,20 @@ class BaseInstructionsTest < AArch64::Test
     assert_bytes [0x63, 0xf, 0x80, 0x12] do |asm|
       asm.movn w3, 123
     end
+
+    # movn x3, 1, lsl #16
+    assert_bytes [0x23, 00, 0xa0, 0x92] do |asm|
+      asm.movn x3, 1, lsl(16)
+    end
   end
 
   def test_MOVZ
     asm.movz X0, 0x2a
     assert_one_insn "movz x0, #0x2a"
+    # MOVZ
+    assert_bytes [0x02,0x00,0xa0,0x52] do |asm|
+      asm.movz     w2, 0, lsl(16)
+    end
   end
 
   def test_movz_shift

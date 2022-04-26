@@ -109,6 +109,16 @@ module AArch64
     end
   end
 
+  class DSL
+    include AArch64::Registers
+    include AArch64::Registers::Methods
+    include AArch64::Conditions::Methods
+    include AArch64::Extends::Methods
+    include AArch64::Shifts::Methods
+    include AArch64::Names::Methods
+    include AArch64::SystemRegisters
+  end
+
   class Assembler
     include Instructions
     include Registers
@@ -133,10 +143,24 @@ module AArch64
       @insns = []
     end
 
+    # Creates a DSL object so you can write prettier assembly.  For example:
+    #
+    #   asm = AArch64::Assembler.new
+    #   asm.pretty do
+    #     asm.movz x0, 42
+    #     asm.ret
+    #   end
+    def pretty &block
+      DSL.new.instance_eval(&block)
+    end
+
+    # Makes a new label with +name+.  Place the label using the +put_label+
+    # method.
     def make_label name
       Label.new name
     end
 
+    # Puts the label at the current position.  Labels can only be placed once.
     def put_label label
       label.set_offset @insns.length
     end
@@ -1709,7 +1733,9 @@ module AArch64
       end
     end
 
-    def movn rd, imm, lsl: 0
+    def movn rd, imm, option = nil, lsl: 0
+      lsl = option.amount if option
+
       lsl /= 16
       while imm > 65535
         lsl += 1
@@ -1718,7 +1744,9 @@ module AArch64
       a MOVN.new(rd, imm, lsl, rd.sf)
     end
 
-    def movz reg, imm, lsl: 0
+    def movz reg, imm, option = nil, lsl: 0
+      lsl = option.amount if option
+
       lsl /= 16
       while imm > 65535
         lsl += 1
@@ -1727,7 +1755,8 @@ module AArch64
       a MOVZ.new(reg, imm, lsl, reg.sf)
     end
 
-    def movk reg, imm, lsl: 0
+    def movk reg, imm, option = nil, lsl: 0
+      lsl = option.amount if option
       a MOVK.new(reg, imm, lsl / 16, reg.sf)
     end
 
