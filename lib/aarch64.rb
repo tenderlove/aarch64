@@ -291,11 +291,7 @@ module AArch64
 
     def asr d, n, m
       if m.integer?
-        if d.x?
-          sbfm d, n, m, 63
-        else
-          sbfm d, n, m, 31
-        end
+        sbfm d, n, m, d.size - 1
       else
         asrv d, n, m
       end
@@ -383,14 +379,11 @@ module AArch64
     end
 
     def bfc rd, lsb, width
-      div = rd.x? ? 64 : 32
-      rn  = rd.x? ? XZR : WZR
-      bfm(rd, rn, -lsb % div, width - 1)
+      bfm(rd, rd.zr, -lsb % rd.size, width - 1)
     end
 
     def bfi rd, rn, lsb, width
-      div = rd.x? ? 64 : 32
-      bfm(rd, rn, -lsb % div, width - 1)
+      bfm(rd, rn, -lsb % rd.size, width - 1)
     end
 
     def bfm d, n, immr, imms
@@ -579,7 +572,7 @@ module AArch64
     end
 
     def csetm rd, cond
-      reg = rd.x? ? XZR : WZR
+      reg = rd.zr
       a CSINV.new(rd, reg, reg, Utils.cond2bin(cond) ^ 1, rd.sf)
     end
 
@@ -734,8 +727,7 @@ module AArch64
 
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)
-        n = rd.x? ? encoding.n : 0
-        a EOR_log_imm.new(rd, rn, n, encoding.immr, encoding.imms, rd.sf)
+        a EOR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms, rd.sf)
       else
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
         a EOR_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
@@ -796,35 +788,19 @@ module AArch64
     end
 
     def ldadd rs, rt, rn
-      if rs.x?
-        a LDADD.new(rs, rt, rn.first, 0b11, 0, 0)
-      else
-        a LDADD.new(rs, rt, rn.first, 0b10, 0, 0)
-      end
+      a LDADD.new(rs, rt, rn.first, rs.opc2, 0, 0)
     end
 
     def ldadda rs, rt, rn
-      if rs.x?
-        a LDADD.new(rs, rt, rn.first, 0b11, 1, 0)
-      else
-        a LDADD.new(rs, rt, rn.first, 0b10, 1, 0)
-      end
+      a LDADD.new(rs, rt, rn.first, rs.opc2, 1, 0)
     end
 
     def ldaddal rs, rt, rn
-      if rs.x?
-        a LDADD.new(rs, rt, rn.first, 0b11, 1, 1)
-      else
-        a LDADD.new(rs, rt, rn.first, 0b10, 1, 1)
-      end
+      a LDADD.new(rs, rt, rn.first, rs.opc2, 1, 1)
     end
 
     def ldaddl rs, rt, rn
-      if rs.x?
-        a LDADD.new(rs, rt, rn.first, 0b11, 0, 1)
-      else
-        a LDADD.new(rs, rt, rn.first, 0b10, 0, 1)
-      end
+      a LDADD.new(rs, rt, rn.first, rs.opc2, 0, 1)
     end
 
     def ldaddab rs, rt, rn
@@ -860,11 +836,7 @@ module AArch64
     end
 
     def ldapr rt, rn
-      if rt.x?
-        a LDAPR.new(rt, rn.first, 0b11)
-      else
-        a LDAPR.new(rt, rn.first, 0b10)
-      end
+      a LDAPR.new(rt, rn.first, rt.opc2)
     end
 
     def ldaprb rt, rn
@@ -876,11 +848,7 @@ module AArch64
     end
 
     def ldapur rt, rn
-      if rt.x?
-        a LDAPUR_gen.new(0b11, 0b01, rt, rn.first, rn[1] || 0)
-      else
-        a LDAPUR_gen.new(0b10, 0b01, rt, rn.first, rn[1] || 0)
-      end
+      a LDAPUR_gen.new(rt.opc2, 0b01, rt, rn.first, rn[1] || 0)
     end
 
     def ldapurb rt, rn
@@ -892,19 +860,11 @@ module AArch64
     end
 
     def ldapursb rt, rn
-      if rt.x?
-        a LDAPUR_gen.new(0b00, 0b10, rt, rn.first, rn[1] || 0)
-      else
-        a LDAPUR_gen.new(0b00, 0b11, rt, rn.first, rn[1] || 0)
-      end
+      a LDAPUR_gen.new(0b00, rt.opc, rt, rn.first, rn[1] || 0)
     end
 
     def ldapursh rt, rn
-      if rt.x?
-        a LDAPUR_gen.new(0b01, 0b10, rt, rn.first, rn[1] || 0)
-      else
-        a LDAPUR_gen.new(0b01, 0b11, rt, rn.first, rn[1] || 0)
-      end
+      a LDAPUR_gen.new(0b01, rt.opc, rt, rn.first, rn[1] || 0)
     end
 
     def ldapursw rt, rn
@@ -912,8 +872,7 @@ module AArch64
     end
 
     def ldar rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDAR.new(rt, rn.first, size)
+      a LDAR.new(rt, rn.first, rt.opc2)
     end
 
     def ldarb rt, rn
@@ -929,8 +888,7 @@ module AArch64
     end
 
     def ldaxr rt1, xn
-      size = rt1.x? ? 0b11 : 0b10
-      a LDAXR.new(rt1, xn.first, size)
+      a LDAXR.new(rt1, xn.first, rt1.opc2)
     end
 
     def ldaxrb rt1, xn
@@ -942,23 +900,19 @@ module AArch64
     end
 
     def ldclr rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDCLR.new(rs, rt, rn.first, 0, 0, size)
+      a LDCLR.new(rs, rt, rn.first, 0, 0, rs.opc2)
     end
 
     def ldclra rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDCLR.new(rs, rt, rn.first, 1, 0, size)
+      a LDCLR.new(rs, rt, rn.first, 1, 0, rs.opc2)
     end
 
     def ldclral rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDCLR.new(rs, rt, rn.first, 1, 1, size)
+      a LDCLR.new(rs, rt, rn.first, 1, 1, rs.opc2)
     end
 
     def ldclrl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDCLR.new(rs, rt, rn.first, 0, 1, size)
+      a LDCLR.new(rs, rt, rn.first, 0, 1, rs.opc2)
     end
 
     def ldclrab rs, rt, rn
@@ -994,23 +948,19 @@ module AArch64
     end
 
     def ldeor rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDEOR.new(rs, rt, rn.first, 0, 0, size)
+      a LDEOR.new(rs, rt, rn.first, 0, 0, rs.opc2)
     end
 
     def ldeora rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDEOR.new(rs, rt, rn.first, 1, 0, size)
+      a LDEOR.new(rs, rt, rn.first, 1, 0, rs.opc2)
     end
 
     def ldeoral rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDEOR.new(rs, rt, rn.first, 1, 1, size)
+      a LDEOR.new(rs, rt, rn.first, 1, 1, rs.opc2)
     end
 
     def ldeorl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDEOR.new(rs, rt, rn.first, 0, 1, size)
+      a LDEOR.new(rs, rt, rn.first, 0, 1, rs.opc2)
     end
 
     def ldeorab rs, rt, rn
@@ -1054,8 +1004,7 @@ module AArch64
     end
 
     def ldlar rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDLAR.new(rt, rn.first, size)
+      a LDLAR.new(rt, rn.first, rt.opc2)
     end
 
     def ldlarb rt, rn
@@ -1067,14 +1016,13 @@ module AArch64
     end
 
     def ldnp rt1, rt2, rn
-      opc = rt1.x? ? 0b10 : 0b00
-      div = rt1.x? ? 8 : 4
-      a LDNP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, opc)
+      div = rt1.size / 8
+      a LDNP_gen.new(rt1, rt2, rn.first, (rn[1] || 0) / div, rt1.opc3)
     end
 
     def ldp rt1, rt2, rn, imm = nil
-      opc = rt1.x? ? 0b10 : 0b00
-      div = rt1.x? ? 8 : 4
+      opc = rt1.opc3
+      div = rt1.size / 8
 
       if imm
         if imm == :!
@@ -1108,7 +1056,7 @@ module AArch64
     end
 
     def ldr rt, rn, simm = nil
-      size = rt.x? ? 0b11 : 0b10
+      size = rt.opc2
 
       if simm
         if simm == :!
@@ -1124,7 +1072,7 @@ module AArch64
         if rn.is_a?(Array)
           simm = rn[1] || 0
           if simm.integer?
-            div = rt.x? ? 8 : 4
+            div = rt.size / 8
             a LDR_imm_unsigned.new(rt, rn.first, simm / div, size)
           else
             rn, rm, option = *rn
@@ -1155,8 +1103,7 @@ module AArch64
             a LDR_reg_gen.new(rt, rn, rm, size, extend, amount)
           end
         else
-          size = rt.x? ? 0b01 : 0b00
-          a LDR_lit_gen.new(rt, rn, size)
+          a LDR_lit_gen.new(rt, rn, rt.sf)
         end
       end
     end
@@ -1238,7 +1185,7 @@ module AArch64
     end
 
     def ldrsb wt, xn, imm = nil
-      opc = wt.x? ? 0b10 : 0b11
+      opc = wt.opc
 
       if imm
         if imm == :!
@@ -1271,7 +1218,7 @@ module AArch64
     end
 
     def ldrsh wt, xn, imm = nil
-      opc = wt.x? ? 0b10 : 0b11
+      opc = wt.opc
 
       if imm
         if imm == :!
@@ -1338,23 +1285,19 @@ module AArch64
     end
 
     def ldset rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSET.new(rs, rt, rn.first, size, 0, 0)
+      a LDSET.new(rs, rt, rn.first, rs.opc2, 0, 0)
     end
 
     def ldseta rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSET.new(rs, rt, rn.first, size, 1, 0)
+      a LDSET.new(rs, rt, rn.first, rs.opc2, 1, 0)
     end
 
     def ldsetal rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSET.new(rs, rt, rn.first, size, 1, 1)
+      a LDSET.new(rs, rt, rn.first, rs.opc2, 1, 1)
     end
 
     def ldsetl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSET.new(rs, rt, rn.first, size, 0, 1)
+      a LDSET.new(rs, rt, rn.first, rs.opc2, 0, 1)
     end
 
     def ldsetb rs, rt, rn
@@ -1390,23 +1333,19 @@ module AArch64
     end
 
     def ldsmax rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMAX.new(rs, rt, rn.first, size, 0, 0)
+      a LDSMAX.new(rs, rt, rn.first, rs.opc2, 0, 0)
     end
 
     def ldsmaxa rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMAX.new(rs, rt, rn.first, size, 1, 0)
+      a LDSMAX.new(rs, rt, rn.first, rs.opc2, 1, 0)
     end
 
     def ldsmaxal rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMAX.new(rs, rt, rn.first, size, 1, 1)
+      a LDSMAX.new(rs, rt, rn.first, rs.opc2, 1, 1)
     end
 
     def ldsmaxl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMAX.new(rs, rt, rn.first, size, 0, 1)
+      a LDSMAX.new(rs, rt, rn.first, rs.opc2, 0, 1)
     end
 
     def ldsmaxab rs, rt, rn
@@ -1442,23 +1381,19 @@ module AArch64
     end
 
     def ldsmin rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMIN.new(rs, rt, rn.first, size, 0, 0)
+      a LDSMIN.new(rs, rt, rn.first, rs.opc2, 0, 0)
     end
 
     def ldsmina rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMIN.new(rs, rt, rn.first, size, 1, 0)
+      a LDSMIN.new(rs, rt, rn.first, rs.opc2, 1, 0)
     end
 
     def ldsminal rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMIN.new(rs, rt, rn.first, size, 1, 1)
+      a LDSMIN.new(rs, rt, rn.first, rs.opc2, 1, 1)
     end
 
     def ldsminl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a LDSMIN.new(rs, rt, rn.first, size, 0, 1)
+      a LDSMIN.new(rs, rt, rn.first, rs.opc2, 0, 1)
     end
 
     def ldsminb rs, rt, rn
@@ -1494,8 +1429,7 @@ module AArch64
     end
 
     def ldtr rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDTR.new(rt, rn.first, rn[1] || 0, size)
+      a LDTR.new(rt, rn.first, rn[1] || 0, rt.opc2)
     end
 
     def ldtrb rt, rn
@@ -1507,13 +1441,11 @@ module AArch64
     end
 
     def ldtrsb rt, rn
-      opc = rt.x? ? 0b10 : 0b11
-      a LDTRSB.new(rt, rn.first, rn[1] || 0, opc)
+      a LDTRSB.new(rt, rn.first, rn[1] || 0, rt.opc)
     end
 
     def ldtrsh rt, rn
-      opc = rt.x? ? 0b10 : 0b11
-      a LDTRSH.new(rt, rn.first, rn[1] || 0, opc)
+      a LDTRSH.new(rt, rn.first, rn[1] || 0, rt.opc)
     end
 
     def ldtrsw rt, rn
@@ -1521,23 +1453,19 @@ module AArch64
     end
 
     def ldumax rs, rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDUMAX.new(rs, rt, rn.first, size, 0, 0)
+      a LDUMAX.new(rs, rt, rn.first, rt.opc2, 0, 0)
     end
 
     def ldumaxa rs, rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDUMAX.new(rs, rt, rn.first, size, 1, 0)
+      a LDUMAX.new(rs, rt, rn.first, rt.opc2, 1, 0)
     end
 
     def ldumaxal rs, rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDUMAX.new(rs, rt, rn.first, size, 1, 1)
+      a LDUMAX.new(rs, rt, rn.first, rt.opc2, 1, 1)
     end
 
     def ldumaxl rs, rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a LDUMAX.new(rs, rt, rn.first, size, 0, 1)
+      a LDUMAX.new(rs, rt, rn.first, rt.opc2, 0, 1)
     end
 
     def ldumaxab rs, rt, rn
@@ -1637,11 +1565,7 @@ module AArch64
     end
 
     def ldur rt, rn
-      if rt.x?
-        a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b11)
-      else
-        a LDUR_gen.new(rt, rn.first, rn[1] || 0, 0b10)
-      end
+      a LDUR_gen.new(rt, rn.first, rn[1] || 0, rt.opc2)
     end
 
     def ldurb rt, rn
@@ -1653,11 +1577,7 @@ module AArch64
     end
 
     def ldxr rt, rn
-      if rt.x?
-        a LDXR.new(rt, rn.first, 0b11)
-      else
-        a LDXR.new(rt, rn.first, 0b10)
-      end
+      a LDXR.new(rt, rn.first, rt.opc2)
     end
 
     def ldxrb rt, rn
@@ -1670,11 +1590,7 @@ module AArch64
 
     def lsl rd, rn, rm
       if rm.integer?
-        if rd.x?
-          ubfm rd, rn, -rm % 64, 63 - rm
-        else
-          ubfm rd, rn, -rm % 32, 31 - rm
-        end
+        ubfm rd, rn, -rm % rd.size, (rd.size - 1) - rm
       else
         lslv rd, rn, rm
       end
@@ -1686,11 +1602,7 @@ module AArch64
 
     def lsr rd, rn, rm
       if rm.integer?
-        if rd.x?
-          ubfm rd, rn, rm, 63
-        else
-          ubfm rd, rn, rm, 31
-        end
+        ubfm rd, rn, rm, rd.size - 1
       else
         lsrv rd, rn, rm
       end
@@ -1715,20 +1627,20 @@ module AArch64
           if rm < 65536 || rm % 65536 == 0
             movn(rd, rm)
           else
-            orr(rd, rd.x? ? XZR : WZR, ~rm)
+            orr(rd, rd.zr, ~rm)
           end
         else
           if rm < 65536 || rm % 65536 == 0
             movz(rd, rm)
           else
-            orr(rd, rd.x? ? XZR : WZR, rm)
+            orr(rd, rd.zr, rm)
           end
         end
       else
         if rd.sp? || rm.sp?
           add rd, rm, 0
         else
-          orr(rd, rd.x? ? XZR : WZR, rm)
+          orr(rd, rd.zr, rm)
         end
       end
     end
@@ -2236,11 +2148,11 @@ module AArch64
     end
 
     def stnp rt, rt2, rn
-      a STNP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / (rt.x? ? 8 : 4), rt.opc3)
+      a STNP_gen.new(rt, rt2, rn.first, (rn[1] || 0) / (rt.size / 8), rt.opc3)
     end
 
     def stp rt, rt2, rn, imm = nil
-      div = rt.x? ? 8 : 4
+      div = rt.size / 8
 
       if imm
         if imm == :!
@@ -2269,7 +2181,7 @@ module AArch64
         imm = rn[1] || 0
         if imm.integer?
           # Unsigned
-          div = rt.x? ? 8 : 4
+          div = rt.size / 8
           a STR_imm_unsigned.new(rt, rn.first, imm / div, rt.sizeb)
         else
           rn, rm, opt = *rn
@@ -2504,8 +2416,7 @@ module AArch64
     end
 
     def stxr rs, rt, rn
-      size = rt.x? ? 0b11 : 0b10
-      a STXR.new(rs, rt, rn.first, size)
+      a STXR.new(rs, rt, rn.first, rt.opc2)
     end
 
     def stxrb rs, rt, rn
@@ -2662,23 +2573,19 @@ module AArch64
     end
 
     def swp rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a SWP.new(rs, rt, rn.first, size, 0, 0)
+      a SWP.new(rs, rt, rn.first, rs.opc2, 0, 0)
     end
 
     def swpal rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a SWP.new(rs, rt, rn.first, size, 1, 1)
+      a SWP.new(rs, rt, rn.first, rs.opc2, 1, 1)
     end
 
     def swpl rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a SWP.new(rs, rt, rn.first, size, 0, 1)
+      a SWP.new(rs, rt, rn.first, rs.opc2, 0, 1)
     end
 
     def swpa rs, rt, rn
-      size = rs.x? ? 0b11 : 0b10
-      a SWP.new(rs, rt, rn.first, size, 1, 0)
+      a SWP.new(rs, rt, rn.first, rs.opc2, 1, 0)
     end
 
     def swpab rs, rt, rn
