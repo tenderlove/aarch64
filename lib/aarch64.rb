@@ -2751,7 +2751,11 @@ module AArch64
     end
 
     def write_to io
-      io.write @insns.map(&:encode).pack("L<*")
+      io.write to_binary
+    end
+
+    def to_binary
+      @insns.map(&:encode).pack("L<*")
     end
 
     private
