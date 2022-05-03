@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.STLXP(@sz, @rs.to_i, @rt2.to_i, @rn.to_i, @rt.to_i)
+        STLXP(@sz, @rs.to_i, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

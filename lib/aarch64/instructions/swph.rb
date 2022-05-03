@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        self.SWPH(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        SWPH(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

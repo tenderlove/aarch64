@@ -17,7 +17,7 @@ module AArch64
       end
 
       def encode
-        self.LDRSB_unsigned(@opc, @imm12, @rn.to_i, @rt.to_i)
+        LDRSB_unsigned(@opc, @imm12, @rn.to_i, @rt.to_i)
       end
 
       private

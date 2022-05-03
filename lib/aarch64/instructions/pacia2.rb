@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.PACIA2(@crm, @op2)
+        PACIA2(@crm, @op2)
       end
 
       private

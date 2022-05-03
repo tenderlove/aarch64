@@ -17,7 +17,7 @@ module AArch64
       end
 
       def encode
-        self.LDRA(@m, @s, @imm9, @w, @rn.to_i, @rt.to_i)
+        LDRA(@m, @s, @imm9, @w, @rn.to_i, @rt.to_i)
       end
 
       private

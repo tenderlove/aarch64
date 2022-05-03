@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.STLRH(@rn.to_i, @rt.to_i)
+        STLRH(@rn.to_i, @rt.to_i)
       end
 
       private

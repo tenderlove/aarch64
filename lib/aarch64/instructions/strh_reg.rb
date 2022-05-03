@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.STRH_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        STRH_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.WFET(@rd.to_i)
+        WFET(@rd.to_i)
       end
 
       private

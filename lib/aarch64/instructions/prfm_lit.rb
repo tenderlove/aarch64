@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.PRFM_lit(@imm19.to_i / 4, @rt.to_i)
+        PRFM_lit(@imm19.to_i / 4, @rt.to_i)
       end
 
       private

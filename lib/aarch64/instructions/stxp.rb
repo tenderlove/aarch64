@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.STXP(@sf, @rs.to_i, @rt2.to_i, @rn.to_i, @rt1.to_i)
+        STXP(@sf, @rs.to_i, @rt2.to_i, @rn.to_i, @rt1.to_i)
       end
 
       private

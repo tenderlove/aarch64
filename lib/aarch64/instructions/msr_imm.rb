@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.MSR_imm(@op1, @crm, @op2)
+        MSR_imm(@op1, @crm, @op2)
       end
 
       private

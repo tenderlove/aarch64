@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.SMC(@imm16)
+        SMC(@imm16)
       end
 
       private

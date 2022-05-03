@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.STLR(@size, @rn.to_i, @rt.to_i)
+        STLR(@size, @rn.to_i, @rt.to_i)
       end
 
       private

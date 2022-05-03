@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        self.PACIA(@z, @rn.to_i, @rd.to_i)
+        PACIA(@z, @rn.to_i, @rd.to_i)
       end
 
       private

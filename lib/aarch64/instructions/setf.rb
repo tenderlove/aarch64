@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.SETF(@sz, @rn.to_i)
+        SETF(@sz, @rn.to_i)
       end
 
       private

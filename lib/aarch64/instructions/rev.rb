@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.REV(@sf, @rn.to_i, @rd.to_i, @opc)
+        REV(@sf, @rn.to_i, @rd.to_i, @opc)
       end
 
       private

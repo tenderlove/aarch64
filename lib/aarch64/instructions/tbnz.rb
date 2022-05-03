@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.TBNZ(@sf, @imm, @label.to_i / 4, @rt.to_i)
+        TBNZ(@sf, @imm, @label.to_i / 4, @rt.to_i)
       end
 
       private

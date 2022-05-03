@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.PRFM_imm(@imm12, @rn.to_i, @rt.to_i)
+        PRFM_imm(@imm12, @rn.to_i, @rt.to_i)
       end
 
       private

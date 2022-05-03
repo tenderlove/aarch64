@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.LDRB_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        LDRB_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

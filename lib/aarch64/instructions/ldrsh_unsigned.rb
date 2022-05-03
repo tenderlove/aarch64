@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.LDRSH_unsigned(@opc, @imm12, @rn.to_i, @rt.to_i)
+        LDRSH_unsigned(@opc, @imm12, @rn.to_i, @rt.to_i)
       end
 
       private

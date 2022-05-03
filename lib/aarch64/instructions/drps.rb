@@ -5,7 +5,7 @@ module AArch64
     # DRPS
     class DRPS
       def encode
-        self.DRPS
+        DRPS()
       end
 
       private

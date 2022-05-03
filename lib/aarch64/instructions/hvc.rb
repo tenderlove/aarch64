@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.HVC @imm
+        HVC @imm
       end
 
       private

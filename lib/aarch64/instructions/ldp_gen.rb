@@ -19,7 +19,7 @@ module AArch64
       end
 
       def encode
-        self.LDP_gen(@opc, @mode, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
+        LDP_gen(@opc, @mode, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

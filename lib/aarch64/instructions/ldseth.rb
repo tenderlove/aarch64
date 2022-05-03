@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        self.LDSETH(@a, @r.to_i, @rs.to_i, @rn.to_i, @rt.to_i)
+        LDSETH(@a, @r.to_i, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

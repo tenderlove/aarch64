@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.SVC(@imm)
+        SVC(@imm)
       end
 
       private

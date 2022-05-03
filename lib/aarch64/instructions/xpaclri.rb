@@ -5,12 +5,6 @@ module AArch64
     # XPACLRI
     class XPACLRI
       def encode
-        self.XPACLRI
-      end
-
-      private
-
-      def XPACLRI
         0b11010101000000110010000011111111
       end
     end

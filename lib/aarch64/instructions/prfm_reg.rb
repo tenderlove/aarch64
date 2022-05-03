@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.PRFM_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        PRFM_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

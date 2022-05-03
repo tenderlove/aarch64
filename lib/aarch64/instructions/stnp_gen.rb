@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.STNP_gen(@opc, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
+        STNP_gen(@opc, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

@@ -5,14 +5,7 @@ module AArch64
     # DGH
     class DGH
       def encode
-        self.DGH
-      end
-
-      private
-
-      def DGH
-        insn = 0b1101010100_0_00_011_0010_0000_110_11111
-        insn
+        0b1101010100_0_00_011_0010_0000_110_11111
       end
     end
   end

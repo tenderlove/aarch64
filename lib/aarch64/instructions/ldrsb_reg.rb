@@ -17,7 +17,7 @@ module AArch64
       end
 
       def encode
-        self.LDRSB_reg(@opc, @rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        LDRSB_reg(@opc, @rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

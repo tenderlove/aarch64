@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.STRB_imm_unsigned(@imm12, @rn.to_i, @rt.to_i)
+        STRB_imm_unsigned(@imm12, @rn.to_i, @rt.to_i)
       end
 
       private

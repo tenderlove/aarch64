@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.SMULH(@rm.to_i, @rn.to_i, @rd.to_i)
+        SMULH(@rm.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

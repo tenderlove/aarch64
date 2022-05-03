@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        self.SWPB(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        SWPB(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

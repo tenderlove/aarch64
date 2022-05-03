@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.RBIT_int(@sf, @rn.to_i, @rd.to_i)
+        RBIT_int(@sf, @rn.to_i, @rd.to_i)
       end
 
       private

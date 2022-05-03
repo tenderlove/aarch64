@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.UDF_perm_undef(@imm)
+        UDF_perm_undef(@imm)
       end
 
       private

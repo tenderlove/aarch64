@@ -19,7 +19,7 @@ module AArch64
       end
 
       def encode
-        self.STP_gen(@opc, @option, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
+        STP_gen(@opc, @option, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

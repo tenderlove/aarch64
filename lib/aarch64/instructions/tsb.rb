@@ -5,7 +5,7 @@ module AArch64
     # TSB CSYNC
     class TSB
       def encode
-        self.TSB
+        TSB()
       end
 
       private

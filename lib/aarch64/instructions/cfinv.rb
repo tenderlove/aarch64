@@ -5,7 +5,7 @@ module AArch64
     # CFINV
     class CFINV
       def encode
-        self.CFINV
+        CFINV()
       end
 
       private

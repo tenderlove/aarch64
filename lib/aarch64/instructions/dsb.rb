@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.DSB(@imm)
+        DSB(@imm)
       end
 
       private

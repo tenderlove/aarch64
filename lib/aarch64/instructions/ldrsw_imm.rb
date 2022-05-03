@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.LDRSW_imm(@imm9, @rn.to_i, @rt.to_i, @option)
+        LDRSW_imm(@imm9, @rn.to_i, @rt.to_i, @option)
       end
 
       private

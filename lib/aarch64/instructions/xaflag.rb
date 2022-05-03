@@ -5,14 +5,7 @@ module AArch64
     # XAFLAG
     class XAFLAG
       def encode
-        self.XAFLAG
-      end
-
-      private
-
-      def XAFLAG
-        insn = 0b1101010100_0_00_000_0100_0000_001_11111
-        insn
+        0b1101010100_0_00_000_0100_0000_001_11111
       end
     end
   end

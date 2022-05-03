@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        self.DMB(@imm)
+        DMB(@imm)
       end
 
       private

@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.SMADDL(@rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        SMADDL(@rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

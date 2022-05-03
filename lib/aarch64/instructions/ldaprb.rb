@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.LDAPRB(@rn.to_i, @rt.to_i)
+        LDAPRB(@rn.to_i, @rt.to_i)
       end
 
       private

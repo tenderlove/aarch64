@@ -5,7 +5,7 @@ module AArch64
     # PSB CSYNC
     class PSB
       def encode
-        self.PSB
+        PSB()
       end
 
       private

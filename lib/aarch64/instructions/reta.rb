@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.RETA(@m)
+        RETA(@m)
       end
 
       private

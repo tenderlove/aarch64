@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.STG(@imm9, @option, @xn.to_i, @xt.to_i)
+        STG(@imm9, @option, @xn.to_i, @xt.to_i)
       end
 
       private

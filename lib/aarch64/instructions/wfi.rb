@@ -5,14 +5,7 @@ module AArch64
     # WFI
     class WFI
       def encode
-        self.WFI
-      end
-
-      private
-
-      def WFI
-        insn = 0b1101010100_0_00_011_0010_0000_011_11111
-        insn
+        0b1101010100_0_00_011_0010_0000_011_11111
       end
     end
   end

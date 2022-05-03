@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.ERETA(@m)
+        ERETA(@m)
       end
 
       private

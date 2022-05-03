@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.LDRSW_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        LDRSW_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
       end
 
       private

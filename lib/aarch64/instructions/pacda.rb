@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.PACDA(@z, @rn.to_i, @rd.to_i)
+        PACDA(@z, @rn.to_i, @rd.to_i)
       end
 
       private

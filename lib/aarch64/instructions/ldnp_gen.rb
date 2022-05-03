@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.LDNP_gen(@opc, @imm, @rt2.to_i, @rn.to_i, @rt1.to_i)
+        LDNP_gen(@opc, @imm, @rt2.to_i, @rn.to_i, @rt1.to_i)
       end
 
       private

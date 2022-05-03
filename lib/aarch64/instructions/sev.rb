@@ -5,7 +5,7 @@ module AArch64
     # SEV
     class SEV
       def encode
-        self.SEV
+        SEV()
       end
 
       private

@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        self.ADD_addsub_ext(@sf, @rm.to_i, @extend, @amount, @rn.to_i, @rd.to_i)
+        ADD_addsub_ext(@sf, @rm.to_i, @extend, @amount, @rn.to_i, @rd.to_i)
       end
 
       private

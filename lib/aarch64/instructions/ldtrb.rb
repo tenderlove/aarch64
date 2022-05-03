@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.LDTRB(@imm9, @rn.to_i, @rt.to_i)
+        LDTRB(@imm9, @rn.to_i, @rt.to_i)
       end
 
       private

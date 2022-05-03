@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.STRB_imm(@imm9, @opt, @rn.to_i, @rt.to_i)
+        STRB_imm(@imm9, @opt, @rn.to_i, @rt.to_i)
       end
 
       private

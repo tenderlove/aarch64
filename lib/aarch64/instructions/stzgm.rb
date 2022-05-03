@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.STZGM(@rn.to_i, @rt.to_i)
+        STZGM(@rn.to_i, @rt.to_i)
       end
 
       private

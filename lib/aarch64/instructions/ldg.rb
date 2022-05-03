@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.LDG(@imm9, @xn.to_i, @xt.to_i)
+        LDG(@imm9, @xn.to_i, @xt.to_i)
       end
 
       private

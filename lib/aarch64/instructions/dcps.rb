@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        self.DCPS @imm, @ll
+        DCPS(@imm, @ll)
       end
 
       private

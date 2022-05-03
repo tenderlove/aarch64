@@ -5,7 +5,7 @@ module AArch64
     # ERET
     class ERET
       def encode
-        self.ERET
+        ERET()
       end
 
       private

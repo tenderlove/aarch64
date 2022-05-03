@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        self.EON(@sf, @shift, @rm.to_i, @imm, @rn.to_i, @rd.to_i)
+        EON(@sf, @shift, @rm.to_i, @imm, @rn.to_i, @rd.to_i)
       end
 
       private

@@ -5,7 +5,7 @@ module AArch64
     # YIELD
     class YIELD
       def encode
-        self.YIELD
+        YIELD()
       end
 
       private

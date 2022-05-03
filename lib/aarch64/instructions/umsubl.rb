@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        self.UMSUBL(@wm.to_i, @xa.to_i, @wn.to_i, @xd.to_i)
+        UMSUBL(@wm.to_i, @xa.to_i, @wn.to_i, @xd.to_i)
       end
 
       private

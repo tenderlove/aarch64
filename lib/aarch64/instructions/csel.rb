@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.CSEL @sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i
+        CSEL @sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i
       end
 
       private

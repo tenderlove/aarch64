@@ -21,7 +21,7 @@ module AArch64
       end
 
       def encode
-        self.LDCLR(@size, @a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        LDCLR(@size, @a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

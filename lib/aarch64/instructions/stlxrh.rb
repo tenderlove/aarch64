@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        self.STLXRH(@rs.to_i, @rn.to_i, @rt.to_i)
+        STLXRH(@rs.to_i, @rn.to_i, @rt.to_i)
       end
 
       private

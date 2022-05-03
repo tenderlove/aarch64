@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        self.EOR_log_shift(@sf, @shift, @rm.to_i, @imm6, @rn.to_i, @rd.to_i)
+        EOR_log_shift(@sf, @shift, @rm.to_i, @imm6, @rn.to_i, @rd.to_i)
       end
 
       private

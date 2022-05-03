@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        self.MADD(@sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        MADD(@sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
       end
 
       private

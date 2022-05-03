@@ -5,14 +5,7 @@ module AArch64
     # SB
     class SB
       def encode
-        self.SB
-      end
-
-      private
-
-      def SB
-        insn = 0b1101010100_0_00_011_0011_0000_1_11_11111
-        insn
+        0b1101010100_0_00_011_0011_0000_1_11_11111
       end
     end
   end

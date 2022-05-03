@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        self.STR_imm_gen(@size, @imm12, @rn.to_i, @rt.to_i)
+        STR_imm_gen(@size, @imm12, @rn.to_i, @rt.to_i)
       end
 
       private

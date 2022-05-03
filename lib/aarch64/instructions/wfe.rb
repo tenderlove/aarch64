@@ -5,7 +5,7 @@ module AArch64
     # WFE
     class WFE
       def encode
-        self.WFE
+        WFE()
       end
 
       private
