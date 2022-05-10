@@ -25,7 +25,7 @@ asm.pretty do
 end
 
 # Write the instructions to a JIT buffer
-jit_buffer.writable!
+jit_buffer.writeable!
 asm.write_to jit_buffer
 jit_buffer.executable!
 
