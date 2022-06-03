@@ -30,50 +30,50 @@ rule
     ;
 
   add_immediate
-    : ADD WSP COMMA Wd COMMA imm COMMA LSL imm {
-        @asm.add(val[1], val[3], val[5], lsl: val[8])
+    : WSP COMMA Wd COMMA imm COMMA LSL imm {
+        @asm.add(val[0], val[2], val[4], lsl: val[7])
       }
-    | ADD Wd COMMA Wd COMMA imm COMMA LSL imm {
-        @asm.add(val[1], val[3], val[5], lsl: val[8])
+    | Wd COMMA Wd COMMA imm COMMA LSL imm {
+        @asm.add(val[0], val[2], val[4], lsl: val[7])
       }
-    | ADD Xd COMMA Xd COMMA imm COMMA LSL imm {
-        @asm.add(val[1], val[3], val[5], lsl: val[8])
+    | Xd COMMA Xd COMMA imm COMMA LSL imm {
+        @asm.add(val[0], val[2], val[4], lsl: val[7])
       }
-    | ADD Wd COMMA WSP COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | Wd COMMA WSP COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD WSP COMMA Wd COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | WSP COMMA Wd COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD WSP COMMA WSP COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | WSP COMMA WSP COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD Wd COMMA Wd COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | Wd COMMA Wd COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD Xd COMMA SP COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | Xd COMMA SP COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD SP COMMA Xd COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | SP COMMA Xd COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD Xd COMMA Xd COMMA imm {
-        @asm.add(val[1], val[3], val[5])
+    | Xd COMMA Xd COMMA imm {
+        @asm.add(val[0], val[2], val[4])
       }
     ;
 
   add_shifted
-    : ADD Wd COMMA Wd COMMA Wd COMMA shift imm {
-        @asm.add(val[1], val[3], val[5], shift: val[7].to_sym, amount: val[8])
+    : Wd COMMA Wd COMMA Wd COMMA shift imm {
+        @asm.add(val[0], val[2], val[4], shift: val[6].to_sym, amount: val[7])
       }
-    | ADD Xd COMMA Xd COMMA Xd COMMA shift imm {
-        @asm.add(val[1], val[3], val[5], shift: val[7].to_sym, amount: val[8])
+    | Xd COMMA Xd COMMA Xd COMMA shift imm {
+        @asm.add(val[0], val[2], val[4], shift: val[6].to_sym, amount: val[7])
       }
-    | ADD Wd COMMA Wd COMMA Wd {
-        @asm.add(val[1], val[3], val[5])
+    | Wd COMMA Wd COMMA Wd {
+        @asm.add(val[0], val[2], val[4])
       }
-    | ADD Xd COMMA Xd COMMA Xd {
-        @asm.add(val[1], val[3], val[5])
+    | Xd COMMA Xd COMMA Xd {
+        @asm.add(val[0], val[2], val[4])
       }
     ;
 
@@ -84,53 +84,53 @@ rule
     | add_extend extend {
         @asm.add(*val[0], extend: val[1].to_sym)
       }
-    | add_extend_with_sp LSL imm {
-        @asm.add(*val[0], extend: val[1].to_sym, amount: val[2])
+    | add_extend_with_sp COMMA LSL imm {
+        @asm.add(*val[0], extend: val[2].to_sym, amount: val[3])
       }
     ;
 
   add_extend
-    : add_extend_with_sp
+    : add_extend_with_sp COMMA
     | add_extend_without_sp
     ;
 
   add_extend_with_sp
-    : ADD SP COMMA Xd COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    : SP COMMA Xd COMMA Wd {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD SP COMMA Xd COMMA Xd COMMA {
-        result = [val[1], val[3], val[5]]
+    | SP COMMA Xd COMMA Xd {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD Xd COMMA SP COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    | Xd COMMA SP COMMA Wd {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD Xd COMMA SP COMMA Xd COMMA {
-        result = [val[1], val[3], val[5]]
+    | Xd COMMA SP COMMA Xd {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD WSP COMMA Wd COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    | WSP COMMA Wd COMMA Wd {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD Wd COMMA WSP COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    | Wd COMMA WSP COMMA Wd {
+        result = [val[0], val[2], val[4]]
       }
     ;
 
   add_extend_without_sp
-    : ADD Xd COMMA Xd COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    : Xd COMMA Xd COMMA Wd COMMA {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD Xd COMMA Xd COMMA Xd COMMA {
-        result = [val[1], val[3], val[5]]
+    | Xd COMMA Xd COMMA Xd COMMA {
+        result = [val[0], val[2], val[4]]
       }
-    | ADD Wd COMMA Wd COMMA Wd COMMA {
-        result = [val[1], val[3], val[5]]
+    | Wd COMMA Wd COMMA Wd COMMA {
+        result = [val[0], val[2], val[4]]
       }
     ;
 
   add
-    : add_shifted
-    | add_extended
-    | add_immediate
+    : ADD add_shifted
+    | ADD add_extended
+    | ADD add_immediate
     ;
   autda
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
