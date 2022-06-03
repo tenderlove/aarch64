@@ -160,11 +160,17 @@ file SYSTEM_REGS_FILE do |t|
   download SYSTEM_REGS_URL, t.name
 end
 
+rule ".tab.rb" => [".y"] do |t|
+  sh "gel exec racc -v #{t.source}"
+end
+
 Rake::TestTask.new(:test) do |t|
   t.libs << "test/lib" << "test"
   t.test_files = FileList['test/**/*_test.rb']
   t.verbose = true
   t.warning = true
 end
+
+task :test => "lib/aarch64/parser.tab.rb"
 
 task :default => :test

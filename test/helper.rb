@@ -16,7 +16,7 @@ module AArch64
 
     def assert_bytes bytes
       asm = Assembler.new
-      yield asm
+      x = yield asm
       jit_buffer = StringIO.new
       asm.write_to jit_buffer
       if false

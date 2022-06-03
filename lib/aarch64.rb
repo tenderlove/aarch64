@@ -163,6 +163,7 @@ module AArch64
     # Puts the label at the current position.  Labels can only be placed once.
     def put_label label
       label.set_offset @insns.length
+      self
     end
 
     def adc d, n, m
@@ -179,6 +180,7 @@ module AArch64
                  when :uxtb then 0b000
                  when :uxth then 0b001
                  when :uxtw then 0b010
+                 when :lsl  then 0b010
                  when :uxtx then 0b011
                  when :sxtb then 0b100
                  when :sxth then 0b101
@@ -187,16 +189,6 @@ module AArch64
                  else
                    raise "Unknown extend #{extend}"
                  end
-
-        if m.x?
-          if (extend & 0x3 != 0x3)
-            raise "Wrong extend"
-          end
-        else
-          if (extend & 0x3 == 0x3)
-            raise "Wrong extend"
-          end
-        end
 
         a ADD_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
