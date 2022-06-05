@@ -67,21 +67,6 @@ rule
       }
     ;
 
-  add_shifted
-    : Wd COMMA Wd COMMA Wd COMMA shift imm {
-        result = [[val[0], val[2], val[4]], { shift: val[6].to_sym, amount: val[7] }]
-      }
-    | Xd COMMA Xd COMMA Xd COMMA shift imm {
-        result = [[val[0], val[2], val[4]], { shift: val[6].to_sym, amount: val[7] }]
-      }
-    | Wd COMMA Wd COMMA Wd {
-        result = [[val[0], val[2], val[4]], { shift: :lsl, amount: 0 }]
-      }
-    | Xd COMMA Xd COMMA Xd {
-        result = [[val[0], val[2], val[4]], { shift: :lsl, amount: 0 }]
-      }
-    ;
-
   add_extended
     : add_extend extend imm {
         result = [val[0], { extend: val[1].to_sym, amount: val[2] }]
@@ -133,10 +118,8 @@ rule
     ;
 
   add
-    : ADD add_shifted {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.add(r1, r2, r3, shift: opts[:shift], amount: opts[:amount])
+    : ADD shifted {
+        val[1].apply(@asm, :add)
       }
     | ADD add_extended {
         regs, opts = *val[1]
@@ -151,10 +134,8 @@ rule
     ;
 
   adds
-    : ADDS add_shifted {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.adds(r1, r2, r3, shift: opts[:shift], amount: opts[:amount])
+    : ADDS shifted {
+        val[1].apply(@asm, :adds)
       }
     | ADDS add_extended {
         regs, opts = *val[1]
@@ -177,7 +158,7 @@ rule
       }
     ;
 
-  and_shifted
+  shifted
     : Wd COMMA Wd COMMA Wd COMMA shift imm {
         result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
       }
@@ -194,12 +175,12 @@ rule
 
   and
     : AND and_immediate { result = val[1] }
-    | AND and_shifted { result = val[1] }
+    | AND shifted { result = val[1] }
     ;
 
   ands
     : ANDS and_immediate { result = val[1] }
-    | ANDS and_shifted { result = val[1] }
+    | ANDS shifted { result = val[1] }
     ;
 
   autda
