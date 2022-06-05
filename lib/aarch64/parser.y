@@ -19,6 +19,7 @@ rule
     | and { val[0].apply(@asm, :and) }
     | ands { val[0].apply(@asm, :ands) }
     | asr  { val[0].apply(@asm, :asr) }
+    | at
     | autda
     | dc
     | ic
@@ -194,6 +195,8 @@ rule
       }
     ;
 
+  at: AT at_op COMMA Xd { @asm.at(val[1].to_sym, val[3]) };
+
   three_regs
     : Wd COMMA Wd COMMA Wd { result = ThreeRegs.new(val[0], val[2], val[4]) }
     | Xd COMMA Xd COMMA Xd { result = ThreeRegs.new(val[0], val[2], val[4]) }
@@ -285,4 +288,20 @@ rule
       : IALLUIS
       | IALLU
       | IVAU
+      ;
+  at_op
+      : S1E1R
+      | S1E1W
+      | S1E0R
+      | S1E0W
+      | S1E1RP
+      | S1E1WP
+      | S1E2R
+      | S1E2W
+      | S12E1R
+      | S12E1W
+      | S12E0R
+      | S12E0W
+      | S1E3R
+      | S1E3W
       ;

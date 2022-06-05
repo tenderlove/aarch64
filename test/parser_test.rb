@@ -292,7 +292,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_at
-    skip "fixme"
     assert_bytes "at      s12e0r, x20", [0xd4,0x78,0x0c,0xd5]
     assert_bytes "at      s12e0w, x20", [0xf4,0x78,0x0c,0xd5]
     assert_bytes "at      s12e1r, x20", [0x94,0x78,0x0c,0xd5]
