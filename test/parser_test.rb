@@ -365,13 +365,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cbnz
-    skip "fixme"
     assert_bytes "cbnz    x3, #-4", [0xe3,0xff,0xff,0xb5]
     assert_bytes "cbnz    xzr, #-1048576", [0x1f,0x00,0x80,0xb5]
   end
 
   def test_generated_cbz
-    skip "fixme"
     assert_bytes "cbz     w20, #1048572", [0xf4,0xff,0x7f,0x34]
     assert_bytes "cbz     w5, #0", [0x05,0x00,0x00,0x34]
   end

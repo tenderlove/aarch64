@@ -20,6 +20,7 @@ rule
     | ands { val[0].apply(@asm, :ands) }
     | asr  { val[0].apply(@asm, :asr) }
     | at
+    | autda
     | b
     | bfi
     | bfxil
@@ -28,7 +29,8 @@ rule
     | bl
     | blr
     | br
-    | autda
+    | cbnz
+    | cbz
     | dc
     | ic
     | movz
@@ -253,6 +255,16 @@ rule
   bl : BL imm { @asm.bl(val[1]) } ;
   blr : BLR Xd { @asm.blr(val[1]) } ;
   br : BR Xd { @asm.br(val[1]) } ;
+
+  cbnz
+    : CBNZ Wd COMMA imm { @asm.cbnz(val[1], val[3]) }
+    | CBNZ Xd COMMA imm { @asm.cbnz(val[1], val[3]) }
+    ;
+
+  cbz
+    : CBZ Wd COMMA imm { @asm.cbz(val[1], val[3]) }
+    | CBZ Xd COMMA imm { @asm.cbz(val[1], val[3]) }
+    ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
