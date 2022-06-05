@@ -271,7 +271,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_asr
-    skip "fixme"
     assert_bytes "asr  w18, w19, w20", [0x72,0x2a,0xd4,0x1a]
     assert_bytes "asr  w23, w24, w25", [0x17,0x2b,0xd9,0x1a]
     assert_bytes "asr  x21, x22, x23", [0xd5,0x2a,0xd7,0x9a]

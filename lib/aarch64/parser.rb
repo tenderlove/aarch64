@@ -21,6 +21,20 @@ module AArch64
       end
     end
 
+    class ThreeRegs
+      attr_reader :d, :n, :m
+
+      def initialize d, n, m
+        @d = d
+        @n = n
+        @m = m
+      end
+
+      def apply asm, name
+        asm.public_send(name, d, n, m)
+      end
+    end
+
     def parse str
       str += "\n" unless str.end_with?("\n")
       @scan = StringScanner.new str

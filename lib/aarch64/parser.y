@@ -18,6 +18,7 @@ rule
     | ADRP Xd COMMA imm { @asm.adrp(val[1], val[3]) }
     | and { val[0].apply(@asm, :and) }
     | ands { val[0].apply(@asm, :ands) }
+    | asr  { val[0].apply(@asm, :asr) }
     | autda
     | dc
     | ic
@@ -181,6 +182,21 @@ rule
   ands
     : ANDS and_immediate { result = val[1] }
     | ANDS shifted { result = val[1] }
+    ;
+
+  asr
+    : ASR three_regs { result = val[1] }
+    | ASR Wd COMMA Wd COMMA imm {
+        result = ThreeRegs.new(val[1], val[3], val[5])
+      }
+    | ASR Xd COMMA Xd COMMA imm {
+        result = ThreeRegs.new(val[1], val[3], val[5])
+      }
+    ;
+
+  three_regs
+    : Wd COMMA Wd COMMA Wd { result = ThreeRegs.new(val[0], val[2], val[4]) }
+    | Xd COMMA Xd COMMA Xd { result = ThreeRegs.new(val[0], val[2], val[4]) }
     ;
 
   autda
