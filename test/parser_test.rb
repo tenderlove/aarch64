@@ -405,7 +405,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cinc
-    skip "fixme"
     assert_bytes "cinc     x3, x5, gt", [0xa3,0xd4,0x85,0x9a]
     assert_bytes "cinc     xzr, x4, le", [0x9f,0xc4,0x84,0x9a]
     assert_bytes "cinc    w3, w5, gt", [0xa3,0xd4,0x85,0x1a]
@@ -413,7 +412,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cinv
-    skip "fixme"
     assert_bytes "cinv    w3, w5, gt", [0xa3,0xd0,0x85,0x5a]
     assert_bytes "cinv    wzr, w4, le", [0x9f,0xc0,0x84,0x5a]
     assert_bytes "cinv    x3, x5, gt", [0xa3,0xd0,0x85,0xda]

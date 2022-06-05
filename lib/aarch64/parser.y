@@ -33,6 +33,8 @@ rule
     | cbz
     | ccmn
     | ccmp
+    | cinc
+    | cinv
     | dc
     | ic
     | movz
@@ -290,6 +292,14 @@ rule
   ccmn : CCMN cond_four { val[1].apply(@asm, :ccmn) };
 
   ccmp : CCMP cond_four { val[1].apply(@asm, :ccmp) };
+
+  cond_three
+    : Wd COMMA Wd COMMA cond { result = ThreeArg.new(val[0], val[2], val[4]) }
+    | Xd COMMA Xd COMMA cond { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
+  cinc : CINC cond_three { val[1].apply(@asm, :cinc) };
+  cinv : CINV cond_three { val[1].apply(@asm, :cinv) };
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
