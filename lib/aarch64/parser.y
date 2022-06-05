@@ -22,6 +22,9 @@ rule
     | at
     | b
     | bfi
+    | bfxil
+    | bic
+    | bics
     | autda
     | dc
     | ic
@@ -218,6 +221,21 @@ rule
         @asm.bfi(val[1], val[3], val[5], val[7])
       }
     ;
+
+  bfxil
+    : BFXIL Wd COMMA Wd COMMA imm COMMA imm {
+        @asm.bfxil(val[1], val[3], val[5], val[7])
+      }
+    | BFXIL Xd COMMA Xd COMMA imm COMMA imm {
+        @asm.bfxil(val[1], val[3], val[5], val[7])
+      }
+    ;
+
+  bic
+    : BIC shifted { val[1].apply(@asm, :bic) } ;
+
+  bics
+    : BICS shifted { val[1].apply(@asm, :bics) } ;
 
   three_regs
     : Wd COMMA Wd COMMA Wd { result = ThreeRegs.new(val[0], val[2], val[4]) }

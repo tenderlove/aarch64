@@ -328,7 +328,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_bfxil
-    skip "fixme"
     assert_bytes "bfxil    w11, w12, #31, #1", [0x8b,0x7d,0x1f,0x33]
     assert_bytes "bfxil    w13, w14, #29, #3", [0xcd,0x7d,0x1d,0x33]
     assert_bytes "bfxil    w9, w10, #0, #1", [0x49,0x01,0x00,0x33]
@@ -343,13 +342,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_bic
-    skip "fixme"
     assert_bytes "bic      w2, w7, w9", [0xe2,0x00,0x29,0x0a]
     assert_bytes "bic      x13, x20, x14, lsl #47", [0x8d,0xbe,0x2e,0x8a]
   end
 
   def test_generated_bics
-    skip "fixme"
     assert_bytes "bics     w3, w5, w7", [0xa3,0x00,0x27,0x6a]
     assert_bytes "bics     x3, xzr, x3, lsl #1", [0xe3,0x07,0x23,0xea]
   end
