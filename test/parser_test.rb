@@ -182,7 +182,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_adds
-    skip "fixme"
     assert_bytes "adds     w11, w13, w15", [0xab,0x01,0x0f,0x2b]
     assert_bytes "adds     w13, w23, #291, lsl #12", [0xed,0x8e,0x44,0x31]
     assert_bytes "adds     w17, w29, w20, lsl #31", [0xb1,0x7f,0x14,0x2b]

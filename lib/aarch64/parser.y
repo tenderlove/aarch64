@@ -13,6 +13,7 @@ rule
     : adc
     | adcs
     | add
+    | adds
     | autda
     | dc
     | ic
@@ -144,6 +145,25 @@ rule
         @asm.add(r1, r2, r3, lsl: opts[:lsl])
       }
     ;
+
+  adds
+    : ADDS add_shifted {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.adds(r1, r2, r3, shift: opts[:shift], amount: opts[:amount])
+      }
+    | ADDS add_extended {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.adds(r1, r2, r3, extend: opts[:extend], amount: opts[:amount])
+      }
+    | ADDS add_immediate {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.adds(r1, r2, r3, lsl: opts[:lsl])
+      }
+    ;
+
   autda
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
     | AUTDA xd COMMA SP { @asm.autda(val[1], val[3]) }
