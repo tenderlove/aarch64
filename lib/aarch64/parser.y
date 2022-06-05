@@ -31,61 +31,61 @@ rule
 
   add_immediate
     : WSP COMMA Wd COMMA imm COMMA LSL imm {
-        @asm.add(val[0], val[2], val[4], lsl: val[7])
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
     | Wd COMMA Wd COMMA imm COMMA LSL imm {
-        @asm.add(val[0], val[2], val[4], lsl: val[7])
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
     | Xd COMMA Xd COMMA imm COMMA LSL imm {
-        @asm.add(val[0], val[2], val[4], lsl: val[7])
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
     | Wd COMMA WSP COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | WSP COMMA Wd COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | WSP COMMA WSP COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | Wd COMMA Wd COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | Xd COMMA SP COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | SP COMMA Xd COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     | Xd COMMA Xd COMMA imm {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { lsl: 0 }]
       }
     ;
 
   add_shifted
     : Wd COMMA Wd COMMA Wd COMMA shift imm {
-        @asm.add(val[0], val[2], val[4], shift: val[6].to_sym, amount: val[7])
+        result = [[val[0], val[2], val[4]], { shift: val[6].to_sym, amount: val[7] }]
       }
     | Xd COMMA Xd COMMA Xd COMMA shift imm {
-        @asm.add(val[0], val[2], val[4], shift: val[6].to_sym, amount: val[7])
+        result = [[val[0], val[2], val[4]], { shift: val[6].to_sym, amount: val[7] }]
       }
     | Wd COMMA Wd COMMA Wd {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { shift: :lsl, amount: 0 }]
       }
     | Xd COMMA Xd COMMA Xd {
-        @asm.add(val[0], val[2], val[4])
+        result = [[val[0], val[2], val[4]], { shift: :lsl, amount: 0 }]
       }
     ;
 
   add_extended
     : add_extend extend imm {
-        @asm.add(*val[0], extend: val[1].to_sym, amount: val[2])
+        result = [val[0], { extend: val[1].to_sym, amount: val[2] }]
       }
     | add_extend extend {
-        @asm.add(*val[0], extend: val[1].to_sym)
+        result = [val[0], { extend: val[1].to_sym, amount: 0 }]
       }
     | add_extend_with_sp COMMA LSL imm {
-        @asm.add(*val[0], extend: val[2].to_sym, amount: val[3])
+        result = [val[0], { extend: val[2].to_sym, amount: val[3] }]
       }
     ;
 
@@ -128,9 +128,21 @@ rule
     ;
 
   add
-    : ADD add_shifted
-    | ADD add_extended
-    | ADD add_immediate
+    : ADD add_shifted {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.add(r1, r2, r3, shift: opts[:shift], amount: opts[:amount])
+      }
+    | ADD add_extended {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.add(r1, r2, r3, extend: opts[:extend], amount: opts[:amount])
+      }
+    | ADD add_immediate {
+        regs, opts = *val[1]
+        r1, r2, r3 = *regs
+        @asm.add(r1, r2, r3, lsl: opts[:lsl])
+      }
     ;
   autda
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
