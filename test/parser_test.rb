@@ -307,7 +307,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_b
-    skip "fixme"
     assert_bytes "b       #134217724", [0xff,0xff,0xff,0x15]
     assert_bytes "b       #4", [0x01,0x00,0x00,0x14]
     assert_bytes "b.eq #0", [0x00,0x00,0x00,0x54]

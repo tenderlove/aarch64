@@ -20,6 +20,7 @@ rule
     | ands { val[0].apply(@asm, :ands) }
     | asr  { val[0].apply(@asm, :asr) }
     | at
+    | b
     | autda
     | dc
     | ic
@@ -196,6 +197,17 @@ rule
     ;
 
   at: AT at_op COMMA Xd { @asm.at(val[1].to_sym, val[3]) };
+
+  b
+    : B imm { @asm.b(val[1]) }
+    | B DOT cond imm { @asm.b(val[3], cond: val[2]) }
+    ;
+
+  cond
+    : EQ
+    | LO
+    | LT
+    ;
 
   three_regs
     : Wd COMMA Wd COMMA Wd { result = ThreeRegs.new(val[0], val[2], val[4]) }

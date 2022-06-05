@@ -66,6 +66,8 @@ module AArch64
         [:WSP, AArch64::Registers.const_get(str.upcase)]
       elsif @scan.scan(/,/)
         [:COMMA, ","]
+      elsif @scan.scan(/\./)
+        [:DOT, "."]
       elsif str = @scan.scan(/0x[0-9A-F]+/i)
         [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/-?(?:0|[1-9][0-9]*)/i)
