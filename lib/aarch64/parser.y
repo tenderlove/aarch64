@@ -31,6 +31,7 @@ rule
     | br
     | cbnz
     | cbz
+    | ccmn
     | dc
     | ic
     | movz
@@ -216,6 +217,10 @@ rule
     : EQ
     | LO
     | LT
+    | HS
+    | GT
+    | LE
+    | NE
     ;
 
   bfi
@@ -264,6 +269,21 @@ rule
   cbz
     : CBZ Wd COMMA imm { @asm.cbz(val[1], val[3]) }
     | CBZ Xd COMMA imm { @asm.cbz(val[1], val[3]) }
+    ;
+
+  ccmn
+    : CCMN Wd COMMA imm COMMA imm COMMA cond {
+        @asm.ccmn(val[1], val[3], val[5], val[7])
+      }
+    | CCMN Wd COMMA Wd COMMA imm COMMA cond {
+        @asm.ccmn(val[1], val[3], val[5], val[7])
+      }
+    | CCMN Xd COMMA imm COMMA imm COMMA cond {
+        @asm.ccmn(val[1], val[3], val[5], val[7])
+      }
+    | CCMN Xd COMMA Xd COMMA imm COMMA cond {
+        @asm.ccmn(val[1], val[3], val[5], val[7])
+      }
     ;
 
   dc
