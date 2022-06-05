@@ -32,6 +32,7 @@ rule
     | cbnz
     | cbz
     | ccmn
+    | ccmp
     | dc
     | ic
     | movz
@@ -199,10 +200,10 @@ rule
   asr
     : ASR three_regs { result = val[1] }
     | ASR Wd COMMA Wd COMMA imm {
-        result = ThreeRegs.new(val[1], val[3], val[5])
+        result = ThreeArg.new(val[1], val[3], val[5])
       }
     | ASR Xd COMMA Xd COMMA imm {
-        result = ThreeRegs.new(val[1], val[3], val[5])
+        result = ThreeArg.new(val[1], val[3], val[5])
       }
     ;
 
@@ -248,8 +249,8 @@ rule
     : BICS shifted { val[1].apply(@asm, :bics) } ;
 
   three_regs
-    : Wd COMMA Wd COMMA Wd { result = ThreeRegs.new(val[0], val[2], val[4]) }
-    | Xd COMMA Xd COMMA Xd { result = ThreeRegs.new(val[0], val[2], val[4]) }
+    : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
     ;
 
   autda
@@ -271,20 +272,24 @@ rule
     | CBZ Xd COMMA imm { @asm.cbz(val[1], val[3]) }
     ;
 
-  ccmn
-    : CCMN Wd COMMA imm COMMA imm COMMA cond {
-        @asm.ccmn(val[1], val[3], val[5], val[7])
+  cond_four
+    : Wd COMMA imm COMMA imm COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
       }
-    | CCMN Wd COMMA Wd COMMA imm COMMA cond {
-        @asm.ccmn(val[1], val[3], val[5], val[7])
+    | Wd COMMA Wd COMMA imm COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
       }
-    | CCMN Xd COMMA imm COMMA imm COMMA cond {
-        @asm.ccmn(val[1], val[3], val[5], val[7])
+    | Xd COMMA imm COMMA imm COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
       }
-    | CCMN Xd COMMA Xd COMMA imm COMMA cond {
-        @asm.ccmn(val[1], val[3], val[5], val[7])
+    | Xd COMMA Xd COMMA imm COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
       }
     ;
+
+  ccmn : CCMN cond_four { val[1].apply(@asm, :ccmn) };
+
+  ccmp : CCMP cond_four { val[1].apply(@asm, :ccmp) };
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }

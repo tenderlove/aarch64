@@ -390,7 +390,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ccmp
-    skip "fixme"
     assert_bytes "ccmp    w1, #31, #0, eq", [0x20,0x08,0x5f,0x7a]
     assert_bytes "ccmp    w1, wzr, #0, eq", [0x20,0x00,0x5f,0x7a]
     assert_bytes "ccmp    w3, #0, #15, hs", [0x6f,0x28,0x40,0x7a]

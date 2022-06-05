@@ -21,7 +21,7 @@ module AArch64
       end
     end
 
-    class ThreeRegs
+    class ThreeArg
       attr_reader :d, :n, :m
 
       def initialize d, n, m
@@ -32,6 +32,12 @@ module AArch64
 
       def apply asm, name
         asm.public_send(name, d, n, m)
+      end
+    end
+
+    class FourArg < Struct.new(:a, :b, :c, :d)
+      def apply asm, name
+        asm.public_send(name, a, b, c, d)
       end
     end
 
