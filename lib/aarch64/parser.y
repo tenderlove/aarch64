@@ -35,6 +35,9 @@ rule
     | ccmp
     | cinc
     | cinv
+    | clrex
+    | cls
+    | clz
     | dc
     | ic
     | movz
@@ -300,6 +303,21 @@ rule
 
   cinc : CINC cond_three { val[1].apply(@asm, :cinc) };
   cinv : CINV cond_three { val[1].apply(@asm, :cinv) };
+
+  clrex
+    : CLREX { @asm.clrex(15) }
+    | CLREX imm { @asm.clrex(val[1]) }
+    ;
+
+  cls
+    : CLS Wd COMMA Wd { @asm.cls(val[1], val[3]) }
+    | CLS Xd COMMA Xd { @asm.cls(val[1], val[3]) }
+    ;
+
+  clz
+    : CLZ Wd COMMA Wd { @asm.clz(val[1], val[3]) }
+    | CLZ Xd COMMA Xd { @asm.clz(val[1], val[3]) }
+    ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }

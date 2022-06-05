@@ -419,20 +419,17 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_clrex
-    skip "fixme"
     assert_bytes "clrex", [0x5f,0x3f,0x03,0xd5]
     assert_bytes "clrex   #0", [0x5f,0x30,0x03,0xd5]
     assert_bytes "clrex   #7", [0x5f,0x37,0x03,0xd5]
   end
 
   def test_generated_cls
-    skip "fixme"
     assert_bytes "cls  w3, w5", [0xa3,0x14,0xc0,0x5a]
     assert_bytes "cls  x20, x5", [0xb4,0x14,0xc0,0xda]
   end
 
   def test_generated_clz
-    skip "fixme"
     assert_bytes "clz  w24, w3", [0x78,0x10,0xc0,0x5a]
     assert_bytes "clz  w24, wzr", [0xf8,0x13,0xc0,0x5a]
     assert_bytes "clz  x26, x4", [0x9a,0x10,0xc0,0xda]
