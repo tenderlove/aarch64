@@ -352,18 +352,15 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_bl
-    skip "fixme"
     assert_bytes "bl      #-134217728", [0x00,0x00,0x00,0x96]
     assert_bytes "bl      #0", [0x00,0x00,0x00,0x94]
   end
 
   def test_generated_blr
-    skip "fixme"
     assert_bytes "blr      xzr", [0xe0,0x03,0x3f,0xd6]
   end
 
   def test_generated_br
-    skip "fixme"
     assert_bytes "br       x20", [0x80,0x02,0x1f,0xd6]
   end
 

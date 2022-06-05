@@ -25,6 +25,9 @@ rule
     | bfxil
     | bic
     | bics
+    | bl
+    | blr
+    | br
     | autda
     | dc
     | ic
@@ -246,6 +249,10 @@ rule
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
     | AUTDA xd COMMA SP { @asm.autda(val[1], val[3]) }
     ;
+
+  bl : BL imm { @asm.bl(val[1]) } ;
+  blr : BLR Xd { @asm.blr(val[1]) } ;
+  br : BR Xd { @asm.br(val[1]) } ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
