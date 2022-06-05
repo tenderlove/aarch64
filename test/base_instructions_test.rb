@@ -135,8 +135,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_ADRP
-    asm.adrp X3, 4000
-    assert_one_insn "adrp x3, #0x4000"
+    # adrp x3, #0x4000
+    assert_bytes [0x23, 00, 00, 0x90] do |asm|
+      asm.adrp x3, 0x4000
+    end
   end
 
   def test_AND_log_imm

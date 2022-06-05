@@ -5,6 +5,22 @@ require "strscan"
 
 module AArch64
   class Parser < Racc::Parser
+    class RegsWithShift
+      attr_reader :d, :n, :m, :shift, :amount
+
+      def initialize d, n, m, shift: :lsl, amount: 0
+        @d      = d
+        @n      = n
+        @m      = m
+        @shift  = shift
+        @amount = amount
+      end
+
+      def apply asm, name
+        asm.public_send(name, d, n, m, shift: shift, amount: amount)
+      end
+    end
+
     def parse str
       str += "\n" unless str.end_with?("\n")
       @scan = StringScanner.new str
@@ -38,7 +54,7 @@ module AArch64
         [:COMMA, ","]
       elsif str = @scan.scan(/0x[0-9A-F]+/i)
         [:NUMBER, Integer(str)]
-      elsif str = @scan.scan(/(?:0|[1-9][0-9]*)/i)
+      elsif str = @scan.scan(/-?(?:0|[1-9][0-9]*)/i)
         [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/LSL/i)
         [:LSL, str]

@@ -14,6 +14,10 @@ rule
     | adcs
     | add
     | adds
+    | ADR Xd COMMA imm { @asm.adr(val[1], val[3]) }
+    | ADRP Xd COMMA imm { @asm.adrp(val[1], val[3]) }
+    | and { val[0].apply(@asm, :and) }
+    | ands { val[0].apply(@asm, :ands) }
     | autda
     | dc
     | ic
@@ -164,6 +168,40 @@ rule
       }
     ;
 
+  and_immediate
+    : Wd COMMA Wd COMMA imm {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    | Xd COMMA Xd COMMA imm {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    ;
+
+  and_shifted
+    : Wd COMMA Wd COMMA Wd COMMA shift imm {
+        result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
+      }
+    | Xd COMMA Xd COMMA Xd COMMA shift imm {
+        result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
+      }
+    | Wd COMMA Wd COMMA Wd {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    | Xd COMMA Xd COMMA Xd {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    ;
+
+  and
+    : AND and_immediate { result = val[1] }
+    | AND and_shifted { result = val[1] }
+    ;
+
+  ands
+    : ANDS and_immediate { result = val[1] }
+    | ANDS and_shifted { result = val[1] }
+    ;
+
   autda
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
     | AUTDA xd COMMA SP { @asm.autda(val[1], val[3]) }
@@ -184,9 +222,10 @@ rule
     ;
 
   shift
-    : LSL
-    | LSR
-    | ASR
+    : LSL { result = val[0].to_sym }
+    | LSR { result = val[0].to_sym }
+    | ASR { result = val[0].to_sym }
+    | ROR { result = val[0].to_sym }
     ;
 
   register

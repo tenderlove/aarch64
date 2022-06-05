@@ -224,7 +224,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_adr
-    skip "fixme"
     assert_bytes "adr     x2, #-1048576", [0x02,0x00,0x80,0x10]
     assert_bytes "adr     x20, #0", [0x14,0x00,0x00,0x10]
     assert_bytes "adr     x5, #1048575", [0xe5,0xff,0x7f,0x70]
@@ -233,14 +232,12 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_adrp
-    skip "fixme"
     assert_bytes "adrp    x20, #-4294967296", [0x14,0x00,0x80,0x90]
     assert_bytes "adrp    x30, #4096", [0x1e,0x00,0x00,0xb0]
     assert_bytes "adrp    x9, #4294963200", [0xe9,0xff,0x7f,0xf0]
   end
 
   def test_generated_and
-    skip "fixme"
     assert_bytes "and  w2, w3, #0xfffffffd", [0x62,0x78,0x1e,0x12]
     assert_bytes "and      w0, w2, wzr, lsr #17", [0x40,0x44,0x5f,0x0a]
     assert_bytes "and      w11, wzr, #0x30003", [0xeb,0x87,0x00,0x12]
@@ -264,7 +261,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ands
-    skip "fixme"
     assert_bytes "ands  w19, w20, #0xfffffff0", [0x93,0x6e,0x1c,0x72]
     assert_bytes "ands     w19, w20, #0x33333333", [0x93,0xe6,0x00,0x72]
     assert_bytes "ands     w21, w22, #0x99999999", [0xd5,0xe6,0x01,0x72]
