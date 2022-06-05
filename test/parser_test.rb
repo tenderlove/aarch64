@@ -315,7 +315,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_bfi
-    skip "fixme"
     assert_bytes "bfi      w11, w12, #31, #1", [0x8b,0x01,0x01,0x33]
     assert_bytes "bfi      w13, w14, #29, #3", [0xcd,0x09,0x03,0x33]
     assert_bytes "bfi      x2, x3, #63, #1", [0x62,0x00,0x41,0xb3]

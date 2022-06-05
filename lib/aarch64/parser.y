@@ -21,6 +21,7 @@ rule
     | asr  { val[0].apply(@asm, :asr) }
     | at
     | b
+    | bfi
     | autda
     | dc
     | ic
@@ -207,6 +208,15 @@ rule
     : EQ
     | LO
     | LT
+    ;
+
+  bfi
+    : BFI Wd COMMA Wd COMMA imm COMMA imm {
+        @asm.bfi(val[1], val[3], val[5], val[7])
+      }
+    | BFI Xd COMMA Xd COMMA imm COMMA imm {
+        @asm.bfi(val[1], val[3], val[5], val[7])
+      }
     ;
 
   three_regs
