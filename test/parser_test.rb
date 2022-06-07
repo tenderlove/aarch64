@@ -611,7 +611,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_dmb
-    skip "fixme"
     assert_bytes "dmb     #0", [0xbf,0x30,0x03,0xd5]
     assert_bytes "dmb     #12", [0xbf,0x3c,0x03,0xd5]
     assert_bytes "dmb     ish", [0xbf,0x3b,0x03,0xd5]

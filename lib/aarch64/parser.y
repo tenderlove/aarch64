@@ -45,6 +45,7 @@ rule
     | DCPS1 { @asm.dcps1 }
     | DCPS2 { @asm.dcps2 }
     | DCPS3 { @asm.dcps3 }
+    | dmb
     | ic
     | movz
     | cond_fours
@@ -419,6 +420,11 @@ rule
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
     ;
 
+  dmb
+    : DMB imm { @asm.dmb(val[1]) }
+    | DMB dmb_option { @asm.dmb(val[1]) }
+    ;
+
   ic
     : IC ic_op { @asm.ic(val[1]) }
     | IC ic_op COMMA xt { @asm.ic(val[1], val[3]) }
@@ -499,6 +505,7 @@ rule
       | IALLU
       | IVAU
       ;
+
   at_op
       : S1E1R
       | S1E1W
@@ -514,4 +521,19 @@ rule
       | S12E0W
       | S1E3R
       | S1E3W
+      ;
+
+  dmb_option
+      : OSHLD
+      | OSHST
+      | OSH
+      | NSHLD
+      | NSHST
+      | NSH
+      | ISHLD
+      | ISHST
+      | ISH
+      | LD
+      | ST
+      | SY
       ;
