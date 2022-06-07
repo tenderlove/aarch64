@@ -41,6 +41,7 @@ rule
     | cmn
     | cmp
     | cneg
+    | csel
     | dc
     | ic
     | movz
@@ -283,6 +284,12 @@ rule
     | Xd COMMA Xd COMMA imm COMMA cond {
         result = FourArg.new(val[0], val[2], val[4], val[6])
       }
+    | Wd COMMA Wd COMMA Wd COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
+      }
+    | Xd COMMA Xd COMMA Xd COMMA cond {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
+      }
     ;
 
   ccmn : CCMN cond_four { val[1].apply(@asm, :ccmn) };
@@ -384,17 +391,9 @@ rule
 
   cmp : CMP cmn_body { val[1].apply(@asm, :cmp) }
 
-  cneg_body
-    : Wd COMMA Wd COMMA cond {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    | Xd COMMA Xd COMMA cond {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    ;
-  cneg
-    : CNEG cneg_body { val[1].apply(@asm, :cneg) }
-    ;
+  cneg : CNEG cond_three { val[1].apply(@asm, :cneg) } ;
+
+  csel : CSEL cond_four { val[1].apply(@asm, :csel) } ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
@@ -432,7 +431,7 @@ rule
   xt: Xd | XZR;
   wd: Wd | WZR;
 
-  cond : EQ | LO | LT | HS | GT | LE | NE ;
+  cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE;
 
   extend
       : UXTB
