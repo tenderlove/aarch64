@@ -55,6 +55,7 @@ rule
     | isb
     | movz
     | cond_fours
+    | loads
     ;
 
   adc
@@ -426,9 +427,54 @@ rule
     | ISB imm { @asm.isb(val[1]) }
     ;
 
+  loads
+    : ldaxp
+    | w_loads
+    | x_loads
+    ;
+
+  load_to_w
+    : Wd COMMA read_x_or_sp { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  load_to_x
+    : Xd COMMA read_x_or_sp { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  w_load_insns
+    : LDARB
+    | LDARH
+    | LDAR
+    | LDAXR
+    | LDAXRB
+    ;
+
+  w_loads
+    : w_load_insns load_to_w { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  x_load_insns
+    : LDAR
+    | LDAXR
+    ;
+
+  x_loads
+    : x_load_insns load_to_x { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  ldaxp
+    : LDAXP Wd COMMA Wd COMMA read_x_or_sp { @asm.ldaxp(val[1], val[3], val[5]) }
+    | LDAXP Xd COMMA Xd COMMA read_x_or_sp { @asm.ldaxp(val[1], val[3], val[5]) }
+    ;
+
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
+    ;
+
+  read_x_or_sp
+    : LSQ Xd RSQ { result = val[1] }
+    | LSQ SP RSQ { result = val[1] }
     ;
 
   shift

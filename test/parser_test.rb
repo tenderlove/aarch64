@@ -675,35 +675,29 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldar
-    skip "fixme"
     assert_bytes "ldar     wzr, [x1]", [0x3f,0xfc,0xdf,0x88]
     assert_bytes "ldar     x1, [x2]", [0x41,0xfc,0xdf,0xc8]
   end
 
   def test_generated_ldarb
-    skip "fixme"
     assert_bytes "ldarb    w29, [sp]", [0xfd,0xff,0xdf,0x08]
   end
 
   def test_generated_ldarh
-    skip "fixme"
     assert_bytes "ldarh    w30, [x0]", [0x1e,0xfc,0xdf,0x48]
   end
 
   def test_generated_ldaxp
-    skip "fixme"
     assert_bytes "ldaxp    w26, wzr, [sp]", [0xfa,0xff,0x7f,0x88]
     assert_bytes "ldaxp    x27, x28, [x30]", [0xdb,0xf3,0x7f,0xc8]
   end
 
   def test_generated_ldaxr
-    skip "fixme"
     assert_bytes "ldaxr    wzr, [x22]", [0xdf,0xfe,0x5f,0x88]
     assert_bytes "ldaxr    x21, [x23]", [0xf5,0xfe,0x5f,0xc8]
   end
 
   def test_generated_ldaxrb
-    skip "fixme"
     assert_bytes "ldaxrb   w19, [x21]", [0xb3,0xfe,0x5f,0x08]
   end
 
