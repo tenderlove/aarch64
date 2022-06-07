@@ -39,6 +39,7 @@ rule
     | cls
     | clz
     | cmn
+    | cmp
     | dc
     | ic
     | movz
@@ -317,7 +318,13 @@ rule
     | Wd COMMA imm COMMA LSL imm {
         result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
+    | Xd COMMA imm COMMA LSL imm {
+        result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
+      }
     | WSP COMMA imm {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | SP COMMA imm {
         result = TwoArg.new(val[0], val[2])
       }
     ;
@@ -366,11 +373,15 @@ rule
       }
     ;
 
-  cmn
-    : CMN cmn_shift    { val[1].apply(@asm, :cmn) }
-    | CMN cmn_immediate { val[1].apply(@asm, :cmn) }
-    | CMN cmn_extended { val[1].apply(@asm, :cmn) }
+  cmn_body
+    : cmn_shift
+    | cmn_immediate
+    | cmn_extended
     ;
+
+  cmn : CMN cmn_body { val[1].apply(@asm, :cmn) }
+
+  cmp : CMP cmn_body { val[1].apply(@asm, :cmp) }
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }

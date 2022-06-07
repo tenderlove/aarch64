@@ -478,7 +478,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cmp
-    skip "fixme"
     assert_bytes "cmp      sp, #200", [0xff,0x23,0x03,0xf1]
     assert_bytes "cmp      sp, w19, sxth", [0xff,0xa3,0x33,0xeb]
     assert_bytes "cmp      sp, w19, uxth #4", [0xff,0x33,0x33,0xeb]
