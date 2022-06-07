@@ -659,7 +659,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_eret
-    skip "fixme"
     assert_bytes "eret", [0xe0,0x03,0x9f,0xd6]
   end
 

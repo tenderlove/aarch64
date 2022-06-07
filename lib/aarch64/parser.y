@@ -49,6 +49,7 @@ rule
     | DRPS { @asm.drps }
     | dsb
     | eor
+    | ERET { @asm.eret }
     | ic
     | movz
     | cond_fours
