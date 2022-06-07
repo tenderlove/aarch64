@@ -48,6 +48,7 @@ rule
     | dmb
     | DRPS { @asm.drps }
     | dsb
+    | eor
     | ic
     | movz
     | cond_fours
@@ -183,6 +184,12 @@ rule
         result = RegsWithShift.new(val[0], val[2], val[4])
       }
     | Xd COMMA Xd COMMA imm {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    | SP COMMA Xd COMMA imm {
+        result = RegsWithShift.new(val[0], val[2], val[4])
+      }
+    | WSP COMMA Wd COMMA imm {
         result = RegsWithShift.new(val[0], val[2], val[4])
       }
     ;
@@ -430,6 +437,10 @@ rule
   dsb
     : DSB imm { @asm.dsb(val[1]) }
     | DSB dmb_option { @asm.dsb(val[1]) }
+    ;
+
+  eor
+    : EOR and_immediate { val[1].apply(@asm, :eor) }
     ;
 
   ic

@@ -648,7 +648,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_eor
-    skip "fixme"
     assert_bytes "eor  w16, w17, #0xfffffff9", [0x30,0x76,0x1d,0x52]
     assert_bytes "eor      sp, xzr, #0x303030303030303", [0xff,0xc7,0x00,0xd2]
     assert_bytes "eor      w16, w17, #0x81818181", [0x30,0xc6,0x01,0x52]
