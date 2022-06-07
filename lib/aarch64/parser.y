@@ -40,6 +40,7 @@ rule
     | clz
     | cmn
     | cmp
+    | cneg
     | dc
     | ic
     | movz
@@ -382,6 +383,18 @@ rule
   cmn : CMN cmn_body { val[1].apply(@asm, :cmn) }
 
   cmp : CMP cmn_body { val[1].apply(@asm, :cmp) }
+
+  cneg_body
+    : Wd COMMA Wd COMMA cond {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | Xd COMMA Xd COMMA cond {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    ;
+  cneg
+    : CNEG cneg_body { val[1].apply(@asm, :cneg) }
+    ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }

@@ -532,7 +532,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cneg
-    skip "fixme"
     assert_bytes "cneg    w3, w5, gt", [0xa3,0xd4,0x85,0x5a]
     assert_bytes "cneg    w9, wzr, lt", [0xe9,0xa7,0x9f,0x5a]
     assert_bytes "cneg    wzr, w4, le", [0x9f,0xc4,0x84,0x5a]
