@@ -663,7 +663,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_extr
-    skip "fixme"
     assert_bytes "extr     w11, w13, w17, #31", [0xab,0x7d,0x91,0x13]
     assert_bytes "extr     w3, w5, w7, #0", [0xa3,0x00,0x87,0x13]
     assert_bytes "extr     x11, x13, x17, #63", [0xab,0xfd,0xd1,0x93]

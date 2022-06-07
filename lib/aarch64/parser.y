@@ -50,6 +50,7 @@ rule
     | dsb
     | eor
     | ERET { @asm.eret }
+    | extr
     | ic
     | movz
     | cond_fours
@@ -430,9 +431,9 @@ rule
     | DSB dmb_option { @asm.dsb(val[1]) }
     ;
 
-  eor
-    : EOR reg_reg_imm { val[1].apply(@asm, :eor) }
-    ;
+  eor : EOR reg_reg_imm { val[1].apply(@asm, :eor) } ;
+
+  extr : EXTR reg_reg_reg_imm { val[1].apply(@asm, :extr) } ;
 
   ic
     : IC ic_op { @asm.ic(val[1]) }
@@ -454,6 +455,15 @@ rule
   register
     : Xd
     | Wd
+    ;
+
+  reg_reg_reg_imm
+    : Wd COMMA Wd COMMA Wd COMMA imm {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
+      }
+    | Xd COMMA Xd COMMA Xd COMMA imm {
+        result = FourArg.new(val[0], val[2], val[4], val[6])
+      }
     ;
 
   imm
