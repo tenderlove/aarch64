@@ -559,7 +559,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_csetm
-    skip "fixme"
     assert_bytes "csetm    w20, ne", [0xf4,0x03,0x9f,0x5a]
     assert_bytes "csetm    w9, lt", [0xe9,0xa3,0x9f,0x5a]
     assert_bytes "csetm    x30, ge", [0xfe,0xb3,0x9f,0xda]
