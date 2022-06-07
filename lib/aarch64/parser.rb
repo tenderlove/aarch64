@@ -51,6 +51,33 @@ module AArch64
       end
     end
 
+    class TwoWithLsl
+      attr_reader :n, :m, :lsl
+
+      def initialize n, m, lsl:
+        @n   = n
+        @m   = m
+        @lsl = lsl
+      end
+
+      def apply asm, name
+        asm.public_send(name, n, m, lsl: lsl)
+      end
+    end
+
+    class TwoArg
+      attr_reader :n, :m
+
+      def initialize n, m
+        @n = n
+        @m = m
+      end
+
+      def apply asm, name
+        asm.public_send(name, n, m)
+      end
+    end
+
     class ThreeArg
       attr_reader :d, :n, :m
 

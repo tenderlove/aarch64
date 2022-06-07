@@ -312,13 +312,13 @@ rule
 
   cmn_immediate
     : SP COMMA imm COMMA LSL imm {
-        @asm.cmn(val[0], val[2], lsl: val[5])
+        result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
     | Wd COMMA imm COMMA LSL imm {
-        @asm.cmn(val[0], val[2], lsl: val[5])
+        result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
     | WSP COMMA imm {
-        @asm.cmn(val[0], val[2])
+        result = TwoArg.new(val[0], val[2])
       }
     ;
 
@@ -368,7 +368,7 @@ rule
 
   cmn
     : CMN cmn_shift    { val[1].apply(@asm, :cmn) }
-    | CMN cmn_immediate
+    | CMN cmn_immediate { val[1].apply(@asm, :cmn) }
     | CMN cmn_extended { val[1].apply(@asm, :cmn) }
     ;
 
