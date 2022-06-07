@@ -179,18 +179,18 @@ rule
       }
     ;
 
-  and_immediate
+  reg_reg_imm
     : Wd COMMA Wd COMMA imm {
-        result = RegsWithShift.new(val[0], val[2], val[4])
+        result = ThreeArg.new(val[0], val[2], val[4])
       }
     | Xd COMMA Xd COMMA imm {
-        result = RegsWithShift.new(val[0], val[2], val[4])
+        result = ThreeArg.new(val[0], val[2], val[4])
       }
     | SP COMMA Xd COMMA imm {
-        result = RegsWithShift.new(val[0], val[2], val[4])
+        result = ThreeArg.new(val[0], val[2], val[4])
       }
     | WSP COMMA Wd COMMA imm {
-        result = RegsWithShift.new(val[0], val[2], val[4])
+        result = ThreeArg.new(val[0], val[2], val[4])
       }
     ;
 
@@ -201,32 +201,22 @@ rule
     | Xd COMMA Xd COMMA Xd COMMA shift imm {
         result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
       }
-    | Wd COMMA Wd COMMA Wd {
-        result = RegsWithShift.new(val[0], val[2], val[4])
-      }
-    | Xd COMMA Xd COMMA Xd {
-        result = RegsWithShift.new(val[0], val[2], val[4])
-      }
+    | reg_reg_reg
     ;
 
   and
-    : AND and_immediate { result = val[1] }
+    : AND reg_reg_imm { result = val[1] }
     | AND shifted { result = val[1] }
     ;
 
   ands
-    : ANDS and_immediate { result = val[1] }
+    : ANDS reg_reg_imm { result = val[1] }
     | ANDS shifted { result = val[1] }
     ;
 
   asr
-    : ASR three_regs { result = val[1] }
-    | ASR Wd COMMA Wd COMMA imm {
-        result = ThreeArg.new(val[1], val[3], val[5])
-      }
-    | ASR Xd COMMA Xd COMMA imm {
-        result = ThreeArg.new(val[1], val[3], val[5])
-      }
+    : ASR reg_reg_reg { result = val[1] }
+    | ASR reg_reg_imm { result = val[1] }
     ;
 
   at: AT at_op COMMA Xd { @asm.at(val[1].to_sym, val[3]) };
@@ -260,7 +250,7 @@ rule
   bics
     : BICS shifted { val[1].apply(@asm, :bics) } ;
 
-  three_regs
+  reg_reg_reg
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
     | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
     ;
@@ -440,7 +430,7 @@ rule
     ;
 
   eor
-    : EOR and_immediate { val[1].apply(@asm, :eor) }
+    : EOR reg_reg_imm { val[1].apply(@asm, :eor) }
     ;
 
   ic
