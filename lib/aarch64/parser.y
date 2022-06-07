@@ -219,16 +219,6 @@ rule
     | B DOT cond imm { @asm.b(val[3], cond: val[2]) }
     ;
 
-  cond
-    : EQ
-    | LO
-    | LT
-    | HS
-    | GT
-    | LE
-    | NE
-    ;
-
   bfi
     : BFI Wd COMMA Wd COMMA imm COMMA imm {
         @asm.bfi(val[1], val[3], val[5], val[7])
@@ -354,6 +344,8 @@ rule
   xn: Xd;
   xt: Xd | XZR;
   wd: Wd | WZR;
+
+  cond : EQ | LO | LT | HS | GT | LE | NE ;
 
   extend
       : UXTB
