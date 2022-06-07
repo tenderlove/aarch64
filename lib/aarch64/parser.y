@@ -42,6 +42,7 @@ rule
     | cmp
     | cneg
     | csel
+    | cset
     | dc
     | ic
     | movz
@@ -301,6 +302,10 @@ rule
     | Xd COMMA Xd COMMA cond { result = ThreeArg.new(val[0], val[2], val[4]) }
     ;
 
+  cond_two
+    : Wd COMMA cond { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA cond { result = TwoArg.new(val[0], val[2]) }
+
   cinc : CINC cond_three { val[1].apply(@asm, :cinc) };
   cinv : CINV cond_three { val[1].apply(@asm, :cinv) };
 
@@ -395,6 +400,8 @@ rule
 
   csel : CSEL cond_four { val[1].apply(@asm, :csel) } ;
 
+  cset : CSET cond_two { val[1].apply(@asm, :cset) } ;
+
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
     ;
@@ -431,7 +438,7 @@ rule
   xt: Xd | XZR;
   wd: Wd | WZR;
 
-  cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE;
+  cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE | PL;
 
   extend
       : UXTB

@@ -552,7 +552,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cset
-    skip "fixme"
     assert_bytes "cset     x9, lt", [0xe9,0xa7,0x9f,0x9a]
     assert_bytes "cset    w3, eq", [0xe3,0x17,0x9f,0x1a]
     assert_bytes "cset    w9, lt", [0xe9,0xa7,0x9f,0x1a]
