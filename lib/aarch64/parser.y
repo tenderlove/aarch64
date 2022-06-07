@@ -47,6 +47,7 @@ rule
     | DCPS3 { @asm.dcps3 }
     | dmb
     | DRPS { @asm.drps }
+    | dsb
     | ic
     | movz
     | cond_fours
@@ -424,6 +425,11 @@ rule
   dmb
     : DMB imm { @asm.dmb(val[1]) }
     | DMB dmb_option { @asm.dmb(val[1]) }
+    ;
+
+  dsb
+    : DSB imm { @asm.dsb(val[1]) }
+    | DSB dmb_option { @asm.dsb(val[1]) }
     ;
 
   ic

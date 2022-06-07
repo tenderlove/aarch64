@@ -632,7 +632,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_dsb
-    skip "fixme"
     assert_bytes "dsb     #12", [0x9f,0x3c,0x03,0xd5]
     assert_bytes "dsb     ish", [0x9f,0x3b,0x03,0xd5]
     assert_bytes "dsb     ishld", [0x9f,0x39,0x03,0xd5]
