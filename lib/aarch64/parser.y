@@ -399,6 +399,7 @@ rule
     | CSEL
     | CCMN
     | CCMP
+    | CSNEG
     ;
 
   cond_fours
