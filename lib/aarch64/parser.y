@@ -429,6 +429,7 @@ rule
 
   loads
     : ldaxp
+    | ldnp
     | w_loads
     | x_loads
     ;
@@ -463,9 +464,40 @@ rule
     : x_load_insns load_to_x { val[1].apply(@asm, val[0].to_sym) }
     ;
 
+  w_w_load
+    : Wd COMMA Wd COMMA LSQ Xd { result = val.values_at(0, 2, 5) }
+    | Wd COMMA Wd COMMA LSQ SP { result = val.values_at(0, 2, 5) }
+    ;
+
+  x_x_load
+    : Xd COMMA Xd COMMA LSQ Xd { result = val.values_at(0, 2, 5) }
+    | Xd COMMA Xd COMMA LSQ SP { result = val.values_at(0, 2, 5) }
+    ;
+
+  reg_reg_load
+    : x_x_load RSQ { result = ThreeArg.new(*val[0]) }
+    | w_w_load RSQ { result = ThreeArg.new(*val[0]) }
+    ;
+
   ldaxp
-    : LDAXP Wd COMMA Wd COMMA read_x_or_sp { @asm.ldaxp(val[1], val[3], val[5]) }
-    | LDAXP Xd COMMA Xd COMMA read_x_or_sp { @asm.ldaxp(val[1], val[3], val[5]) }
+    : LDAXP reg_reg_load { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  reg_reg_load_offset
+    : w_w_load COMMA imm RSQ {
+        reg1, reg2, reg3 = *val[0]
+        result = ThreeArg.new(reg1, reg2, [reg3, val[2]])
+      }
+    | x_x_load COMMA imm RSQ {
+        reg1, reg2, reg3 = *val[0]
+        result = ThreeArg.new(reg1, reg2, [reg3, val[2]])
+      }
+    | w_w_load RSQ { result = ThreeArg.new(*val[0].first(2), [val[0].last]) }
+    | x_x_load RSQ { result = ThreeArg.new(*val[0].first(2), [val[0].last]) }
+    ;
+
+  ldnp
+    : LDNP reg_reg_load_offset { val[1].apply(@asm, val[0].to_sym) }
     ;
 
   movz

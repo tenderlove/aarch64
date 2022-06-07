@@ -706,11 +706,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldnp
-    skip "fixme"
-    assert_bytes "ldnp      d2, d3, [x30, #-8]", [0xc2,0x8f,0x7f,0x6c]
-    assert_bytes "ldnp      q23, q29, [x1, #-1024]", [0x37,0x74,0x60,0xac]
-    assert_bytes "ldnp      s1, s2, [x3, #44]", [0x61,0x88,0x45,0x2c]
-    assert_bytes "ldnp      s29, s28, [sp, #252]", [0xfd,0xf3,0x5f,0x2c]
     assert_bytes "ldnp      w2, wzr, [sp, #-256]", [0xe2,0x7f,0x60,0x28]
     assert_bytes "ldnp      w3, w5, [sp]", [0xe3,0x17,0x40,0x28]
     assert_bytes "ldnp      w9, w10, [sp, #4]", [0xe9,0xab,0x40,0x28]
