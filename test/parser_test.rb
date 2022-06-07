@@ -599,17 +599,14 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_dcps1
-    skip "fixme"
     assert_bytes "dcps1", [0x01,0x00,0xa0,0xd4]
   end
 
   def test_generated_dcps2
-    skip "fixme"
     assert_bytes "dcps2", [0x02,0x00,0xa0,0xd4]
   end
 
   def test_generated_dcps3
-    skip "fixme"
     assert_bytes "dcps3", [0x03,0x00,0xa0,0xd4]
   end
 

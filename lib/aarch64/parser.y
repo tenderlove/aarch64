@@ -42,6 +42,9 @@ rule
     | cset
     | csetm
     | dc
+    | DCPS1 { @asm.dcps1 }
+    | DCPS2 { @asm.dcps2 }
+    | DCPS3 { @asm.dcps3 }
     | ic
     | movz
     | cond_fours
