@@ -702,7 +702,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldaxrh
-    skip "fixme"
     assert_bytes "ldaxrh   w20, [sp]", [0xf4,0xff,0x5f,0x48]
   end
 

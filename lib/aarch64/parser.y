@@ -447,6 +447,7 @@ rule
     | LDAR
     | LDAXR
     | LDAXRB
+    | LDAXRH
     ;
 
   w_loads
