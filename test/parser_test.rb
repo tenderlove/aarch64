@@ -628,7 +628,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_drps
-    skip "fixme"
     assert_bytes "drps", [0xe0,0x03,0xbf,0xd6]
   end
 

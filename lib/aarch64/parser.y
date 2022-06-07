@@ -46,6 +46,7 @@ rule
     | DCPS2 { @asm.dcps2 }
     | DCPS3 { @asm.dcps3 }
     | dmb
+    | DRPS { @asm.drps }
     | ic
     | movz
     | cond_fours
