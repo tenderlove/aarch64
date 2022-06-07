@@ -52,6 +52,7 @@ rule
     | ERET { @asm.eret }
     | extr
     | ic
+    | isb
     | movz
     | cond_fours
     ;
@@ -181,21 +182,6 @@ rule
       }
     ;
 
-  reg_reg_imm
-    : Wd COMMA Wd COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    | Xd COMMA Xd COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    | SP COMMA Xd COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    | WSP COMMA Wd COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[4])
-      }
-    ;
-
   shifted
     : Wd COMMA Wd COMMA Wd COMMA shift imm {
         result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
@@ -251,11 +237,6 @@ rule
 
   bics
     : BICS shifted { val[1].apply(@asm, :bics) } ;
-
-  reg_reg_reg
-    : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
-    | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
-    ;
 
   autda
     : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
@@ -440,6 +421,11 @@ rule
     | IC ic_op COMMA xt { @asm.ic(val[1], val[3]) }
     ;
 
+  isb
+    : ISB { @asm.isb }
+    | ISB imm { @asm.isb(val[1]) }
+    ;
+
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
@@ -455,6 +441,26 @@ rule
   register
     : Xd
     | Wd
+    ;
+
+  reg_reg_reg
+    : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
+  reg_reg_imm
+    : Wd COMMA Wd COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | Xd COMMA Xd COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | SP COMMA Xd COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | WSP COMMA Wd COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
     ;
 
   reg_reg_reg_imm
