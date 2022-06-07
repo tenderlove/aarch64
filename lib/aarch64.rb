@@ -234,6 +234,7 @@ module AArch64
                  when :uxtb then 0b000
                  when :uxth then 0b001
                  when :uxtw then 0b010
+                 when :lsl then 0b010
                  when :uxtx then 0b011
                  when :sxtb then 0b100
                  when :sxth then 0b101

@@ -21,6 +21,36 @@ module AArch64
       end
     end
 
+    class TwoWithExtend
+      attr_reader :n, :m, :extend, :amount
+
+      def initialize n, m, extend:, amount:
+        @n      = n
+        @m      = m
+        @extend = extend
+        @amount = amount
+      end
+
+      def apply asm, name
+        asm.public_send(name, n, m, extend: extend, amount: amount)
+      end
+    end
+
+    class TwoWithShift
+      attr_reader :n, :m, :shift, :amount
+
+      def initialize n, m, shift:, amount:
+        @n      = n
+        @m      = m
+        @shift  = shift
+        @amount = amount
+      end
+
+      def apply asm, name
+        asm.public_send(name, n, m, shift: shift, amount: amount)
+      end
+    end
+
     class ThreeArg
       attr_reader :d, :n, :m
 

@@ -38,6 +38,7 @@ rule
     | clrex
     | cls
     | clz
+    | cmn
     | dc
     | ic
     | movz
@@ -307,6 +308,68 @@ rule
   clz
     : CLZ Wd COMMA Wd { @asm.clz(val[1], val[3]) }
     | CLZ Xd COMMA Xd { @asm.clz(val[1], val[3]) }
+    ;
+
+  cmn_immediate
+    : SP COMMA imm COMMA LSL imm {
+        @asm.cmn(val[0], val[2], lsl: val[5])
+      }
+    | Wd COMMA imm COMMA LSL imm {
+        @asm.cmn(val[0], val[2], lsl: val[5])
+      }
+    | WSP COMMA imm {
+        @asm.cmn(val[0], val[2])
+      }
+    ;
+
+  cmn_extend_with_sp
+    : SP COMMA Wd { result = [val[0], val[2]] }
+    | SP COMMA Xd { result = [val[0], val[2]] }
+    | WSP COMMA Wd { result = [val[0], val[2]] }
+    ;
+
+  cmn_extend_without_sp
+    : Wd COMMA Wd COMMA { result = [val[0], val[2]] }
+    | Xd COMMA Xd COMMA { result = [val[0], val[2]] }
+    | Xd COMMA Wd COMMA { result = [val[0], val[2]] }
+    ;
+
+  cmn_extended
+    : cmn_extend_with_sp COMMA extend {
+        result = TwoWithExtend.new(*val[0], extend: val[2].to_sym, amount: 0)
+      }
+    | cmn_extend_with_sp COMMA extend imm {
+        result = TwoWithExtend.new(*val[0], extend: val[2].to_sym, amount: val[3])
+      }
+    | cmn_extend_with_sp COMMA LSL imm {
+        result = TwoWithExtend.new(*val[0], extend: :lsl, amount: val[3])
+      }
+    | cmn_extend_with_sp {
+        result = TwoWithExtend.new(*val[0], extend: nil, amount: 0)
+      }
+    | cmn_extend_without_sp extend {
+        result = TwoWithExtend.new(*val[0], extend: val[1].to_sym, amount: 0)
+      }
+    | cmn_extend_without_sp extend imm {
+        result = TwoWithExtend.new(*val[0], extend: val[1].to_sym, amount: val[2])
+      }
+    ;
+
+  cmn_shift
+    : Wd COMMA Wd { result = TwoWithShift.new(val[0], val[2], shift: :lsl, amount: 0) }
+    | Xd COMMA Xd { result = TwoWithShift.new(val[0], val[2], shift: :lsl, amount: 0) }
+    | Wd COMMA Wd COMMA shift imm {
+        result = TwoWithShift.new(val[0], val[2], shift: val[4], amount: val[5])
+      }
+    | Xd COMMA Xd COMMA shift imm {
+        result = TwoWithShift.new(val[0], val[2], shift: val[4], amount: val[5])
+      }
+    ;
+
+  cmn
+    : CMN cmn_shift    { val[1].apply(@asm, :cmn) }
+    | CMN cmn_immediate
+    | CMN cmn_extended { val[1].apply(@asm, :cmn) }
     ;
 
   dc

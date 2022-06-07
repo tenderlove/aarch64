@@ -436,7 +436,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_cmn
-    skip "fixme"
     assert_bytes "cmn      sp, #1092, lsl #12", [0xff,0x13,0x51,0xb1]
     assert_bytes "cmn      sp, w19, sxth", [0xff,0xa3,0x33,0xab]
     assert_bytes "cmn      sp, w19, uxth #4", [0xff,0x33,0x33,0xab]
