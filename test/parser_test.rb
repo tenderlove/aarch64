@@ -577,7 +577,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_csinv
-    skip "fixme"
     assert_bytes "csinv    w1, w0, w19, ne", [0x01,0x10,0x93,0x5a]
     assert_bytes "csinv    w1, w28, wzr, mi", [0x81,0x43,0x9f,0x5a]
     assert_bytes "csinv    w9, wzr, w30, gt", [0xe9,0xc3,0x9e,0x5a]

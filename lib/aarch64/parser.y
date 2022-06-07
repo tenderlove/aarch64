@@ -31,8 +31,6 @@ rule
     | br
     | cbnz
     | cbz
-    | ccmn
-    | ccmp
     | cinc
     | cinv
     | clrex
@@ -41,13 +39,12 @@ rule
     | cmn
     | cmp
     | cneg
-    | csel
     | cset
     | csetm
-    | csinc
     | dc
     | ic
     | movz
+    | cond_fours
     ;
 
   adc
@@ -295,10 +292,6 @@ rule
       }
     ;
 
-  ccmn : CCMN cond_four { val[1].apply(@asm, :ccmn) };
-
-  ccmp : CCMP cond_four { val[1].apply(@asm, :ccmp) };
-
   cond_three
     : Wd COMMA Wd COMMA cond { result = ThreeArg.new(val[0], val[2], val[4]) }
     | Xd COMMA Xd COMMA cond { result = ThreeArg.new(val[0], val[2], val[4]) }
@@ -400,13 +393,23 @@ rule
 
   cneg : CNEG cond_three { val[1].apply(@asm, :cneg) } ;
 
-  csel : CSEL cond_four { val[1].apply(@asm, :csel) } ;
+  cond_four_instructions
+    : CSINV
+    | CSINC
+    | CSEL
+    | CCMN
+    | CCMP
+    ;
+
+  cond_fours
+    : cond_four_instructions cond_four {
+        val[1].apply(@asm, val[0].downcase.to_sym)
+      }
+    ;
 
   cset : CSET cond_two { val[1].apply(@asm, :cset) } ;
 
   csetm : CSETM cond_two { val[1].apply(@asm, :csetm) } ;
-
-  csinc : CSINC cond_four { val[1].apply(@asm, :csinc) } ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
