@@ -44,6 +44,7 @@ rule
     | csel
     | cset
     | csetm
+    | csinc
     | dc
     | ic
     | movz
@@ -404,6 +405,8 @@ rule
   cset : CSET cond_two { val[1].apply(@asm, :cset) } ;
 
   csetm : CSETM cond_two { val[1].apply(@asm, :csetm) } ;
+
+  csinc : CSINC cond_four { val[1].apply(@asm, :csinc) } ;
 
   dc
     : DC dc_op COMMA xt { @asm.dc(val[1], val[3]) }
