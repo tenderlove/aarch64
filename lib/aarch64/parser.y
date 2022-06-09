@@ -432,16 +432,17 @@ rule
     | ldnp
     | ldp
     | ldpsw
+    | ldr
     | w_loads
     | x_loads
     ;
 
   load_to_w
-    : Wd COMMA read_x_or_sp { result = TwoArg.new(val[0], val[2]) }
+    : Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
     ;
 
   load_to_x
-    : Xd COMMA read_x_or_sp { result = TwoArg.new(val[0], val[2]) }
+    : Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
     ;
 
   w_load_insns
@@ -466,14 +467,21 @@ rule
     : x_load_insns load_to_x { val[1].apply(@asm, val[0].to_sym) }
     ;
 
+  read_reg
+    : LSQ Xd { result = val[1] }
+    | LSQ SP { result = val[1] }
+    ;
+
+  read_reg_imm
+    : read_reg COMMA imm { result = [val[0], val[2]] }
+    ;
+
   w_w_load
-    : Wd COMMA Wd COMMA LSQ Xd { result = val.values_at(0, 2, 5) }
-    | Wd COMMA Wd COMMA LSQ SP { result = val.values_at(0, 2, 5) }
+    : Wd COMMA Wd COMMA read_reg { result = val.values_at(0, 2, 4) }
     ;
 
   x_x_load
-    : Xd COMMA Xd COMMA LSQ Xd { result = val.values_at(0, 2, 5) }
-    | Xd COMMA Xd COMMA LSQ SP { result = val.values_at(0, 2, 5) }
+    : Xd COMMA Xd COMMA read_reg { result = val.values_at(0, 2, 4) }
     ;
 
   reg_reg_load
@@ -524,28 +532,76 @@ rule
     ;
 
   ldp_signed_offset
-    : Wd COMMA Wd COMMA LSQ Xd COMMA imm RSQ {
-        result = [val[0], val[2], [val[5], val[7]]]
+    : Wd COMMA Wd COMMA read_reg_imm RSQ {
+        result = [val[0], val[2], val[4]]
       }
-    | Wd COMMA Wd COMMA LSQ SP COMMA imm RSQ {
-        result = [val[0], val[2], [val[5], val[7]]]
+    | Xd COMMA Xd COMMA read_reg_imm RSQ {
+        result = [val[0], val[2], val[4]]
       }
-    | Xd COMMA Xd COMMA LSQ Xd COMMA imm RSQ {
-        result = [val[0], val[2], [val[5], val[7]]]
+    ;
+
+  read_reg_reg
+    : read_reg COMMA Xd { result = [val[0], val[2]] }
+    | read_reg COMMA Wd { result = [val[0], val[2]] }
+    ;
+
+  read_reg_reg_extend_amount
+    : read_reg_reg COMMA ldr_extend imm {
+        result = [val[0], Shifts::Shift.new(val[3], 0, val[2].to_sym)].flatten
       }
-    | Xd COMMA Xd COMMA LSQ SP COMMA imm RSQ {
-        result = [val[0], val[2], [val[5], val[7]]]
+    | read_reg_reg COMMA ldr_extend {
+        result = [val[0], Shifts::Shift.new(0, 0, val[2].to_sym)].flatten
+      }
+    ;
+
+  ldr
+    : LDR Wd COMMA read_reg_reg_extend_amount RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Xd COMMA read_reg_reg_extend_amount RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Wd COMMA read_reg_imm RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Xd COMMA read_reg_imm RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Wd COMMA read_reg_imm RSQ BANG {
+        @asm.ldr(val[1], val[3], :!)
+      }
+    | LDR Xd COMMA read_reg_imm RSQ BANG {
+        @asm.ldr(val[1], val[3], :!)
+      }
+    | LDR Wd COMMA read_reg RSQ COMMA imm {
+        @asm.ldr(val[1], [val[3]], val[6])
+      }
+    | LDR Xd COMMA read_reg RSQ COMMA imm {
+        @asm.ldr(val[1], [val[3]], val[6])
+      }
+    | LDR Wd COMMA read_reg RSQ {
+        @asm.ldr(val[1], [val[3]])
+      }
+    | LDR Xd COMMA read_reg RSQ {
+        @asm.ldr(val[1], [val[3]])
+      }
+    | LDR Wd COMMA read_reg_reg RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Xd COMMA read_reg_reg RSQ {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Wd COMMA imm {
+        @asm.ldr(val[1], val[3])
+      }
+    | LDR Xd COMMA imm {
+        @asm.ldr(val[1], val[3])
       }
     ;
 
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
-    ;
-
-  read_x_or_sp
-    : LSQ Xd RSQ { result = val[1] }
-    | LSQ SP RSQ { result = val[1] }
     ;
 
   shift
@@ -608,6 +664,13 @@ rule
       | UXTX
       | SXTB
       | SXTH
+      | SXTW
+      | SXTX
+      ;
+
+  ldr_extend
+      : LSL
+      | UXTW
       | SXTW
       | SXTX
       ;

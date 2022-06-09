@@ -1076,7 +1076,7 @@ module AArch64
                      when :sxtw then 0b110
                      when :sxtx then 0b111
                      else
-                       raise
+                       raise option.name
                      end
 
             amount = if rt.x?

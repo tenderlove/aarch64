@@ -748,7 +748,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldr
-    skip "fixme"
     assert_bytes "ldr      w10, [x30, x7, lsl #2]", [0xca,0x7b,0x67,0xb8]
     assert_bytes "ldr      w11, [x29, x3, sxtx]", [0xab,0xeb,0x63,0xb8]
     assert_bytes "ldr      w13, [x2, #4]", [0x4d,0x04,0x40,0xb9]
