@@ -616,15 +616,19 @@ rule
     | LDURH
     ;
 
+  ldtr_64s
+    : LDTR
+    | LDTRSB
+    | LDTRSH
+    | LDTRSW
+    | LDUR
+    | LDURSB
+    | LDURSH
+    ;
+
   ldtr
     : ldtr_32s ldtr_32 { val[1].apply(@asm, val[0]) }
-    | LDTR ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDTRSB ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDTRSH ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDTRSW ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDUR ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDURSB ldtr_64 { val[1].apply(@asm, val[0]) }
-    | LDURSH ldtr_64 { val[1].apply(@asm, val[0]) }
+    | ldtr_64s ldtr_64 { val[1].apply(@asm, val[0]) }
     ;
 
   movz

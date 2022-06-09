@@ -161,7 +161,9 @@ file SYSTEM_REGS_FILE do |t|
 end
 
 rule ".tab.rb" => [".y"] do |t|
+  puts "#" * 90
   sh "gel exec racc -v #{t.source}"
+  puts "#" * 90
 end
 
 Rake::TestTask.new(:test) do |t|
