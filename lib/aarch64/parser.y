@@ -565,20 +565,22 @@ rule
     ;
 
   ldr_64
-    : Xd COMMA read_reg_reg_extend_amount RSQ { @asm.ldr(val[0], val[2]) }
-    | Xd COMMA read_reg_imm RSQ { @asm.ldr(val[0], val[2]) }
-    | Xd COMMA read_reg_imm RSQ BANG { @asm.ldr(val[0], val[2], :!) }
-    | Xd COMMA read_reg RSQ COMMA imm { @asm.ldr(val[0], [val[2]], val[5]) }
-    | Xd COMMA read_reg RSQ { @asm.ldr(val[0], [val[2]]) }
-    | Xd COMMA read_reg_reg RSQ { @asm.ldr(val[0], val[2]) }
-    | Xd COMMA imm { @asm.ldr(val[0], val[2]) }
+    : Xd COMMA read_reg_reg_extend_amount RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA read_reg_imm RSQ BANG { result = ThreeArg.new(val[0], val[2], :!) }
+    | Xd COMMA read_reg RSQ COMMA imm { result = ThreeArg.new(val[0], [val[2]], val[5]) }
+    | Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
+    | Xd COMMA read_reg_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA imm { result = TwoArg.new(val[0], val[2]) }
     ;
 
   ldr
     : LDR ldr_32 { val[1].apply(@asm, :ldr) }
-    | LDR ldr_64
+    | LDR ldr_64 { val[1].apply(@asm, :ldr) }
     | LDRB ldr_32 { val[1].apply(@asm, :ldrb) }
     | LDRH ldr_32 { val[1].apply(@asm, :ldrh) }
+    | LDRSB ldr_32 { val[1].apply(@asm, :ldrsb) }
+    | LDRSB ldr_64 { val[1].apply(@asm, :ldrsb) }
     ;
 
   movz

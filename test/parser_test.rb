@@ -820,7 +820,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldrsb
-    skip "fixme"
     assert_bytes "ldrsb    w10, [x30, x7]", [0xca,0x6b,0xe7,0x38]
     assert_bytes "ldrsb    w15, [x25, w7, uxtw #0]", [0x2f,0x5b,0xe7,0x38]
     assert_bytes "ldrsb    w19, [x12, #-256]!", [0x93,0x0d,0xd0,0x38]
