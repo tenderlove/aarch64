@@ -431,6 +431,7 @@ rule
     : ldaxp
     | ldnp
     | ldp
+    | ldpsw
     | w_loads
     | x_loads
     ;
@@ -502,15 +503,23 @@ rule
     ;
 
   ldp
-    : LDP ldp_signed_offset { @asm.ldp(*val[1]) }
-    | LDP ldp_signed_offset BANG { @asm.ldp(*val[1], :!) }
-    | LDP reg_reg_load COMMA imm {
-        rt1, rt2, rn = *val[1].to_a
-        @asm.ldp(rt1, rt2, [rn], val[3])
+    : LDP ldp_body { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  ldpsw
+    : LDPSW ldp_body { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  ldp_body
+    : ldp_signed_offset { result = ThreeArg.new(*val[0]) }
+    | ldp_signed_offset BANG { result = FourArg.new(*val[0], :!) }
+    | reg_reg_load COMMA imm {
+        rt1, rt2, rn = *val[0].to_a
+        result = FourArg.new(rt1, rt2, [rn], val[2])
       }
-    | LDP reg_reg_load {
-        rt1, rt2, rn = *val[1].to_a
-        @asm.ldp(rt1, rt2, [rn])
+    | reg_reg_load {
+        rt1, rt2, rn = *val[0].to_a
+        result = ThreeArg.new(rt1, rt2, [rn])
       }
     ;
 

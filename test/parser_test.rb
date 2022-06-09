@@ -736,7 +736,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldpsw
-    skip "fixme"
     assert_bytes "ldpsw    x20, x30, [sp, #252]", [0xf4,0xfb,0x5f,0x69]
     assert_bytes "ldpsw    x20, x30, [sp, #252]!", [0xf4,0xfb,0xdf,0x69]
     assert_bytes "ldpsw    x20, x30, [sp], #252", [0xf4,0xfb,0xdf,0x68]
