@@ -875,62 +875,51 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldtr
-    skip "fixme"
     assert_bytes "ldtr     w12, [sp, #255]", [0xec,0xfb,0x4f,0xb8]
     assert_bytes "ldtr     xzr, [x12, #255]", [0x9f,0xf9,0x4f,0xf8]
   end
 
   def test_generated_ldtrb
-    skip "fixme"
     assert_bytes "ldtrb    w1, [x20, #255]", [0x81,0xfa,0x4f,0x38]
   end
 
   def test_generated_ldtrh
-    skip "fixme"
     assert_bytes "ldtrh    w20, [x1, #255]", [0x34,0xf8,0x4f,0x78]
   end
 
   def test_generated_ldtrsb
-    skip "fixme"
     assert_bytes "ldtrsb   w19, [x1, #-256]", [0x33,0x08,0xd0,0x38]
     assert_bytes "ldtrsb   x9, [x7, #-256]", [0xe9,0x08,0x90,0x38]
   end
 
   def test_generated_ldtrsh
-    skip "fixme"
     assert_bytes "ldtrsh   w15, [x21, #-256]", [0xaf,0x0a,0xd0,0x78]
     assert_bytes "ldtrsh   x17, [x19, #-256]", [0x71,0x0a,0x90,0x78]
   end
 
   def test_generated_ldtrsw
-    skip "fixme"
     assert_bytes "ldtrsw   x20, [x15, #-256]", [0xf4,0x09,0x90,0xb8]
   end
 
   def test_generated_ldur
-    skip "fixme"
     assert_bytes "ldur     w12, [sp, #255]", [0xec,0xf3,0x4f,0xb8]
     assert_bytes "ldur     xzr, [x12, #255]", [0x9f,0xf1,0x4f,0xf8]
   end
 
   def test_generated_ldurb
-    skip "fixme"
     assert_bytes "ldurb    w1, [x20, #255]", [0x81,0xf2,0x4f,0x38]
   end
 
   def test_generated_ldurh
-    skip "fixme"
     assert_bytes "ldurh    w20, [x1, #255]", [0x34,0xf0,0x4f,0x78]
   end
 
   def test_generated_ldursb
-    skip "fixme"
     assert_bytes "ldursb   w19, [x1, #-256]", [0x33,0x00,0xd0,0x38]
     assert_bytes "ldursb   x9, [x7, #-256]", [0xe9,0x00,0x90,0x38]
   end
 
   def test_generated_ldursh
-    skip "fixme"
     assert_bytes "ldursh   w15, [x21, #-256]", [0xaf,0x02,0xd0,0x78]
     assert_bytes "ldursh   x17, [x19, #-256]", [0x71,0x02,0x90,0x78]
   end

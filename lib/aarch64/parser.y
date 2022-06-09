@@ -433,6 +433,7 @@ rule
     | ldp
     | ldpsw
     | ldr
+    | ldtr
     | w_loads
     | x_loads
     ;
@@ -592,6 +593,38 @@ rule
   ldr
     : ldr_32s ldr_32 { val[1].apply(@asm, val[0]) }
     | ldr_64s ldr_64 { val[1].apply(@asm, val[0]) }
+    ;
+
+  ldtr_32
+    : Wd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  ldtr_64
+    : Xd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  ldtr_32s
+    : LDTR
+    | LDTRB
+    | LDTRH
+    | LDTRSB
+    | LDTRSH
+    | LDUR
+    | LDURB
+    | LDURSB
+    | LDURSH
+    | LDURH
+    ;
+
+  ldtr
+    : ldtr_32s ldtr_32 { val[1].apply(@asm, val[0]) }
+    | LDTR ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDTRSB ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDTRSH ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDTRSW ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDUR ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDURSB ldtr_64 { val[1].apply(@asm, val[0]) }
+    | LDURSH ldtr_64 { val[1].apply(@asm, val[0]) }
     ;
 
   movz
