@@ -578,6 +578,7 @@ rule
     : LDR
     | LDRSB
     | LDRSH
+    | LDRSW
     ;
 
   ldr_32s

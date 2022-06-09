@@ -1276,7 +1276,7 @@ module AArch64
                     when :sxtx then 0b111
                     end
 
-              a LDRSW_reg.new(xt, xn, imm, option.amount / 2, val)
+              a LDRSW_reg.new(xt, xn, imm, (option.amount || 0) / 2, val)
             else
               a LDRSW_reg.new(xt, xn, imm, 0, 0b11)
             end
