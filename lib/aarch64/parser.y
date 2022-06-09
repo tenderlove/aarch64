@@ -574,13 +574,23 @@ rule
     | Xd COMMA imm { result = TwoArg.new(val[0], val[2]) }
     ;
 
+  ldr_64s
+    : LDR
+    | LDRSB
+    | LDRSH
+    ;
+
+  ldr_32s
+    : LDR
+    | LDRSB
+    | LDRB
+    | LDRH
+    | LDRSH
+    ;
+
   ldr
-    : LDR ldr_32 { val[1].apply(@asm, :ldr) }
-    | LDR ldr_64 { val[1].apply(@asm, :ldr) }
-    | LDRB ldr_32 { val[1].apply(@asm, :ldrb) }
-    | LDRH ldr_32 { val[1].apply(@asm, :ldrh) }
-    | LDRSB ldr_32 { val[1].apply(@asm, :ldrsb) }
-    | LDRSB ldr_64 { val[1].apply(@asm, :ldrsb) }
+    : ldr_32s ldr_32 { val[1].apply(@asm, val[0]) }
+    | ldr_64s ldr_64 { val[1].apply(@asm, val[0]) }
     ;
 
   movz

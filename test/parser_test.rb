@@ -840,7 +840,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldrsh
-    skip "fixme"
     assert_bytes "ldrsh    w16, [x24, w8, uxtw #1]", [0x10,0x5b,0xe8,0x78]
     assert_bytes "ldrsh    w19, [x12, #-256]!", [0x93,0x0d,0xd0,0x78]
     assert_bytes "ldrsh    w19, [x12], #-256", [0x93,0x05,0xd0,0x78]
