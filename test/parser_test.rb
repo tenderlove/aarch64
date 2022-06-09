@@ -788,7 +788,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldrb
-    skip "fixme"
     assert_bytes "ldrb     w10, [x3, #-256]!", [0x6a,0x0c,0x50,0x38]
     assert_bytes "ldrb     w10, [x3, #1]!", [0x6a,0x1c,0x40,0x38]
     assert_bytes "ldrb     w10, [x3], #-256", [0x6a,0x04,0x50,0x38]

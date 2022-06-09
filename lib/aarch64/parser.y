@@ -550,53 +550,34 @@ rule
         result = [val[0], Shifts::Shift.new(val[3], 0, val[2].to_sym)].flatten
       }
     | read_reg_reg COMMA ldr_extend {
-        result = [val[0], Shifts::Shift.new(0, 0, val[2].to_sym)].flatten
+        result = [val[0], Shifts::Shift.new(nil, 0, val[2].to_sym)].flatten
       }
     ;
 
+  ldr_32
+    : Wd COMMA read_reg_reg_extend_amount RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA read_reg_imm RSQ BANG { result = ThreeArg.new(val[0], val[2], :!) }
+    | Wd COMMA read_reg RSQ COMMA imm { result = ThreeArg.new(val[0], [val[2]], val[5]) }
+    | Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
+    | Wd COMMA read_reg_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA imm { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  ldr_64
+    : Xd COMMA read_reg_reg_extend_amount RSQ { @asm.ldr(val[0], val[2]) }
+    | Xd COMMA read_reg_imm RSQ { @asm.ldr(val[0], val[2]) }
+    | Xd COMMA read_reg_imm RSQ BANG { @asm.ldr(val[0], val[2], :!) }
+    | Xd COMMA read_reg RSQ COMMA imm { @asm.ldr(val[0], [val[2]], val[5]) }
+    | Xd COMMA read_reg RSQ { @asm.ldr(val[0], [val[2]]) }
+    | Xd COMMA read_reg_reg RSQ { @asm.ldr(val[0], val[2]) }
+    | Xd COMMA imm { @asm.ldr(val[0], val[2]) }
+    ;
+
   ldr
-    : LDR Wd COMMA read_reg_reg_extend_amount RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Xd COMMA read_reg_reg_extend_amount RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Wd COMMA read_reg_imm RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Xd COMMA read_reg_imm RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Wd COMMA read_reg_imm RSQ BANG {
-        @asm.ldr(val[1], val[3], :!)
-      }
-    | LDR Xd COMMA read_reg_imm RSQ BANG {
-        @asm.ldr(val[1], val[3], :!)
-      }
-    | LDR Wd COMMA read_reg RSQ COMMA imm {
-        @asm.ldr(val[1], [val[3]], val[6])
-      }
-    | LDR Xd COMMA read_reg RSQ COMMA imm {
-        @asm.ldr(val[1], [val[3]], val[6])
-      }
-    | LDR Wd COMMA read_reg RSQ {
-        @asm.ldr(val[1], [val[3]])
-      }
-    | LDR Xd COMMA read_reg RSQ {
-        @asm.ldr(val[1], [val[3]])
-      }
-    | LDR Wd COMMA read_reg_reg RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Xd COMMA read_reg_reg RSQ {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Wd COMMA imm {
-        @asm.ldr(val[1], val[3])
-      }
-    | LDR Xd COMMA imm {
-        @asm.ldr(val[1], val[3])
-      }
+    : LDR ldr_32 { val[1].apply(@asm, :ldr) }
+    | LDR ldr_64
+    | LDRB ldr_32 { val[1].apply(@asm, :ldrb) }
     ;
 
   movz

@@ -1137,7 +1137,12 @@ module AArch64
                   when :sxtx then 0b111
                   end
 
-            a LDRB_reg.new(wt, xn, imm, option.shift? ? 1 : 0, val)
+            s = if option.shift?
+              !!option.amount
+            else
+              false
+            end
+            a LDRB_reg.new(wt, xn, imm, s ? 1 : 0, val)
           else
             a LDRB_reg.new(wt, xn, imm, 0, 0b11)
           end

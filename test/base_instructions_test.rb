@@ -3077,7 +3077,8 @@ class BaseInstructionsTest < AArch64::Test
     assert_bytes [0x69,0x7b,0x66,0x38] do |asm|
       asm.ldrb     w9, [x27, x6, lsl(0)]
     end
-    assert_bytes [0xab,0xeb,0x63,0x38] do |asm|
+    # ldrb     w11, [x29, x3, sxtx]
+    assert_bytes [0xab, 0xeb, 0x63, 0x38] do |asm|
       asm.ldrb     w11, [x29, x3, sxtx]
     end
     assert_bytes [0x4e,0x4b,0x66,0x38] do |asm|
