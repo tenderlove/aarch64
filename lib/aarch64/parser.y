@@ -430,6 +430,7 @@ rule
   loads
     : ldaxp
     | ldnp
+    | ldp
     | w_loads
     | x_loads
     ;
@@ -498,6 +499,34 @@ rule
 
   ldnp
     : LDNP reg_reg_load_offset { val[1].apply(@asm, val[0].to_sym) }
+    ;
+
+  ldp
+    : LDP ldp_signed_offset { @asm.ldp(*val[1]) }
+    | LDP ldp_signed_offset BANG { @asm.ldp(*val[1], :!) }
+    | LDP reg_reg_load COMMA imm {
+        rt1, rt2, rn = *val[1].to_a
+        @asm.ldp(rt1, rt2, [rn], val[3])
+      }
+    | LDP reg_reg_load {
+        rt1, rt2, rn = *val[1].to_a
+        @asm.ldp(rt1, rt2, [rn])
+      }
+    ;
+
+  ldp_signed_offset
+    : Wd COMMA Wd COMMA LSQ Xd COMMA imm RSQ {
+        result = [val[0], val[2], [val[5], val[7]]]
+      }
+    | Wd COMMA Wd COMMA LSQ SP COMMA imm RSQ {
+        result = [val[0], val[2], [val[5], val[7]]]
+      }
+    | Xd COMMA Xd COMMA LSQ Xd COMMA imm RSQ {
+        result = [val[0], val[2], [val[5], val[7]]]
+      }
+    | Xd COMMA Xd COMMA LSQ SP COMMA imm RSQ {
+        result = [val[0], val[2], [val[5], val[7]]]
+      }
     ;
 
   movz

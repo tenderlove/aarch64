@@ -90,6 +90,8 @@ module AArch64
       def apply asm, name
         asm.public_send(name, d, n, m)
       end
+
+      def to_a; [d, n, m]; end
     end
 
     class FourArg < Struct.new(:a, :b, :c, :d)
@@ -135,6 +137,8 @@ module AArch64
         [:LSQ, "["]
       elsif @scan.scan(/\]/)
         [:RSQ, "]"]
+      elsif @scan.scan(/!/)
+        [:BANG, "!"]
       elsif str = @scan.scan(/0x[0-9A-F]+/i)
         [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/-?(?:0|[1-9][0-9]*)/i)
