@@ -597,10 +597,12 @@ rule
 
   ldtr_32
     : Wd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
     ;
 
   ldtr_64
     : Xd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
     ;
 
   ldtr_32s
@@ -624,6 +626,7 @@ rule
     | LDUR
     | LDURSB
     | LDURSH
+    | LDURSW
     ;
 
   ldtr
