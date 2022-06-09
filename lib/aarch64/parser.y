@@ -578,6 +578,7 @@ rule
     : LDR ldr_32 { val[1].apply(@asm, :ldr) }
     | LDR ldr_64
     | LDRB ldr_32 { val[1].apply(@asm, :ldrb) }
+    | LDRH ldr_32 { val[1].apply(@asm, :ldrh) }
     ;
 
   movz
