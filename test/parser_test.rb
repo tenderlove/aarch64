@@ -982,7 +982,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_madd
-    skip "fixme"
     assert_bytes "madd     w1, w3, w7, w4", [0x61,0x10,0x07,0x1b]
     assert_bytes "madd     w13, wzr, w4, w4", [0xed,0x13,0x04,0x1b]
     assert_bytes "madd     w19, w30, wzr, w29", [0xd3,0x77,0x1f,0x1b]

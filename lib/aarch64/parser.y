@@ -58,6 +58,7 @@ rule
     | loads
     | lsl
     | lsr
+    | madd
     ;
 
   adc
@@ -668,6 +669,10 @@ rule
     | LSR reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
+  madd
+    : MADD reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
@@ -688,6 +693,11 @@ rule
   reg_reg_reg
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
     | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
+  reg_reg_reg_reg
+    : Wd COMMA Wd COMMA Wd COMMA Wd { result = FourArg.new(val[0], val[2], val[4], val[6]) }
+    | Xd COMMA Xd COMMA Xd COMMA Xd { result = FourArg.new(val[0], val[2], val[4], val[6]) }
     ;
 
   reg_reg_imm
