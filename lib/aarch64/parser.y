@@ -61,6 +61,7 @@ rule
     | madd
     | mneg
     | mov
+    | msub
     ;
 
   adc
@@ -695,6 +696,10 @@ rule
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
+    ;
+
+  msub
+    : MSUB reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   shift

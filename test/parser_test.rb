@@ -1022,7 +1022,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_msub
-    skip "fixme"
     assert_bytes "msub     w1, w3, w7, w4", [0x61,0x90,0x07,0x1b]
     assert_bytes "msub     w13, wzr, w4, w4", [0xed,0x93,0x04,0x1b]
     assert_bytes "msub     w19, w30, wzr, w29", [0xd3,0xf7,0x1f,0x1b]
