@@ -62,6 +62,7 @@ rule
     | mneg
     | mov
     | msub
+    | mul
     ;
 
   adc
@@ -700,6 +701,10 @@ rule
 
   msub
     : MSUB reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  mul
+    : MUL reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   shift

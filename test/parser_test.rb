@@ -1033,7 +1033,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_mul
-    skip "fixme"
     assert_bytes "mul      w10, w11, wzr", [0x6a,0x7d,0x1f,0x1b]
     assert_bytes "mul      w3, w4, w5", [0x83,0x7c,0x05,0x1b]
     assert_bytes "mul      w4, w5, w6", [0xa4,0x7c,0x06,0x1b]
