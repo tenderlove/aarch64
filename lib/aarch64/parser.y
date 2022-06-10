@@ -435,6 +435,9 @@ rule
     | ldr
     | ldtr
     | ldxp
+    | ldxr
+    | ldxrb
+    | ldxrh
     | w_loads
     | x_loads
     ;
@@ -638,6 +641,19 @@ rule
   ldxp
     : LDXP Wd COMMA Wd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
     | LDXP Xd COMMA Xd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
+    ;
+
+  ldxr
+    : LDXR Wd COMMA read_reg RSQ { @asm.ldxr(val[1], val[3]) }
+    | LDXR Xd COMMA read_reg RSQ { @asm.ldxr(val[1], val[3]) }
+    ;
+
+  ldxrb
+    : LDXRB Wd COMMA read_reg RSQ { @asm.ldxrb(val[1], val[3]) }
+    ;
+
+  ldxrh
+    : LDXRH Wd COMMA read_reg RSQ { @asm.ldxrh(val[1], val[3]) }
     ;
 
   movz
