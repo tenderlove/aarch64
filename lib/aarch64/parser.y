@@ -60,6 +60,7 @@ rule
     | lsr
     | madd
     | mneg
+    | mov
     ;
 
   adc
@@ -678,6 +679,19 @@ rule
     : MADD reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
+  mov_sp
+    : Xd COMMA SP  { result = TwoArg.new(val[0], val[2]) }
+    | SP COMMA Xd  { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA WSP { result = TwoArg.new(val[0], val[2]) }
+    | WSP COMMA Wd { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  mov
+    : MOV mov_sp { val[1].apply(@asm, val[0]) }
+    | MOV reg_reg { val[1].apply(@asm, val[0]) }
+    | MOV reg_imm { val[1].apply(@asm, val[0]) }
+    ;
+
   movz
     : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
     | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
@@ -695,6 +709,11 @@ rule
     | Wd
     ;
 
+  reg_reg
+    : Wd COMMA Wd { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA Xd { result = TwoArg.new(val[0], val[2]) }
+    ;
+
   reg_reg_reg
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
     | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
@@ -703,6 +722,11 @@ rule
   reg_reg_reg_reg
     : Wd COMMA Wd COMMA Wd COMMA Wd { result = FourArg.new(val[0], val[2], val[4], val[6]) }
     | Xd COMMA Xd COMMA Xd COMMA Xd { result = FourArg.new(val[0], val[2], val[4], val[6]) }
+    ;
+
+  reg_imm
+    : Wd COMMA imm { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA imm { result = TwoArg.new(val[0], val[2]) }
     ;
 
   reg_reg_imm

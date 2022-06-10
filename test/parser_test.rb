@@ -1002,7 +1002,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_mov
-    skip "fixme"
     assert_bytes "mov      sp, x30", [0xdf,0x03,0x00,0x91]
     assert_bytes "mov      w24, wsp", [0xf8,0x03,0x00,0x11]
     assert_bytes "mov      w3, w5", [0xe3,0x03,0x05,0x2a]
