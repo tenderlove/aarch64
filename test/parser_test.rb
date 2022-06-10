@@ -930,7 +930,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ldxp
-    skip "fixme"
     assert_bytes "ldxp     w12, wzr, [sp]", [0xec,0x7f,0x7f,0x88]
     assert_bytes "ldxp     x13, x14, [x15]", [0xed,0x39,0x7f,0xc8]
   end

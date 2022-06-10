@@ -434,6 +434,7 @@ rule
     | ldpsw
     | ldr
     | ldtr
+    | ldxp
     | w_loads
     | x_loads
     ;
@@ -632,6 +633,11 @@ rule
   ldtr
     : ldtr_32s ldtr_32 { val[1].apply(@asm, val[0]) }
     | ldtr_64s ldtr_64 { val[1].apply(@asm, val[0]) }
+    ;
+
+  ldxp
+    : LDXP Wd COMMA Wd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
+    | LDXP Xd COMMA Xd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
     ;
 
   movz
