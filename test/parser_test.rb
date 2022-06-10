@@ -1018,7 +1018,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_movz
-    skip "fixme"
     assert_bytes "movz     w2, #0, lsl #16", [0x02,0x00,0xa0,0x52]
   end
 
