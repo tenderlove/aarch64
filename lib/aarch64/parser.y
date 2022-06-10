@@ -57,6 +57,7 @@ rule
     | cond_fours
     | loads
     | lsl
+    | lsr
     ;
 
   adc
@@ -658,8 +659,13 @@ rule
     ;
 
   lsl
-    : LSL reg_reg_reg { val[1].apply(@asm, :lsl) }
-    | LSL reg_reg_imm { val[1].apply(@asm, :lsl) }
+    : LSL reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | LSL reg_reg_imm { val[1].apply(@asm, val[0]) }
+    ;
+
+  lsr
+    : LSR reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | LSR reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
   movz

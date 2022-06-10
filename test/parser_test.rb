@@ -962,7 +962,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_lsr
-    skip "fixme"
     assert_bytes "lsr  w12, w13, w14", [0xac,0x25,0xce,0x1a]
     assert_bytes "lsr  w17, w18, w19", [0x51,0x26,0xd3,0x1a]
     assert_bytes "lsr  x15, x16, x17", [0x0f,0x26,0xd1,0x9a]
