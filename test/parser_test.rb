@@ -948,7 +948,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_lsl
-    skip "fixme"
     assert_bytes "lsl  w11, w12, w13", [0x8b,0x21,0xcd,0x1a]
     assert_bytes "lsl  w6, w7, w8", [0xe6,0x20,0xc8,0x1a]
     assert_bytes "lsl  x14, x15, x16", [0xee,0x21,0xd0,0x9a]

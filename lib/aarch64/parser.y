@@ -56,6 +56,7 @@ rule
     | movz
     | cond_fours
     | loads
+    | lsl
     ;
 
   adc
@@ -654,6 +655,11 @@ rule
 
   ldxrh
     : LDXRH Wd COMMA read_reg RSQ { @asm.ldxrh(val[1], val[3]) }
+    ;
+
+  lsl
+    : LSL reg_reg_reg { val[1].apply(@asm, :lsl) }
+    | LSL reg_reg_imm { val[1].apply(@asm, :lsl) }
     ;
 
   movz
