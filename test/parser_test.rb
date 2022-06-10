@@ -993,7 +993,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_mneg
-    skip "fixme"
     assert_bytes "mneg     w21, w22, w23", [0xd5,0xfe,0x17,0x1b]
     assert_bytes "mneg     w26, wzr, w27", [0xfa,0xff,0x1b,0x1b]
     assert_bytes "mneg     w28, w29, wzr", [0xbc,0xff,0x1f,0x1b]

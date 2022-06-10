@@ -59,6 +59,7 @@ rule
     | lsl
     | lsr
     | madd
+    | mneg
     ;
 
   adc
@@ -667,6 +668,10 @@ rule
   lsr
     : LSR reg_reg_reg { val[1].apply(@asm, val[0]) }
     | LSR reg_reg_imm { val[1].apply(@asm, val[0]) }
+    ;
+
+  mneg
+    : MNEG reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   madd
