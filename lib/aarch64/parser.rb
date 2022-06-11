@@ -154,6 +154,8 @@ module AArch64
         [:RSQ, "]"]
       elsif @scan.scan(/!/)
         [:BANG, "!"]
+      elsif str = @scan.scan(/(?:pld|pli|pst)(?:l1|l2|l3)(?:keep|strm)/)
+        [:PRFOP, str]
       elsif str = @scan.scan(/0x[0-9A-F]+/i)
         [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/-?(?:0|[1-9][0-9]*)/i)

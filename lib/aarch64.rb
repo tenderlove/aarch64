@@ -1823,9 +1823,9 @@ module AArch64
                   when :sxtw then 0b110
                   when :sxtx then 0b111
                   else
-                    raise
+                    raise option.name
                   end
-          a PRFM_reg.new(rt, xn, rm, shift, option.amount / 3)
+          a PRFM_reg.new(rt, xn, rm, shift, (option.amount || 0) / 3)
         end
       else
         a PRFM_lit.new(rt, xn)

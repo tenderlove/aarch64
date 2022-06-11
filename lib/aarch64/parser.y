@@ -70,6 +70,7 @@ rule
     | NOP { @asm.nop }
     | orn
     | orr
+    | prfm
     ;
 
   adc
@@ -753,6 +754,23 @@ rule
   orr
     : ORR reg_reg_imm { val[1].apply(@asm, val[0]) }
     | ORR reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
+    ;
+
+  prfm_register
+    : PRFOP COMMA read_reg_reg_extend_amount RSQ {
+        result = TwoArg.new(val[0].to_sym, val[2])
+      }
+    ;
+
+  prfm_imm
+    : PRFOP COMMA read_reg_imm RSQ {
+        result = TwoArg.new(val[0].to_sym, val[2])
+      }
+    ;
+
+  prfm
+    : PRFM prfm_register { val[1].apply(@asm, val[0]) }
+    | PRFM prfm_imm { val[1].apply(@asm, val[0]) }
     ;
 
   shift

@@ -1146,7 +1146,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_prfm
-    skip "fixme"
     assert_bytes "prfm     pldl1keep, [x26, w6, uxtw]", [0x40,0x4b,0xa6,0xf8]
     assert_bytes "prfm    pldl1keep, [sp, #8]", [0xe0,0x07,0x80,0xf9]
     assert_bytes "prfm    pldl2keep, [x5, #16]", [0xa2,0x08,0x80,0xf9]
