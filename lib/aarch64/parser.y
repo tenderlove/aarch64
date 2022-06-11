@@ -65,6 +65,9 @@ rule
     | mul
     | neg
     | negs
+    | ngc
+    | ngcs
+    | NOP { @asm.nop }
     ;
 
   adc
@@ -726,6 +729,14 @@ rule
   negs
     : NEGS reg_reg_shift { val[1].apply(@asm, val[0]) }
     | NEGS reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  ngc
+    : NGC reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  ngcs
+    : NGCS reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   shift

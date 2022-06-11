@@ -1102,7 +1102,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ngc
-    skip "fixme"
     assert_bytes "ngc      w23, wzr", [0xf7,0x03,0x1f,0x5a]
     assert_bytes "ngc      w3, w12", [0xe3,0x03,0x0c,0x5a]
     assert_bytes "ngc      w9, w10", [0xe9,0x03,0x0a,0x5a]
@@ -1114,7 +1113,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ngcs
-    skip "fixme"
     assert_bytes "ngcs     w23, wzr", [0xf7,0x03,0x1f,0x7a]
     assert_bytes "ngcs     w3, w12", [0xe3,0x03,0x0c,0x7a]
     assert_bytes "ngcs     w9, w10", [0xe9,0x03,0x0a,0x7a]
@@ -1126,7 +1124,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_nop
-    skip "fixme"
     assert_bytes "nop", [0x1f,0x20,0x03,0xd5]
   end
 
