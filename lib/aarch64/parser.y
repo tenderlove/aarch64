@@ -63,6 +63,7 @@ rule
     | mov
     | msub
     | mul
+    | neg
     ;
 
   adc
@@ -187,6 +188,15 @@ rule
         regs, opts = *val[1]
         r1, r2, r3 = *regs
         @asm.adds(r1, r2, r3, lsl: opts[:lsl])
+      }
+    ;
+
+  reg_reg_shift
+    : Wd COMMA Wd COMMA shift imm {
+        result = RegRegShift.new(val[0], val[2], shift: val[4], amount: val[5])
+      }
+    | Xd COMMA Xd COMMA shift imm {
+        result = RegRegShift.new(val[0], val[2], shift: val[4], amount: val[5])
       }
     ;
 
@@ -705,6 +715,11 @@ rule
 
   mul
     : MUL reg_reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  neg
+    : NEG reg_reg_shift { val[1].apply(@asm, val[0]) }
+    | NEG reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   shift

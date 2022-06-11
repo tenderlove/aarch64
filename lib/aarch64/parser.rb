@@ -21,6 +21,21 @@ module AArch64
       end
     end
 
+    class RegRegShift
+      attr_reader :d, :m, :shift, :amount
+
+      def initialize d, m, shift: :lsl, amount: 0
+        @d      = d
+        @m      = m
+        @shift  = shift
+        @amount = amount
+      end
+
+      def apply asm, name
+        asm.public_send(name, d, m, shift: shift, amount: amount)
+      end
+    end
+
     class TwoWithExtend
       attr_reader :n, :m, :extend, :amount
 

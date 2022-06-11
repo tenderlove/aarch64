@@ -1046,7 +1046,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_neg
-    skip "fixme"
     assert_bytes "neg      w12, w11, asr #31", [0xec,0x7f,0x8b,0x4b]
     assert_bytes "neg      w14, w13, asr #12", [0xee,0x33,0x8d,0x4b]
     assert_bytes "neg      w16, w15, asr #0", [0xf0,0x03,0x8f,0x4b]
