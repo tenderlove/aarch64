@@ -119,27 +119,6 @@ rule
     | Xd COMMA Xd COMMA imm COMMA LSL imm {
         result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
-    | Wd COMMA WSP COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | WSP COMMA Wd COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | WSP COMMA WSP COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | Wd COMMA Wd COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | Xd COMMA SP COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | SP COMMA Xd COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
-    | Xd COMMA Xd COMMA imm {
-        result = [[val[0], val[2], val[4]], { lsl: 0 }]
-      }
     ;
 
   add_extended
@@ -206,6 +185,7 @@ rule
         r1, r2, r3 = *regs
         @asm.add(r1, r2, r3, lsl: opts[:lsl])
       }
+    | ADD reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
   adds
@@ -222,6 +202,7 @@ rule
         r1, r2, r3 = *regs
         @asm.adds(r1, r2, r3, lsl: opts[:lsl])
       }
+    | ADDS reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
   reg_reg_shift
@@ -914,10 +895,19 @@ rule
     | Xd COMMA Xd COMMA imm {
         result = ThreeArg.new(val[0], val[2], val[4])
       }
+    | Xd COMMA SP COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
     | SP COMMA Xd COMMA imm {
         result = ThreeArg.new(val[0], val[2], val[4])
       }
     | WSP COMMA Wd COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | Wd COMMA WSP COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | WSP COMMA WSP COMMA imm {
         result = ThreeArg.new(val[0], val[2], val[4])
       }
     ;
