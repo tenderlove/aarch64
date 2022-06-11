@@ -84,6 +84,17 @@ rule
     | SBFIZ reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
     | SBFX reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
     | SDIV reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | SEV { @asm.sev }
+    | SEVL { @asm.sevl }
+    | SMADDL smaddl_params { val[1].apply(@asm, val[0]) }
+    | SMNEGL xd_wd_wd { val[1].apply(@asm, val[0]) }
+    | SMSUBL smaddl_params { val[1].apply(@asm, val[0]) }
+    | SMULH xd_xd_xd { val[1].apply(@asm, val[0]) }
+    | SMULL xd_wd_wd { val[1].apply(@asm, val[0]) }
+    | SSBB { @asm.ssbb }
+    | stlr
+    | stlrb
+    | stlrh
     ;
 
   adc
@@ -798,6 +809,31 @@ rule
     | ROR reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
+  stlr
+    : STLR Wd COMMA read_reg RSQ { @asm.stlr(val[1], val[3]) }
+    | STLR Xd COMMA read_reg RSQ { @asm.stlr(val[1], val[3]) }
+    ;
+
+  stlrb
+    : STLRB Wd COMMA read_reg RSQ { @asm.stlrb(val[1], val[3]) }
+    ;
+
+  stlrh
+    : STLRH Wd COMMA read_reg RSQ { @asm.stlrh(val[1], val[3]) }
+    ;
+
+  smaddl_params
+    : Xd COMMA Wd COMMA Wd COMMA Xd {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    ;
+
+  xd_wd_wd
+    : Xd COMMA Wd COMMA Wd {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    ;
+
   reg_reg_imm_imm
     : Wd COMMA Wd COMMA imm COMMA imm {
         result = FourArg.new(*val.values_at(0, 2, 4, 6))
@@ -826,9 +862,13 @@ rule
     | xd_xd
     ;
 
+  xd_xd_xd
+    : Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
   reg_reg_reg
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
-    | Xd COMMA Xd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    | xd_xd_xd
     ;
 
   reg_reg_reg_reg

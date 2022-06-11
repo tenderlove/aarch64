@@ -1241,17 +1241,14 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sev
-    skip "fixme"
     assert_bytes "sev", [0x9f,0x20,0x03,0xd5]
   end
 
   def test_generated_sevl
-    skip "fixme"
     assert_bytes "sevl", [0xbf,0x20,0x03,0xd5]
   end
 
   def test_generated_smaddl
-    skip "fixme"
     assert_bytes "smaddl   x13, wzr, w14, x15", [0xed,0x3f,0x2e,0x9b]
     assert_bytes "smaddl   x16, w17, wzr, x18", [0x30,0x4a,0x3f,0x9b]
     assert_bytes "smaddl   x3, w5, w2, x9", [0xa3,0x24,0x22,0x9b]
@@ -1259,13 +1256,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_smnegl
-    skip "fixme"
     assert_bytes "smnegl   x11, w13, w17", [0xab,0xfd,0x31,0x9b]
     assert_bytes "smnegl   x19, w20, w21", [0x93,0xfe,0x35,0x9b]
   end
 
   def test_generated_smsubl
-    skip "fixme"
     assert_bytes "smsubl   x13, wzr, w14, x15", [0xed,0xbf,0x2e,0x9b]
     assert_bytes "smsubl   x16, w17, wzr, x18", [0x30,0xca,0x3f,0x9b]
     assert_bytes "smsubl   x3, w5, w2, x9", [0xa3,0xa4,0x22,0x9b]
@@ -1273,7 +1268,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_smulh
-    skip "fixme"
     assert_bytes "smulh    x23, x22, xzr", [0xd7,0x7e,0x5f,0x9b]
     assert_bytes "smulh    x25, xzr, x24", [0xf9,0x7f,0x58,0x9b]
     assert_bytes "smulh    x30, x29, x28", [0xbe,0x7f,0x5c,0x9b]
@@ -1281,29 +1275,24 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_smull
-    skip "fixme"
     assert_bytes "smull    x11, w13, w17", [0xab,0x7d,0x31,0x9b]
     assert_bytes "smull    x19, w20, w21", [0x93,0x7e,0x35,0x9b]
   end
 
   def test_generated_ssbb
-    skip "fixme"
     assert_bytes "ssbb", [0x9f,0x30,0x03,0xd5]
   end
 
   def test_generated_stlr
-    skip "fixme"
     assert_bytes "stlr     wzr, [x1]", [0x3f,0xfc,0x9f,0x88]
     assert_bytes "stlr     x30, [x2]", [0x5e,0xfc,0x9f,0xc8]
   end
 
   def test_generated_stlrb
-    skip "fixme"
     assert_bytes "stlrb    w27, [sp]", [0xfb,0xff,0x9f,0x08]
   end
 
   def test_generated_stlrh
-    skip "fixme"
     assert_bytes "stlrh    w28, [x0]", [0x1c,0xfc,0x9f,0x48]
   end
 
