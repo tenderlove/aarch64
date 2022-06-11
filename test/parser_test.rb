@@ -1319,7 +1319,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_stp
-    skip "fixme"
     assert_bytes "stp      wzr, w9, [sp, #252]", [0xff,0xa7,0x1f,0x29]
     assert_bytes "stp      wzr, w9, [sp, #252]!", [0xff,0xa7,0x9f,0x29]
     assert_bytes "stp      wzr, w9, [sp], #252", [0xff,0xa7,0x9f,0x28]

@@ -100,6 +100,7 @@ rule
     | STLXRB wd_wd_read_reg { val[1].apply(@asm, val[0]) }
     | STLXRH wd_wd_read_reg { val[1].apply(@asm, val[0]) }
     | stnp
+    | stp
     ;
 
   adc
@@ -831,8 +832,18 @@ rule
     ;
 
   stnp
-    : STNP wd_wd_read_reg_imm {
+    : STNP wd_wd_read_reg_imm RSQ {
         val[1].apply(@asm, val[0])
+      }
+    ;
+
+  stp
+    : STP reg_reg_read_reg_imm RSQ { val[1].apply(@asm, val[0]) }
+    | STP reg_reg_read_reg_imm RSQ BANG {
+        FourArg.new(*val[1].to_a, :!).apply(@asm, val[0])
+      }
+    | STP reg_reg_read_reg RSQ COMMA imm {
+        FourArg.new(*val[1].to_a, val[4]).apply(@asm, val[0])
       }
     ;
 
@@ -842,8 +853,28 @@ rule
       }
     ;
 
+  reg_reg_read_reg
+    : Wd COMMA Wd COMMA read_reg {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    | Xd COMMA Xd COMMA read_reg {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    ;
+
+  reg_reg_read_reg_imm
+    : wd_wd_read_reg_imm
+    | xd_xd_read_reg_imm
+    ;
+
   wd_wd_read_reg_imm
-    : Wd COMMA Wd COMMA read_reg_imm RSQ {
+    : Wd COMMA Wd COMMA read_reg_imm {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    ;
+
+  xd_xd_read_reg_imm
+    : Xd COMMA Xd COMMA read_reg_imm {
         result = ThreeArg.new(*val.values_at(0, 2, 4))
       }
     ;
