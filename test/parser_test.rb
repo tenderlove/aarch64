@@ -1193,7 +1193,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_ror
-    skip "fixme"
     assert_bytes "ror  w0, w1, w2", [0x20,0x2c,0xc2,0x1a]
     assert_bytes "ror  w24, w25, w26", [0x38,0x2f,0xda,0x1a]
     assert_bytes "ror  x27, x28, x29", [0x9b,0x2f,0xdd,0x9a]
@@ -1204,7 +1203,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sbc
-    skip "fixme"
     assert_bytes "sbc      w20, w0, wzr", [0x14,0x00,0x1f,0x5a]
     assert_bytes "sbc      w29, w27, w25", [0x7d,0x03,0x19,0x5a]
     assert_bytes "sbc      wzr, w3, w4", [0x7f,0x00,0x04,0x5a]
@@ -1214,7 +1212,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sbcs
-    skip "fixme"
     assert_bytes "sbcs     w20, w0, wzr", [0x14,0x00,0x1f,0x7a]
     assert_bytes "sbcs     w29, w27, w25", [0x7d,0x03,0x19,0x7a]
     assert_bytes "sbcs     wzr, w3, w4", [0x7f,0x00,0x04,0x7a]
@@ -1224,7 +1221,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sbfiz
-    skip "fixme"
     assert_bytes "sbfiz    w11, w12, #31, #1", [0x8b,0x01,0x01,0x13]
     assert_bytes "sbfiz    w13, w14, #29, #3", [0xcd,0x09,0x03,0x13]
     assert_bytes "sbfiz    x2, x3, #63, #1", [0x62,0x00,0x41,0x93]
@@ -1233,7 +1229,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sbfx
-    skip "fixme"
     assert_bytes "sbfx     w12, w9, #0, #1", [0x2c,0x01,0x00,0x13]
     assert_bytes "sbfx     w9, w10, #0, #1", [0x49,0x01,0x00,0x13]
     assert_bytes "sbfx     x1, x2, #3, #2", [0x41,0x10,0x43,0x93]

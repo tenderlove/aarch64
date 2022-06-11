@@ -78,16 +78,19 @@ rule
     | REV reg_reg { val[1].apply(@asm, val[0]) }
     | REV16 reg_reg { val[1].apply(@asm, val[0]) }
     | REV32 xd_xd { val[1].apply(@asm, val[0]) }
+    | ror
+    | SBC reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | SBCS reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | SBFIZ reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
+    | SBFX reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
     ;
 
   adc
-    : ADC wd COMMA wd COMMA wd { @asm.adc(val[1], val[3], val[5]) }
-    | ADC xt COMMA xt COMMA xt { @asm.adc(val[1], val[3], val[5]) }
+    : ADC reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   adcs
-    : ADCS wd COMMA wd COMMA wd { @asm.adcs(val[1], val[3], val[5]) }
-    | ADCS xt COMMA xt COMMA xt { @asm.adcs(val[1], val[3], val[5]) }
+    : ADCS reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   add_immediate
@@ -789,6 +792,20 @@ rule
     | RET Xd { @asm.ret(val[1]) }
     ;
 
+  ror
+    : ROR reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | ROR reg_reg_imm { val[1].apply(@asm, val[0]) }
+    ;
+
+  reg_reg_imm_imm
+    : Wd COMMA Wd COMMA imm COMMA imm {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    | Xd COMMA Xd COMMA imm COMMA imm {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    ;
+
   shift
     : LSL { result = val[0].to_sym }
     | LSR { result = val[0].to_sym }
@@ -855,7 +872,6 @@ rule
   xd: Xd;
   xn: Xd;
   xt: Xd | XZR;
-  wd: Wd | WZR;
 
   cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE | PL;
 
