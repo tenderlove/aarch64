@@ -69,6 +69,7 @@ rule
     | ngcs
     | NOP { @asm.nop }
     | orn
+    | orr
     ;
 
   adc
@@ -747,6 +748,11 @@ rule
   orn
     : ORN reg_reg_reg { val[1].apply(@asm, val[0]) }
     | ORN reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
+    ;
+
+  orr
+    : ORR reg_reg_imm { val[1].apply(@asm, val[0]) }
+    | ORR reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
     ;
 
   shift
