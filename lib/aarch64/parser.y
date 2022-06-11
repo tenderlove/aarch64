@@ -83,6 +83,7 @@ rule
     | SBCS reg_reg_reg { val[1].apply(@asm, val[0]) }
     | SBFIZ reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
     | SBFX reg_reg_imm_imm { val[1].apply(@asm, val[0]) }
+    | SDIV reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   adc

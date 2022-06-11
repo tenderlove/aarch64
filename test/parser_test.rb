@@ -1236,7 +1236,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sdiv
-    skip "fixme"
     assert_bytes "sdiv  w12, w21, w0", [0xac,0x0e,0xc0,0x1a]
     assert_bytes "sdiv  x13, x2, x1", [0x4d,0x0c,0xc1,0x9a]
   end
