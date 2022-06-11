@@ -1315,7 +1315,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_stnp
-    skip "fixme"
     assert_bytes "stnp      wzr, w9, [sp, #252]", [0xff,0xa7,0x1f,0x28]
   end
 

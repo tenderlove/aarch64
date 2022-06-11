@@ -99,6 +99,7 @@ rule
     | STLXR stlxr_body { val[1].apply(@asm, val[0]) }
     | STLXRB wd_wd_read_reg { val[1].apply(@asm, val[0]) }
     | STLXRH wd_wd_read_reg { val[1].apply(@asm, val[0]) }
+    | stnp
     ;
 
   adc
@@ -829,8 +830,20 @@ rule
       }
     ;
 
+  stnp
+    : STNP wd_wd_read_reg_imm {
+        val[1].apply(@asm, val[0])
+      }
+    ;
+
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    ;
+
+  wd_wd_read_reg_imm
+    : Wd COMMA Wd COMMA read_reg_imm RSQ {
         result = ThreeArg.new(*val.values_at(0, 2, 4))
       }
     ;
