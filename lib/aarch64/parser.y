@@ -68,6 +68,7 @@ rule
     | ngc
     | ngcs
     | NOP { @asm.nop }
+    | orn
     ;
 
   adc
@@ -204,13 +205,17 @@ rule
       }
     ;
 
-  shifted
+  reg_reg_reg_shift
     : Wd COMMA Wd COMMA Wd COMMA shift imm {
         result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
       }
     | Xd COMMA Xd COMMA Xd COMMA shift imm {
         result = RegsWithShift.new(val[0], val[2], val[4], shift: val[6], amount: val[7])
       }
+    ;
+
+  shifted
+    : reg_reg_reg_shift
     | reg_reg_reg
     ;
 
@@ -737,6 +742,11 @@ rule
 
   ngcs
     : NGCS reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  orn
+    : ORN reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | ORN reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
     ;
 
   shift

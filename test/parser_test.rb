@@ -1128,7 +1128,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_orn
-    skip "fixme"
     assert_bytes "orn      w2, w5, w29", [0xa2,0x00,0x3d,0x2a]
     assert_bytes "orn      x3, x5, x7, asr #0", [0xa3,0x00,0xa7,0xaa]
   end
