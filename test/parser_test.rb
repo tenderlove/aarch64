@@ -1297,13 +1297,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_stlxp
-    skip "fixme"
     assert_bytes "stlxp    w25, x26, x27, [sp]", [0xfa,0xef,0x39,0xc8]
     assert_bytes "stlxp    wzr, w22, w23, [x24]", [0x16,0xdf,0x3f,0x88]
   end
 
   def test_generated_stlxr
-    skip "fixme"
     assert_bytes "stlxr    w18, x19, [x20]", [0x93,0xfe,0x12,0xc8]
     assert_bytes "stlxr    wzr, w17, [sp]", [0xf1,0xff,0x1f,0x88]
   end

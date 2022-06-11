@@ -95,6 +95,8 @@ rule
     | stlr
     | stlrb
     | stlrh
+    | STLXP stlxp_body { val[1].apply(@asm, val[0]) }
+    | STLXR stlxr_body { val[1].apply(@asm, val[0]) }
     ;
 
   adc
@@ -825,6 +827,24 @@ rule
   smaddl_params
     : Xd COMMA Wd COMMA Wd COMMA Xd {
         result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    ;
+
+  stlxp_body
+    : Wd COMMA Xd COMMA Xd COMMA read_reg RSQ {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    | Wd COMMA Wd COMMA Wd COMMA read_reg RSQ {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    ;
+
+  stlxr_body
+    : Wd COMMA Wd COMMA read_reg RSQ {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    | Wd COMMA Xd COMMA read_reg RSQ {
+        result = ThreeArg.new(*val.values_at(0, 2, 4))
       }
     ;
 
