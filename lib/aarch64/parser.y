@@ -64,6 +64,7 @@ rule
     | msub
     | mul
     | neg
+    | negs
     ;
 
   adc
@@ -720,6 +721,11 @@ rule
   neg
     : NEG reg_reg_shift { val[1].apply(@asm, val[0]) }
     | NEG reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  negs
+    : NEGS reg_reg_shift { val[1].apply(@asm, val[0]) }
+    | NEGS reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   shift
