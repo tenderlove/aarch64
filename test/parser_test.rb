@@ -1156,29 +1156,24 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_prfum
-    skip "fixme"
     assert_bytes "prfum    pldl2keep, [sp, #-256]", [0xe2,0x03,0x90,0xf8]
   end
 
   def test_generated_pssbb
-    skip "fixme"
     assert_bytes "pssbb", [0x9f,0x34,0x03,0xd5]
   end
 
   def test_generated_rbit
-    skip "fixme"
     assert_bytes "rbit  w0, w7", [0xe0,0x00,0xc0,0x5a]
     assert_bytes "rbit  x18, x3", [0x72,0x00,0xc0,0xda]
   end
 
   def test_generated_ret
-    skip "fixme"
     assert_bytes "ret", [0xc0,0x03,0x5f,0xd6]
     assert_bytes "ret      x10", [0x40,0x01,0x5f,0xd6]
   end
 
   def test_generated_rev
-    skip "fixme"
     assert_bytes "rev  w18, w0", [0x12,0x08,0xc0,0x5a]
     assert_bytes "rev  w7, wzr", [0xe7,0x0b,0xc0,0x5a]
     assert_bytes "rev  x13, x12", [0x8d,0x0d,0xc0,0xda]
@@ -1188,13 +1183,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_rev16
-    skip "fixme"
     assert_bytes "rev16  x5, x2", [0x45,0x04,0xc0,0xda]
     assert_bytes "rev16 w17, w1", [0x31,0x04,0xc0,0x5a]
   end
 
   def test_generated_rev32
-    skip "fixme"
     assert_bytes "rev32  x20, x1", [0x34,0x08,0xc0,0xda]
     assert_bytes "rev32  x20, xzr", [0xf4,0x0b,0xc0,0xda]
   end

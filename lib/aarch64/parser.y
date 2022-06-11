@@ -71,6 +71,13 @@ rule
     | orn
     | orr
     | prfm
+    | prfum
+    | PSSBB { @asm.pssbb }
+    | RBIT reg_reg { val[1].apply(@asm, val[0]) }
+    | ret
+    | REV reg_reg { val[1].apply(@asm, val[0]) }
+    | REV16 reg_reg { val[1].apply(@asm, val[0]) }
+    | REV32 xd_xd { val[1].apply(@asm, val[0]) }
     ;
 
   adc
@@ -773,6 +780,15 @@ rule
     | PRFM prfm_imm { val[1].apply(@asm, val[0]) }
     ;
 
+  prfum
+    : PRFUM prfm_imm { val[1].apply(@asm, val[0]) }
+    ;
+
+  ret
+    : RET { @asm.ret }
+    | RET Xd { @asm.ret(val[1]) }
+    ;
+
   shift
     : LSL { result = val[0].to_sym }
     | LSR { result = val[0].to_sym }
@@ -785,9 +801,11 @@ rule
     | Wd
     ;
 
+  xd_xd : Xd COMMA Xd { result = TwoArg.new(val[0], val[2]) };
+
   reg_reg
     : Wd COMMA Wd { result = TwoArg.new(val[0], val[2]) }
-    | Xd COMMA Xd { result = TwoArg.new(val[0], val[2]) }
+    | xd_xd
     ;
 
   reg_reg_reg
