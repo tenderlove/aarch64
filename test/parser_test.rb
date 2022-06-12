@@ -1384,18 +1384,15 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_stur
-    skip "fixme"
     assert_bytes "stur     w16, [x0, #-256]", [0x10,0x00,0x10,0xb8]
     assert_bytes "stur     x28, [x14, #1]", [0xdc,0x11,0x00,0xf8]
   end
 
   def test_generated_sturb
-    skip "fixme"
     assert_bytes "sturb    w9, [sp]", [0xe9,0x03,0x00,0x38]
   end
 
   def test_generated_sturh
-    skip "fixme"
     assert_bytes "sturh    wzr, [x12, #255]", [0x9f,0xf1,0x0f,0x78]
   end
 

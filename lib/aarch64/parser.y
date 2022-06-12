@@ -107,6 +107,7 @@ rule
     | sttr
     | sttrb
     | sttrh
+    | stur
     ;
 
   adc
@@ -925,6 +926,13 @@ rule
   sttrb : STTRB strr_32 { val[1].apply(@asm, val[0]) };
 
   sttrh : STTRH strr_32 { val[1].apply(@asm, val[0]) };
+
+  stur
+    : STUR strr_32 { val[1].apply(@asm, val[0]) }
+    | STUR strr_64 { val[1].apply(@asm, val[0]) }
+    | STURH strr_32 { val[1].apply(@asm, val[0]) }
+    | STURB strr_32 { val[1].apply(@asm, val[0]) }
+    ;
 
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
