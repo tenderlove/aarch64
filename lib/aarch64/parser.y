@@ -102,6 +102,8 @@ rule
     | stnp
     | stp
     | str
+    | strb
+    | strh
     ;
 
   adc
@@ -871,6 +873,35 @@ rule
 
   str
     : STR str_body { val[1].apply(@asm, val[0]) }
+    ;
+
+  strb_body
+    : Wd COMMA read_reg_reg_extend_amount RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | Wd COMMA read_reg_imm RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | Wd COMMA read_reg_imm RSQ BANG {
+        result = ThreeArg.new(val[0], val[2], :!)
+      }
+    | Wd COMMA read_reg_imm RSQ COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[5])
+      }
+    | Wd COMMA read_reg RSQ {
+        result = TwoArg.new(val[0], [val[2]])
+      }
+    | Wd COMMA read_reg RSQ COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[5])
+      }
+    ;
+
+  strb
+    : STRB strb_body { val[1].apply(@asm, val[0]) }
+    ;
+
+  strh
+    : STRH strb_body { val[1].apply(@asm, val[0]) }
     ;
 
   wd_wd_read_reg

@@ -1346,7 +1346,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_strb
-    skip "fixme"
     assert_bytes "strb     w10, [x3, #-256]!", [0x6a,0x0c,0x10,0x38]
     assert_bytes "strb     w10, [x3, #1]!", [0x6a,0x1c,0x00,0x38]
     assert_bytes "strb     w10, [x3], #-256", [0x6a,0x04,0x10,0x38]
@@ -1359,7 +1358,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_strh
-    skip "fixme"
     assert_bytes "strh     w10, [x3, #-256]!", [0x6a,0x0c,0x10,0x78]
     assert_bytes "strh     w10, [x3], #-256", [0x6a,0x04,0x10,0x78]
     assert_bytes "strh     w11, [x29, x3, sxtx]", [0xab,0xeb,0x23,0x78]

@@ -2263,7 +2263,7 @@ module AArch64
                      raise "Unknown type #{opt.name}"
                    end
 
-          amount = opt.amount > 0 ? 1 : 0
+          amount = (opt.amount || 0) > 0 ? 1 : 0
 
           a STRH_reg.new(rt, rn, rm, extend, amount)
         end
