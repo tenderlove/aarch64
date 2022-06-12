@@ -1371,18 +1371,15 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sttr
-    skip "fixme"
     assert_bytes "sttr     w16, [x0, #-256]", [0x10,0x08,0x10,0xb8]
     assert_bytes "sttr     x28, [x14, #1]", [0xdc,0x19,0x00,0xf8]
   end
 
   def test_generated_sttrb
-    skip "fixme"
     assert_bytes "sttrb    w9, [sp]", [0xe9,0x0b,0x00,0x38]
   end
 
   def test_generated_sttrh
-    skip "fixme"
     assert_bytes "sttrh    wzr, [x12, #255]", [0x9f,0xf9,0x0f,0x78]
   end
 

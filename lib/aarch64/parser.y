@@ -104,6 +104,9 @@ rule
     | str
     | strb
     | strh
+    | sttr
+    | sttrb
+    | sttrh
     ;
 
   adc
@@ -903,6 +906,25 @@ rule
   strh
     : STRH strb_body { val[1].apply(@asm, val[0]) }
     ;
+
+  strr_32
+    : Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
+    | Wd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  strr_64
+    : Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
+    | Xd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  sttr
+    : STTR strr_32 { val[1].apply(@asm, val[0]) }
+    | STTR strr_64 { val[1].apply(@asm, val[0]) }
+    ;
+
+  sttrb : STTRB strr_32 { val[1].apply(@asm, val[0]) };
+
+  sttrh : STTRH strr_32 { val[1].apply(@asm, val[0]) };
 
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
