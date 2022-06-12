@@ -1325,7 +1325,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_str
-    skip "fixme"
     assert_bytes "str      w13, [x27, x5, sxtx #2]", [0x6d,0xfb,0x25,0xb8]
     assert_bytes "str      w14, [x26, w6, uxtw]", [0x4e,0x4b,0x26,0xb8]
     assert_bytes "str      w19, [sp, #255]!", [0xf3,0xff,0x0f,0xb8]

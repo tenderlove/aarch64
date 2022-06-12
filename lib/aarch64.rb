@@ -2198,7 +2198,7 @@ module AArch64
                      raise "Unknown type #{opt.name}"
                    end
 
-          amount = opt.amount / (rt.x? ? 3 : 2)
+          amount = (opt.amount || 0) / (rt.x? ? 3 : 2)
           a STR_reg_gen.new(rt, rn, rm, extend, amount, rt.sizeb)
         end
       end

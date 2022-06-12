@@ -101,6 +101,7 @@ rule
     | STLXRH wd_wd_read_reg { val[1].apply(@asm, val[0]) }
     | stnp
     | stp
+    | str
     ;
 
   adc
@@ -845,6 +846,31 @@ rule
     | STP reg_reg_read_reg RSQ COMMA imm {
         FourArg.new(*val[1].to_a, val[4]).apply(@asm, val[0])
       }
+    ;
+
+  str_body
+    : register COMMA read_reg_reg_extend_amount RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | register COMMA read_reg_imm RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | register COMMA read_reg_imm RSQ BANG {
+        result = ThreeArg.new(val[0], val[2], :!)
+      }
+    | register COMMA read_reg RSQ COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[5])
+      }
+    | register COMMA read_reg RSQ {
+        result = TwoArg.new(val[0], [val[2]])
+      }
+    | register COMMA read_reg_reg RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    ;
+
+  str
+    : STR str_body { val[1].apply(@asm, val[0]) }
     ;
 
   wd_wd_read_reg
