@@ -1397,7 +1397,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_stxp
-    skip "fixme"
     assert_bytes "stxp     w11, w12, w13, [x14]", [0xcc,0x35,0x2b,0x88]
     assert_bytes "stxp     wzr, x23, x14, [x15]", [0xf7,0x39,0x3f,0xc8]
   end
