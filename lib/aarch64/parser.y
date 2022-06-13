@@ -109,6 +109,9 @@ rule
     | sttrh
     | stur
     | stxp
+    | stxr
+    | stxrb
+    | stxrh
     ;
 
   adc
@@ -944,6 +947,27 @@ rule
       }
     ;
 
+  stxr
+    : STXR wd_wd COMMA read_reg RSQ {
+        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+      }
+    | STXR wd_xd COMMA read_reg RSQ {
+        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+      }
+    ;
+
+  stxrb
+    : STXRB wd_wd COMMA read_reg RSQ {
+        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+      }
+    ;
+
+  stxrh
+    : STXRH wd_wd COMMA read_reg RSQ {
+        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+      }
+    ;
+
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
         result = ThreeArg.new(*val.values_at(0, 2, 4))
@@ -1016,6 +1040,14 @@ rule
 
   wd_wd_wd
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
+  wd_wd
+    : Wd COMMA Wd { result = TwoArg.new(val[0], val[2]) }
+    ;
+
+  wd_xd
+    : Wd COMMA Xd { result = TwoArg.new(val[0], val[2]) }
     ;
 
   wd_xd_xd

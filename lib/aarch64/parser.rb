@@ -91,6 +91,8 @@ module AArch64
       def apply asm, name
         asm.public_send(name, n, m)
       end
+
+      def to_a; [n, m]; end
     end
 
     class ThreeArg
