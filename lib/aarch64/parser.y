@@ -12,8 +12,8 @@ rule
   insn
     : adc
     | adcs
-    | add
-    | adds
+    | ADD add_body { val[1].apply(@asm, :add) }
+    | ADDS add_body { val[1].apply(@asm, :adds) }
     | ADR Xd COMMA imm { @asm.adr(val[1], val[3]) }
     | ADRP Xd COMMA imm { @asm.adrp(val[1], val[3]) }
     | and { val[0].apply(@asm, :and) }
@@ -112,7 +112,8 @@ rule
     | stxr
     | stxrb
     | stxrh
-    | sub
+    | SUB add_body { val[1].apply(@asm, :sub) }
+    | SUBS add_body { val[1].apply(@asm, :subs) }
     ;
 
   adc
@@ -199,16 +200,6 @@ rule
         result = ThreeWithLsl.new(*regs, lsl: opts[:lsl])
       }
     | reg_reg_imm { result = val[0] }
-    ;
-
-  add
-    : ADD add_body { val[1].apply(@asm, :add) }
-    ;
-
-  adds
-    : ADDS add_body {
-        val[1].apply(@asm, :adds)
-      }
     ;
 
   reg_reg_shift
@@ -959,10 +950,6 @@ rule
     : STXRH wd_wd COMMA read_reg RSQ {
         ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
       }
-    ;
-
-  sub
-    : SUB add_body { val[1].apply(@asm, :sub) }
     ;
 
   wd_wd_read_reg
