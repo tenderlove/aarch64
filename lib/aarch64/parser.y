@@ -114,6 +114,8 @@ rule
     | stxrh
     | SUB add_body { val[1].apply(@asm, :sub) }
     | SUBS add_body { val[1].apply(@asm, :subs) }
+    | SVC imm { @asm.svc val[1] }
+    | sxtb
     ;
 
   adc
@@ -950,6 +952,11 @@ rule
     : STXRH wd_wd COMMA read_reg RSQ {
         ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
       }
+    ;
+
+  sxtb
+    : SXTB wd_wd { val[1].apply(@asm, :sxtb) }
+    | SXTB Xd COMMA Wd { TwoArg.new(val[1], val[3]).apply(@asm, :sxtb) }
     ;
 
   wd_wd_read_reg

@@ -1480,12 +1480,10 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_svc
-    skip "fixme"
     assert_bytes "svc      #0", [0x01,0x00,0x00,0xd4]
   end
 
   def test_generated_sxtb
-    skip "fixme"
     assert_bytes "sxtb     w1, w2", [0x41,0x1c,0x00,0x13]
     assert_bytes "sxtb     xzr, w3", [0x7f,0x1c,0x40,0x93]
   end
