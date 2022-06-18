@@ -206,20 +206,9 @@ rule
     ;
 
   adds
-    : ADDS shifted {
+    : ADDS add_body {
         val[1].apply(@asm, :adds)
       }
-    | ADDS add_extended {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.adds(r1, r2, r3, extend: opts[:extend], amount: opts[:amount])
-      }
-    | ADDS add_immediate {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.adds(r1, r2, r3, lsl: opts[:lsl])
-      }
-    | ADDS reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
   reg_reg_shift
