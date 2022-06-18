@@ -2533,22 +2533,15 @@ module AArch64
       end
 
       if extend
-        extend = case extend
-                 when :uxtb then 0b000
-                 when :uxth then 0b001
-                 when :uxtw then 0b010
-                 when :uxtx then 0b011
-                 when :sxtb then 0b100
-                 when :sxth then 0b101
-                 when :sxtw then 0b110
-                 when :sxtx then 0b111
+        extend = if m.x?
+                   Utils.sub_decode_extend64(extend)
                  else
-                   raise "Unknown extend #{extend}"
+                   Utils.sub_decode_extend32(extend)
                  end
         a SUB_addsub_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          a SUB_addsub_imm.new(d, n, m, lsl / 12, d.sf)
+          a SUB_addsub_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
           a SUB_addsub_shift.new(d, n, m, shift, amount, d.sf)

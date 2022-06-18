@@ -8302,6 +8302,10 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_SUB_all
+    # FIXME
+    #assert_bytes [0x7f,0x70,0x27,0xcb] do |asm|
+    #  asm.sub sp, x3, x7, extend: :uxtx, amount: 4
+    #end
     assert_bytes [0x82,0x08,0x25,0xcb] do |asm|
       asm.sub      x2, x4, w5, uxtb(2)
     end

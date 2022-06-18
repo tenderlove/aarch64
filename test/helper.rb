@@ -14,17 +14,48 @@ module AArch64
       str.split(" ").map { |x| x.to_i(16) }
     end
 
+    def color_diff expected, actual
+      len = expected.bytesize
+      raise unless actual.bytesize == len
+
+      exp_out = ''
+      act_out = ''
+      len.times do |i|
+        if expected[i] == actual[i]
+          exp_out << expected[i]
+          act_out << actual[i]
+        else
+          exp_out << "\e[32m"
+          exp_out << expected[i]
+          exp_out << "\e[30m"
+          act_out << "\e[31m"
+          act_out << actual[i]
+          act_out << "\e[30m"
+        end
+      end
+
+      [exp_out, act_out]
+    end
+
     def assert_bytes bytes
       asm = Assembler.new
       x = yield asm
-      jit_buffer = StringIO.new
-      asm.write_to jit_buffer
-      if false
-        actual_bin = sprintf("%032b", jit_buffer.string.unpack1("L<")).gsub(/([01]{4})/, '\1_').sub(/_$/, '')
-        expected_bin = sprintf("%032b", bytes.pack("C4").unpack1("L<")).gsub(/([01]{4})/, '\1_').sub(/_$/, '')
-        assert_equal expected_bin, actual_bin
-      end
-      assert_equal bytes, jit_buffer.string.bytes
+      io = StringIO.new
+      asm.write_to io
+      assert_equal bytes, io.string.bytes, ->() {
+        pos          = 32.times.map { |i| (i % 0x10).to_s(16) }.join.reverse
+        actual_bin   = sprintf("%032b", io.string.unpack1("L<"))
+        expected_bin = sprintf("%032b", bytes.pack("C4").unpack1("L<"))
+        broken = []
+        actual_bin.bytes.zip(expected_bin.bytes).each_with_index { |(a, b), i|
+          broken << (31 - i) unless a == b
+        }
+        input = nil
+        expected_bin, actual_bin = color_diff(expected_bin, actual_bin)
+        "idx: #{pos}\nexp: #{expected_bin}\nact: #{actual_bin}\n" +
+          broken.reverse.map { |idx| "Bit #{idx} differs" }.join("\n") +
+          "\n#{input}"
+      }
     end
 
     def assert_insn binary, asm:

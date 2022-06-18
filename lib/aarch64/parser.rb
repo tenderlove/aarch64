@@ -80,6 +80,21 @@ module AArch64
       end
     end
 
+    class ThreeWithLsl
+      attr_reader :d, :n, :m, :lsl
+
+      def initialize d, n, m, lsl:
+        @d   = d
+        @n   = n
+        @m   = m
+        @lsl = lsl
+      end
+
+      def apply asm, name
+        asm.public_send(name, d, n, m, lsl: lsl)
+      end
+    end
+
     class TwoArg
       attr_reader :n, :m
 
@@ -109,6 +124,22 @@ module AArch64
       end
 
       def to_a; [d, n, m]; end
+    end
+
+    class ThreeWithExtend
+      attr_reader :d, :n, :m, :extend, :amount
+
+      def initialize d, n, m, extend:, amount:
+        @d      = d
+        @n      = n
+        @m      = m
+        @extend = extend
+        @amount = amount
+      end
+
+      def apply asm, name
+        asm.public_send(name, d, n, m, extend: extend, amount: amount)
+      end
     end
 
     class FourArg < Struct.new(:a, :b, :c, :d)

@@ -16,29 +16,6 @@ class ParserTest < AArch64::Test
     assert_bytes "autda x1, x2", [0x41, 0x18, 0xc1, 0xda]
   end
 
-  def color_diff expected, actual
-    len = expected.bytesize
-    raise unless actual.bytesize == len
-
-    exp_out = ''
-    act_out = ''
-    len.times do |i|
-      if expected[i] == actual[i]
-        exp_out << expected[i]
-        act_out << actual[i]
-      else
-        exp_out << "\e[32m"
-        exp_out << expected[i]
-        exp_out << "\e[30m"
-        act_out << "\e[31m"
-        act_out << actual[i]
-        act_out << "\e[30m"
-      end
-    end
-
-    [exp_out, act_out]
-  end
-
   def assert_bytes input, bytes
     parser = AArch64::Parser.new
     begin
@@ -1415,7 +1392,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sub
-    skip "fixme"
     assert_bytes "sub      sp, sp, #288", [0xff,0x83,0x04,0xd1]
     assert_bytes "sub      sp, x2, w3, sxtw", [0x5f,0xc0,0x23,0xcb]
     assert_bytes "sub      sp, x3, x7, lsl #4", [0x7f,0x70,0x27,0xcb]

@@ -112,6 +112,7 @@ rule
     | stxr
     | stxrb
     | stxrh
+    | sub
     ;
 
   adc
@@ -130,6 +131,9 @@ rule
         result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
     | Xd COMMA Xd COMMA imm COMMA LSL imm {
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
+      }
+    | SP COMMA SP COMMA imm {
         result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
     ;
@@ -184,21 +188,21 @@ rule
       }
     ;
 
+  add_body
+    : shifted { result = val[0] }
+    | add_extended {
+        regs, opts = *val[0]
+        result = ThreeWithExtend.new(*regs, extend: opts[:extend], amount: opts[:amount])
+      }
+    | add_immediate {
+        regs, opts = *val[0]
+        result = ThreeWithLsl.new(*regs, lsl: opts[:lsl])
+      }
+    | reg_reg_imm { result = val[0] }
+    ;
+
   add
-    : ADD shifted {
-        val[1].apply(@asm, :add)
-      }
-    | ADD add_extended {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.add(r1, r2, r3, extend: opts[:extend], amount: opts[:amount])
-      }
-    | ADD add_immediate {
-        regs, opts = *val[1]
-        r1, r2, r3 = *regs
-        @asm.add(r1, r2, r3, lsl: opts[:lsl])
-      }
-    | ADD reg_reg_imm { val[1].apply(@asm, val[0]) }
+    : ADD add_body { val[1].apply(@asm, :add) }
     ;
 
   adds
@@ -966,6 +970,10 @@ rule
     : STXRH wd_wd COMMA read_reg RSQ {
         ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
       }
+    ;
+
+  sub
+    : SUB add_body { val[1].apply(@asm, :sub) }
     ;
 
   wd_wd_read_reg
