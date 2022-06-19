@@ -1489,13 +1489,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sxth
-    skip "fixme"
     assert_bytes "sxth     w9, w10", [0x49,0x3d,0x00,0x13]
     assert_bytes "sxth     x0, w1", [0x20,0x3c,0x40,0x93]
   end
 
   def test_generated_sxtw
-    skip "fixme"
     assert_bytes "sxtw     x3, w30", [0xc3,0x7f,0x40,0x93]
   end
 

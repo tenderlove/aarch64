@@ -115,7 +115,9 @@ rule
     | SUB add_body { val[1].apply(@asm, :sub) }
     | SUBS add_body { val[1].apply(@asm, :subs) }
     | SVC imm { @asm.svc val[1] }
-    | sxtb
+    | SXTB sxtb_body { val[1].apply(@asm, :sxtb) }
+    | SXTH sxtb_body { val[1].apply(@asm, :sxth) }
+    | SXTW xd_wd { val[1].apply(@asm, :sxtw) }
     ;
 
   adc
@@ -954,9 +956,9 @@ rule
       }
     ;
 
-  sxtb
-    : SXTB wd_wd { val[1].apply(@asm, :sxtb) }
-    | SXTB Xd COMMA Wd { TwoArg.new(val[1], val[3]).apply(@asm, :sxtb) }
+  sxtb_body
+    : wd_wd
+    | xd_wd
     ;
 
   wd_wd_read_reg
@@ -994,6 +996,12 @@ rule
   xd_wd_wd
     : Xd COMMA Wd COMMA Wd {
         result = ThreeArg.new(*val.values_at(0, 2, 4))
+      }
+    ;
+
+  xd_wd
+    : Xd COMMA Wd {
+        result = TwoArg.new(*val.values_at(0, 2))
       }
     ;
 
