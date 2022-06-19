@@ -169,6 +169,8 @@ module AArch64
         [:Xd, AArch64::Registers.const_get(str.upcase)]
       elsif str = @scan.scan(/w\d+/i)
         [:Wd, AArch64::Registers.const_get(str.upcase)]
+      elsif str = @scan.scan(/c\d+/i)
+        [:Cd, AArch64::Names.const_get(str.upcase)]
       elsif str = @scan.scan(/sp/i)
         [:SP, AArch64::Registers.const_get(str.upcase)]
       elsif str = @scan.scan(/xzr/i)

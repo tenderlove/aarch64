@@ -1498,7 +1498,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sys
-    skip "fixme"
     assert_bytes "sys     #0, c15, c15, #2", [0x5f,0xff,0x08,0xd5]
     assert_bytes "sys     #7, c5, c9, #7, x5", [0xe5,0x59,0x0f,0xd5]
   end
