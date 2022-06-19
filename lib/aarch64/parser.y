@@ -12,12 +12,12 @@ rule
   insn
     : adc
     | adcs
-    | ADD add_body { val[1].apply(@asm, :add) }
-    | ADDS add_body { val[1].apply(@asm, :adds) }
+    | ADD add_body { val[1].apply(@asm, val[0]) }
+    | ADDS add_body { val[1].apply(@asm, val[0]) }
     | ADR Xd COMMA imm { @asm.adr(val[1], val[3]) }
     | ADRP Xd COMMA imm { @asm.adrp(val[1], val[3]) }
-    | and { val[0].apply(@asm, :and) }
-    | ands { val[0].apply(@asm, :ands) }
+    | AND and_body { val[1].apply(@asm, val[0]) }
+    | ANDS and_body { val[1].apply(@asm, val[0]) }
     | asr  { val[0].apply(@asm, :asr) }
     | at
     | autda
@@ -246,14 +246,9 @@ rule
     | reg_reg_reg
     ;
 
-  and
-    : AND reg_reg_imm { result = val[1] }
-    | AND shifted { result = val[1] }
-    ;
-
-  ands
-    : ANDS reg_reg_imm { result = val[1] }
-    | ANDS shifted { result = val[1] }
+  and_body
+    : reg_reg_imm
+    | shifted
     ;
 
   asr
