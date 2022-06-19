@@ -124,6 +124,17 @@ rule
     | tst
     | UBFIZ ubfiz_body { val[1].apply(@asm, val[0]) }
     | UBFX ubfiz_body { val[1].apply(@asm, val[0]) }
+    | UDIV reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | UMADDL xd_wd_wd_xd { val[1].apply(@asm, val[0]) }
+    | UMNEGL xd_wd_wd { val[1].apply(@asm, val[0]) }
+    | UMSUBL xd_wd_wd_xd { val[1].apply(@asm, val[0]) }
+    | UMULH xd_xd_xd { val[1].apply(@asm, val[0]) }
+    | UMULL xd_wd_wd { val[1].apply(@asm, val[0]) }
+    | UXTB wd_wd { val[1].apply(@asm, val[0]) }
+    | UXTH wd_wd { val[1].apply(@asm, val[0]) }
+    | WFE { @asm.wfe }
+    | WFI { @asm.wfi }
+    | YIELD { @asm.yield }
     ;
 
   adc
@@ -996,6 +1007,12 @@ rule
         result = FourArg.new(*val.values_at(0, 2, 4, 6))
       }
     | Xd COMMA Xd COMMA imm COMMA imm {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    ;
+
+  xd_wd_wd_xd
+    : Xd COMMA Wd COMMA Wd COMMA Xd {
         result = FourArg.new(*val.values_at(0, 2, 4, 6))
       }
     ;

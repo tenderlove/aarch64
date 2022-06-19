@@ -1561,13 +1561,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_udiv
-    skip "fixme"
     assert_bytes "udiv  w0, w7, w10", [0xe0,0x08,0xca,0x1a]
     assert_bytes "udiv  x9, x22, x4", [0xc9,0x0a,0xc4,0x9a]
   end
 
   def test_generated_umaddl
-    skip "fixme"
     assert_bytes "umaddl   x13, wzr, w14, x15", [0xed,0x3f,0xae,0x9b]
     assert_bytes "umaddl   x16, w17, wzr, x18", [0x30,0x4a,0xbf,0x9b]
     assert_bytes "umaddl   x3, w5, w2, x9", [0xa3,0x24,0xa2,0x9b]
@@ -1575,13 +1573,11 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_umnegl
-    skip "fixme"
     assert_bytes "umnegl   x11, w13, w17", [0xab,0xfd,0xb1,0x9b]
     assert_bytes "umnegl   x19, w20, w21", [0x93,0xfe,0xb5,0x9b]
   end
 
   def test_generated_umsubl
-    skip "fixme"
     assert_bytes "umsubl   x13, wzr, w14, x15", [0xed,0xbf,0xae,0x9b]
     assert_bytes "umsubl   x16, w17, wzr, x18", [0x30,0xca,0xbf,0x9b]
     assert_bytes "umsubl   x3, w5, w2, x9", [0xa3,0xa4,0xa2,0x9b]
@@ -1589,7 +1585,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_umulh
-    skip "fixme"
     assert_bytes "umulh    x23, x22, xzr", [0xd7,0x7e,0xdf,0x9b]
     assert_bytes "umulh    x25, xzr, x24", [0xf9,0x7f,0xd8,0x9b]
     assert_bytes "umulh    x30, x29, x28", [0xbe,0x7f,0xdc,0x9b]
@@ -1597,33 +1592,27 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_umull
-    skip "fixme"
     assert_bytes "umull    x11, w13, w17", [0xab,0x7d,0xb1,0x9b]
     assert_bytes "umull    x19, w20, w21", [0x93,0x7e,0xb5,0x9b]
   end
 
   def test_generated_uxtb
-    skip "fixme"
     assert_bytes "uxtb     w1, w2", [0x41,0x1c,0x00,0x53]
   end
 
   def test_generated_uxth
-    skip "fixme"
     assert_bytes "uxth     w9, w10", [0x49,0x3d,0x00,0x53]
   end
 
   def test_generated_wfe
-    skip "fixme"
     assert_bytes "wfe", [0x5f,0x20,0x03,0xd5]
   end
 
   def test_generated_wfi
-    skip "fixme"
     assert_bytes "wfi", [0x7f,0x20,0x03,0xd5]
   end
 
   def test_generated_yield
-    skip "fixme"
     assert_bytes "yield", [0x3f,0x20,0x03,0xd5]
   end
 
