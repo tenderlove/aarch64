@@ -119,6 +119,7 @@ rule
     | SXTH sxtb_body { val[1].apply(@asm, :sxth) }
     | SXTW xd_wd { val[1].apply(@asm, :sxtw) }
     | sys
+    | sysl
     ;
 
   adc
@@ -970,6 +971,12 @@ rule
         @asm.sys(val[1], val[3], val[5], val[7], val[9])
       }
     ;
+  sysl
+    : SYSL Xd COMMA imm COMMA Cd COMMA Cd COMMA imm {
+        @asm.sysl(val[1], val[3], val[5], val[7], val[9])
+      }
+    ;
+
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
         result = ThreeArg.new(*val.values_at(0, 2, 4))

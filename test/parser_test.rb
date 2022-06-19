@@ -1503,7 +1503,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_sysl
-    skip "fixme"
     assert_bytes "sysl    x1, #0, c15, c15, #2", [0x41,0xff,0x28,0xd5]
     assert_bytes "sysl    x9, #7, c5, c9, #7", [0xe9,0x59,0x2f,0xd5]
   end
