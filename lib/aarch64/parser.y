@@ -121,6 +121,9 @@ rule
     | sys
     | sysl
     | tlbi
+    | tst
+    | UBFIZ ubfiz_body { val[1].apply(@asm, val[0]) }
+    | UBFX ubfiz_body { val[1].apply(@asm, val[0]) }
     ;
 
   adc
@@ -981,6 +984,20 @@ rule
   tlbi
     : TLBI tlbi_op { @asm.tlbi(val[1].to_sym) }
     | TLBI tlbi_op COMMA Xd { @asm.tlbi(val[1].to_sym, val[3]) }
+    ;
+
+  tst
+    : TST reg_imm { val[1].apply(@asm, val[0]) }
+    | TST reg_reg_shift { val[1].apply(@asm, val[0]) }
+    ;
+
+  ubfiz_body
+    : Wd COMMA Wd COMMA imm COMMA imm {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
+    | Xd COMMA Xd COMMA imm COMMA imm {
+        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+      }
     ;
 
   wd_wd_read_reg

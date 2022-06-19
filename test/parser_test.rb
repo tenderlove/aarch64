@@ -1543,20 +1543,17 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_tst
-    skip "fixme"
     assert_bytes "tst      w3, w7, lsl #31", [0x7f,0x7c,0x07,0x6a]
     assert_bytes "tst      x2, x20, asr #0", [0x5f,0x00,0x94,0xea]
   end
 
   def test_generated_ubfiz
-    skip "fixme"
     assert_bytes "ubfiz    x4, x5, #52, #11", [0xa4,0x28,0x4c,0xd3]
     assert_bytes "ubfiz    x4, xzr, #1, #6", [0xe4,0x17,0x7f,0xd3]
     assert_bytes "ubfiz    xzr, xzr, #10, #11", [0xff,0x2b,0x76,0xd3]
   end
 
   def test_generated_ubfx
-    skip "fixme"
     assert_bytes "ubfx     w9, w10, #0, #1", [0x49,0x01,0x00,0x53]
     assert_bytes "ubfx     xzr, x4, #0, #1", [0x9f,0x00,0x40,0xd3]
     assert_bytes "ubfx    w9, w10, #0, #1", [0x49,0x01,0x00,0x53]
