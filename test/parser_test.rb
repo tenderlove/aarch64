@@ -1508,7 +1508,6 @@ class ParserTest < AArch64::Test
   end
 
   def test_generated_tlbi
-    skip "fixme"
     assert_bytes "tlbi    alle1", [0x9f,0x87,0x0c,0xd5]
     assert_bytes "tlbi    alle1is", [0x9f,0x83,0x0c,0xd5]
     assert_bytes "tlbi    alle2", [0x1f,0x87,0x0c,0xd5]

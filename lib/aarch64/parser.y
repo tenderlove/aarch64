@@ -120,6 +120,7 @@ rule
     | SXTW xd_wd { val[1].apply(@asm, :sxtw) }
     | sys
     | sysl
+    | tlbi
     ;
 
   adc
@@ -977,6 +978,11 @@ rule
       }
     ;
 
+  tlbi
+    : TLBI tlbi_op { @asm.tlbi(val[1].to_sym) }
+    | TLBI tlbi_op COMMA Xd { @asm.tlbi(val[1].to_sym, val[3]) }
+    ;
+
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
         result = ThreeArg.new(*val.values_at(0, 2, 4))
@@ -1212,4 +1218,85 @@ rule
       | LD
       | ST
       | SY
+      ;
+
+  tlbi_op
+      : VMALLE1OS
+      | VAE1OS
+      | ASIDE1OS
+      | VAAE1OS
+      | VALE1OS
+      | VAALE1OS
+      | RVAE1IS
+      | RVAAE1IS
+      | RVALE1IS
+      | RVAALE1IS
+      | VMALLE1IS
+      | VAE1IS
+      | ASIDE1IS
+      | VAAE1IS
+      | VALE1IS
+      | VAALE1IS
+      | RVAE1OS
+      | RVAAE1OS
+      | RVALE1OS
+      | RVAALE1OS
+      | RVAE1
+      | RVAAE1
+      | RVALE1
+      | RVAALE1
+      | VMALLE1
+      | VAE1
+      | ASIDE1
+      | VAAE1
+      | VALE1
+      | VAALE1
+      | IPAS2E1IS
+      | RIPAS2E1IS
+      | IPAS2LE1IS
+      | RIPAS2LE1IS
+      | ALLE2OS
+      | VAE2OS
+      | ALLE1OS
+      | VALE2OS
+      | VMALLS12E1OS
+      | RVAE2IS
+      | RVALE2IS
+      | ALLE2IS
+      | VAE2IS
+      | ALLE1IS
+      | VALE2IS
+      | VMALLS12E1IS
+      | IPAS2E1OS
+      | IPAS2E1
+      | RIPAS2E1
+      | RIPAS2E1OS
+      | IPAS2LE1OS
+      | IPAS2LE1
+      | RIPAS2LE1
+      | RIPAS2LE1OS
+      | RVAE2OS
+      | RVALE2OS
+      | RVAE2
+      | RVALE2
+      | ALLE2
+      | VAE2
+      | ALLE1
+      | VALE2
+      | VMALLS12E1
+      | ALLE3OS
+      | VAE3OS
+      | VALE3OS
+      | RVAE3IS
+      | RVALE3IS
+      | ALLE3IS
+      | VAE3IS
+      | VALE3IS
+      | RVAE3OS
+      | RVALE3OS
+      | RVAE3
+      | RVALE3
+      | ALLE3
+      | VAE3
+      | VALE3
       ;
