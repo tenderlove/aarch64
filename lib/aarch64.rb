@@ -194,7 +194,7 @@ module AArch64
       else
         if m.integer?
           # add immediate
-          a ADD_addsub_imm.new(d, n, m, lsl / 12, d.sf)
+          a ADD_addsub_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
           a ADD_addsub_shift.new(d, n, m, shift, amount, d.sf)

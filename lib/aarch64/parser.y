@@ -170,6 +170,12 @@ rule
     | Xd COMMA Xd COMMA imm COMMA LSL imm {
         result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
+    | Xd COMMA SP COMMA imm COMMA LSL imm {
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
+      }
+    | SP COMMA SP COMMA imm COMMA LSL imm {
+        result = [[val[0], val[2], val[4]], { lsl: val[7] }]
+      }
     | SP COMMA SP COMMA imm {
         result = [[val[0], val[2], val[4]], { lsl: val[7] }]
       }
@@ -386,6 +392,9 @@ rule
         result = TwoArg.new(val[0], val[2])
       }
     | Xd COMMA imm {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | Wd COMMA imm {
         result = TwoArg.new(val[0], val[2])
       }
     | SP COMMA imm {
@@ -935,6 +944,10 @@ rule
     | STP reg_reg_read_reg RSQ COMMA imm {
         FourArg.new(*val[1].to_a, val[4]).apply(@asm, val[0])
       }
+    | STP reg_reg_read_reg RSQ {
+        a, b, c = *val[1].to_a
+        ThreeArg.new(a, b, [c]).apply(@asm, val[0])
+      }
     ;
 
   str_body
@@ -964,6 +977,9 @@ rule
 
   strb_body
     : Wd COMMA read_reg_reg_extend_amount RSQ {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | Wd COMMA read_reg_reg RSQ {
         result = TwoArg.new(val[0], val[2])
       }
     | Wd COMMA read_reg_imm RSQ {
@@ -1254,7 +1270,7 @@ rule
   xn: Xd;
   xt: Xd | XZR;
 
-  cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE | PL;
+  cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE | PL | LS | HI | VC | VS;
 
   extend
       : UXTB

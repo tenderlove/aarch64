@@ -51,6 +51,32 @@ class ParserTest < AArch64::Test
     }
   end
 
+  def test_add
+    assert_bytes "add sp, sp, #0x40", [0xff, 0x03, 0x01, 0x91]
+    assert_bytes "add x8, sp, #1, lsl #12", [0xe8, 0x07, 0x40, 0x91]
+    assert_bytes "add sp, sp, #1, lsl #12", [0xff, 0x07, 0x40, 0x91]
+    assert_bytes "add x8, x10, #1", [0x48, 0x5, 00, 0x91]
+  end
+
+  def test_bls
+    assert_bytes "b.ls #0x10", [0x89, 0x00, 0000, 0x54]
+  end
+
+  def test_bhi
+    assert_bytes "b.hi #0x28", [0x48, 0x01, 0000, 0x54]
+  end
+
+  def test_bvc
+    assert_bytes "b.vc #0x2e8", [0x47, 0x17, 0000, 0x54]
+    assert_bytes "b.vc #0x10", [0x87, 0000, 0000, 0x54]
+  end
+
+  def test_bvs
+    assert_bytes "b.vs #0x64", [0x26, 0x03, 0000, 0x54]
+    assert_bytes "b.vs #0x1c", [0xe6, 0000, 0000, 0x54]
+    assert_bytes "b.vs #0xec", [0x66, 0x07, 0000, 0x54]
+  end
+
   def test_brk
     assert_bytes "brk #0x1", [0x20, 0000, 0x20, 0xd4]
   end
@@ -58,6 +84,10 @@ class ParserTest < AArch64::Test
   def test_cmn
     assert_bytes "cmn wsp, #0x555, lsl #12", [0xff, 0x57, 0x55, 0x31]
     assert_bytes "cmn x18, #0x555", [0x5f, 0x56, 0x15, 0xb1]
+  end
+
+  def test_cmp
+    assert_bytes "cmp w0, #1", [0x1f, 0x04, 0000, 0x71]
   end
 
   def test_crc32
@@ -195,6 +225,14 @@ class ParserTest < AArch64::Test
 
   def test_stnp
     assert_bytes "stnp x4, x9, [sp, #-0x10]", [0xe4, 0x27, 0x3f, 0xa8]
+  end
+
+  def test_stp
+    assert_bytes "stp x0, x1, [sp]", [0xe0, 0x07, 0000, 0xa9]
+  end
+
+  def test_strh
+    assert_bytes "strh wzr, [x8, x9]", [0x1f, 0x69, 0x29, 0x78]
   end
 
   def test_hint
