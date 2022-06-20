@@ -2,6 +2,7 @@
 
 require "racc/parser.rb"
 require "strscan"
+require "aarch64/system_registers/mrs_msr_64"
 
 module AArch64
   class Parser < Racc::Parser
@@ -160,6 +161,11 @@ module AArch64
       _next_token
     end
 
+    SYS_REG_SCAN = Regexp.new(AArch64::SystemRegisters.constants.join("|"), true)
+    SYS_REG_MAP = Hash[AArch64::SystemRegisters.constants.map { |k|
+      [k.to_s.downcase, AArch64::SystemRegisters.const_get(k)]
+    }]
+
     def _next_token
       return _next_token if @scan.scan(/[\t ]+/) # skip whitespace
 
@@ -199,6 +205,18 @@ module AArch64
         [:LSL, str]
       elsif str = @scan.scan(/#/)
         ["#", "#"]
+      elsif str = @scan.scan(/s\d_\d_c\d_c\d_\d/i)
+        if str =~ /s(\d)_(\d)_(c\d)_(c\d)_(\d)/i
+          [:SYSTEMREG, SystemRegisters::MRS_MSR_64.new($1.to_i,
+                                                       $2.to_i,
+                                                       Names.const_get($3.upcase),
+                                                       Names.const_get($4.upcase),
+                                                       $5.to_i)]
+        else
+          raise
+        end
+      elsif str = @scan.scan(SYS_REG_SCAN)
+        [:SYSTEMREG, SYS_REG_MAP[str.downcase]]
       elsif str = @scan.scan(/\w+/)
         [str.upcase.to_sym, str]
       else

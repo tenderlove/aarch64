@@ -752,7 +752,7 @@ module AArch64
     end
 
     def hint imm
-      a HINT.new(31, imm)
+      a HINT.new(imm >> 3, imm & 0b111)
     end
 
     def hlt imm

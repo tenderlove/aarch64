@@ -1,4 +1,5 @@
 require "aarch64"
+require "aarch64/parser"
 require "minitest/autorun"
 require "hatstone"
 require "stringio"

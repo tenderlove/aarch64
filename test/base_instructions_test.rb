@@ -336,6 +336,13 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
+  def test_hint
+    # hint #0xc
+    assert_bytes [0x9f, 0x21, 0x3, 0xd5] do |asm|
+      asm.hint 0xc
+    end
+  end
+
   def test_AUTIB
     # AUTIB  <Xd>, <Xn|SP>
     assert_bytes [0x41, 0x14, 0xc1, 0xda] do |asm|

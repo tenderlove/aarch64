@@ -29,6 +29,7 @@ rule
     | bl
     | blr
     | br
+    | BRK imm { @asm.brk(val[1]) }
     | cbnz
     | cbz
     | cinc
@@ -50,10 +51,10 @@ rule
     | dsb
     | eor
     | ERET { @asm.eret }
+    | HINT imm { @asm.hint(val[1]) }
     | extr
     | ic
     | isb
-    | movz
     | cond_fours
     | loads
     | lsl
@@ -61,6 +62,10 @@ rule
     | madd
     | mneg
     | mov
+    | MOVK movz_body { val[1].apply(@asm, val[0]) }
+    | MOVZ movz_body { val[1].apply(@asm, val[0]) }
+    | mrs
+    | msr
     | msub
     | mul
     | neg
@@ -120,6 +125,8 @@ rule
     | SXTW xd_wd { val[1].apply(@asm, :sxtw) }
     | sys
     | sysl
+    | TBZ reg_imm_imm { val[1].apply(@asm, val[0]) }
+    | TBNZ reg_imm_imm { val[1].apply(@asm, val[0]) }
     | tlbi
     | tst
     | UBFIZ ubfiz_body { val[1].apply(@asm, val[0]) }
@@ -358,6 +365,9 @@ rule
     : SP COMMA imm COMMA LSL imm {
         result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
+    | WSP COMMA imm COMMA LSL imm {
+        result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
+      }
     | Wd COMMA imm COMMA LSL imm {
         result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
@@ -365,6 +375,9 @@ rule
         result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
       }
     | WSP COMMA imm {
+        result = TwoArg.new(val[0], val[2])
+      }
+    | Xd COMMA imm {
         result = TwoArg.new(val[0], val[2])
       }
     | SP COMMA imm {
@@ -735,13 +748,27 @@ rule
     | MOV reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
-  movz
-    : MOVZ register COMMA imm { @asm.movz(val[1], val[3]) }
-    | MOVZ register COMMA imm COMMA LSL imm { @asm.movz(val[1], val[3], lsl: val[6]) }
+  movz_body
+    : register COMMA imm { result = TwoArg.new(val[0], val[2]) }
+    | register COMMA imm COMMA LSL imm {
+        result = TwoWithLsl.new(val[0], val[2], lsl: val[5])
+      }
     ;
 
   msub
     : MSUB reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
+  msr
+    : MSR SYSTEMREG COMMA Xd {
+        TwoArg.new(val[1], val[3]).apply(@asm, val[0])
+      }
+    ;
+
+  mrs
+    : MRS Xd COMMA SYSTEMREG {
+        TwoArg.new(val[1], val[3]).apply(@asm, val[0])
+      }
     ;
 
   mul
@@ -784,6 +811,9 @@ rule
 
   prfm_imm
     : PRFOP COMMA read_reg_imm RSQ {
+        result = TwoArg.new(val[0].to_sym, val[2])
+      }
+    | PRFOP COMMA imm {
         result = TwoArg.new(val[0].to_sym, val[2])
       }
     ;
@@ -984,6 +1014,15 @@ rule
   sysl
     : SYSL Xd COMMA imm COMMA Cd COMMA Cd COMMA imm {
         @asm.sysl(val[1], val[3], val[5], val[7], val[9])
+      }
+    ;
+
+  reg_imm_imm
+    : Xd COMMA imm COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
+      }
+    | Wd COMMA imm COMMA imm {
+        result = ThreeArg.new(val[0], val[2], val[4])
       }
     ;
 
