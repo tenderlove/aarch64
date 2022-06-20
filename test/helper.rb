@@ -38,6 +38,14 @@ module AArch64
       [exp_out, act_out]
     end
 
+    def try_parse asm_str, bytes
+      parser = AArch64::Parser.new
+      parser.parse asm_str
+    rescue Racc::ParseError, ArgumentError, NameError
+      bytes = "[" + bytes.map { |x| sprintf("%#04x", x) }.join(", ") + "]"
+      puts "assert_bytes #{asm_str.dump}, #{bytes}"
+    end
+
     def assert_bytes bytes
       asm = Assembler.new
       x = yield asm

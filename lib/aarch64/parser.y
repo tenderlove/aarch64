@@ -40,6 +40,8 @@ rule
     | cmn
     | cmp
     | cneg
+    | crc32
+    | crc32c
     | cset
     | csetm
     | dc
@@ -54,6 +56,7 @@ rule
     | ERET { @asm.eret }
     | HINT imm { @asm.hint(val[1]) }
     | HLT imm { @asm.hlt(val[1]) }
+    | HVC imm { @asm.hvc(val[1]) }
     | extr
     | ic
     | isb
@@ -445,6 +448,28 @@ rule
   cmp : CMP cmn_body { val[1].apply(@asm, :cmp) }
 
   cneg : CNEG cond_three { val[1].apply(@asm, :cneg) } ;
+
+  crc32w_insns
+    : CRC32B
+    | CRC32H
+    | CRC32W
+    ;
+
+  crc32
+    : crc32w_insns wd_wd_wd { val[1].apply(@asm, val[0]) }
+    | CRC32X wd_wd_xd { val[1].apply(@asm, val[0]) }
+    ;
+
+  crc32c_insns
+    : CRC32CB
+    | CRC32CH
+    | CRC32CW
+    ;
+
+  crc32c
+    : crc32c_insns wd_wd_wd { val[1].apply(@asm, val[0]) }
+    | CRC32CX wd_wd_xd { val[1].apply(@asm, val[0]) }
+    ;
 
   cond_four_instructions
     : CSINV
@@ -897,7 +922,7 @@ rule
     ;
 
   stnp
-    : STNP wd_wd_read_reg_imm RSQ {
+    : STNP reg_reg_read_reg_imm RSQ {
         val[1].apply(@asm, val[0])
       }
     ;
@@ -1058,6 +1083,7 @@ rule
   tst
     : TST reg_imm { val[1].apply(@asm, val[0]) }
     | TST reg_reg_shift { val[1].apply(@asm, val[0]) }
+    | TST reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   ubfiz_body
@@ -1153,6 +1179,10 @@ rule
 
   wd_wd_wd
     : Wd COMMA Wd COMMA Wd { result = ThreeArg.new(val[0], val[2], val[4]) }
+    ;
+
+  wd_wd_xd
+    : Wd COMMA Wd COMMA Xd { result = ThreeArg.new(val[0], val[2], val[4]) }
     ;
 
   wd_wd

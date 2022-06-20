@@ -60,6 +60,20 @@ class ParserTest < AArch64::Test
     assert_bytes "cmn x18, #0x555", [0x5f, 0x56, 0x15, 0xb1]
   end
 
+  def test_crc32
+    assert_bytes "crc32b w5, w7, w20", [0xe5, 0x40, 0xd4, 0x1a]
+    assert_bytes "crc32h w28, wzr, w30", [0xfc, 0x47, 0xde, 0x1a]
+    assert_bytes "crc32w w0, w1, w2", [0x20, 0x48, 0xc2, 0x1a]
+    assert_bytes "crc32x w7, w9, x20", [0x27, 0x4d, 0xd4, 0x9a]
+  end
+
+  def test_crc32c
+    assert_bytes "crc32cb w9, w5, w4", [0xa9, 0x50, 0xc4, 0x1a]
+    assert_bytes "crc32ch w13, w17, w25", [0x2d, 0x56, 0xd9, 0x1a]
+    assert_bytes "crc32cw wzr, w3, w5", [0x7f, 0x58, 0xc5, 0x1a]
+    assert_bytes "crc32cx w18, w16, xzr", [0x12, 0x5e, 0xdf, 0x9a]
+  end
+
   def test_eon
     assert_bytes "eon w1, w2, w3", [0x41, 0000, 0x23, 0x4a]
     assert_bytes "eon x1, x2, x3", [0x41, 0000, 0x23, 0xca]
@@ -88,6 +102,10 @@ class ParserTest < AArch64::Test
 
   def test_hlt
     assert_bytes "hlt #0x7b", [0x60, 0x0f, 0x40, 0xd4]
+  end
+
+  def test_hvc
+    assert_bytes "hvc #0x1", [0x22, 0000, 0000, 0xd4]
   end
 
   def test_ldursh
@@ -175,6 +193,10 @@ class ParserTest < AArch64::Test
     assert_bytes "smc #0xf", [0xe3, 0x01, 0000, 0xd4]
   end
 
+  def test_stnp
+    assert_bytes "stnp x4, x9, [sp, #-0x10]", [0xe4, 0x27, 0x3f, 0xa8]
+  end
+
   def test_hint
     assert_bytes "hint #0xc", [0x9f, 0x21, 0x03, 0xd5]
   end
@@ -185,6 +207,11 @@ class ParserTest < AArch64::Test
 
   def test_tbnz
     assert_bytes "tbnz w3, #5, #4", [0x23, 0000, 0x28, 0x37]
+  end
+
+  def test_tst
+    assert_bytes "tst w1, w2", [0x3f, 0000, 0x02, 0x6a]
+    assert_bytes "tst x1, x2", [0x3f, 0000, 0x02, 0xea]
   end
 
   def test_generated_dc
