@@ -197,7 +197,7 @@ module AArch64
         [:BANG, "!"]
       elsif str = @scan.scan(/(?:pld|pli|pst)(?:l1|l2|l3)(?:keep|strm)/)
         [:PRFOP, str]
-      elsif str = @scan.scan(/0x[0-9A-F]+/i)
+      elsif str = @scan.scan(/-?0x[0-9A-F]+/i)
         [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/-?(?:0|[1-9][0-9]*)/i)
         [:NUMBER, Integer(str)]
@@ -205,8 +205,8 @@ module AArch64
         [:LSL, str]
       elsif str = @scan.scan(/#/)
         ["#", "#"]
-      elsif str = @scan.scan(/s\d_\d_c\d_c\d_\d/i)
-        if str =~ /s(\d)_(\d)_(c\d)_(c\d)_(\d)/i
+      elsif str = @scan.scan(/s\d_\d_c\d+_c\d+_\d/i)
+        if str =~ /s(\d)_(\d)_(c\d+)_(c\d+)_(\d)/i
           [:SYSTEMREG, SystemRegisters::MRS_MSR_64.new($1.to_i,
                                                        $2.to_i,
                                                        Names.const_get($3.upcase),

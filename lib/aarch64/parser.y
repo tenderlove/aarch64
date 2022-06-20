@@ -50,8 +50,10 @@ rule
     | DRPS { @asm.drps }
     | dsb
     | eor
+    | eon
     | ERET { @asm.eret }
     | HINT imm { @asm.hint(val[1]) }
+    | HLT imm { @asm.hlt(val[1]) }
     | extr
     | ic
     | isb
@@ -62,12 +64,14 @@ rule
     | madd
     | mneg
     | mov
+    | MOVN movz_body { val[1].apply(@asm, val[0]) }
     | MOVK movz_body { val[1].apply(@asm, val[0]) }
     | MOVZ movz_body { val[1].apply(@asm, val[0]) }
     | mrs
     | msr
     | msub
     | mul
+    | mvn
     | neg
     | negs
     | ngc
@@ -92,6 +96,7 @@ rule
     | SEV { @asm.sev }
     | SEVL { @asm.sevl }
     | SMADDL smaddl_params { val[1].apply(@asm, val[0]) }
+    | SMC imm { @asm.smc(val[1]) }
     | SMNEGL xd_wd_wd { val[1].apply(@asm, val[0]) }
     | SMSUBL smaddl_params { val[1].apply(@asm, val[0]) }
     | SMULH xd_xd_xd { val[1].apply(@asm, val[0]) }
@@ -474,7 +479,16 @@ rule
     | DSB dmb_option { @asm.dsb(val[1]) }
     ;
 
-  eor : EOR reg_reg_imm { val[1].apply(@asm, :eor) } ;
+  eor
+    : EOR reg_reg_imm { val[1].apply(@asm, :eor) }
+    | EOR reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | EOR reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
+    ;
+
+  eon
+    : EON reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | EON reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
+    ;
 
   extr : EXTR reg_reg_reg_imm { val[1].apply(@asm, :extr) } ;
 
@@ -775,6 +789,11 @@ rule
     : MUL reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
+  mvn
+    : MVN reg_reg_shift { val[1].apply(@asm, val[0]) }
+    | MVN reg_reg { val[1].apply(@asm, val[0]) }
+    ;
+
   neg
     : NEG reg_reg_shift { val[1].apply(@asm, val[0]) }
     | NEG reg_reg { val[1].apply(@asm, val[0]) }
@@ -801,6 +820,7 @@ rule
   orr
     : ORR reg_reg_imm { val[1].apply(@asm, val[0]) }
     | ORR reg_reg_reg_shift { val[1].apply(@asm, val[0]) }
+    | ORR reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   prfm_register
@@ -813,6 +833,9 @@ rule
     : PRFOP COMMA read_reg_imm RSQ {
         result = TwoArg.new(val[0].to_sym, val[2])
       }
+    | PRFOP COMMA read_reg RSQ {
+        result = TwoArg.new(val[0].to_sym, [val[2]])
+      }
     | PRFOP COMMA imm {
         result = TwoArg.new(val[0].to_sym, val[2])
       }
@@ -821,6 +844,7 @@ rule
   prfm
     : PRFM prfm_register { val[1].apply(@asm, val[0]) }
     | PRFM prfm_imm { val[1].apply(@asm, val[0]) }
+    | PRFM imm COMMA read_reg_imm RSQ { TwoArg.new(val[1], val[3]).apply(@asm, val[0]) }
     ;
 
   prfum
