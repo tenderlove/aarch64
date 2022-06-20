@@ -30,13 +30,13 @@ rule
     | blr
     | br
     | BRK imm { @asm.brk(val[1]) }
-    | cbnz
-    | cbz
+    | CBNZ reg_imm { val[1].apply(@asm, val[0]) }
+    | CBZ reg_imm { val[1].apply(@asm, val[0]) }
     | cinc
     | cinv
     | clrex
-    | cls
-    | clz
+    | CLS reg_reg { val[1].apply(@asm, val[0]) }
+    | CLZ reg_reg { val[1].apply(@asm, val[0]) }
     | cmn
     | cmp
     | cneg
@@ -64,21 +64,21 @@ rule
     | loads
     | lsl
     | lsr
-    | madd
-    | mneg
+    | MADD reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | MNEG reg_reg_reg { val[1].apply(@asm, val[0]) }
     | mov
     | MOVN movz_body { val[1].apply(@asm, val[0]) }
     | MOVK movz_body { val[1].apply(@asm, val[0]) }
     | MOVZ movz_body { val[1].apply(@asm, val[0]) }
     | mrs
     | msr
-    | msub
-    | mul
+    | MSUB reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
+    | MUL reg_reg_reg { val[1].apply(@asm, val[0]) }
     | mvn
     | neg
     | negs
-    | ngc
-    | ngcs
+    | NGC reg_reg { val[1].apply(@asm, val[0]) }
+    | NGCS reg_reg { val[1].apply(@asm, val[0]) }
     | NOP { @asm.nop }
     | orn
     | orr
@@ -317,16 +317,6 @@ rule
   blr : BLR Xd { @asm.blr(val[1]) } ;
   br : BR Xd { @asm.br(val[1]) } ;
 
-  cbnz
-    : CBNZ Wd COMMA imm { @asm.cbnz(val[1], val[3]) }
-    | CBNZ Xd COMMA imm { @asm.cbnz(val[1], val[3]) }
-    ;
-
-  cbz
-    : CBZ Wd COMMA imm { @asm.cbz(val[1], val[3]) }
-    | CBZ Xd COMMA imm { @asm.cbz(val[1], val[3]) }
-    ;
-
   cond_four
     : Wd COMMA imm COMMA imm COMMA cond {
         result = FourArg.new(val[0], val[2], val[4], val[6])
@@ -363,16 +353,6 @@ rule
   clrex
     : CLREX { @asm.clrex(15) }
     | CLREX imm { @asm.clrex(val[1]) }
-    ;
-
-  cls
-    : CLS Wd COMMA Wd { @asm.cls(val[1], val[3]) }
-    | CLS Xd COMMA Xd { @asm.cls(val[1], val[3]) }
-    ;
-
-  clz
-    : CLZ Wd COMMA Wd { @asm.clz(val[1], val[3]) }
-    | CLZ Xd COMMA Xd { @asm.clz(val[1], val[3]) }
     ;
 
   cmn_immediate
@@ -775,14 +755,6 @@ rule
     | LSR reg_reg_imm { val[1].apply(@asm, val[0]) }
     ;
 
-  mneg
-    : MNEG reg_reg_reg { val[1].apply(@asm, val[0]) }
-    ;
-
-  madd
-    : MADD reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
-    ;
-
   mov_sp
     : Xd COMMA SP  { result = TwoArg.new(val[0], val[2]) }
     | SP COMMA Xd  { result = TwoArg.new(val[0], val[2]) }
@@ -803,10 +775,6 @@ rule
       }
     ;
 
-  msub
-    : MSUB reg_reg_reg_reg { val[1].apply(@asm, val[0]) }
-    ;
-
   msr
     : MSR SYSTEMREG COMMA Xd {
         TwoArg.new(val[1], val[3]).apply(@asm, val[0])
@@ -817,10 +785,6 @@ rule
     : MRS Xd COMMA SYSTEMREG {
         TwoArg.new(val[1], val[3]).apply(@asm, val[0])
       }
-    ;
-
-  mul
-    : MUL reg_reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   mvn
@@ -836,14 +800,6 @@ rule
   negs
     : NEGS reg_reg_shift { val[1].apply(@asm, val[0]) }
     | NEGS reg_reg { val[1].apply(@asm, val[0]) }
-    ;
-
-  ngc
-    : NGC reg_reg { val[1].apply(@asm, val[0]) }
-    ;
-
-  ngcs
-    : NGCS reg_reg { val[1].apply(@asm, val[0]) }
     ;
 
   orn
