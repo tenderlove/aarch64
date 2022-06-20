@@ -309,8 +309,8 @@ rule
     : BICS shifted { val[1].apply(@asm, :bics) } ;
 
   autda
-    : AUTDA xd COMMA xn { @asm.autda(val[1], val[3]) }
-    | AUTDA xd COMMA SP { @asm.autda(val[1], val[3]) }
+    : AUTDA Xd COMMA Xd { @asm.autda(val[1], val[3]) }
+    | AUTDA Xd COMMA SP { @asm.autda(val[1], val[3]) }
     ;
 
   bl : BL imm { @asm.bl(val[1]) } ;
@@ -1266,8 +1266,6 @@ rule
     | NUMBER     { result = val[0] }
     ;
 
-  xd: Xd;
-  xn: Xd;
   xt: Xd | XZR;
 
   cond : EQ | LO | LT | HS | GT | LE | NE | MI | GE | PL | LS | HI | VC | VS;
