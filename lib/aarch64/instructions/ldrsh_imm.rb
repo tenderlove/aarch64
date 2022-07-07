@@ -8,7 +8,7 @@ module AArch64
     # LDRSH  <Xt>, [<Xn|SP>, #<simm>]!
     # LDRSH  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDRSH  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class LDRSH_imm
+    class LDRSH_imm < Instruction
       def initialize rt, rn, imm9, option, opc
         @rt     = rt
         @rn     = rn

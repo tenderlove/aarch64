@@ -4,7 +4,7 @@ module AArch64
     # Store Register (register)
     # STR  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     # STR  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class STR_reg_gen
+    class STR_reg_gen < Instruction
       def initialize rt, rn, rm, option, s, size
         @rt     = rt
         @rn     = rn

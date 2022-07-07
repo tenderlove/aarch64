@@ -3,7 +3,7 @@ module AArch64
     # LDAPRH -- A64
     # Load-Acquire RCpc Register Halfword
     # LDAPRH  <Wt>, [<Xn|SP> {,#0}]
-    class LDAPRH
+    class LDAPRH < Instruction
       def initialize rt, rn
         @rt = rt
         @rn = rn

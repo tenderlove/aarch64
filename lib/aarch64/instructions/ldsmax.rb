@@ -10,7 +10,7 @@ module AArch64
     # LDSMAXA  <Xs>, <Xt>, [<Xn|SP>]
     # LDSMAXAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDSMAXL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDSMAX
+    class LDSMAX < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

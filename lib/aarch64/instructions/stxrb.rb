@@ -3,7 +3,7 @@ module AArch64
     # STXRB -- A64
     # Store Exclusive Register Byte
     # STXRB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
-    class STXRB
+    class STXRB < Instruction
       def initialize rs, rt, rn
         @rs = rs
         @rt = rt

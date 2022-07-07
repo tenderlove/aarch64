@@ -3,7 +3,7 @@ module AArch64
     # SUBPS -- A64
     # Subtract Pointer, setting Flags
     # SUBPS  <Xd>, <Xn|SP>, <Xm|SP>
-    class SUBPS
+    class SUBPS < Instruction
       def initialize xd, xn, xm
         @xd = xd
         @xn = xn

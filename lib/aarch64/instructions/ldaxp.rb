@@ -4,7 +4,7 @@ module AArch64
     # Load-Acquire Exclusive Pair of Registers
     # LDAXP  <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # LDAXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
-    class LDAXP
+    class LDAXP < Instruction
       def initialize rt1, rt2, rn, sf
         @rt1 = rt1
         @rt2 = rt2

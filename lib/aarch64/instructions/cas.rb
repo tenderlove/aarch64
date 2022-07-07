@@ -10,7 +10,7 @@ module AArch64
     # CASA  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASAL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     # CASL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
-    class CAS
+    class CAS < Instruction
       def initialize s, t, n, l, o0, sf
         @s  = s
         @t  = t

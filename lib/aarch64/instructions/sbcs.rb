@@ -4,7 +4,7 @@ module AArch64
     # Subtract with Carry, setting flags
     # SBCS  <Wd>, <Wn>, <Wm>
     # SBCS  <Xd>, <Xn>, <Xm>
-    class SBCS
+    class SBCS < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

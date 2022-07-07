@@ -5,7 +5,7 @@ module AArch64
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class STGP
+    class STGP < Instruction
       def initialize xt, xt2, xn, simm7, option
         @xt     = xt
         @xt2    = xt2

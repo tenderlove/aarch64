@@ -6,7 +6,7 @@ module AArch64
     # SWPALB  <Ws>, <Wt>, [<Xn|SP>]
     # SWPB  <Ws>, <Wt>, [<Xn|SP>]
     # SWPLB  <Ws>, <Wt>, [<Xn|SP>]
-    class SWPB
+    class SWPB < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

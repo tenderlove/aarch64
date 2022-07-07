@@ -3,7 +3,7 @@ module AArch64
     # MSR (immediate) -- A64
     # Move immediate value to Special Register
     # MSR  <pstatefield>, #<imm>
-    class MSR_imm
+    class MSR_imm < Instruction
       def initialize op1, crm, op2
         @op1 = op1
         @crm = crm

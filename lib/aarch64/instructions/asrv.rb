@@ -4,7 +4,7 @@ module AArch64
     # Arithmetic Shift Right Variable
     # ASRV  <Wd>, <Wn>, <Wm>
     # ASRV  <Xd>, <Xn>, <Xm>
-    class ASRV
+    class ASRV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

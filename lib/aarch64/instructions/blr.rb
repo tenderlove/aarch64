@@ -3,7 +3,7 @@ module AArch64
     # BLR -- A64
     # Branch with Link to Register
     # BLR  <Xn>
-    class BLR
+    class BLR < Instruction
       def initialize n
         @n = n
       end

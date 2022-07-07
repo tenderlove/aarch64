@@ -8,7 +8,7 @@ module AArch64
     # LDRSB  <Xt>, [<Xn|SP>, #<simm>]!
     # LDRSB  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDRSB  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class LDRSB_unsigned
+    class LDRSB_unsigned < Instruction
       def initialize rt, rn, imm12, opc
         @rt    = rt
         @rn    = rn

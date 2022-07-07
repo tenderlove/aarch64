@@ -3,7 +3,7 @@ module AArch64
     # MRS -- A64
     # Move System Register
     # MRS  <Xt>, (<systemreg>|S<op0>_<op1>_<Cn>_<Cm>_<op2>)
-    class MRS
+    class MRS < Instruction
       def initialize o0, op1, crn, crm, op2, rt
         @o0  = o0
         @op1 = op1

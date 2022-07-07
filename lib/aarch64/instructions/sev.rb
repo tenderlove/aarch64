@@ -3,7 +3,7 @@ module AArch64
     # SEV -- A64
     # Send Event
     # SEV
-    class SEV
+    class SEV < Instruction
       def encode
         SEV()
       end

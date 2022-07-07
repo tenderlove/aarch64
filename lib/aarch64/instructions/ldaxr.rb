@@ -4,7 +4,7 @@ module AArch64
     # Load-Acquire Exclusive Register
     # LDAXR  <Wt>, [<Xn|SP>{,#0}]
     # LDAXR  <Xt>, [<Xn|SP>{,#0}]
-    class LDAXR
+    class LDAXR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

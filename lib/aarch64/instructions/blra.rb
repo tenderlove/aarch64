@@ -6,7 +6,7 @@ module AArch64
     # BLRAA  <Xn>, <Xm|SP>
     # BLRABZ  <Xn>
     # BLRAB  <Xn>, <Xm|SP>
-    class BLRA
+    class BLRA < Instruction
       def initialize rn, rm, z, m
         @rn = rn
         @rm = rm

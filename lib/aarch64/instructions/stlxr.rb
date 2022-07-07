@@ -4,7 +4,7 @@ module AArch64
     # Store-Release Exclusive Register
     # STLXR  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # STLXR  <Ws>, <Xt>, [<Xn|SP>{,#0}]
-    class STLXR
+    class STLXR < Instruction
       def initialize rs, rt, rn, size
         @rs   = rs
         @rt   = rt

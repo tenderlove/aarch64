@@ -3,7 +3,7 @@ module AArch64
     # UDF -- A64
     # Permanently Undefined
     # UDF  #<imm>
-    class UDF_perm_undef
+    class UDF_perm_undef < Instruction
       def initialize imm
         @imm = imm
       end

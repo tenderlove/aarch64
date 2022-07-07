@@ -5,7 +5,7 @@ module AArch64
     # XPACD  <Xd>
     # XPACI  <Xd>
     # XPACLRI
-    class XPAC
+    class XPAC < Instruction
       def initialize rd, d
         @rd = rd
         @d  = d

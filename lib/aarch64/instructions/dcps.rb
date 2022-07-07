@@ -3,7 +3,7 @@ module AArch64
     # DCPS1 -- A64
     # Debug Change PE State to EL1.
     # DCPS1  {#<imm>}
-    class DCPS
+    class DCPS < Instruction
       def initialize imm, ll
         @imm = imm
         @ll  = ll

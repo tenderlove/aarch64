@@ -4,7 +4,7 @@ module AArch64
     # Subtract (shifted register), setting flags
     # SUBS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # SUBS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class SUBS_addsub_shift
+    class SUBS_addsub_shift < Instruction
       def initialize rd, rn, rm, shift, amount, sf
         @rd     = rd
         @rn     = rn

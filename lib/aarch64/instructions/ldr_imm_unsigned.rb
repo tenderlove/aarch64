@@ -4,7 +4,7 @@ module AArch64
     # Load Register (immediate)
     # LDR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDR  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class LDR_imm_unsigned
+    class LDR_imm_unsigned < Instruction
       def initialize rt, rn, imm12, size
         @rt    = rt
         @rn    = rn

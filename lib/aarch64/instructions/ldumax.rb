@@ -10,7 +10,7 @@ module AArch64
     # LDUMAXA  <Xs>, <Xt>, [<Xn|SP>]
     # LDUMAXAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDUMAXL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDUMAX
+    class LDUMAX < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

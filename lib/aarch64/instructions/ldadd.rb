@@ -10,7 +10,7 @@ module AArch64
     # LDADDA  <Xs>, <Xt>, [<Xn|SP>]
     # LDADDAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDADDL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDADD
+    class LDADD < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

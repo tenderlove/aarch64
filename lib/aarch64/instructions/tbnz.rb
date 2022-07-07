@@ -3,7 +3,7 @@ module AArch64
     # TBNZ -- A64
     # Test bit and Branch if Nonzero
     # TBNZ  <R><t>, #<imm>, <label>
-    class TBNZ
+    class TBNZ < Instruction
       def initialize rt, imm, label, sf
         @rt    = rt
         @imm   = imm

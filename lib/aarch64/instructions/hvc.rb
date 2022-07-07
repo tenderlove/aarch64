@@ -3,7 +3,7 @@ module AArch64
     # HVC -- A64
     # Hypervisor Call
     # HVC  #<imm>
-    class HVC
+    class HVC < Instruction
       def initialize imm
         @imm = imm
       end

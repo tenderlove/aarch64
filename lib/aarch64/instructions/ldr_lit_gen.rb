@@ -4,7 +4,7 @@ module AArch64
     # Load Register (literal)
     # LDR  <Wt>, <label>
     # LDR  <Xt>, <label>
-    class LDR_lit_gen
+    class LDR_lit_gen < Instruction
       def initialize rt, imm19, size
         @rt    = rt
         @imm19 = imm19

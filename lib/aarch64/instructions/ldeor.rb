@@ -10,7 +10,7 @@ module AArch64
     # LDEORA  <Xs>, <Xt>, [<Xn|SP>]
     # LDEORAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDEORL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDEOR
+    class LDEOR < Instruction
       def initialize rs, rt, rn, a, r, size
         @rs   = rs
         @rt   = rt

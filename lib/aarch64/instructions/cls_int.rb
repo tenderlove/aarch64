@@ -4,7 +4,7 @@ module AArch64
     # Count Leading Sign bits
     # CLS  <Wd>, <Wn>
     # CLS  <Xd>, <Xn>
-    class CLS_int
+    class CLS_int < Instruction
       def initialize rd, rn, sf
         @rd = rd
         @rn = rn

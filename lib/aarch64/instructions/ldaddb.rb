@@ -6,7 +6,7 @@ module AArch64
     # LDADDALB  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDB  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDLB  <Ws>, <Wt>, [<Xn|SP>]
-    class LDADDB
+    class LDADDB < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

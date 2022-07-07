@@ -4,7 +4,7 @@ module AArch64
     # Add (extended register), setting flags
     # ADDS  <Wd>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # ADDS  <Xd>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
-    class ADDS_addsub_ext
+    class ADDS_addsub_ext < Instruction
       def initialize d, n, m, extend, amount, sf
         @d      = d
         @n      = n

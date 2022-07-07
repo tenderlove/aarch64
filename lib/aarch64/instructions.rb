@@ -1,5 +1,8 @@
 module AArch64
   module Instructions
+    class Instruction
+    end
+
     autoload :ADC, "aarch64/instructions/adc"
     autoload :ADCS, "aarch64/instructions/adcs"
     autoload :ADD_addsub_ext, "aarch64/instructions/add_addsub_ext"

@@ -3,7 +3,7 @@ module AArch64
     # STLXRB -- A64
     # Store-Release Exclusive Register Byte
     # STLXRB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
-    class STLXRB
+    class STLXRB < Instruction
       def initialize rs, rt, rn
         @rs = rs
         @rt = rt

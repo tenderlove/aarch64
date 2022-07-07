@@ -3,7 +3,7 @@ module AArch64
     # DRPS -- A64
     # Debug restore process state
     # DRPS
-    class DRPS
+    class DRPS < Instruction
       def encode
         DRPS()
       end

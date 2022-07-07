@@ -10,7 +10,7 @@ module AArch64
     # LDUMINA  <Xs>, <Xt>, [<Xn|SP>]
     # LDUMINAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDUMINL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDUMIN
+    class LDUMIN < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

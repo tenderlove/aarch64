@@ -10,7 +10,7 @@ module AArch64
     # LDCLRA  <Xs>, <Xt>, [<Xn|SP>]
     # LDCLRAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDCLRL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDCLR
+    class LDCLR < Instruction
       def initialize rs, rt, rn, a, r, size
         @rs   = rs
         @rt   = rt

@@ -4,7 +4,7 @@ module AArch64
     # Move wide with keep
     # MOVK  <Wd>, #<imm>{, LSL #<shift>}
     # MOVK  <Xd>, #<imm>{, LSL #<shift>}
-    class MOVK
+    class MOVK < Instruction
       def initialize reg, imm, shift, sf
         @reg   = reg
         @imm   = imm

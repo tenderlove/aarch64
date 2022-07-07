@@ -4,7 +4,7 @@ module AArch64
     # Load-Acquire Register
     # LDAR  <Wt>, [<Xn|SP>{,#0}]
     # LDAR  <Xt>, [<Xn|SP>{,#0}]
-    class LDAR
+    class LDAR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

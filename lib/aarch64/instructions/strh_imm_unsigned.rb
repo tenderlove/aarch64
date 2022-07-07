@@ -3,7 +3,7 @@ module AArch64
     # STRH (immediate) -- A64
     # Store Register Halfword (immediate)
     # STRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class STRH_imm_unsigned
+    class STRH_imm_unsigned < Instruction
       def initialize rt, rn, imm12
         @rt    = rt
         @rn    = rn

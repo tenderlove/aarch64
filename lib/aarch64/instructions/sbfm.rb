@@ -4,7 +4,7 @@ module AArch64
     # Signed Bitfield Move
     # SBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # SBFM  <Xd>, <Xn>, #<immr>, #<imms>
-    class SBFM
+    class SBFM < Instruction
       def initialize d, n, immr, imms, sf
         @d    = d
         @n    = n

@@ -4,7 +4,7 @@ module AArch64
     # Subtract with Carry
     # SBC  <Wd>, <Wn>, <Wm>
     # SBC  <Xd>, <Xn>, <Xm>
-    class SBC
+    class SBC < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

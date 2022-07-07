@@ -5,7 +5,7 @@ module AArch64
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class LDPSW
+    class LDPSW < Instruction
       def initialize rt, rt2, rn, imm7, mode
         @rt   = rt
         @rt2  = rt2

@@ -3,7 +3,7 @@ module AArch64
     # ST64BV -- A64
     # Single-copy Atomic 64-byte Store with Return
     # ST64BV  <Xs>, <Xt>, [<Xn|SP>]
-    class ST64BV
+    class ST64BV < Instruction
       def initialize rs, rt, rn
         @rs = rs
         @rt = rt

@@ -5,7 +5,7 @@ module AArch64
     # LDRB  <Wt>, [<Xn|SP>], #<simm>
     # LDRB  <Wt>, [<Xn|SP>, #<simm>]!
     # LDRB  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class LDRB_imm
+    class LDRB_imm < Instruction
       def initialize rt, rn, imm9, option
         @rt     = rt
         @rn     = rn

@@ -5,7 +5,7 @@ module AArch64
     # LDRSW  <Xt>, [<Xn|SP>], #<simm>
     # LDRSW  <Xt>, [<Xn|SP>, #<simm>]!
     # LDRSW  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class LDRSW_imm
+    class LDRSW_imm < Instruction
       def initialize rt, rn, imm9, option
         @rt     = rt
         @rn     = rn

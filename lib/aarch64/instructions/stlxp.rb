@@ -4,7 +4,7 @@ module AArch64
     # Store-Release Exclusive Pair of registers
     # STLXP  <Ws>, <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # STLXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
-    class STLXP
+    class STLXP < Instruction
       def initialize rs, rt, rt2, rn, sz
         @rs  = rs
         @rt  = rt

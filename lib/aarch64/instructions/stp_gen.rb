@@ -8,7 +8,7 @@ module AArch64
     # STP  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # STP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # STP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class STP_gen
+    class STP_gen < Instruction
       def initialize rt, rt2, rn, imm7, opc, option
         @rt     = rt
         @rt2    = rt2

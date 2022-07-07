@@ -3,7 +3,7 @@ module AArch64
     # IRG -- A64
     # Insert Random Tag
     # IRG  <Xd|SP>, <Xn|SP>{, <Xm>}
-    class IRG
+    class IRG < Instruction
       def initialize rd, rn, rm
         @rd = rd
         @rn = rn

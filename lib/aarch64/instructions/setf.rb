@@ -4,7 +4,7 @@ module AArch64
     # Evaluation of 8 or 16 bit flag values
     # SETF8  <Wn>
     # SETF16  <Wn>
-    class SETF
+    class SETF < Instruction
       def initialize rn, sz
         @rn = rn
         @sz = sz

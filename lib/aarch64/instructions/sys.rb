@@ -3,7 +3,7 @@ module AArch64
     # SYS -- A64
     # System instruction
     # SYS  #<op1>, <Cn>, <Cm>, #<op2>{, <Xt>}
-    class SYS
+    class SYS < Instruction
       def initialize op1, cn, cm, op2, xt
         @op1 = op1
         @cn  = cn

@@ -4,7 +4,7 @@ module AArch64
     # Authenticate Data address, using key B
     # AUTDB  <Xd>, <Xn|SP>
     # AUTDZB  <Xd>
-    class AUTDB
+    class AUTDB < Instruction
       def initialize d, n
         @d = d
         @n = n

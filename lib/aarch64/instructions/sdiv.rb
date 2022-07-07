@@ -4,7 +4,7 @@ module AArch64
     # Signed Divide
     # SDIV  <Wd>, <Wn>, <Wm>
     # SDIV  <Xd>, <Xn>, <Xm>
-    class SDIV
+    class SDIV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

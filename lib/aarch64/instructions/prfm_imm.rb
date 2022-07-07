@@ -3,7 +3,7 @@ module AArch64
     # PRFM (immediate) -- A64
     # Prefetch Memory (immediate)
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>{, #<pimm>}]
-    class PRFM_imm
+    class PRFM_imm < Instruction
       def initialize rt, rn, imm12
         @rt    = rt
         @rn    = rn

@@ -4,7 +4,7 @@ module AArch64
     # Conditional Compare (register)
     # CCMP  <Wn>, <Wm>, #<nzcv>, <cond>
     # CCMP  <Xn>, <Xm>, #<nzcv>, <cond>
-    class CCMP_reg
+    class CCMP_reg < Instruction
       def initialize rn, rm, nzcv, cond, sf
         @rn   = rn
         @rm   = rm

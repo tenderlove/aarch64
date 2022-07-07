@@ -3,7 +3,7 @@ module AArch64
     # ADD (immediate) -- A64
     # Add (immediate)
     # ADD  <Wd|WSP>, <Wn|WSP>, #<imm>{, <shift>}
-    class ADD_addsub_imm
+    class ADD_addsub_imm < Instruction
       def initialize rd, rn, imm12, sh, sf
         @rd    = rd
         @rn    = rn

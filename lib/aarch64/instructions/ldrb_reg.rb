@@ -4,7 +4,7 @@ module AArch64
     # Load Register Byte (register)
     # LDRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
     # LDRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
-    class LDRB_reg
+    class LDRB_reg < Instruction
       def initialize rt, rn, rm, s, option
         @rt     = rt
         @rn     = rn

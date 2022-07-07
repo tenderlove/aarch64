@@ -4,7 +4,7 @@ module AArch64
     # Store Register (immediate)
     # STR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class STR_imm_unsigned
+    class STR_imm_unsigned < Instruction
       def initialize rt, rn, imm12, size
         @rt    = rt
         @rn    = rn

@@ -4,7 +4,7 @@ module AArch64
     # Rotate Right Variable
     # RORV  <Wd>, <Wn>, <Wm>
     # RORV  <Xd>, <Xn>, <Xm>
-    class RORV
+    class RORV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

@@ -4,7 +4,7 @@ module AArch64
     # Load Register Signed Byte (unprivileged)
     # LDTRSB  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDTRSB  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDTRSB
+    class LDTRSB < Instruction
       def initialize rt, rn, imm9, opc
         @rt   = rt
         @rn   = rn

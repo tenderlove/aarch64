@@ -3,7 +3,7 @@ module AArch64
     # PRFUM -- A64
     # Prefetch Memory (unscaled offset)
     # PRFUM (<prfop>|#<imm5>), [<Xn|SP>{, #<simm>}]
-    class PRFUM
+    class PRFUM < Instruction
       def initialize rt, rn, imm9
         @rt   = rt
         @rn   = rn

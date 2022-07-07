@@ -6,7 +6,7 @@ module AArch64
     # CASALB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASLB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
-    class CASB
+    class CASB < Instruction
       def initialize rs, rt, rn, l, o0
         @rs = rs
         @rt = rt

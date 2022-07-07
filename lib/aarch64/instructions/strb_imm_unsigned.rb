@@ -3,7 +3,7 @@ module AArch64
     # STRB (immediate) -- A64
     # Store Register Byte (immediate)
     # STRB  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class STRB_imm_unsigned
+    class STRB_imm_unsigned < Instruction
       def initialize rt, rn, imm12
         @rt    = rt
         @rn    = rn

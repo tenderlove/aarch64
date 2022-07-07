@@ -4,7 +4,7 @@ module AArch64
     # Load LOAcquire Register
     # LDLAR  <Wt>, [<Xn|SP>{,#0}]
     # LDLAR  <Xt>, [<Xn|SP>{,#0}]
-    class LDLAR
+    class LDLAR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

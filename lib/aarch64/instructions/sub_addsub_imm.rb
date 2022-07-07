@@ -4,7 +4,7 @@ module AArch64
     # Subtract (immediate)
     # SUB  <Wd|WSP>, <Wn|WSP>, #<imm>{, <shift>}
     # SUB  <Xd|SP>, <Xn|SP>, #<imm>{, <shift>}
-    class SUB_addsub_imm
+    class SUB_addsub_imm < Instruction
       def initialize rd, rn, imm, shift, sf
         @rd    = rd
         @rn    = rn

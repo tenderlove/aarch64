@@ -3,7 +3,7 @@ module AArch64
     # LDRH (register) -- A64
     # Load Register Halfword (register)
     # LDRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class LDRH_reg
+    class LDRH_reg < Instruction
       def initialize rt, rn, rm, s, option
         @rt     = rt
         @rn     = rn

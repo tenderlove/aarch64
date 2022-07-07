@@ -4,7 +4,7 @@ module AArch64
     # Authenticate Data address, using key A
     # AUTDA  <Xd>, <Xn|SP>
     # AUTDZA  <Xd>
-    class AUTDA
+    class AUTDA < Instruction
       def initialize d, n
         @d = d
         @n = n

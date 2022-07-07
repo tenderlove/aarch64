@@ -4,7 +4,7 @@ module AArch64
     # Extract register
     # EXTR  <Wd>, <Wn>, <Wm>, #<lsb>
     # EXTR  <Xd>, <Xn>, <Xm>, #<lsb>
-    class EXTR
+    class EXTR < Instruction
       def initialize rd, rn, rm, lsb, sf
         @rd  = rd
         @rn  = rn

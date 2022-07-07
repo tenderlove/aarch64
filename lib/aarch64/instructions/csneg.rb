@@ -4,7 +4,7 @@ module AArch64
     # Conditional Select Negation
     # CSNEG  <Wd>, <Wn>, <Wm>, <cond>
     # CSNEG  <Xd>, <Xn>, <Xm>, <cond>
-    class CSNEG
+    class CSNEG < Instruction
       def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn

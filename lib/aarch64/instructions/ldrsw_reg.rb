@@ -3,7 +3,7 @@ module AArch64
     # LDRSW (register) -- A64
     # Load Register Signed Word (register)
     # LDRSW  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class LDRSW_reg
+    class LDRSW_reg < Instruction
       def initialize rt, rn, rm, s, option
         @rt     = rt
         @rn     = rn

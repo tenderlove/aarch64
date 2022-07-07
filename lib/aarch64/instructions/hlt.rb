@@ -3,7 +3,7 @@ module AArch64
     # HLT -- A64
     # Halt instruction
     # HLT  #<imm>
-    class HLT
+    class HLT < Instruction
       def initialize imm
         @imm = imm
       end

@@ -3,7 +3,7 @@ module AArch64
     # UMULH -- A64
     # Unsigned Multiply High
     # UMULH  <Xd>, <Xn>, <Xm>
-    class UMULH
+    class UMULH < Instruction
       def initialize rd, rn, rm
         @rd = rd
         @rn = rn

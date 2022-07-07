@@ -6,7 +6,7 @@ module AArch64
     # CRC32CH  <Wd>, <Wn>, <Wm>
     # CRC32CW  <Wd>, <Wn>, <Wm>
     # CRC32CX  <Wd>, <Wn>, <Xm>
-    class CRC32C
+    class CRC32C < Instruction
       def initialize rd, rn, rm, sz, sf
         @rd = rd
         @rn = rn

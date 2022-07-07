@@ -4,7 +4,7 @@ module AArch64
     # Store Exclusive Pair of registers
     # STXP  <Ws>, <Wt1>, <Wt2>, [<Xn|SP>{,#0}]
     # STXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
-    class STXP
+    class STXP < Instruction
       def initialize rs, rt1, rt2, rn, sf
         @rs  = rs
         @rt1 = rt1

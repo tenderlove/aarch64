@@ -4,7 +4,7 @@ module AArch64
     # Data Synchronization Barrier
     # DSB  <option>|#<imm>
     # DSB  <option>nXS|#<imm>
-    class DSB
+    class DSB < Instruction
       def initialize imm
         @imm = imm
       end

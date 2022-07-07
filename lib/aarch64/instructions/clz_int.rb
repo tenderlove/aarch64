@@ -4,7 +4,7 @@ module AArch64
     # Count Leading Zeros
     # CLZ  <Wd>, <Wn>
     # CLZ  <Xd>, <Xn>
-    class CLZ_int
+    class CLZ_int < Instruction
       def initialize rd, rn, sf
         @rd = rd
         @rn = rn

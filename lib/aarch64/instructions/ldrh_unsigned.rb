@@ -3,7 +3,7 @@ module AArch64
     # LDRH (immediate) -- A64
     # Load Register Halfword (immediate)
     # LDRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class LDRH_unsigned
+    class LDRH_unsigned < Instruction
       def initialize rt, rn, imm12
         @rt    = rt
         @rn    = rn

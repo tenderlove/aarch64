@@ -10,7 +10,7 @@ module AArch64
     # LDSMINA  <Xs>, <Xt>, [<Xn|SP>]
     # LDSMINAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDSMINL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDSMIN
+    class LDSMIN < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

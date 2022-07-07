@@ -3,7 +3,7 @@ module AArch64
     # RET -- A64
     # Return from subroutine
     # RET  {<Xn>}
-    class RET
+    class RET < Instruction
       def initialize reg
         @reg = reg
       end

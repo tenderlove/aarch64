@@ -3,7 +3,7 @@ module AArch64
     # LDTRB -- A64
     # Load Register Byte (unprivileged)
     # LDTRB  <Wt>, [<Xn|SP>{, #<simm>}]
-    class LDTRB
+    class LDTRB < Instruction
       def initialize rt, rn, imm9
         @rt   = rt
         @rn   = rn

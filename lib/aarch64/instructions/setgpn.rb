@@ -5,7 +5,7 @@ module AArch64
     # SETGEN  [<Xd>]!, <Xn>!, <Xs>
     # SETGMN  [<Xd>]!, <Xn>!, <Xs>
     # SETGPN  [<Xd>]!, <Xn>!, <Xs>
-    class SETGPN
+    class SETGPN < Instruction
       def encode
         raise NotImplementedError
       end

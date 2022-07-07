@@ -10,7 +10,7 @@ module AArch64
     # SWPA  <Xs>, <Xt>, [<Xn|SP>]
     # SWPAL  <Xs>, <Xt>, [<Xn|SP>]
     # SWPL  <Xs>, <Xt>, [<Xn|SP>]
-    class SWP
+    class SWP < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

@@ -5,7 +5,7 @@ module AArch64
     # STG  <Xt|SP>, [<Xn|SP>], #<simm>
     # STG  <Xt|SP>, [<Xn|SP>, #<simm>]!
     # STG  <Xt|SP>, [<Xn|SP>{, #<simm>}]
-    class STG
+    class STG < Instruction
       def initialize xt, xn, imm9, option
         @xt     = xt
         @xn     = xn

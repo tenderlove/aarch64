@@ -4,7 +4,7 @@ module AArch64
     # Compare and Branch on Nonzero
     # CBNZ  <Wt>, <label>
     # CBNZ  <Xt>, <label>
-    class CBNZ
+    class CBNZ < Instruction
       def initialize rt, label, sf
         @rt    = rt
         @label = label

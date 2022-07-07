@@ -3,7 +3,7 @@ module AArch64
     # XPACLRI -- A64
     # Strip Pointer Authentication Code
     # XPACLRI
-    class XPACLRI
+    class XPACLRI < Instruction
       def encode
         0b11010101000000110010000011111111
       end

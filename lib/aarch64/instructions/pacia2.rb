@@ -5,7 +5,7 @@ module AArch64
     # PACIA1716
     # PACIASP
     # PACIAZ
-    class PACIA2
+    class PACIA2 < Instruction
       def initialize crm, op2
         @crm = crm
         @op2 = op2

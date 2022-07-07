@@ -3,7 +3,7 @@ module AArch64
     # UMADDL -- A64
     # Unsigned Multiply-Add Long
     # UMADDL  <Xd>, <Wn>, <Wm>, <Xa>
-    class UMADDL
+    class UMADDL < Instruction
       def initialize xd, wn, wm, xa
         @xd = xd
         @wn = wn

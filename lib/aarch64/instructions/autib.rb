@@ -7,7 +7,7 @@ module AArch64
     # AUTIB1716
     # AUTIBSP
     # AUTIBZ
-    class AUTIB
+    class AUTIB < Instruction
       def initialize d, n
         @d = d
         @n = n

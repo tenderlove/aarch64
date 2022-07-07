@@ -3,7 +3,7 @@ module AArch64
     # ADR -- A64
     # Form PC-relative address
     # ADR  <Xd>, <label>
-    class ADR
+    class ADR < Instruction
       def initialize xd, label
         @xd    = xd
         @label = label

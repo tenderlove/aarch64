@@ -4,7 +4,7 @@ module AArch64
     # Bitwise OR (shifted register)
     # ORR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ORR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class ORR_log_shift
+    class ORR_log_shift < Instruction
       def initialize rd, rn, rm, shift, imm6, sf
         @rd    = rd
         @rn    = rn

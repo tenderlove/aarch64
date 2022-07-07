@@ -3,7 +3,7 @@ module AArch64
     # WFET -- A64
     # Wait For Event with Timeout
     # WFET  <Xt>
-    class WFET
+    class WFET < Instruction
       def initialize rd
         @rd = rd
       end

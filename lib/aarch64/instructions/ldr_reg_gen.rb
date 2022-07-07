@@ -4,7 +4,7 @@ module AArch64
     # Load Register (register)
     # LDR  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     # LDR  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class LDR_reg_gen
+    class LDR_reg_gen < Instruction
       def initialize rt, rn, rm, size, option, s
         @rt     = rt
         @rn     = rn

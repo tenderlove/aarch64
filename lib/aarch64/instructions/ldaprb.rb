@@ -3,7 +3,7 @@ module AArch64
     # LDAPRB -- A64
     # Load-Acquire RCpc Register Byte
     # LDAPRB  <Wt>, [<Xn|SP> {,#0}]
-    class LDAPRB
+    class LDAPRB < Instruction
       def initialize rt, rn
         @rt = rt
         @rn = rn

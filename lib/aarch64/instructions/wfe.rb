@@ -3,7 +3,7 @@ module AArch64
     # WFE -- A64
     # Wait For Event
     # WFE
-    class WFE
+    class WFE < Instruction
       def encode
         WFE()
       end

@@ -6,7 +6,7 @@ module AArch64
     # LDUMAXALB  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXB  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXLB  <Ws>, <Wt>, [<Xn|SP>]
-    class LDUMAXB
+    class LDUMAXB < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

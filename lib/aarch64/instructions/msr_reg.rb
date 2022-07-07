@@ -3,7 +3,7 @@ module AArch64
     # MSR (register) -- A64
     # Move general-purpose register to System Register
     # MSR  (<systemreg>|S<op0>_<op1>_<Cn>_<Cm>_<op2>), <Xt>
-    class MSR_reg
+    class MSR_reg < Instruction
       def initialize o0, op1, crn, crm, op2, rt
         @o0  = o0
         @op1 = op1

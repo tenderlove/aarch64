@@ -3,7 +3,7 @@ module AArch64
     # LDTRH -- A64
     # Load Register Halfword (unprivileged)
     # LDTRH  <Wt>, [<Xn|SP>{, #<simm>}]
-    class LDTRH
+    class LDTRH < Instruction
       def initialize rt, rn, imm9
         @rt   = rt
         @rn   = rn

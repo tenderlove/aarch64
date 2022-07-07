@@ -4,7 +4,7 @@ module AArch64
     # Unsigned Divide
     # UDIV  <Wd>, <Wn>, <Wm>
     # UDIV  <Xd>, <Xn>, <Xm>
-    class UDIV
+    class UDIV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

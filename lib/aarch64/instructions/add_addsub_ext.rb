@@ -4,7 +4,7 @@ module AArch64
     # Add (extended register)
     # ADD  <Wd|WSP>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # ADD  <Xd|SP>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
-    class ADD_addsub_ext
+    class ADD_addsub_ext < Instruction
       def initialize rd, rn, rm, extend, amount, sf
         @rd     = rd
         @rn     = rn

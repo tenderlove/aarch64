@@ -5,7 +5,7 @@ module AArch64
     # STRH  <Wt>, [<Xn|SP>], #<simm>
     # STRH  <Wt>, [<Xn|SP>, #<simm>]!
     # STRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class STRH_imm
+    class STRH_imm < Instruction
       def initialize rt, rn, imm9, opt
         @rt   = rt
         @rn   = rn

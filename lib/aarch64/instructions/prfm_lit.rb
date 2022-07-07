@@ -3,7 +3,7 @@ module AArch64
     # PRFM (literal) -- A64
     # Prefetch Memory (literal)
     # PRFM  (<prfop>|#<imm5>), <label>
-    class PRFM_lit
+    class PRFM_lit < Instruction
       def initialize rt, imm19
         @imm19 = imm19
         @rt    = rt

@@ -3,7 +3,7 @@ module AArch64
     # BRK -- A64
     # Breakpoint instruction
     # BRK  #<imm>
-    class BRK
+    class BRK < Instruction
       def initialize imm
         @imm = imm
       end

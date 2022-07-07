@@ -4,7 +4,7 @@ module AArch64
     # Load Pair of Registers, with non-temporal hint
     # LDNP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # LDNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class LDNP_gen
+    class LDNP_gen < Instruction
       def initialize rt1, rt2, rn, imm, opc
         @rt1 = rt1
         @rt2 = rt2

@@ -4,7 +4,7 @@ module AArch64
     # Add (immediate), setting flags
     # ADDS  <Wd>, <Wn|WSP>, #<imm>{, <shift>}
     # ADDS  <Xd>, <Xn|SP>, #<imm>{, <shift>}
-    class ADDS_addsub_imm
+    class ADDS_addsub_imm < Instruction
       def initialize d, n, imm, shift, sf
         @d     = d
         @n     = n

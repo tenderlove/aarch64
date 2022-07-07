@@ -3,7 +3,7 @@ module AArch64
     # BC.cond -- A64
     # Branch Consistent conditionally
     # BC.<cond>  <label>
-    class BC_cond
+    class BC_cond < Instruction
       def initialize cond, label
         @cond  = cond
         @label = label

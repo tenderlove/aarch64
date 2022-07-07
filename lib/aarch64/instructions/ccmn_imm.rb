@@ -4,7 +4,7 @@ module AArch64
     # Conditional Compare Negative (immediate)
     # CCMN  <Wn>, #<imm>, #<nzcv>, <cond>
     # CCMN  <Xn>, #<imm>, #<nzcv>, <cond>
-    class CCMN_imm
+    class CCMN_imm < Instruction
       def initialize rn, imm, nzcv, cond, sf
         @rn   = rn
         @imm  = imm

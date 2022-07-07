@@ -5,7 +5,7 @@ module AArch64
     # STRB  <Wt>, [<Xn|SP>], #<simm>
     # STRB  <Wt>, [<Xn|SP>, #<simm>]!
     # STRB  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class STRB_imm
+    class STRB_imm < Instruction
       def initialize rt, rn, imm9, opt
         @rt   = rt
         @rn   = rn

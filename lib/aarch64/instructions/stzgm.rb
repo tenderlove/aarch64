@@ -3,7 +3,7 @@ module AArch64
     # STZGM -- A64
     # Store Tag and Zero Multiple
     # STZGM  <Xt>, [<Xn|SP>]
-    class STZGM
+    class STZGM < Instruction
       def initialize rt, rn
         @rt = rt
         @rn = rn

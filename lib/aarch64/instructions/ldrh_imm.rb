@@ -5,7 +5,7 @@ module AArch64
     # LDRH  <Wt>, [<Xn|SP>], #<simm>
     # LDRH  <Wt>, [<Xn|SP>, #<simm>]!
     # LDRH  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class LDRH_imm
+    class LDRH_imm < Instruction
       def initialize rt, rn, imm9, option
         @rt     = rt
         @rn     = rn

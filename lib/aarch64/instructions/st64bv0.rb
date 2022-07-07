@@ -3,7 +3,7 @@ module AArch64
     # ST64BV0 -- A64
     # Single-copy Atomic 64-byte EL0 Store with Return
     # ST64BV0  <Xs>, <Xt>, [<Xn|SP>]
-    class ST64BV0
+    class ST64BV0 < Instruction
       def initialize rs, rt, rn
         @rs = rs
         @rt = rt

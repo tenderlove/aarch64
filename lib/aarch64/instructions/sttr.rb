@@ -4,7 +4,7 @@ module AArch64
     # Store Register (unprivileged)
     # STTR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STTR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class STTR
+    class STTR < Instruction
       def initialize rt, rn, imm9, size
         @rt   = rt
         @rn   = rn

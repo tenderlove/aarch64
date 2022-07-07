@@ -4,7 +4,7 @@ module AArch64
     # Exception Return, with pointer authentication
     # ERETAA
     # ERETAB
-    class ERETA
+    class ERETA < Instruction
       def initialize m
         @m = m
       end

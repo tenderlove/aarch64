@@ -7,7 +7,7 @@ module AArch64
     # PACIA1716
     # PACIASP
     # PACIAZ
-    class PACIA
+    class PACIA < Instruction
       def initialize rd, rn, z
         @rd = rd
         @rn = rn

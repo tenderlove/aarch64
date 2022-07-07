@@ -4,7 +4,7 @@ module AArch64
     # Bitwise Exclusive OR (immediate)
     # EOR  <Wd|WSP>, <Wn>, #<imm>
     # EOR  <Xd|SP>, <Xn>, #<imm>
-    class EOR_log_imm
+    class EOR_log_imm < Instruction
       def initialize rd, rn, n, immr, imms, sf
         @rd   = rd
         @rn   = rn

@@ -4,7 +4,7 @@ module AArch64
     # Subtract (extended register)
     # SUB  <Wd|WSP>, <Wn|WSP>, <Wm>{, <extend> {#<amount>}}
     # SUB  <Xd|SP>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
-    class SUB_addsub_ext
+    class SUB_addsub_ext < Instruction
       def initialize rd, rn, rm, extend, amount, sf
         @rd     = rd
         @rn     = rn

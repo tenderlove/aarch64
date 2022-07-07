@@ -6,7 +6,7 @@ module AArch64
     # LDRAA  <Xt>, [<Xn|SP>{, #<simm>}]!
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]!
-    class LDRA
+    class LDRA < Instruction
       def initialize rt, rn, imm9, m, w, s
         @rt   = rt
         @rn   = rn

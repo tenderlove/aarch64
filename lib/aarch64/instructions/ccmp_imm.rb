@@ -4,7 +4,7 @@ module AArch64
     # Conditional Compare (immediate)
     # CCMP  <Wn>, #<imm>, #<nzcv>, <cond>
     # CCMP  <Xn>, #<imm>, #<nzcv>, <cond>
-    class CCMP_imm
+    class CCMP_imm < Instruction
       def initialize rn, imm, nzcv, cond, sf
         @rn   = rn
         @imm  = imm

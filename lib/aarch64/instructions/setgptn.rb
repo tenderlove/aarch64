@@ -5,7 +5,7 @@ module AArch64
     # SETGETN  [<Xd>]!, <Xn>!, <Xs>
     # SETGMTN  [<Xd>]!, <Xn>!, <Xs>
     # SETGPTN  [<Xd>]!, <Xn>!, <Xs>
-    class SETGPTN
+    class SETGPTN < Instruction
       def encode
         raise NotImplementedError
       end

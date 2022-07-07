@@ -4,7 +4,7 @@ module AArch64
     # Conditional Select Invert
     # CSINV  <Wd>, <Wn>, <Wm>, <cond>
     # CSINV  <Xd>, <Xn>, <Xm>, <cond>
-    class CSINV
+    class CSINV < Instruction
       def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn

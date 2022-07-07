@@ -4,7 +4,7 @@ module AArch64
     # Load-Acquire RCpc Register
     # LDAPR  <Wt>, [<Xn|SP> {,#0}]
     # LDAPR  <Xt>, [<Xn|SP> {,#0}]
-    class LDAPR
+    class LDAPR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

@@ -4,7 +4,7 @@ module AArch64
     # Load Register Signed Byte (unscaled)
     # LDURSB  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDURSB  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDURSB
+    class LDURSB < Instruction
       def initialize rt, rn, imm9, opc
         @rt   = rt
         @rn   = rn

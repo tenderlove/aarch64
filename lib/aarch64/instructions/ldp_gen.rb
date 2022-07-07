@@ -8,7 +8,7 @@ module AArch64
     # LDP  <Xt1>, <Xt2>, [<Xn|SP>, #<imm>]!
     # LDP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # LDP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class LDP_gen
+    class LDP_gen < Instruction
       def initialize rt, rt2, rn, imm7, mode, opc
         @rt   = rt
         @rt2  = rt2

@@ -4,7 +4,7 @@ module AArch64
     # Load Exclusive Register
     # LDXR  <Wt>, [<Xn|SP>{,#0}]
     # LDXR  <Xt>, [<Xn|SP>{,#0}]
-    class LDXR
+    class LDXR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

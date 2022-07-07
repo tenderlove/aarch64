@@ -3,7 +3,7 @@ module AArch64
     # HINT -- A64
     # Hint instruction
     # HINT  #<imm>
-    class HINT
+    class HINT < Instruction
       def initialize crm, op2
         @crm = crm
         @op2 = op2

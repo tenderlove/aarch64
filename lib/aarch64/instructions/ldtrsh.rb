@@ -4,7 +4,7 @@ module AArch64
     # Load Register Signed Halfword (unprivileged)
     # LDTRSH  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDTRSH  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDTRSH
+    class LDTRSH < Instruction
       def initialize rt, rn, imm9, opc
         @rt   = rt
         @rn   = rn

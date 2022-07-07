@@ -3,7 +3,7 @@ module AArch64
     # DMB -- A64
     # Data Memory Barrier
     # DMB  <option>|#<imm>
-    class DMB
+    class DMB < Instruction
       def initialize imm
         @imm = imm
       end

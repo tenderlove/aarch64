@@ -3,7 +3,7 @@ module AArch64
     # LDRSW (literal) -- A64
     # Load Register Signed Word (literal)
     # LDRSW  <Xt>, <label>
-    class LDRSW_lit
+    class LDRSW_lit < Instruction
       def initialize rt, imm19
         @rt    = rt
         @imm19 = imm19

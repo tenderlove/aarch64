@@ -3,7 +3,7 @@ module AArch64
     # ISB -- A64
     # Instruction Synchronization Barrier
     # ISB  {<option>|#<imm>}
-    class ISB
+    class ISB < Instruction
       def initialize imm
         @imm = imm
       end

@@ -4,7 +4,7 @@ module AArch64
     # Multiply-Add
     # MADD  <Wd>, <Wn>, <Wm>, <Wa>
     # MADD  <Xd>, <Xn>, <Xm>, <Xa>
-    class MADD
+    class MADD < Instruction
       def initialize rd, rn, rm, ra, sf
         @rd = rd
         @rn = rn

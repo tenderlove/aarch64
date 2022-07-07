@@ -6,7 +6,7 @@ module AArch64
     # SWPALH  <Ws>, <Wt>, [<Xn|SP>]
     # SWPH  <Ws>, <Wt>, [<Xn|SP>]
     # SWPLH  <Ws>, <Wt>, [<Xn|SP>]
-    class SWPH
+    class SWPH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

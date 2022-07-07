@@ -3,7 +3,7 @@ module AArch64
     # NOP -- A64
     # No Operation
     # NOP
-    class NOP
+    class NOP < Instruction
       def encode
         0b1101010100_0_00_011_0010_0000_000_11111
       end

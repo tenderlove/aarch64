@@ -6,7 +6,7 @@ module AArch64
     # LDADDALH  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDH  <Ws>, <Wt>, [<Xn|SP>]
     # LDADDLH  <Ws>, <Wt>, [<Xn|SP>]
-    class LDADDH
+    class LDADDH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

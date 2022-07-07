@@ -4,7 +4,7 @@ module AArch64
     # Add with Carry
     # ADC  <Wd>, <Wn>, <Wm>
     # ADC  <Xd>, <Xn>, <Xm>
-    class ADC
+    class ADC < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

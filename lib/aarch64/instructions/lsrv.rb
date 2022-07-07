@@ -4,7 +4,7 @@ module AArch64
     # Logical Shift Right Variable
     # LSRV  <Wd>, <Wn>, <Wm>
     # LSRV  <Xd>, <Xn>, <Xm>
-    class LSRV
+    class LSRV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

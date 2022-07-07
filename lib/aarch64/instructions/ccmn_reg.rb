@@ -4,7 +4,7 @@ module AArch64
     # Conditional Compare Negative (register)
     # CCMN  <Wn>, <Wm>, #<nzcv>, <cond>
     # CCMN  <Xn>, <Xm>, #<nzcv>, <cond>
-    class CCMN_reg
+    class CCMN_reg < Instruction
       def initialize rn, rm, nzcv, cond, sf
         @rn   = rn
         @rm   = rm

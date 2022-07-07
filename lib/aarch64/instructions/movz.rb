@@ -4,7 +4,7 @@ module AArch64
     # Move wide with zero
     # MOVZ  <Wd>, #<imm>{, LSL #<shift>}
     # MOVZ  <Xd>, #<imm>{, LSL #<shift>}
-    class MOVZ
+    class MOVZ < Instruction
       def initialize reg, imm, shift, sf
         @reg   = reg
         @imm   = imm

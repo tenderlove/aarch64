@@ -3,7 +3,7 @@ module AArch64
     # LDG -- A64
     # Load Allocation Tag
     # LDG  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDG
+    class LDG < Instruction
       def initialize xt, xn, imm9
         @xt   = xt
         @xn   = xn

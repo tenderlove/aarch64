@@ -8,7 +8,7 @@ module AArch64
     # STR  <Xt>, [<Xn|SP>, #<simm>]!
     # STR  <Wt>, [<Xn|SP>{, #<pimm>}]
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class STR_imm_gen
+    class STR_imm_gen < Instruction
       def initialize rt, rn, imm9, opt, size
         @rt   = rt
         @rn   = rn

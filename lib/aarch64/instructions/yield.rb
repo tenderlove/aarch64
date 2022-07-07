@@ -3,7 +3,7 @@ module AArch64
     # YIELD -- A64
     # YIELD
     # YIELD
-    class YIELD
+    class YIELD < Instruction
       def encode
         YIELD()
       end

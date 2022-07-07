@@ -4,7 +4,7 @@ module AArch64
     # Bitwise Exclusive OR (shifted register)
     # EOR  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # EOR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class EOR_log_shift
+    class EOR_log_shift < Instruction
       def initialize rd, rn, rm, shift, imm6, sf
         @rd    = rd
         @rn    = rn

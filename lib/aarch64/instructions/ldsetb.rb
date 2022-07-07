@@ -6,7 +6,7 @@ module AArch64
     # LDSETALB  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETB  <Ws>, <Wt>, [<Xn|SP>]
     # LDSETLB  <Ws>, <Wt>, [<Xn|SP>]
-    class LDSETB
+    class LDSETB < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

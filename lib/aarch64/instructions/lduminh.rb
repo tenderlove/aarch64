@@ -6,7 +6,7 @@ module AArch64
     # LDUMINALH  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINH  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINLH  <Ws>, <Wt>, [<Xn|SP>]
-    class LDUMINH
+    class LDUMINH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

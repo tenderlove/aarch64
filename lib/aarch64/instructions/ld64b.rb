@@ -3,7 +3,7 @@ module AArch64
     # LD64B -- A64
     # Single-copy Atomic 64-byte Load
     # LD64B  <Xt>, [<Xn|SP> {,#0}]
-    class LD64B
+    class LD64B < Instruction
       def initialize rt, rn
         @rt = rt
         @rn = rn

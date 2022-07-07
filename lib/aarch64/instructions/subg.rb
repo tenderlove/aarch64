@@ -3,7 +3,7 @@ module AArch64
     # SUBG -- A64
     # Subtract with Tag
     # SUBG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
-    class SUBG
+    class SUBG < Instruction
       def initialize xd, xn, uimm6, uimm4
         @xd    = xd
         @xn    = xn

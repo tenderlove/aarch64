@@ -3,7 +3,7 @@ module AArch64
     # PACGA -- A64
     # Pointer Authentication Code, using Generic key
     # PACGA  <Xd>, <Xn>, <Xm|SP>
-    class PACGA
+    class PACGA < Instruction
       def initialize rd, rn, rm
         @rd = rd
         @rn = rn

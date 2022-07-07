@@ -4,7 +4,7 @@ module AArch64
     # Bitwise AND (shifted register), setting flags
     # ANDS  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ANDS  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class ANDS_log_shift
+    class ANDS_log_shift < Instruction
       def initialize xd, xn, xm, shift, amount, sf
         @xd     = xd
         @xn     = xn

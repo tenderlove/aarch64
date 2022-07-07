@@ -3,7 +3,7 @@ module AArch64
     # BL -- A64
     # Branch with Link
     # BL  <label>
-    class BL
+    class BL < Instruction
       def initialize label
         @label = label
       end

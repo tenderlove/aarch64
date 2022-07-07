@@ -3,7 +3,7 @@ module AArch64
     # SMSUBL -- A64
     # Signed Multiply-Subtract Long
     # SMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
-    class SMSUBL
+    class SMSUBL < Instruction
       def initialize rd, rn, rm, ra
         @rd = rd
         @rn = rn

@@ -4,7 +4,7 @@ module AArch64
     # Reverse Bits
     # RBIT  <Wd>, <Wn>
     # RBIT  <Xd>, <Xn>
-    class RBIT_int
+    class RBIT_int < Instruction
       def initialize rd, rn, sf
         @rd = rd
         @rn = rn

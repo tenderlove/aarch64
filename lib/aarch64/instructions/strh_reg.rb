@@ -3,7 +3,7 @@ module AArch64
     # STRH (register) -- A64
     # Store Register Halfword (register)
     # STRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class STRH_reg
+    class STRH_reg < Instruction
       def initialize rt, rn, rm, option, s
         @rt     = rt
         @rn     = rn

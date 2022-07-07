@@ -6,7 +6,7 @@ module AArch64
     # BRAA  <Xn>, <Xm|SP>
     # BRABZ  <Xn>
     # BRAB  <Xn>, <Xm|SP>
-    class BRA
+    class BRA < Instruction
       def initialize rn, rm, z, m
         @rn = rn
         @rm = rm

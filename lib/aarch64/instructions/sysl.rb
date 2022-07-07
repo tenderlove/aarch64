@@ -3,7 +3,7 @@ module AArch64
     # SYSL -- A64
     # System instruction with result
     # SYSL  <Xt>, #<op1>, <Cn>, <Cm>, #<op2>
-    class SYSL
+    class SYSL < Instruction
       def initialize xt, op1, cn, cm, op2
         @xt  = xt
         @op1 = op1

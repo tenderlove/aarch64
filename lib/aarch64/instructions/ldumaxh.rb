@@ -6,7 +6,7 @@ module AArch64
     # LDUMAXALH  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXH  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMAXLH  <Ws>, <Wt>, [<Xn|SP>]
-    class LDUMAXH
+    class LDUMAXH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

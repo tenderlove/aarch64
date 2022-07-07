@@ -3,7 +3,7 @@ module AArch64
     # BTI -- A64
     # Branch Target Identification
     # BTI  {<targets>}
-    class BTI
+    class BTI < Instruction
       def initialize target
         @target = target
       end

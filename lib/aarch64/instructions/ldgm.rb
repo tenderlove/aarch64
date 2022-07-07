@@ -3,7 +3,7 @@ module AArch64
     # LDGM -- A64
     # Load Tag Multiple
     # LDGM  <Xt>, [<Xn|SP>]
-    class LDGM
+    class LDGM < Instruction
       def initialize xt, xn
         @xt = xt
         @xn = xn

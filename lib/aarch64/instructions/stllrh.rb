@@ -3,7 +3,7 @@ module AArch64
     # STLLRH -- A64
     # Store LORelease Register Halfword
     # STLLRH  <Wt>, [<Xn|SP>{,#0}]
-    class STLLRH
+    class STLLRH < Instruction
       def initialize rt, rn
         @rt = rt
         @rn = rn

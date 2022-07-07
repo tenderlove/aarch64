@@ -3,7 +3,7 @@ module AArch64
     # SVC -- A64
     # Supervisor Call
     # SVC  #<imm>
-    class SVC
+    class SVC < Instruction
       def initialize imm
         @imm = imm
       end

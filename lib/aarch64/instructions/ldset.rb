@@ -10,7 +10,7 @@ module AArch64
     # LDSETA  <Xs>, <Xt>, [<Xn|SP>]
     # LDSETAL  <Xs>, <Xt>, [<Xn|SP>]
     # LDSETL  <Xs>, <Xt>, [<Xn|SP>]
-    class LDSET
+    class LDSET < Instruction
       def initialize rs, rt, rn, size, a, r
         @rs   = rs
         @rt   = rt

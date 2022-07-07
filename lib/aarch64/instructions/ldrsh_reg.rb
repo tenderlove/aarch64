@@ -4,7 +4,7 @@ module AArch64
     # Load Register Signed Halfword (register)
     # LDRSH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     # LDRSH  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class LDRSH_reg
+    class LDRSH_reg < Instruction
       def initialize rt, rn, rm, s, option, opc
         @rt     = rt
         @rn     = rn

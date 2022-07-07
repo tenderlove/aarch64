@@ -3,7 +3,7 @@ module AArch64
     # SMC -- A64
     # Secure Monitor Call
     # SMC  #<imm>
-    class SMC
+    class SMC < Instruction
       def initialize imm16
         @imm16 = imm16
       end

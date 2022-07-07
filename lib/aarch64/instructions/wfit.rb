@@ -3,7 +3,7 @@ module AArch64
     # WFIT -- A64
     # Wait For Interrupt with Timeout
     # WFIT  <Xt>
-    class WFIT
+    class WFIT < Instruction
       def initialize rd
         @rd = rd
       end

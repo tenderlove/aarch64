@@ -4,7 +4,7 @@ module AArch64
     # Bitwise AND (immediate)
     # AND  <Wd|WSP>, <Wn>, #<imm>
     # AND  <Xd|SP>, <Xn>, #<imm>
-    class AND_log_imm
+    class AND_log_imm < Instruction
       def initialize rd, rn, immr, imms, n, sf
         @rd   = rd
         @rn   = rn

@@ -4,7 +4,7 @@ module AArch64
     # Load-Acquire RCpc Register (unscaled)
     # LDAPUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDAPUR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDAPUR_gen
+    class LDAPUR_gen < Instruction
       def initialize size, opc, rt, rn, simm
         @size = size
         @opc  = opc

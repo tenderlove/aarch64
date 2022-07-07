@@ -4,7 +4,7 @@ module AArch64
     # Add (shifted register)
     # ADD  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # ADD  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class ADD_addsub_shift
+    class ADD_addsub_shift < Instruction
       def initialize xd, xn, xm, shift, amount, sf
         @xd     = xd
         @xn     = xn

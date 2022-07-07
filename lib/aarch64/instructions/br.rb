@@ -3,7 +3,7 @@ module AArch64
     # BR -- A64
     # Branch to Register
     # BR  <Xn>
-    class BR
+    class BR < Instruction
       def initialize rn
         @rn = rn
       end

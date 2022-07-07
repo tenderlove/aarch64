@@ -4,7 +4,7 @@ module AArch64
     # Move wide with NOT
     # MOVN  <Wd>, #<imm>{, LSL #<shift>}
     # MOVN  <Xd>, #<imm>{, LSL #<shift>}
-    class MOVN
+    class MOVN < Instruction
       def initialize rd, imm16, hw, sf
         @rd    = rd
         @imm16 = imm16

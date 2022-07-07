@@ -3,7 +3,7 @@ module AArch64
     # LDRB (immediate) -- A64
     # Load Register Byte (immediate)
     # LDRB  <Wt>, [<Xn|SP>{, #<pimm>}]
-    class LDRB_unsigned
+    class LDRB_unsigned < Instruction
       def initialize rt, rn, imm12
         @rt    = rt
         @rn    = rn

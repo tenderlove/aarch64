@@ -6,7 +6,7 @@ module AArch64
     # LDSMINALH  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMINH  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMINLH  <Ws>, <Wt>, [<Xn|SP>]
-    class LDSMINH
+    class LDSMINH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

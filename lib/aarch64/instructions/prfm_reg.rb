@@ -3,7 +3,7 @@ module AArch64
     # PRFM (register) -- A64
     # Prefetch Memory (register)
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
-    class PRFM_reg
+    class PRFM_reg < Instruction
       def initialize rt, rn, rm, option, s
         @rt     = rt
         @rn     = rn

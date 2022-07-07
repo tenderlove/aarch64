@@ -7,7 +7,7 @@ module AArch64
     # AUTIA1716
     # AUTIASP
     # AUTIAZ
-    class AUTIA
+    class AUTIA < Instruction
       def initialize d, n
         @d = d
         @n = n

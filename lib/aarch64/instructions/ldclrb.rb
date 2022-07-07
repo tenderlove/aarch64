@@ -6,7 +6,7 @@ module AArch64
     # LDCLRALB  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLRB  <Ws>, <Wt>, [<Xn|SP>]
     # LDCLRLB  <Ws>, <Wt>, [<Xn|SP>]
-    class LDCLRB
+    class LDCLRB < Instruction
       def initialize rs, rt, rn, a, r, size
         @rs   = rs
         @rt   = rt

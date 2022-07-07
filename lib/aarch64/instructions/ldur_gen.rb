@@ -4,7 +4,7 @@ module AArch64
     # Load Register (unscaled)
     # LDUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDUR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDUR_gen
+    class LDUR_gen < Instruction
       def initialize rt, rn, imm9, size
         @rt   = rt
         @rn   = rn

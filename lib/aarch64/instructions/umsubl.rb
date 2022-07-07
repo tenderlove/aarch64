@@ -3,7 +3,7 @@ module AArch64
     # UMSUBL -- A64
     # Unsigned Multiply-Subtract Long
     # UMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
-    class UMSUBL
+    class UMSUBL < Instruction
       def initialize xd, wn, wm, xa
         @xd = xd
         @wn = wn

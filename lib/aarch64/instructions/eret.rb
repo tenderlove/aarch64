@@ -3,7 +3,7 @@ module AArch64
     # ERET -- A64
     # Exception Return
     # ERET
-    class ERET
+    class ERET < Instruction
       def encode
         ERET()
       end

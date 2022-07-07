@@ -4,7 +4,7 @@ module AArch64
     # Load Register (unprivileged)
     # LDTR  <Wt>, [<Xn|SP>{, #<simm>}]
     # LDTR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDTR
+    class LDTR < Instruction
       def initialize rt, rn, imm9, size
         @rt   = rt
         @rn   = rn

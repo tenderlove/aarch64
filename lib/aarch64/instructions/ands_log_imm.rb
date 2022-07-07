@@ -4,7 +4,7 @@ module AArch64
     # Bitwise AND (immediate), setting flags
     # ANDS  <Wd>, <Wn>, #<imm>
     # ANDS  <Xd>, <Xn>, #<imm>
-    class ANDS_log_imm
+    class ANDS_log_imm < Instruction
       def initialize rd, rn, immr, imms, n, sf
         @rd   = rd
         @rn   = rn

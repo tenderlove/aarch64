@@ -3,7 +3,7 @@ module AArch64
     # GMI -- A64
     # Tag Mask Insert
     # GMI  <Xd>, <Xn|SP>, <Xm>
-    class GMI
+    class GMI < Instruction
       def initialize rd, rn, rm
         @rd = rd
         @rn = rn

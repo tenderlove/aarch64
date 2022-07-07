@@ -4,7 +4,7 @@ module AArch64
     # Unsigned Bitfield Move
     # UBFM  <Wd>, <Wn>, #<immr>, #<imms>
     # UBFM  <Xd>, <Xn>, #<immr>, #<imms>
-    class UBFM
+    class UBFM < Instruction
       def initialize rd, rn, immr, imms, sf
         @rd   = rd
         @rn   = rn

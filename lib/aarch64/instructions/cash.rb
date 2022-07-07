@@ -6,7 +6,7 @@ module AArch64
     # CASALH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     # CASLH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
-    class CASH
+    class CASH < Instruction
       def initialize rs, rt, rn, l, o0
         @rs = rs
         @rt = rt

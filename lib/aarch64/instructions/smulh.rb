@@ -3,7 +3,7 @@ module AArch64
     # SMULH -- A64
     # Signed Multiply High
     # SMULH  <Xd>, <Xn>, <Xm>
-    class SMULH
+    class SMULH < Instruction
       def initialize rd, rn, rm
         @rd = rd
         @rn = rn

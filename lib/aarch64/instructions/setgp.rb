@@ -5,7 +5,7 @@ module AArch64
     # SETGE  [<Xd>]!, <Xn>!, <Xs>
     # SETGM  [<Xd>]!, <Xn>!, <Xs>
     # SETGP  [<Xd>]!, <Xn>!, <Xs>
-    class SETGP
+    class SETGP < Instruction
       def encode
         raise NotImplementedError
       end

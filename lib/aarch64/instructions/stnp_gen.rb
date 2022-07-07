@@ -4,7 +4,7 @@ module AArch64
     # Store Pair of Registers, with non-temporal hint
     # STNP  <Wt1>, <Wt2>, [<Xn|SP>{, #<imm>}]
     # STNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
-    class STNP_gen
+    class STNP_gen < Instruction
       def initialize rt, rt2, rn, imm7, opc
         @rt   = rt
         @rt2  = rt2

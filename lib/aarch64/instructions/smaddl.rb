@@ -3,7 +3,7 @@ module AArch64
     # SMADDL -- A64
     # Signed Multiply-Add Long
     # SMADDL  <Xd>, <Wn>, <Wm>, <Xa>
-    class SMADDL
+    class SMADDL < Instruction
       def initialize rd, rn, rm, ra
         @rd = rd
         @rn = rn

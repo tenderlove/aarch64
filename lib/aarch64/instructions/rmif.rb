@@ -3,7 +3,7 @@ module AArch64
     # RMIF -- A64
     # Rotate, Mask Insert Flags
     # RMIF  <Xn>, #<shift>, #<mask>
-    class RMIF
+    class RMIF < Instruction
       def initialize rn, imm6, mask
         @rn   = rn
         @imm6 = imm6

@@ -3,7 +3,7 @@ module AArch64
     # CLREX -- A64
     # Clear Exclusive
     # CLREX  {#<imm>}
-    class CLREX
+    class CLREX < Instruction
       def initialize imm
         @imm = imm
       end

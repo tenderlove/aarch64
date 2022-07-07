@@ -5,7 +5,7 @@ module AArch64
     # STZG  <Xt|SP>, [<Xn|SP>], #<simm>
     # STZG  <Xt|SP>, [<Xn|SP>, #<simm>]!
     # STZG  <Xt|SP>, [<Xn|SP>{, #<simm>}]
-    class STZG
+    class STZG < Instruction
       def initialize xt, xn, imm9, opt
         @xt   = xt
         @xn   = xn

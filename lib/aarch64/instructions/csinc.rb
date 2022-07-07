@@ -4,7 +4,7 @@ module AArch64
     # Conditional Select Increment
     # CSINC  <Wd>, <Wn>, <Wm>, <cond>
     # CSINC  <Xd>, <Xn>, <Xm>, <cond>
-    class CSINC
+    class CSINC < Instruction
       def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn

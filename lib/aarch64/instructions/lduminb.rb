@@ -6,7 +6,7 @@ module AArch64
     # LDUMINALB  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINB  <Ws>, <Wt>, [<Xn|SP>]
     # LDUMINLB  <Ws>, <Wt>, [<Xn|SP>]
-    class LDUMINB
+    class LDUMINB < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

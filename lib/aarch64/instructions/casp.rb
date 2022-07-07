@@ -10,7 +10,7 @@ module AArch64
     # CASPA  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
     # CASPAL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
     # CASPL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
-    class CASP
+    class CASP < Instruction
       def initialize rs, rt, rn, l, o0, sf
         @rs = rs
         @rt = rt

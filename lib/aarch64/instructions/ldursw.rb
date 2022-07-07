@@ -3,7 +3,7 @@ module AArch64
     # LDURSW -- A64
     # Load Register Signed Word (unscaled)
     # LDURSW  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDURSW
+    class LDURSW < Instruction
       def initialize rt, rn, imm9
         @rt   = rt
         @rn   = rn

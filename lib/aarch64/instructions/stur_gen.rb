@@ -4,7 +4,7 @@ module AArch64
     # Store Register (unscaled)
     # STUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STUR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class STUR_gen
+    class STUR_gen < Instruction
       def initialize rt, rn, imm9, size
         @rt   = rt
         @rn   = rn

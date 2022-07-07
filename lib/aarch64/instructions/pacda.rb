@@ -4,7 +4,7 @@ module AArch64
     # Pointer Authentication Code for Data address, using key A
     # PACDA  <Xd>, <Xn|SP>
     # PACDZA  <Xd>
-    class PACDA
+    class PACDA < Instruction
       def initialize rd, rn, z
         @rd = rd
         @rn = rn

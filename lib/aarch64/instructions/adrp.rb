@@ -3,7 +3,7 @@ module AArch64
     # ADRP -- A64
     # Form PC-relative address to 4KB page
     # ADRP  <Xd>, <label>
-    class ADRP
+    class ADRP < Instruction
       def initialize xd, label
         @xd    = xd
         @label = label

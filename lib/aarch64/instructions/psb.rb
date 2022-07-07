@@ -3,7 +3,7 @@ module AArch64
     # PSB CSYNC -- A64
     # Profiling Synchronization Barrier
     # PSB CSYNC
-    class PSB
+    class PSB < Instruction
       def encode
         PSB()
       end

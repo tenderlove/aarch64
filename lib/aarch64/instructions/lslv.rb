@@ -4,7 +4,7 @@ module AArch64
     # Logical Shift Left Variable
     # LSLV  <Wd>, <Wn>, <Wm>
     # LSLV  <Xd>, <Xn>, <Xm>
-    class LSLV
+    class LSLV < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

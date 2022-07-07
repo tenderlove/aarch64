@@ -4,7 +4,7 @@ module AArch64
     # Multiply-Subtract
     # MSUB  <Wd>, <Wn>, <Wm>, <Wa>
     # MSUB  <Xd>, <Xn>, <Xm>, <Xa>
-    class MSUB
+    class MSUB < Instruction
       def initialize rd, rn, rm, ra, sf
         @rd = rd
         @rn = rn

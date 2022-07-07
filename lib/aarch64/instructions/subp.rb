@@ -3,7 +3,7 @@ module AArch64
     # SUBP -- A64
     # Subtract Pointer
     # SUBP  <Xd>, <Xn|SP>, <Xm|SP>
-    class SUBP
+    class SUBP < Instruction
       def initialize xd, xn, xm
         @xd = xd
         @xn = xn

@@ -3,7 +3,7 @@ module AArch64
     # ADCS -- A64
     # Add with Carry, setting flags
     # ADCS  <Wd>, <Wn>, <Wm>
-    class ADCS
+    class ADCS < Instruction
       def initialize rd, rn, rm, sf
         @rd = rd
         @rn = rn

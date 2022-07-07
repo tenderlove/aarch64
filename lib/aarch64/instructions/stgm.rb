@@ -3,7 +3,7 @@ module AArch64
     # STGM -- A64
     # Store Tag Multiple
     # STGM  <Xt>, [<Xn|SP>]
-    class STGM
+    class STGM < Instruction
       def initialize xt, xn
         @xt = xt
         @xn = xn

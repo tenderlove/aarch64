@@ -4,7 +4,7 @@ module AArch64
     # Bitwise Bit Clear (shifted register)
     # BIC  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # BIC  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class BIC_log_shift
+    class BIC_log_shift < Instruction
       def initialize d, n, m, shift, amount, sf
         @d      = d
         @n      = n

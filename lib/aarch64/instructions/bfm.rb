@@ -4,7 +4,7 @@ module AArch64
     # Bitfield Move
     # BFM  <Wd>, <Wn>, #<immr>, #<imms>
     # BFM  <Xd>, <Xn>, #<immr>, #<imms>
-    class BFM
+    class BFM < Instruction
       def initialize d, n, immr, imms, sf
         @d    = d
         @n    = n

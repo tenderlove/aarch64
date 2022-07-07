@@ -4,7 +4,7 @@ module AArch64
     # Load Register Signed Halfword (immediate)
     # LDRSH  <Wt>, [<Xn|SP>{, #<pimm>}]
     # LDRSH  <Xt>, [<Xn|SP>{, #<pimm>}]
-    class LDRSH_unsigned
+    class LDRSH_unsigned < Instruction
       def initialize rt, rn, imm12, opc
         @rt    = rt
         @rn    = rn

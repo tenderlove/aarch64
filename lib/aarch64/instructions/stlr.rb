@@ -4,7 +4,7 @@ module AArch64
     # Store-Release Register
     # STLR  <Wt>, [<Xn|SP>{,#0}]
     # STLR  <Xt>, [<Xn|SP>{,#0}]
-    class STLR
+    class STLR < Instruction
       def initialize rt, rn, size
         @rt   = rt
         @rn   = rn

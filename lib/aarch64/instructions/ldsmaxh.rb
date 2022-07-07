@@ -6,7 +6,7 @@ module AArch64
     # LDSMAXALH  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXH  <Ws>, <Wt>, [<Xn|SP>]
     # LDSMAXLH  <Ws>, <Wt>, [<Xn|SP>]
-    class LDSMAXH
+    class LDSMAXH < Instruction
       def initialize rs, rt, rn, a, r
         @rs = rs
         @rt = rt

@@ -4,7 +4,7 @@ module AArch64
     # Conditional Select
     # CSEL  <Wd>, <Wn>, <Wm>, <cond>
     # CSEL  <Xd>, <Xn>, <Xm>, <cond>
-    class CSEL
+    class CSEL < Instruction
       def initialize rd, rn, rm, cond, sf
         @rd   = rd
         @rn   = rn

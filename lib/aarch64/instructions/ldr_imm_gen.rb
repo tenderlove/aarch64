@@ -6,7 +6,7 @@ module AArch64
     # LDR  <Xt>, [<Xn|SP>], #<simm>
     # LDR  <Wt>, [<Xn|SP>, #<simm>]!
     # LDR  <Xt>, [<Xn|SP>, #<simm>]!
-    class LDR_imm_gen
+    class LDR_imm_gen < Instruction
       def initialize rt, rn, imm9, size, mode
         @rt   = rt
         @rn   = rn

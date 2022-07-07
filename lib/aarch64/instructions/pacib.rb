@@ -7,7 +7,7 @@ module AArch64
     # PACIB1716
     # PACIBSP
     # PACIBZ
-    class PACIB
+    class PACIB < Instruction
       def initialize rd, rn, z
         @rd = rd
         @rn = rn

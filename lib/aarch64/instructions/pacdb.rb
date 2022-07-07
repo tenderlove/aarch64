@@ -4,7 +4,7 @@ module AArch64
     # Pointer Authentication Code for Data address, using key B
     # PACDB  <Xd>, <Xn|SP>
     # PACDZB  <Xd>
-    class PACDB
+    class PACDB < Instruction
       def initialize rd, rn, z
         @rd = rd
         @rn = rn

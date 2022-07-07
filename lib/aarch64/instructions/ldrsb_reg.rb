@@ -6,7 +6,7 @@ module AArch64
     # LDRSB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
     # LDRSB  <Xt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
     # LDRSB  <Xt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
-    class LDRSB_reg
+    class LDRSB_reg < Instruction
       def initialize rt, rn, rm, s, option, opc
         @rt     = rt
         @rn     = rn

@@ -4,7 +4,7 @@ module AArch64
     # Reverse Bytes
     # REV  <Wd>, <Wn>
     # REV  <Xd>, <Xn>
-    class REV
+    class REV < Instruction
       def initialize rd, rn, sf, opc
         @rd  = rd
         @rn  = rn

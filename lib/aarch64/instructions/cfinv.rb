@@ -3,7 +3,7 @@ module AArch64
     # CFINV -- A64
     # Invert Carry Flag
     # CFINV
-    class CFINV
+    class CFINV < Instruction
       def encode
         CFINV()
       end

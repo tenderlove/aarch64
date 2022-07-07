@@ -3,7 +3,7 @@ module AArch64
     # LDTRSW -- A64
     # Load Register Signed Word (unprivileged)
     # LDTRSW  <Xt>, [<Xn|SP>{, #<simm>}]
-    class LDTRSW
+    class LDTRSW < Instruction
       def initialize rt, rn, imm9
         @rt   = rt
         @rn   = rn

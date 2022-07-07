@@ -4,7 +4,7 @@ module AArch64
     # Bitwise Exclusive OR NOT (shifted register)
     # EON  <Wd>, <Wn>, <Wm>{, <shift> #<amount>}
     # EON  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
-    class EON
+    class EON < Instruction
       def initialize rd, rn, rm, shift, imm, sf
         @rd    = rd
         @rn    = rn

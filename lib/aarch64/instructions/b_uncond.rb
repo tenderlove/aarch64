@@ -3,7 +3,7 @@ module AArch64
     # B -- A64
     # Branch
     # B  <label>
-    class B_uncond
+    class B_uncond < Instruction
       def initialize label
         @label = label
       end

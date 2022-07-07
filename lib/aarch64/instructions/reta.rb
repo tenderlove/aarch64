@@ -4,7 +4,7 @@ module AArch64
     # Return from subroutine, with pointer authentication
     # RETAA
     # RETAB
-    class RETA
+    class RETA < Instruction
       def initialize m
         @m = m
       end

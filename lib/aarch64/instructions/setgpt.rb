@@ -5,7 +5,7 @@ module AArch64
     # SETGET  [<Xd>]!, <Xn>!, <Xs>
     # SETGMT  [<Xd>]!, <Xn>!, <Xs>
     # SETGPT  [<Xd>]!, <Xn>!, <Xs>
-    class SETGPT
+    class SETGPT < Instruction
       def encode
         raise NotImplementedError
       end

@@ -3,7 +3,7 @@ module AArch64
     # STXRH -- A64
     # Store Exclusive Register Halfword
     # STXRH  <Ws>, <Wt>, [<Xn|SP>{,#0}]
-    class STXRH
+    class STXRH < Instruction
       def initialize rs, rt, rn
         @rs = rs
         @rt = rt

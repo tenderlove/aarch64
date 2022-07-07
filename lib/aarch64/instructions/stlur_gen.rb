@@ -4,7 +4,7 @@ module AArch64
     # Store-Release Register (unscaled)
     # STLUR  <Wt>, [<Xn|SP>{, #<simm>}]
     # STLUR  <Xt>, [<Xn|SP>{, #<simm>}]
-    class STLUR_gen
+    class STLUR_gen < Instruction
       def initialize rt, rn, imm9, size
         @rt   = rt
         @rn   = rn

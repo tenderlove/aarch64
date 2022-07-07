@@ -4,7 +4,7 @@ module AArch64
     # Store Register Byte (register)
     # STRB  <Wt>, [<Xn|SP>, (<Wm>|<Xm>), <extend> {<amount>}]
     # STRB  <Wt>, [<Xn|SP>, <Xm>{, LSL <amount>}]
-    class STRB_reg
+    class STRB_reg < Instruction
       def initialize rt, rn, rm, option, s
         @rt     = rt
         @rn     = rn

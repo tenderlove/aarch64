@@ -3,7 +3,7 @@ module AArch64
     # TSB CSYNC -- A64
     # Trace Synchronization Barrier
     # TSB CSYNC
-    class TSB
+    class TSB < Instruction
       def encode
         TSB()
       end
