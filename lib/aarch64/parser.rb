@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require "racc/parser.rb"
 require "strscan"
 require "aarch64/system_registers/mrs_msr_64"
+require "aarch64/parser.tab"
+require "aarch64"
 
 module AArch64
   class Parser < Racc::Parser
@@ -152,7 +153,7 @@ module AArch64
     def parse str
       str += "\n" unless str.end_with?("\n")
       @scan = StringScanner.new str
-      @asm  = Assembler.new
+      @asm  = AArch64::Assembler.new
       do_parse
       @asm
     end
@@ -224,5 +225,3 @@ module AArch64
     end
   end
 end
-
-require "aarch64/parser.tab"

@@ -48,7 +48,7 @@ module AArch64
 
     def assert_bytes bytes
       asm = Assembler.new
-      x = yield asm
+      yield asm
       io = StringIO.new
       asm.write_to io
       assert_equal bytes, io.string.bytes, ->() {
