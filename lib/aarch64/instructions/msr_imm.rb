@@ -18,9 +18,9 @@ module AArch64
 
       def MSR_imm op1, crm, op2
         insn = 0b1101010100_0_00_000_0100_0000_000_11111
-        insn |= ((op1 & 0x7) << 16)
-        insn |= ((crm & 0xf) << 8)
-        insn |= ((op2 & 0x7) << 5)
+        insn |= ((apply_mask(op1, 0x7)) << 16)
+        insn |= ((apply_mask(crm, 0xf)) << 8)
+        insn |= ((apply_mask(op2, 0x7)) << 5)
         insn
       end
     end

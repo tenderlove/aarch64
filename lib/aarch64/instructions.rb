@@ -1,6 +1,23 @@
 module AArch64
   module Instructions
     class Instruction
+      private
+
+      def apply_mask val, mask
+        if val > mask
+          raise "Expected a #{popcount(mask)} bit number, but got 0x#{val.to_s(16)}"
+        end
+        val & mask
+      end
+
+      def popcount x
+        x -= ((x >> 1) & 0x55555555)
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333)
+        x = (x + (x >> 4)) & 0x0F0F0F0F
+        x += (x >> 8)
+        x += (x >> 16)
+        x & 0x3F
+      end
     end
 
     autoload :ADC, "aarch64/instructions/adc"

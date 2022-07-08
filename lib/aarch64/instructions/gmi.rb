@@ -18,9 +18,9 @@ module AArch64
 
       def GMI xm, xn, xd
         insn = 0b1_0_0_11010110_00000_0_0_0_1_0_1_00000_00000
-        insn |= ((xm & 0x1f) << 16)
-        insn |= ((xn & 0x1f) << 5)
-        insn |= (xd & 0x1f)
+        insn |= ((apply_mask(xm, 0x1f)) << 16)
+        insn |= ((apply_mask(xn, 0x1f)) << 5)
+        insn |= (apply_mask(xd, 0x1f))
         insn
       end
     end

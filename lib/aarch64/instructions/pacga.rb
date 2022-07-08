@@ -18,9 +18,9 @@ module AArch64
 
       def PACGA rm, rn, rd
         insn = 0b1_0_0_11010110_00000_001100_00000_00000
-        insn |= ((rm & 0x1f) << 16)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rd & 0x1f)
+        insn |= ((apply_mask(rm, 0x1f)) << 16)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(rd, 0x1f))
         insn
       end
     end

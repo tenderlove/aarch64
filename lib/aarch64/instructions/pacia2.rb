@@ -19,8 +19,8 @@ module AArch64
 
       def PACIA2 crm, op2
         insn = 0b11010101000000110010_0000_000_11111
-        insn |= ((crm & 0xf) << 8)
-        insn |= ((op2 & 0x7) << 5)
+        insn |= ((apply_mask(crm, 0xf)) << 8)
+        insn |= ((apply_mask(op2, 0x7)) << 5)
         insn
       end
     end

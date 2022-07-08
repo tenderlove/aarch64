@@ -22,9 +22,9 @@ module AArch64
 
       def AUTDA z, rn, rd
         insn = 0b1_1_0_11010110_00001_0_0_0_110_00000_00000
-        insn |= ((z & 0x1) << 13)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rd & 0x1f)
+        insn |= ((apply_mask(z, 0x1)) << 13)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(rd, 0x1f))
         insn
       end
     end

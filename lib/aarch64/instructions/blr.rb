@@ -16,7 +16,7 @@ module AArch64
 
       def BLR rn
         insn = 0b1101011_0_0_01_11111_0000_0_0_00000_00000
-        insn |= ((rn & 0x1f) << 5)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
         insn
       end
     end

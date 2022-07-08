@@ -19,9 +19,9 @@ module AArch64
 
       def CBZ sf, imm19, rt
         insn = 0b0_011010_0_0000000000000000000_00000
-        insn |= ((sf & 0x1) << 31)
-        insn |= ((imm19 & 0x7ffff) << 5)
-        insn |= (rt & 0x1f)
+        insn |= ((apply_mask(sf, 0x1)) << 31)
+        insn |= ((apply_mask(imm19, 0x7ffff)) << 5)
+        insn |= (apply_mask(rt, 0x1f))
         insn
       end
     end

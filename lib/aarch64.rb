@@ -16,6 +16,7 @@ module AArch64
       def size; 64; end
       def sf; 1; end
       def sizeb; 0b11; end
+      def sz; 0b1; end
       def opc; 0b10; end
       def opc2; 0b11; end
       def opc3; 0b10; end
@@ -27,6 +28,7 @@ module AArch64
       def size; 32; end
       def sf; 0; end
       def sizeb; 0b10; end
+      def sz; 0b0; end
       def opc; 0b11; end
       def opc2; 0b10; end
       def opc3; 0b00; end
@@ -1676,14 +1678,27 @@ module AArch64
     end
 
     def mrs rt, reg
-      a MRS.new(reg.op0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
+      o0 = case reg.op0
+           when 2 then 0
+           when 3 then 1
+           else
+             raise
+           end
+      a MRS.new(o0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
     end
 
     def msr reg, rt
       if rt.integer?
         raise NotImplementedError
       else
-        a MSR_reg.new(reg.op0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
+        o0 = case reg.op0
+             when 2 then 0
+             when 3 then 1
+             else
+               raise
+             end
+
+        a MSR_reg.new(o0, reg.op1, reg.CRn, reg.CRm, reg.op2, rt)
       end
     end
 
@@ -2135,7 +2150,7 @@ module AArch64
     end
 
     def stlxp rs, rt, rt2, rn
-      a STLXP.new(rs, rt, rt2, rn.first, rt.sizeb)
+      a STLXP.new(rs, rt, rt2, rn.first, rt.sz)
     end
 
     def stlxr rs, rt, rn

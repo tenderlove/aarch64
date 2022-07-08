@@ -20,10 +20,10 @@ module AArch64
 
       def LDR_imm_gen size, imm12, rn, rt
         insn = 0b00_111_0_01_01_000000000000_00000_00000
-        insn |= ((size & 0x3) << 30)
-        insn |= ((imm12 & 0xfff) << 10)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rt & 0x1f)
+        insn |= ((apply_mask(size, 0x3)) << 30)
+        insn |= ((apply_mask(imm12, 0xfff)) << 10)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(rt, 0x1f))
         insn
       end
     end

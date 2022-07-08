@@ -19,10 +19,10 @@ module AArch64
 
       def SUBG uimm6, uimm4, xn, xd
         insn = 0b1_1_0_100011_0_000000_00_0000_00000_00000
-        insn |= ((uimm6 & 0x3f) << 16)
-        insn |= ((uimm4 & 0xf) << 10)
-        insn |= ((xn & 0x1f) << 5)
-        insn |= (xd & 0x1f)
+        insn |= ((apply_mask(uimm6, 0x3f)) << 16)
+        insn |= ((apply_mask(uimm4, 0xf)) << 10)
+        insn |= ((apply_mask(xn, 0x1f)) << 5)
+        insn |= (apply_mask(xd, 0x1f))
         insn
       end
     end

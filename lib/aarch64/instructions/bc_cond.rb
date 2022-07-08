@@ -17,8 +17,8 @@ module AArch64
 
       def BC_cond imm19, cond
         insn = 0b0101010_0_0000000000000000000_1_0000
-        insn |= ((imm19 & 0x7ffff) << 5)
-        insn |= (cond & 0xf)
+        insn |= ((apply_mask(imm19, 0x7ffff)) << 5)
+        insn |= (apply_mask(cond, 0xf))
         insn
       end
     end

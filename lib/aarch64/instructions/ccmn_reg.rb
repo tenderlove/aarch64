@@ -21,11 +21,11 @@ module AArch64
 
       def CCMN_reg sf, rm, cond, rn, nzcv
         insn = 0b0_0_1_11010010_00000_0000_0_0_00000_0_0000
-        insn |= ((sf & 0x1) << 31)
-        insn |= ((rm & 0x1f) << 16)
-        insn |= ((cond & 0xf) << 12)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (nzcv & 0xf)
+        insn |= ((apply_mask(sf, 0x1)) << 31)
+        insn |= ((apply_mask(rm, 0x1f)) << 16)
+        insn |= ((apply_mask(cond, 0xf)) << 12)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(nzcv, 0xf))
         insn
       end
     end

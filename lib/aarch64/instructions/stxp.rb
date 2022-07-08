@@ -21,11 +21,11 @@ module AArch64
 
       def STXP sz, rs, rt2, rn, rt
         insn = 0b1_0_001000_0_0_1_00000_0_00000_00000_00000
-        insn |= ((sz & 0x1) << 30)
-        insn |= ((rs & 0x1f) << 16)
-        insn |= ((rt2 & 0x1f) << 10)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rt & 0x1f)
+        insn |= ((apply_mask(sz, 0x1)) << 30)
+        insn |= ((apply_mask(rs, 0x1f)) << 16)
+        insn |= ((apply_mask(rt2, 0x1f)) << 10)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(rt, 0x1f))
         insn
       end
     end

@@ -19,10 +19,10 @@ module AArch64
 
       def TBZ b5, b40, imm14, rt
         insn = 0b0_011011_0_00000_00000000000000_00000
-        insn |= ((b5 & 0x1) << 31)
-        insn |= ((b40 & 0x1f) << 19)
-        insn |= ((imm14 & 0x3fff) << 5)
-        insn |= (rt & 0x1f)
+        insn |= ((apply_mask(b5, 0x1)) << 31)
+        insn |= ((apply_mask(b40, 0x1f)) << 19)
+        insn |= ((apply_mask(imm14, 0x3fff)) << 5)
+        insn |= (apply_mask(rt, 0x1f))
         insn
       end
     end

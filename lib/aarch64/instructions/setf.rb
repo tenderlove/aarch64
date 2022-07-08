@@ -18,8 +18,8 @@ module AArch64
 
       def SETF sz, rn
         insn = 0b0_0_1_11010000_000000_0_0010_00000_0_1101
-        insn |= ((sz & 0x1) << 14)
-        insn |= ((rn & 0x1f) << 5)
+        insn |= ((apply_mask(sz, 0x1)) << 14)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
         insn
       end
     end

@@ -21,11 +21,11 @@ module AArch64
 
       def LDNP_gen opc, imm7, rt2, rn, rt
         insn = 0b00_101_0_000_1_0000000_00000_00000_00000
-        insn |= ((opc & 0x3) << 30)
-        insn |= ((imm7 & 0x7f) << 15)
-        insn |= ((rt2 & 0x1f) << 10)
-        insn |= ((rn & 0x1f) << 5)
-        insn |= (rt & 0x1f)
+        insn |= ((apply_mask(opc, 0x3)) << 30)
+        insn |= ((apply_mask(imm7, 0x7f)) << 15)
+        insn |= ((apply_mask(rt2, 0x1f)) << 10)
+        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= (apply_mask(rt, 0x1f))
         insn
       end
     end
