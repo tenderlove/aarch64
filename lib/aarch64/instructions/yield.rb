@@ -5,14 +5,7 @@ module AArch64
     # YIELD
     class YIELD < Instruction
       def encode
-        YIELD()
-      end
-
-      private
-
-      def YIELD
-        insn = 0b1101010100_0_00_011_0010_0000_001_11111
-        insn
+        0b1101010100_0_00_011_0010_0000_001_11111
       end
     end
   end

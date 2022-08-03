@@ -5,14 +5,7 @@ module AArch64
     # PSB CSYNC
     class PSB < Instruction
       def encode
-        PSB()
-      end
-
-      private
-
-      def PSB
-        insn = 0b1101010100_0_00_011_0010_0010_001_11111
-        insn
+        0b1101010100_0_00_011_0010_0010_001_11111
       end
     end
   end
