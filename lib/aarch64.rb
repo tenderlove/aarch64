@@ -143,7 +143,7 @@ module AArch64
       end
 
       def to_i
-        @offset * 4
+        @offset
       end
 
       def integer?; false; end
@@ -172,7 +172,7 @@ module AArch64
 
     # Puts the label at the current position.  Labels can only be placed once.
     def put_label label
-      label.set_offset @insns.length
+      label.set_offset(@insns.length * 4)
       self
     end
 
@@ -2814,7 +2814,6 @@ module AArch64
     end
 
     def wrap_offset_with_label offset
-      offset /= 4
       label = Label.new :none
       label.set_offset offset
       label
