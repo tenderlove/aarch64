@@ -10,8 +10,8 @@ module AArch64
       end
 
       def encode
-        label = @label.to_i / 4096
-        ADRP(label & 0x3, label >> 2, @xd.to_i)
+        label = @label / 4096
+        ADRP(label & 0x3, label >> 2, @xd)
       end
 
       private

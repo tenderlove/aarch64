@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        IRG(@rm.to_i, @rn.to_i, @rd.to_i)
+        IRG(@rm, @rn, @rd)
       end
 
       private

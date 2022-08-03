@@ -126,6 +126,8 @@ module AArch64
     include Registers
 
     class Label
+      attr_reader :offset
+
       def initialize name
         @name   = name
         @offset = nil
@@ -136,9 +138,15 @@ module AArch64
         freeze
       end
 
+      def unwrap_label
+        to_i
+      end
+
       def to_i
         @offset * 4
       end
+
+      def integer?; false; end
     end
 
     def initialize
@@ -257,6 +265,9 @@ module AArch64
     end
 
     def adr xd, label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a ADR.new(xd, label)
     end
 
@@ -362,6 +373,10 @@ module AArch64
     end
 
     def b label, cond: nil
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
+
       if cond
         a B_cond.new(cond, label)
       else
@@ -370,6 +385,9 @@ module AArch64
     end
 
     def bc label, cond:
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a BC_cond.new(cond, label)
     end
 
@@ -410,6 +428,10 @@ module AArch64
     end
 
     def bl label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
+
       a BL.new(label)
     end
 
@@ -523,10 +545,16 @@ module AArch64
     end
 
     def cbnz rt, label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a CBNZ.new(rt, label, rt.sf)
     end
 
     def cbz rt, label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a CBZ.new(rt, label, rt.sf)
     end
 
@@ -1098,6 +1126,9 @@ module AArch64
             a LDR_reg_gen.new(rt, rn, rm, size, extend, amount)
           end
         else
+          if rn.integer?
+            rn = wrap_offset_with_label rn
+          end
           a LDR_lit_gen.new(rt, rn, rt.sf)
         end
       end
@@ -1284,6 +1315,9 @@ module AArch64
             end
           end
         else
+          if xn.integer?
+            xn = wrap_offset_with_label xn
+          end
           a LDRSW_lit.new(xt, xn)
         end
       end
@@ -1843,6 +1877,10 @@ module AArch64
           a PRFM_reg.new(rt, xn, rm, shift, (option.amount || 0) / 3)
         end
       else
+        if xn.integer?
+          xn = wrap_offset_with_label xn
+        end
+
         a PRFM_lit.new(rt, xn)
       end
     end
@@ -2645,10 +2683,16 @@ module AArch64
     end
 
     def tbnz rt, imm, label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a TBNZ.new(rt, imm, label, rt.sf)
     end
 
     def tbz rt, imm, label
+      if label.integer?
+        label = wrap_offset_with_label label
+      end
       a TBZ.new(rt, imm, label, rt.sf)
     end
 
@@ -2767,6 +2811,13 @@ module AArch64
     def a insn
       @insns = @insns << insn
       self
+    end
+
+    def wrap_offset_with_label offset
+      offset /= 4
+      label = Label.new :none
+      label.set_offset offset
+      label
     end
   end
 end

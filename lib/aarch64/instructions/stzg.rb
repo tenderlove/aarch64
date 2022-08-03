@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        STZG(@imm9, @opt, @xn.to_i, @xt.to_i)
+        STZG(@imm9, @opt, @xn, @xt)
       end
 
       private

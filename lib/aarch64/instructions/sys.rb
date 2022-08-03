@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        SYS(@op1, @cn, @cm, @op2, @xt.to_i)
+        SYS(@op1, @cn, @cm, @op2, @xt)
       end
 
       private

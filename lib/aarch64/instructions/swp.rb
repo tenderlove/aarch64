@@ -21,7 +21,7 @@ module AArch64
       end
 
       def encode
-        SWP(@size, @a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        SWP(@size, @a, @r, @rs, @rn, @rt)
       end
 
       private

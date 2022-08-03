@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        CASB(@l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
+        CASB(@l, @rs, @o0, @rn, @rt)
       end
 
       private

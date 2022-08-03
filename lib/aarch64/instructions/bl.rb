@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        BL(@label.to_i / 4)
+        BL(unwrap_label(@label))
       end
 
       private

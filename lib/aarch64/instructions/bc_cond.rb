@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        BC_cond(@label.to_i / 4, Utils.cond2bin(@cond))
+        BC_cond(unwrap_label(@label), Utils.cond2bin(@cond))
       end
 
       private

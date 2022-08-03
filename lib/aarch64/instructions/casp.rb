@@ -21,7 +21,7 @@ module AArch64
       end
 
       def encode
-        CASP(@sf, @l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
+        CASP(@sf, @l, @rs, @o0, @rn, @rt)
       end
 
       private

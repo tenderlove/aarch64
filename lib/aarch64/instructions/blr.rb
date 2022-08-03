@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        BLR(@n.to_i)
+        BLR(@n)
       end
 
       private

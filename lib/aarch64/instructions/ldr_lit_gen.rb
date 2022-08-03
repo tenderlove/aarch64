@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        LDR_lit_gen(@size, @imm19.to_i / 4, @rt.to_i)
+        LDR_lit_gen(@size, unwrap_label(@imm19), @rt)
       end
 
       private

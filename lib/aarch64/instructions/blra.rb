@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        BLRA(@z, @m, @rn.to_i, @rm.to_i)
+        BLRA(@z, @m, @rn, @rm)
       end
 
       private

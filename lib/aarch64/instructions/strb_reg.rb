@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        STRB_reg(@rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        STRB_reg(@rm, @option, @s, @rn, @rt)
       end
 
       private

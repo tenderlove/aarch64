@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        LDGM(@xn.to_i, @xt.to_i)
+        LDGM(@xn, @xt)
       end
 
       private

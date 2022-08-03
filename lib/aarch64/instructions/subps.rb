@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        SUBPS(@xm.to_i, @xn.to_i, @xd.to_i)
+        SUBPS(@xm, @xn, @xd)
       end
 
       private

@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        CSINC(@sf, @rm.to_i, @cond, @rn.to_i, @rd.to_i)
+        CSINC(@sf, @rm, @cond, @rn, @rd)
       end
 
       private

@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        STTR(@size, @imm9, @rn.to_i, @rt.to_i)
+        STTR(@size, @imm9, @rn, @rt)
       end
 
       private

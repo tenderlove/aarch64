@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        PACIB(@z, @rn.to_i, @rd.to_i)
+        PACIB(@z, @rn, @rd)
       end
 
       private

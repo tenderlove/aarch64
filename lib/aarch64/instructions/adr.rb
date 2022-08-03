@@ -10,8 +10,8 @@ module AArch64
       end
 
       def encode
-        label = @label.to_i
-        ADR(label & 0x3, label >> 2, @xd.to_i)
+        label = @label.unwrap_label
+        ADR(label & 0x3, label >> 2, @xd)
       end
 
       private

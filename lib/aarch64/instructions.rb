@@ -3,7 +3,13 @@ module AArch64
     class Instruction
       private
 
+      def unwrap_label label
+        label.unwrap_label / 4
+      end
+
       def apply_mask val, mask
+        val = val.to_i
+
         if val > mask
           raise "Expected a #{popcount(mask)} bit number, but got 0x#{val.to_s(16)}"
         end

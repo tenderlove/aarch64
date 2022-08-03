@@ -21,7 +21,7 @@ module AArch64
       end
 
       def encode
-        CAS(@sf, @l, @s.to_i, @o0, @n.to_i, @t.to_i)
+        CAS(@sf, @l, @s, @o0, @n, @t)
       end
 
       private

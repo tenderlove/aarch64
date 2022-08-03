@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        LDAPRH(@rn.to_i, @rt.to_i)
+        LDAPRH(@rn, @rt)
       end
 
       private

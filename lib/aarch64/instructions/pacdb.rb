@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        PACDB(@z, @rn.to_i, @rd.to_i)
+        PACDB(@z, @rn, @rd)
       end
 
       private

@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        LDURSH(@opc, @imm9, @rn.to_i, @rt.to_i)
+        LDURSH(@opc, @imm9, @rn, @rt)
       end
 
       private

@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        CASH(@l, @rs.to_i, @o0, @rn.to_i, @rt.to_i)
+        CASH(@l, @rs, @o0, @rn, @rt)
       end
 
       private

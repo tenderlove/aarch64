@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        CBNZ(@sf, @label.to_i / 4, @rt.to_i)
+        CBNZ(@sf, @label, @rt)
       end
 
       private
@@ -20,7 +20,7 @@ module AArch64
       def CBNZ sf, imm19, rt
         insn = 0b0_011010_1_0000000000000000000_00000
         insn |= ((apply_mask(sf, 0x1)) << 31)
-        insn |= ((apply_mask(imm19, 0x7ffff)) << 5)
+        insn |= ((apply_mask(unwrap_label(imm19), 0x7ffff)) << 5)
         insn |= (apply_mask(rt, 0x1f))
         insn
       end

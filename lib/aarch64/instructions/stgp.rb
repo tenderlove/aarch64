@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        STGP(@option, @simm7, @xt2.to_i, @xn.to_i, @xt.to_i)
+        STGP(@option, @simm7, @xt2, @xn, @xt)
       end
 
       private

@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        CRC32(@sf, @rm.to_i, @sz, @rn.to_i, @rd.to_i)
+        CRC32(@sf, @rm, @sz, @rn, @rd)
       end
 
       private

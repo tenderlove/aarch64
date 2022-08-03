@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        LDAR(@size, @rn.to_i, @rt.to_i)
+        LDAR(@size, @rn, @rt)
       end
 
       private

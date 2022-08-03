@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        LDRSW_lit(@imm19.to_i / 4, @rt.to_i)
+        LDRSW_lit(unwrap_label(@imm19), @rt)
       end
 
       private

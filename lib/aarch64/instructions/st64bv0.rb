@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        ST64BV0(@rs.to_i, @rn.to_i, @rt.to_i)
+        ST64BV0(@rs, @rn, @rt)
       end
 
       private

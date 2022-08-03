@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        LDAPUR_gen(@size, @opc, @simm, @rn.to_i, @rt.to_i)
+        LDAPUR_gen(@size, @opc, @simm, @rn, @rt)
       end
 
       private

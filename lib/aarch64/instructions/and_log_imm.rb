@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        AND_log_imm(@sf, @n, @immr, @imms, @rn.to_i, @rd.to_i)
+        AND_log_imm(@sf, @n, @immr, @imms, @rn, @rd)
       end
 
       private

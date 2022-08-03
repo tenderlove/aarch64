@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        AND_log_shift(@sf, @shift, @xm.to_i, @amount, @xn.to_i, @xd.to_i)
+        AND_log_shift(@sf, @shift, @xm, @amount, @xn, @xd)
       end
 
       private

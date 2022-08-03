@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        CCMP_imm(@sf, @imm, @cond, @rn.to_i, @nzcv)
+        CCMP_imm(@sf, @imm, @cond, @rn, @nzcv)
       end
 
       private

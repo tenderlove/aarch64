@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        LDAXP(@sf, @rt2.to_i, @rn.to_i, @rt1.to_i)
+        LDAXP(@sf, @rt2, @rn, @rt1)
       end
 
       private

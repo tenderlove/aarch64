@@ -21,7 +21,7 @@ module AArch64
       end
 
       def encode
-        LDADD(@size, @a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        LDADD(@size, @a, @r, @rs, @rn, @rt)
       end
 
       private

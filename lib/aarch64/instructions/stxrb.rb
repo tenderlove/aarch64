@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        STXRB(@rs.to_i, @rn.to_i, @rt.to_i)
+        STXRB(@rs, @rn, @rt)
       end
 
       private

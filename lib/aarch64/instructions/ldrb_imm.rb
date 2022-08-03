@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        LDRB_imm(@imm9, @option, @rn.to_i, @rt.to_i)
+        LDRB_imm(@imm9, @option, @rn, @rt)
       end
 
       private

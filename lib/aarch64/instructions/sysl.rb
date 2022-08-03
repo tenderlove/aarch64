@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        SYSL(@op1, @cn.to_i, @cm.to_i, @op2, @xt.to_i)
+        SYSL(@op1, @cn, @cm, @op2, @xt)
       end
 
       private

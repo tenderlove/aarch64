@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        CBZ(@sf, @label.to_i / 4, @rt.to_i)
+        CBZ(@sf, unwrap_label(@label), @rt)
       end
 
       private

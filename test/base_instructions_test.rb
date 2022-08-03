@@ -134,6 +134,11 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "adr x3, #4"
   end
 
+  def test_ADR_off
+    asm.adr X3, 4
+    assert_one_insn "adr x3, #4"
+  end
+
   def test_ADRP
     # adrp x3, #0x4000
     assert_bytes [0x23, 00, 00, 0x90] do |asm|
@@ -396,6 +401,10 @@ class BaseInstructionsTest < AArch64::Test
       asm.b label, cond: :pl
       asm.put_label label
     end
+
+    assert_one_insn "b.pl #4" do |asm|
+      asm.b 4, cond: :pl
+    end
   end
 
   def test_BC_cond
@@ -404,6 +413,10 @@ class BaseInstructionsTest < AArch64::Test
       label = asm.make_label :foo
       asm.bc label, cond: :pl
       asm.put_label label
+    end
+
+    assert_bytes [53, 0, 0, 84] do |asm|
+      asm.bc 4, cond: :pl
     end
   end
 
@@ -3003,6 +3016,9 @@ class BaseInstructionsTest < AArch64::Test
       label = asm.make_label :foo
       asm.ldr w1, label
       asm.put_label label
+    end
+    assert_one_insn "ldr x1, #4" do |asm|
+      asm.ldr x1, 4
     end
   end
 

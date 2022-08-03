@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        STLRB(@rn.to_i, @rt.to_i)
+        STLRB(@rn, @rt)
       end
 
       private

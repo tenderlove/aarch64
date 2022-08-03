@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        LDPSW(@mode, @imm7, @rt2.to_i, @rn.to_i, @rt.to_i)
+        LDPSW(@mode, @imm7, @rt2, @rn, @rt)
       end
 
       private

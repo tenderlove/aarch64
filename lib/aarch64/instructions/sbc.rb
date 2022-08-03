@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        SBC(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
+        SBC(@sf, @rm, @rn, @rd)
       end
 
       private

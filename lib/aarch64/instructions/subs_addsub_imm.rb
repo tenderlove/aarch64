@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        SUBS_addsub_imm(@sf, @shift, @imm, @rn.to_i, @rd.to_i)
+        SUBS_addsub_imm(@sf, @shift, @imm, @rn, @rd)
       end
 
       private

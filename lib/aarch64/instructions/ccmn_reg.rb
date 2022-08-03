@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        CCMN_reg(@sf, @rm.to_i, @cond, @rn.to_i, @nzcv)
+        CCMN_reg(@sf, @rm, @cond, @rn, @nzcv)
       end
 
       private

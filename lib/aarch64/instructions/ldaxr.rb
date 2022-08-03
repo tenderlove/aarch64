@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        LDAXR(@size, @rn.to_i, @rt.to_i)
+        LDAXR(@size, @rn, @rt)
       end
 
       private

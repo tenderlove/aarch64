@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        LDSMINB(@a, @r.to_i, @rs.to_i, @rn.to_i, @rt.to_i)
+        LDSMINB(@a, @r, @rs, @rn, @rt)
       end
 
       private

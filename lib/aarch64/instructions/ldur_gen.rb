@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        LDUR_gen(@size, @imm9, @rn.to_i, @rt.to_i)
+        LDUR_gen(@size, @imm9, @rn, @rt)
       end
 
       private

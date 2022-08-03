@@ -12,9 +12,9 @@ module AArch64
 
       def encode
         if @n.integer?
-          AUTDB(1, @n.to_i, @d.to_i)
+          AUTDB(1, @n, @d)
         else
-          AUTDB(0, @n.to_i, @d.to_i)
+          AUTDB(0, @n, @d)
         end
       end
 

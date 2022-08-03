@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        STR_reg_gen(@size, @rm.to_i, @option, @s, @rn.to_i, @rt.to_i)
+        STR_reg_gen(@size, @rm, @option, @s, @rn, @rt)
       end
 
       private

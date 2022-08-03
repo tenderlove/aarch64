@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        MSUB(@sf, @rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        MSUB(@sf, @rm, @ra, @rn, @rd)
       end
 
       private

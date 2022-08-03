@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        LDR_imm_gen(@size, @imm12, @rn.to_i, @rt.to_i)
+        LDR_imm_gen(@size, @imm12, @rn, @rt)
       end
 
       private

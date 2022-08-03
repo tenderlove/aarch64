@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        PACGA(@rm.to_i, @rn.to_i, @rd.to_i)
+        PACGA(@rm, @rn, @rd)
       end
 
       private

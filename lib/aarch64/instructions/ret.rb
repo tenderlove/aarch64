@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        RET(@reg.to_i)
+        RET(@reg)
       end
 
       private

@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        ADCS(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
+        ADCS(@sf, @rm, @rn, @rd)
       end
 
       private

@@ -9,7 +9,7 @@ module AArch64
       end
 
       def encode
-        BR(@rn.to_i)
+        BR(@rn)
       end
 
       private

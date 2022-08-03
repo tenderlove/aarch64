@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        SUBS_addsub_shift(@sf, @shift, @rm.to_i, @amount, @rn.to_i, @rd.to_i)
+        SUBS_addsub_shift(@sf, @shift, @rm, @amount, @rn, @rd)
       end
 
       private

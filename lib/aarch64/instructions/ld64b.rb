@@ -10,7 +10,7 @@ module AArch64
       end
 
       def encode
-        LD64B(@rn.to_i, @rt.to_i)
+        LD64B(@rn, @rt)
       end
 
       private

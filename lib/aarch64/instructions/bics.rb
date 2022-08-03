@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        BICS(@sf, @shift, @m.to_i, @amount, @n.to_i, @d.to_i)
+        BICS(@sf, @shift, @m, @amount, @n, @d)
       end
 
       private

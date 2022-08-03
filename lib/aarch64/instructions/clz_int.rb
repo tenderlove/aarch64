@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        CLZ_int(@sf, @rn.to_i, @rd.to_i)
+        CLZ_int(@sf, @rn, @rd)
       end
 
       private

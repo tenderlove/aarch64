@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        UMULH(@rm.to_i, @rn.to_i, @rd.to_i)
+        UMULH(@rm, @rn, @rd)
       end
 
       private

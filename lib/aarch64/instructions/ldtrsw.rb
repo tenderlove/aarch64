@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        LDTRSW(@imm9, @rn.to_i, @rt.to_i)
+        LDTRSW(@imm9, @rn, @rt)
       end
 
       private

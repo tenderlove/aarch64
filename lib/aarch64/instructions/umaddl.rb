@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        UMADDL(@wm.to_i, @xa.to_i, @wn.to_i, @xd.to_i)
+        UMADDL(@wm, @xa, @wn, @xd)
       end
 
       private

@@ -176,3 +176,32 @@ end
 task :test => "lib/aarch64/parser.tab.rb"
 
 task :default => :test
+
+task "autotest" do
+  basedir = File.dirname(__FILE__)
+  libdir = File.join basedir, "lib"
+  testdir = File.join basedir, "test"
+
+  IO.popen(["fswatch", libdir, testdir]) do |io|
+    loop do
+      line = io.readline.chomp
+      case line
+      when /^#{libdir}/
+        # If the libdir changes, run all tests
+        begin
+          sh "gel exec rake test"
+        rescue
+        end
+      when /^#{testdir}/
+        # If the testdir changes, run the test
+        test_file = line.delete_prefix(testdir + "/")
+        begin
+          sh "gel exec rake test TESTS=#{test_file}" if test_file =~ /_test.rb/
+        rescue
+        end
+      else
+        raise "wat: #{line}"
+      end
+    end
+  end
+end

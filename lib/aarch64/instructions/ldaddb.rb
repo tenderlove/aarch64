@@ -16,7 +16,7 @@ module AArch64
       end
 
       def encode
-        LDADDB(@a, @r, @rs.to_i, @rn.to_i, @rt.to_i)
+        LDADDB(@a, @r, @rs, @rn, @rt)
       end
 
       private

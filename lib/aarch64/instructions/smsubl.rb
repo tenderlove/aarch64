@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        SMSUBL(@rm.to_i, @ra.to_i, @rn.to_i, @rd.to_i)
+        SMSUBL(@rm, @ra, @rn, @rd)
       end
 
       private

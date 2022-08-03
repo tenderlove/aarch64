@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        MOVK(@sf, @shift, @imm, @reg.to_i)
+        MOVK(@sf, @shift, @imm, @reg)
       end
 
       private

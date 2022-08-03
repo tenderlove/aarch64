@@ -15,9 +15,9 @@ module AArch64
 
       def encode
         if @n.integer?
-          AUTIA(1, @n.to_i, @d.to_i)
+          AUTIA(1, @n, @d)
         else
-          AUTIA(0, @n.to_i, @d.to_i)
+          AUTIA(0, @n, @d)
         end
       end
 

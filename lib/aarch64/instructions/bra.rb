@@ -15,7 +15,7 @@ module AArch64
       end
 
       def encode
-        BRA(@z, @m, @rn.to_i, @rm.to_i)
+        BRA(@z, @m, @rn, @rm)
       end
 
       private

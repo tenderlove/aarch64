@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        RMIF(@imm6, @rn.to_i, @mask)
+        RMIF(@imm6, @rn, @mask)
       end
 
       private

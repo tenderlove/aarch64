@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        MSR_reg(@o0, @op1, @crn, @crm, @op2, @rt.to_i)
+        MSR_reg(@o0, @op1, @crn, @crm, @op2, @rt)
       end
 
       private

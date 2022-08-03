@@ -11,7 +11,7 @@ module AArch64
       end
 
       def encode
-        STRH_imm_unsigned(@imm12, @rn.to_i, @rt.to_i)
+        STRH_imm_unsigned(@imm12, @rn, @rt)
       end
 
       private

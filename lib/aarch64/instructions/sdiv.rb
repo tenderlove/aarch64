@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        SDIV(@sf, @rm.to_i, @rn.to_i, @rd.to_i)
+        SDIV(@sf, @rm, @rn, @rd)
       end
 
       private

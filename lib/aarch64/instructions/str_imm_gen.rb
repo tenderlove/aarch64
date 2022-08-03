@@ -18,7 +18,7 @@ module AArch64
       end
 
       def encode
-        STR_imm_gen(@size, @imm9, @opt, @rn.to_i, @rt.to_i)
+        STR_imm_gen(@size, @imm9, @opt, @rn, @rt)
       end
 
       private

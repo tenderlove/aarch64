@@ -13,7 +13,7 @@ module AArch64
       end
 
       def encode
-        MOVN(@sf, @hw, @imm16, @rd.to_i)
+        MOVN(@sf, @hw, @imm16, @rd)
       end
 
       private

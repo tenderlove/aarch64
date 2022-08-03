@@ -14,7 +14,7 @@ module AArch64
       end
 
       def encode
-        ST2G(@imm9, @option, @xn.to_i, @xt.to_i)
+        ST2G(@imm9, @option, @xn, @xt)
       end
 
       private

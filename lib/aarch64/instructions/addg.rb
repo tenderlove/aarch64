@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        ADDG(@imm6, @imm4, @xn.to_i, @xd.to_i)
+        ADDG(@imm6, @imm4, @xn, @xd)
       end
 
       private

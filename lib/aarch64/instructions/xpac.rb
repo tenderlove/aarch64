@@ -12,7 +12,7 @@ module AArch64
       end
 
       def encode
-        XPAC(@d, @rd.to_i)
+        XPAC(@d, @rd)
       end
 
       private

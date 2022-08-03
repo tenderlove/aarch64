@@ -12,9 +12,9 @@ module AArch64
 
       def encode
         if @n.integer?
-          AUTDA(1, @n.to_i, @d.to_i)
+          AUTDA(1, @n, @d)
         else
-          AUTDA(0, @n.to_i, @d.to_i)
+          AUTDA(0, @n, @d)
         end
       end
 
