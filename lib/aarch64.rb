@@ -378,7 +378,7 @@ module AArch64
       end
 
       if cond
-        a B_cond.new(cond, label)
+        a B_cond.new(Utils.cond2bin(cond), label)
       else
         a B_uncond.new(label)
       end
@@ -388,7 +388,7 @@ module AArch64
       if label.integer?
         label = wrap_offset_with_label label
       end
-      a BC_cond.new(cond, label)
+      a BC_cond.new(Utils.cond2bin(cond), label)
     end
 
     def bfc rd, lsb, width
