@@ -21,10 +21,10 @@ module AArch64
 
       def LDRSW_imm imm9, rn, rt, option
         insn = 0b10_111_0_00_10_0_000000000_01_00000_00000
-        insn |= ((apply_mask(imm9, 0x1ff)) << 12)
-        insn |= ((apply_mask(option, 0x3)) << 10)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= ((imm9) << 12)
+        insn |= ((option) << 10)
+        insn |= ((rn) << 5)
+        insn |= (rt)
         insn
       end
     end

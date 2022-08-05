@@ -19,8 +19,8 @@ module AArch64
 
       def XPAC d, rd
         insn = 0b1_1_0_11010110_00001_0_1_000_0_11111_00000
-        insn |= ((apply_mask(d, 0x1)) << 10)
-        insn |= (apply_mask(rd, 0x1f))
+        insn |= ((d) << 10)
+        insn |= (rd)
         insn
       end
     end

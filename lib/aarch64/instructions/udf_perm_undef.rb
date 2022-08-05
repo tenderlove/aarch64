@@ -16,7 +16,7 @@ module AArch64
 
       def UDF_perm_undef imm16
         insn = 0b0000000000000000_0000000000000000
-        insn |= (apply_mask(imm16, 0xffff))
+        insn |= (imm16)
         insn
       end
     end

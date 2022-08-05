@@ -17,7 +17,7 @@ module AArch64
 
       def ERETA m
         insn = 0b1101011_0_100_11111_0000_1_0_11111_11111
-        insn |= ((apply_mask(m, 0x1)) << 10)
+        insn |= ((m) << 10)
         insn
       end
     end

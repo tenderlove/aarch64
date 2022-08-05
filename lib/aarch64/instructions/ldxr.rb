@@ -19,9 +19,9 @@ module AArch64
 
       def LDXR size, rn, rt
         insn = 0b00_001000_0_1_0_11111_0_11111_00000_00000
-        insn |= ((apply_mask(size, 0x3)) << 30)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= ((size) << 30)
+        insn |= ((rn) << 5)
+        insn |= (rt)
         insn
       end
     end

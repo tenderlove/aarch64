@@ -16,7 +16,7 @@ module AArch64
 
       def RET rn
         insn = 0b1101011_0_0_10_11111_0000_0_0_00000_00000
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
+        insn |= ((rn) << 5)
         insn
       end
     end

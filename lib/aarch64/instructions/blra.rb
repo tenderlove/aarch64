@@ -22,10 +22,10 @@ module AArch64
 
       def BLRA z, m, rn, rm
         insn = 0b1101011_0_0_01_11111_0000_1_0_00000_00000
-        insn |= ((apply_mask(z, 0x1)) << 24)
-        insn |= ((apply_mask(m, 0x1)) << 10)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rm, 0x1f))
+        insn |= ((z) << 24)
+        insn |= ((m) << 10)
+        insn |= ((rn) << 5)
+        insn |= (rm)
         insn
       end
     end

@@ -16,7 +16,7 @@ module AArch64
 
       def WFIT rd
         insn = 0b11010101000000110001_0000_001_00000
-        insn |= (apply_mask(rd, 0x1f))
+        insn |= (rd)
         insn
       end
     end

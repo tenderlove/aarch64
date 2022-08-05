@@ -20,10 +20,10 @@ module AArch64
 
       def MOVZ sf, hw, imm16, rd
         insn = 0b0_10_100101_00_0000000000000000_00000
-        insn |= ((apply_mask(sf, 0x1)) << 31)
-        insn |= ((apply_mask(hw, 0x3)) << 21)
-        insn |= ((apply_mask(imm16, 0xffff)) << 5)
-        insn |= (apply_mask(rd, 0x1f))
+        insn |= ((sf) << 31)
+        insn |= ((hw) << 21)
+        insn |= ((imm16) << 5)
+        insn |= (rd)
         insn
       end
     end

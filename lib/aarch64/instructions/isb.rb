@@ -16,7 +16,7 @@ module AArch64
 
       def ISB crm
         insn = 0b1101010100_0_00_011_0011_0000_1_10_11111
-        insn |= ((apply_mask(crm, 0xf)) << 8)
+        insn |= ((crm) << 8)
         insn
       end
     end

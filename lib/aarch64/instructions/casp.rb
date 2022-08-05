@@ -28,12 +28,12 @@ module AArch64
 
       def CASP sz, l, rs, o0, rn, rt
         insn = 0b0_0_001000_0_0_1_00000_0_11111_00000_00000
-        insn |= ((apply_mask(sz, 0x1)) << 30)
-        insn |= ((apply_mask(l, 0x1)) << 22)
-        insn |= ((apply_mask(rs, 0x1f)) << 16)
-        insn |= ((apply_mask(o0, 0x1)) << 15)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= ((sz) << 30)
+        insn |= ((l) << 22)
+        insn |= ((rs) << 16)
+        insn |= ((o0) << 15)
+        insn |= ((rn) << 5)
+        insn |= (rt)
         insn
       end
     end

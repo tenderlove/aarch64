@@ -18,9 +18,9 @@ module AArch64
 
       def RMIF imm6, rn, mask
         insn = 0b1_0_1_11010000_000000_00001_00000_0_0000
-        insn |= ((apply_mask(imm6, 0x3f)) << 15)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(mask, 0xf))
+        insn |= ((imm6) << 15)
+        insn |= ((rn) << 5)
+        insn |= (mask)
         insn
       end
     end

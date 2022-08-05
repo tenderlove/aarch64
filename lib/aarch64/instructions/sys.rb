@@ -20,11 +20,11 @@ module AArch64
 
       def SYS op1, crn, crm, op2, rt
         insn = 0b1101010100_0_01_000_0000_0000_000_00000
-        insn |= ((apply_mask(op1, 0x7)) << 16)
-        insn |= ((apply_mask(crn, 0xf)) << 12)
-        insn |= ((apply_mask(crm, 0xf)) << 8)
-        insn |= ((apply_mask(op2, 0x7)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= ((op1) << 16)
+        insn |= ((crn) << 12)
+        insn |= ((crm) << 8)
+        insn |= ((op2) << 5)
+        insn |= (rt)
         insn
       end
     end

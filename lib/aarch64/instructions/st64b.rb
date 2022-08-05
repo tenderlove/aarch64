@@ -17,8 +17,8 @@ module AArch64
 
       def ST64B rn, rt
         insn = 0b11_111_0_00_0_0_1_11111_1_001_00_00000_00000
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= ((rn) << 5)
+        insn |= (rt)
         insn
       end
     end

@@ -22,9 +22,9 @@ module AArch64
 
       def PACIB z, rn, rd
         insn = 0b1_1_0_11010110_00001_0_0_0_001_00000_00000
-        insn |= ((apply_mask(z, 0x1)) << 13)
-        insn |= ((apply_mask(rn, 0x1f)) << 5)
-        insn |= (apply_mask(rd, 0x1f))
+        insn |= ((z) << 13)
+        insn |= ((rn) << 5)
+        insn |= (rd)
         insn
       end
     end

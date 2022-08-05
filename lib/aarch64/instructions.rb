@@ -7,7 +7,7 @@ module AArch64
         label.unwrap_label / 4
       end
 
-      def apply_mask val, mask
+      def check_mask val, mask
         val = val.to_i
 
         if val > mask
@@ -15,8 +15,6 @@ module AArch64
         end
         val & mask
       end
-
-      alias check_mask apply_mask
 
       def popcount x
         x -= ((x >> 1) & 0x55555555)
