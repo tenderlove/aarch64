@@ -325,11 +325,15 @@ module AArch64
     end
 
     def autdb d, n
-      a AUTDB.new(d, n)
+      if n.integer?
+        a AUTDB.new(1, d, n)
+      else
+        a AUTDB.new(0, d, n)
+      end
     end
 
     def autdzb d
-      a AUTDB.new(d, 0b11111)
+      a AUTDB.new(1, d, 0b11111)
     end
 
     def autia d, n

@@ -5,17 +5,14 @@ module AArch64
     # AUTDB  <Xd>, <Xn|SP>
     # AUTDZB  <Xd>
     class AUTDB < Instruction
-      def initialize d, n
-        @d = d
-        @n = n
+      def initialize z, rd, rn
+        @z  = z
+        @rd = rd
+        @rn = rn
       end
 
       def encode
-        if @n.integer?
-          AUTDB(1, @n, @d)
-        else
-          AUTDB(0, @n, @d)
-        end
+        AUTDB(@z, @rn, @rd)
       end
 
       private
