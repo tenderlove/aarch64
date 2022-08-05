@@ -5,20 +5,20 @@ module AArch64
     # BC.<cond>  <label>
     class BC_cond < Instruction
       def initialize cond, label
-        @cond  = cond
+        @cond  = check_mask(cond, 0xf)
         @label = label
       end
 
       def encode
-        BC_cond(unwrap_label(@label), @cond)
+        BC_cond(check_mask(unwrap_label(@label), 0x7ffff), @cond)
       end
 
       private
 
       def BC_cond imm19, cond
         insn = 0b0101010_0_0000000000000000000_1_0000
-        insn |= ((apply_mask(imm19, 0x7ffff)) << 5)
-        insn |= (apply_mask(cond, 0xf))
+        insn |= (imm19 << 5)
+        insn |= cond
         insn
       end
     end

@@ -6,22 +6,22 @@ module AArch64
     # CBZ  <Xt>, <label>
     class CBZ < Instruction
       def initialize rt, label, sf
-        @rt    = rt
+        @rt    = check_mask(rt, 0x1f)
         @label = label
-        @sf    = sf
+        @sf    = check_mask(sf, 0x1)
       end
 
       def encode
-        CBZ(@sf, unwrap_label(@label), @rt)
+        CBZ(@sf, check_mask(unwrap_label(@label), 0x7ffff), @rt)
       end
 
       private
 
       def CBZ sf, imm19, rt
         insn = 0b0_011010_0_0000000000000000000_00000
-        insn |= ((apply_mask(sf, 0x1)) << 31)
-        insn |= ((apply_mask(imm19, 0x7ffff)) << 5)
-        insn |= (apply_mask(rt, 0x1f))
+        insn |= (sf << 31)
+        insn |= (imm19 << 5)
+        insn |= rt
         insn
       end
     end

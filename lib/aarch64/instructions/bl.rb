@@ -9,14 +9,14 @@ module AArch64
       end
 
       def encode
-        BL(unwrap_label(@label))
+        BL(check_mask(unwrap_label(@label), 0x3ffffff))
       end
 
       private
 
       def BL imm26
         insn = 0b1_00101_00000000000000000000000000
-        insn |= (apply_mask(imm26, 0x3ffffff))
+        insn |= imm26
         insn
       end
     end
