@@ -357,11 +357,15 @@ module AArch64
     end
 
     def autib d, n
-      a AUTIB.new(d, n)
+      if n.integer?
+        a AUTIB.new(1, d, n)
+      else
+        a AUTIB.new(0, d, n)
+      end
     end
 
     def autizb d
-      a AUTIB.new(d, 0b11111)
+      a AUTIB.new(1, d, 0b11111)
     end
 
     def autib1716

@@ -8,17 +8,14 @@ module AArch64
     # AUTIBSP
     # AUTIBZ
     class AUTIB < Instruction
-      def initialize d, n
-        @d = d
-        @n = n
+      def initialize z, rd, rn
+        @z  = z
+        @rd = rd
+        @rn = rn
       end
 
       def encode
-        if @n.integer?
-          AUTIB(1, @n, @d)
-        else
-          AUTIB(0, @n, @d)
-        end
+        AUTIB(@z, @rn, @rd)
       end
 
       private
