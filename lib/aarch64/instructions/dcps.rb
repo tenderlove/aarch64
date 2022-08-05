@@ -5,8 +5,8 @@ module AArch64
     # DCPS1  {#<imm>}
     class DCPS < Instruction
       def initialize imm, ll
-        @imm = imm
-        @ll  = ll
+        @imm = check_mask(imm, 0xffff)
+        @ll  = check_mask(ll, 0x03)
       end
 
       def encode

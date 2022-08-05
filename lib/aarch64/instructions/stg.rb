@@ -7,10 +7,10 @@ module AArch64
     # STG  <Xt|SP>, [<Xn|SP>{, #<simm>}]
     class STG < Instruction
       def initialize xt, xn, imm9, option
-        @xt     = xt
-        @xn     = xn
-        @imm9   = imm9
-        @option = option
+        @xt     = check_mask(xt, 0x1f)
+        @xn     = check_mask(xn, 0x1f)
+        @imm9   = check_mask(imm9, 0x1ff)
+        @option = check_mask(option, 0x03)
       end
 
       def encode

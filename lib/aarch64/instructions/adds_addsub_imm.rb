@@ -6,11 +6,11 @@ module AArch64
     # ADDS  <Xd>, <Xn|SP>, #<imm>{, <shift>}
     class ADDS_addsub_imm < Instruction
       def initialize d, n, imm, shift, sf
-        @d     = d
-        @n     = n
-        @imm   = imm
-        @shift = shift
-        @sf    = sf
+        @d     = check_mask(d, 0x1f)
+        @n     = check_mask(n, 0x1f)
+        @imm   = check_mask(imm, 0xfff)
+        @shift = check_mask(shift, 0x01)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

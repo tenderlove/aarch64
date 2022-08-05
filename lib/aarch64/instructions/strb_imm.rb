@@ -7,10 +7,10 @@ module AArch64
     # STRB  <Wt>, [<Xn|SP>{, #<pimm>}]
     class STRB_imm < Instruction
       def initialize rt, rn, imm9, opt
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @opt  = opt
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @opt  = check_mask(opt, 0x03)
       end
 
       def encode

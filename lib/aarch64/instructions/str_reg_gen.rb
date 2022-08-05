@@ -6,12 +6,12 @@ module AArch64
     # STR  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class STR_reg_gen < Instruction
       def initialize rt, rn, rm, option, s, size
-        @rt     = rt
-        @rn     = rn
-        @rm     = rm
-        @option = option
-        @s      = s
-        @size   = size
+        @rt     = check_mask(rt, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @rm     = check_mask(rm, 0x1f)
+        @option = check_mask(option, 0x07)
+        @s      = check_mask(s, 0x01)
+        @size   = check_mask(size, 0x03)
       end
 
       def encode

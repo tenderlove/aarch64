@@ -6,11 +6,11 @@ module AArch64
     # SUB  <Xd|SP>, <Xn|SP>, #<imm>{, <shift>}
     class SUB_addsub_imm < Instruction
       def initialize rd, rn, imm, shift, sf
-        @rd    = rd
-        @rn    = rn
-        @imm   = imm
-        @shift = shift
-        @sf    = sf
+        @rd    = check_mask(rd, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @imm   = check_mask(imm, 0xfff)
+        @shift = check_mask(shift, 0x01)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

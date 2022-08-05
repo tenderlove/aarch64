@@ -8,11 +8,11 @@ module AArch64
     # LDSETLH  <Ws>, <Wt>, [<Xn|SP>]
     class LDSETH < Instruction
       def initialize rs, rt, rn, a, r
-        @rs = rs
-        @rt = rt
-        @rn = rn
-        @a  = a
-        @r  = r
+        @rs = check_mask(rs, 0x1f)
+        @rt = check_mask(rt, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @a  = check_mask(a, 0x01)
+        @r  = check_mask(r, 0x01)
       end
 
       def encode

@@ -5,9 +5,9 @@ module AArch64
     # MSR  <pstatefield>, #<imm>
     class MSR_imm < Instruction
       def initialize op1, crm, op2
-        @op1 = op1
-        @crm = crm
-        @op2 = op2
+        @op1 = check_mask(op1, 0x07)
+        @crm = check_mask(crm, 0x0f)
+        @op2 = check_mask(op2, 0x07)
       end
 
       def encode

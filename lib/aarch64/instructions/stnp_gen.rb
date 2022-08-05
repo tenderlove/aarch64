@@ -6,11 +6,11 @@ module AArch64
     # STNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class STNP_gen < Instruction
       def initialize rt, rt2, rn, imm7, opc
-        @rt   = rt
-        @rt2  = rt2
-        @rn   = rn
-        @imm7 = imm7
-        @opc  = opc
+        @rt   = check_mask(rt, 0x1f)
+        @rt2  = check_mask(rt2, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm7 = check_mask(imm7, 0x7f)
+        @opc  = check_mask(opc, 0x03)
       end
 
       def encode

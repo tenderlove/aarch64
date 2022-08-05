@@ -6,10 +6,10 @@ module AArch64
     # REV  <Xd>, <Xn>
     class REV < Instruction
       def initialize rd, rn, sf, opc
-        @rd  = rd
-        @rn  = rn
-        @sf  = sf
-        @opc = opc
+        @rd  = check_mask(rd, 0x1f)
+        @rn  = check_mask(rn, 0x1f)
+        @sf  = check_mask(sf, 0x01)
+        @opc = check_mask(opc, 0x03)
       end
 
       def encode

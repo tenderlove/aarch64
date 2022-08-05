@@ -5,7 +5,7 @@ module AArch64
     # BTI  {<targets>}
     class BTI < Instruction
       def initialize target
-        @target = target
+        @target = check_mask(target, 0x03)
       end
 
       def encode

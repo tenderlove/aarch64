@@ -5,10 +5,10 @@ module AArch64
     # UMSUBL  <Xd>, <Wn>, <Wm>, <Xa>
     class UMSUBL < Instruction
       def initialize xd, wn, wm, xa
-        @xd = xd
-        @wn = wn
-        @wm = wm
-        @xa = xa
+        @xd = check_mask(xd, 0x1f)
+        @wn = check_mask(wn, 0x1f)
+        @wm = check_mask(wm, 0x1f)
+        @xa = check_mask(xa, 0x1f)
       end
 
       def encode

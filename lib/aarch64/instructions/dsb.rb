@@ -6,7 +6,7 @@ module AArch64
     # DSB  <option>nXS|#<imm>
     class DSB < Instruction
       def initialize imm
-        @imm = imm
+        @imm = check_mask(imm, 0x0f)
       end
 
       def encode

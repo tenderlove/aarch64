@@ -6,11 +6,11 @@ module AArch64
     # LDNP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class LDNP_gen < Instruction
       def initialize rt1, rt2, rn, imm, opc
-        @rt1 = rt1
-        @rt2 = rt2
-        @rn  = rn
-        @imm = imm
-        @opc = opc
+        @rt1 = check_mask(rt1, 0x1f)
+        @rt2 = check_mask(rt2, 0x1f)
+        @rn  = check_mask(rn, 0x1f)
+        @imm = check_mask(imm, 0x7f)
+        @opc = check_mask(opc, 0x03)
       end
 
       def encode

@@ -6,9 +6,9 @@ module AArch64
     # LDAR  <Xt>, [<Xn|SP>{,#0}]
     class LDAR < Instruction
       def initialize rt, rn, size
-        @rt   = rt
-        @rn   = rn
-        @size = size
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @size = check_mask(size, 0x03)
       end
 
       def encode

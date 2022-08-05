@@ -7,8 +7,8 @@ module AArch64
     # PACIAZ
     class PACIA2 < Instruction
       def initialize crm, op2
-        @crm = crm
-        @op2 = op2
+        @crm = check_mask(crm, 0x0f)
+        @op2 = check_mask(op2, 0x07)
       end
 
       def encode

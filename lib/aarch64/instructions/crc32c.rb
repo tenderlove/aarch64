@@ -8,11 +8,11 @@ module AArch64
     # CRC32CX  <Wd>, <Wn>, <Xm>
     class CRC32C < Instruction
       def initialize rd, rn, rm, sz, sf
-        @rd = rd
-        @rn = rn
-        @rm = rm
-        @sz = sz
-        @sf = sf
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
+        @sz = check_mask(sz, 0x03)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

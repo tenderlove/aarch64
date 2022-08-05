@@ -16,6 +16,8 @@ module AArch64
         val & mask
       end
 
+      alias check_mask apply_mask
+
       def popcount x
         x -= ((x >> 1) & 0x55555555)
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333)

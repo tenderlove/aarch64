@@ -5,8 +5,8 @@ module AArch64
     # STLLRH  <Wt>, [<Xn|SP>{,#0}]
     class STLLRH < Instruction
       def initialize rt, rn
-        @rt = rt
-        @rn = rn
+        @rt = check_mask(rt, 0x1f)
+        @rn = check_mask(rn, 0x1f)
       end
 
       def encode

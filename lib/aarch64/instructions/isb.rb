@@ -5,7 +5,7 @@ module AArch64
     # ISB  {<option>|#<imm>}
     class ISB < Instruction
       def initialize imm
-        @imm = imm
+        @imm = check_mask(imm, 0x0f)
       end
 
       def encode

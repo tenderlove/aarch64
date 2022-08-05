@@ -5,7 +5,7 @@ module AArch64
     # HVC  #<imm>
     class HVC < Instruction
       def initialize imm
-        @imm = imm
+        @imm = check_mask(imm, 0xffff)
       end
 
       def encode

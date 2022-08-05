@@ -8,12 +8,12 @@ module AArch64
     # LDRAB  <Xt>, [<Xn|SP>{, #<simm>}]!
     class LDRA < Instruction
       def initialize rt, rn, imm9, m, w, s
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @m    = m
-        @w    = w
-        @s    = s
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @m    = check_mask(m, 0x01)
+        @w    = check_mask(w, 0x01)
+        @s    = check_mask(s, 0x01)
       end
 
       def encode

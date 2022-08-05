@@ -5,7 +5,7 @@ module AArch64
     # BLR  <Xn>
     class BLR < Instruction
       def initialize n
-        @n = n
+        @n = check_mask(n, 0x1f)
       end
 
       def encode

@@ -6,10 +6,10 @@ module AArch64
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
     class STR_imm_unsigned < Instruction
       def initialize rt, rn, imm12, size
-        @rt    = rt
-        @rn    = rn
-        @imm12 = imm12
-        @size  = size
+        @rt    = check_mask(rt, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @imm12 = check_mask(imm12, 0xfff)
+        @size  = check_mask(size, 0x03)
       end
 
       def encode

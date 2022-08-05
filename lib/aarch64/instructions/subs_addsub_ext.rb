@@ -6,12 +6,12 @@ module AArch64
     # SUBS  <Xd>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
     class SUBS_addsub_ext < Instruction
       def initialize rd, rn, rm, extend, amount, sf
-        @rd     = rd
-        @rn     = rn
-        @rm     = rm
-        @extend = extend
-        @amount = amount
-        @sf     = sf
+        @rd     = check_mask(rd, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @rm     = check_mask(rm, 0x1f)
+        @extend = check_mask(extend, 0x07)
+        @amount = check_mask(amount, 0x07)
+        @sf     = check_mask(sf, 0x01)
       end
 
       def encode

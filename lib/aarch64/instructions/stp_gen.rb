@@ -10,12 +10,12 @@ module AArch64
     # STP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class STP_gen < Instruction
       def initialize rt, rt2, rn, imm7, opc, option
-        @rt     = rt
-        @rt2    = rt2
-        @rn     = rn
-        @imm7   = imm7
-        @opc    = opc
-        @option = option
+        @rt     = check_mask(rt, 0x1f)
+        @rt2    = check_mask(rt2, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @imm7   = check_mask(imm7, 0x7f)
+        @opc    = check_mask(opc, 0x03)
+        @option = check_mask(option, 0x07)
       end
 
       def encode

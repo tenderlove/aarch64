@@ -5,9 +5,9 @@ module AArch64
     # ST64BV0  <Xs>, <Xt>, [<Xn|SP>]
     class ST64BV0 < Instruction
       def initialize rs, rt, rn
-        @rs = rs
-        @rt = rt
-        @rn = rn
+        @rs = check_mask(rs, 0x1f)
+        @rt = check_mask(rt, 0x1f)
+        @rn = check_mask(rn, 0x1f)
       end
 
       def encode

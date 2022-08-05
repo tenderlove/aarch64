@@ -10,11 +10,11 @@ module AArch64
     # STR  <Xt>, [<Xn|SP>{, #<pimm>}]
     class STR_imm_gen < Instruction
       def initialize rt, rn, imm9, opt, size
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @opt  = opt
-        @size = size
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @opt  = check_mask(opt, 0x03)
+        @size = check_mask(size, 0x03)
       end
 
       def encode

@@ -7,10 +7,10 @@ module AArch64
     # STZG  <Xt|SP>, [<Xn|SP>{, #<simm>}]
     class STZG < Instruction
       def initialize xt, xn, imm9, opt
-        @xt   = xt
-        @xn   = xn
-        @imm9 = imm9
-        @opt  = opt
+        @xt   = check_mask(xt, 0x1f)
+        @xn   = check_mask(xn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @opt  = check_mask(opt, 0x03)
       end
 
       def encode

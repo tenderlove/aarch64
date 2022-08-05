@@ -6,12 +6,12 @@ module AArch64
     # LDRSH  <Xt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class LDRSH_reg < Instruction
       def initialize rt, rn, rm, s, option, opc
-        @rt     = rt
-        @rn     = rn
-        @rm     = rm
-        @s      = s
-        @option = option
-        @opc    = opc
+        @rt     = check_mask(rt, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @rm     = check_mask(rm, 0x1f)
+        @s      = check_mask(s, 0x01)
+        @option = check_mask(option, 0x07)
+        @opc    = check_mask(opc, 0x03)
       end
 
       def encode

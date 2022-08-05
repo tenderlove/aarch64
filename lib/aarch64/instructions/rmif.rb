@@ -5,9 +5,9 @@ module AArch64
     # RMIF  <Xn>, #<shift>, #<mask>
     class RMIF < Instruction
       def initialize rn, imm6, mask
-        @rn   = rn
-        @imm6 = imm6
-        @mask = mask
+        @rn   = check_mask(rn, 0x1f)
+        @imm6 = check_mask(imm6, 0x3f)
+        @mask = check_mask(mask, 0x0f)
       end
 
       def encode

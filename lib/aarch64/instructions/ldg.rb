@@ -5,9 +5,9 @@ module AArch64
     # LDG  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDG < Instruction
       def initialize xt, xn, imm9
-        @xt   = xt
-        @xn   = xn
-        @imm9 = imm9
+        @xt   = check_mask(xt, 0x1f)
+        @xn   = check_mask(xn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
       end
 
       def encode

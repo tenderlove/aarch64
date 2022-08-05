@@ -6,7 +6,7 @@ module AArch64
     # RETAB
     class RETA < Instruction
       def initialize m
-        @m = m
+        @m = check_mask(m, 0x01)
       end
 
       def encode

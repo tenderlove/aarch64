@@ -6,10 +6,10 @@ module AArch64
     # RORV  <Xd>, <Xn>, <Xm>
     class RORV < Instruction
       def initialize rd, rn, rm, sf
-        @rd = rd
-        @rn = rn
-        @rm = rm
-        @sf = sf
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

@@ -5,7 +5,7 @@ module AArch64
     # WFET  <Xt>
     class WFET < Instruction
       def initialize rd
-        @rd = rd
+        @rd = check_mask(rd, 0x1f)
       end
 
       def encode

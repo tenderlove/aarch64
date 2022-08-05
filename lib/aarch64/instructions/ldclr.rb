@@ -12,12 +12,12 @@ module AArch64
     # LDCLRL  <Xs>, <Xt>, [<Xn|SP>]
     class LDCLR < Instruction
       def initialize rs, rt, rn, a, r, size
-        @rs   = rs
-        @rt   = rt
-        @rn   = rn
-        @a    = a
-        @r    = r
-        @size = size
+        @rs   = check_mask(rs, 0x1f)
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @a    = check_mask(a, 0x01)
+        @r    = check_mask(r, 0x01)
+        @size = check_mask(size, 0x03)
       end
 
       def encode

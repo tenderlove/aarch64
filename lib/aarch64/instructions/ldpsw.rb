@@ -7,11 +7,11 @@ module AArch64
     # LDPSW  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class LDPSW < Instruction
       def initialize rt, rt2, rn, imm7, mode
-        @rt   = rt
-        @rt2  = rt2
-        @rn   = rn
-        @imm7 = imm7
-        @mode = mode
+        @rt   = check_mask(rt, 0x1f)
+        @rt2  = check_mask(rt2, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm7 = check_mask(imm7, 0x7f)
+        @mode = check_mask(mode, 0x07)
       end
 
       def encode

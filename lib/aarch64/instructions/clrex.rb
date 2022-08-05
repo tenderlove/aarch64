@@ -5,7 +5,7 @@ module AArch64
     # CLREX  {#<imm>}
     class CLREX < Instruction
       def initialize imm
-        @imm = imm
+        @imm = check_mask(imm, 0x0f)
       end
 
       def encode

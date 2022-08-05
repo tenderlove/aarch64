@@ -10,12 +10,12 @@ module AArch64
     # LDP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class LDP_gen < Instruction
       def initialize rt, rt2, rn, imm7, mode, opc
-        @rt   = rt
-        @rt2  = rt2
-        @rn   = rn
-        @imm7 = imm7
-        @mode = mode
-        @opc  = opc
+        @rt   = check_mask(rt, 0x1f)
+        @rt2  = check_mask(rt2, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm7 = check_mask(imm7, 0x7f)
+        @mode = check_mask(mode, 0x07)
+        @opc  = check_mask(opc, 0x03)
       end
 
       def encode

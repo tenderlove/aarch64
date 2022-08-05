@@ -12,12 +12,12 @@ module AArch64
     # CASPL  <Xs>, <X(s+1)>, <Xt>, <X(t+1)>, [<Xn|SP>{,#0}]
     class CASP < Instruction
       def initialize rs, rt, rn, l, o0, sf
-        @rs = rs
-        @rt = rt
-        @rn = rn
-        @l  = l
-        @o0 = o0
-        @sf = sf
+        @rs = check_mask(rs, 0x1f)
+        @rt = check_mask(rt, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @l  = check_mask(l, 0x01)
+        @o0 = check_mask(o0, 0x01)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

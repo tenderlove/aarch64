@@ -5,10 +5,10 @@ module AArch64
     # ADDG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
     class ADDG < Instruction
       def initialize xd, xn, imm6, imm4
-        @xd   = xd
-        @xn   = xn
-        @imm6 = imm6
-        @imm4 = imm4
+        @xd   = check_mask(xd, 0x1f)
+        @xn   = check_mask(xn, 0x1f)
+        @imm6 = check_mask(imm6, 0x3f)
+        @imm4 = check_mask(imm4, 0x0f)
       end
 
       def encode

@@ -5,10 +5,10 @@ module AArch64
     # SMADDL  <Xd>, <Wn>, <Wm>, <Xa>
     class SMADDL < Instruction
       def initialize rd, rn, rm, ra
-        @rd = rd
-        @rn = rn
-        @rm = rm
-        @ra = ra
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
+        @ra = check_mask(ra, 0x1f)
       end
 
       def encode

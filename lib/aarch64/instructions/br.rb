@@ -5,7 +5,7 @@ module AArch64
     # BR  <Xn>
     class BR < Instruction
       def initialize rn
-        @rn = rn
+        @rn = check_mask(rn, 0x1f)
       end
 
       def encode

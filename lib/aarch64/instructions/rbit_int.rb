@@ -6,9 +6,9 @@ module AArch64
     # RBIT  <Xd>, <Xn>
     class RBIT_int < Instruction
       def initialize rd, rn, sf
-        @rd = rd
-        @rn = rn
-        @sf = sf
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

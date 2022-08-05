@@ -6,11 +6,11 @@ module AArch64
     # EXTR  <Xd>, <Xn>, <Xm>, #<lsb>
     class EXTR < Instruction
       def initialize rd, rn, rm, lsb, sf
-        @rd  = rd
-        @rn  = rn
-        @rm  = rm
-        @lsb = lsb
-        @sf  = sf
+        @rd  = check_mask(rd, 0x1f)
+        @rn  = check_mask(rn, 0x1f)
+        @rm  = check_mask(rm, 0x1f)
+        @lsb = check_mask(lsb, 0x3f)
+        @sf  = check_mask(sf, 0x01)
       end
 
       def encode

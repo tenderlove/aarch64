@@ -7,10 +7,10 @@ module AArch64
     # LDRB  <Wt>, [<Xn|SP>{, #<pimm>}]
     class LDRB_imm < Instruction
       def initialize rt, rn, imm9, option
-        @rt     = rt
-        @rn     = rn
-        @imm9   = imm9
-        @option = option
+        @rt     = check_mask(rt, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @imm9   = check_mask(imm9, 0x1ff)
+        @option = check_mask(option, 0x03)
       end
 
       def encode

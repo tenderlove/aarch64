@@ -7,11 +7,11 @@ module AArch64
     # STGP  <Xt1>, <Xt2>, [<Xn|SP>{, #<imm>}]
     class STGP < Instruction
       def initialize xt, xt2, xn, simm7, option
-        @xt     = xt
-        @xt2    = xt2
-        @xn     = xn
-        @simm7  = simm7
-        @option = option
+        @xt     = check_mask(xt, 0x1f)
+        @xt2    = check_mask(xt2, 0x1f)
+        @xn     = check_mask(xn, 0x1f)
+        @simm7  = check_mask(simm7, 0x7f)
+        @option = check_mask(option, 0x03)
       end
 
       def encode

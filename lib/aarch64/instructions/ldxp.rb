@@ -6,10 +6,10 @@ module AArch64
     # LDXP  <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class LDXP < Instruction
       def initialize rt, rt2, rn, sz
-        @rt  = rt
-        @rt2 = rt2
-        @rn  = rn
-        @sz  = sz
+        @rt  = check_mask(rt, 0x1f)
+        @rt2 = check_mask(rt2, 0x1f)
+        @rn  = check_mask(rn, 0x1f)
+        @sz  = check_mask(sz, 0x01)
       end
 
       def encode

@@ -6,11 +6,11 @@ module AArch64
     # CCMP  <Xn>, <Xm>, #<nzcv>, <cond>
     class CCMP_reg < Instruction
       def initialize rn, rm, nzcv, cond, sf
-        @rn   = rn
-        @rm   = rm
-        @nzcv = nzcv
-        @cond = cond
-        @sf   = sf
+        @rn   = check_mask(rn, 0x1f)
+        @rm   = check_mask(rm, 0x1f)
+        @nzcv = check_mask(nzcv, 0x0f)
+        @cond = check_mask(cond, 0x0f)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

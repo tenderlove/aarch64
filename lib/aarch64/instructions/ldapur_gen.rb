@@ -6,11 +6,11 @@ module AArch64
     # LDAPUR  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDAPUR_gen < Instruction
       def initialize size, opc, rt, rn, simm
-        @size = size
-        @opc  = opc
-        @rt   = rt
-        @rn   = rn
-        @simm = simm
+        @size = check_mask(size, 0x03)
+        @opc  = check_mask(opc, 0x03)
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @simm = check_mask(simm, 0x1ff)
       end
 
       def encode

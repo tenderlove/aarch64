@@ -6,12 +6,12 @@ module AArch64
     # ADDS  <Xd>, <Xn|SP>, <R><m>{, <extend> {#<amount>}}
     class ADDS_addsub_ext < Instruction
       def initialize d, n, m, extend, amount, sf
-        @d      = d
-        @n      = n
-        @m      = m
-        @extend = extend
-        @amount = amount
-        @sf     = sf
+        @d      = check_mask(d, 0x1f)
+        @n      = check_mask(n, 0x1f)
+        @m      = check_mask(m, 0x1f)
+        @extend = check_mask(extend, 0x07)
+        @amount = check_mask(amount, 0x07)
+        @sf     = check_mask(sf, 0x01)
       end
 
       def encode

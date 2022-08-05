@@ -5,9 +5,9 @@ module AArch64
     # PACGA  <Xd>, <Xn>, <Xm|SP>
     class PACGA < Instruction
       def initialize rd, rn, rm
-        @rd = rd
-        @rn = rn
-        @rm = rm
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
       end
 
       def encode

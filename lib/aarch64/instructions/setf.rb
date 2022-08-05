@@ -6,8 +6,8 @@ module AArch64
     # SETF16  <Wn>
     class SETF < Instruction
       def initialize rn, sz
-        @rn = rn
-        @sz = sz
+        @rn = check_mask(rn, 0x1f)
+        @sz = check_mask(sz, 0x01)
       end
 
       def encode

@@ -5,7 +5,7 @@ module AArch64
     # RET  {<Xn>}
     class RET < Instruction
       def initialize reg
-        @reg = reg
+        @reg = check_mask(reg, 0x1f)
       end
 
       def encode

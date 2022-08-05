@@ -9,9 +9,9 @@ module AArch64
     # PACIAZ
     class PACIA < Instruction
       def initialize rd, rn, z
-        @rd = rd
-        @rn = rn
-        @z  = z
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @z  = check_mask(z, 0x01)
       end
 
       def encode

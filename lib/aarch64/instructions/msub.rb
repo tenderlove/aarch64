@@ -6,11 +6,11 @@ module AArch64
     # MSUB  <Xd>, <Xn>, <Xm>, <Xa>
     class MSUB < Instruction
       def initialize rd, rn, rm, ra, sf
-        @rd = rd
-        @rn = rn
-        @rm = rm
-        @ra = ra
-        @sf = sf
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
+        @ra = check_mask(ra, 0x1f)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

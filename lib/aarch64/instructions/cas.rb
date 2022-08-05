@@ -12,12 +12,12 @@ module AArch64
     # CASL  <Xs>, <Xt>, [<Xn|SP>{,#0}]
     class CAS < Instruction
       def initialize s, t, n, l, o0, sf
-        @s  = s
-        @t  = t
-        @n  = n
-        @l  = l
-        @o0 = o0
-        @sf = sf
+        @s  = check_mask(s, 0x1f)
+        @t  = check_mask(t, 0x1f)
+        @n  = check_mask(n, 0x1f)
+        @l  = check_mask(l, 0x01)
+        @o0 = check_mask(o0, 0x01)
+        @sf = check_mask(sf, 0x01)
       end
 
       def encode

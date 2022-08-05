@@ -5,7 +5,7 @@ module AArch64
     # SMC  #<imm>
     class SMC < Instruction
       def initialize imm16
-        @imm16 = imm16
+        @imm16 = check_mask(imm16, 0xffff)
       end
 
       def encode

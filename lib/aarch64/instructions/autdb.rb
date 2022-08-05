@@ -6,9 +6,9 @@ module AArch64
     # AUTDZB  <Xd>
     class AUTDB < Instruction
       def initialize z, rd, rn
-        @z  = z
-        @rd = rd
-        @rn = rn
+        @z  = check_mask(z, 0x01)
+        @rd = check_mask(rd, 0x1f)
+        @rn = check_mask(rn, 0x1f)
       end
 
       def encode

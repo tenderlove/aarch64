@@ -6,11 +6,11 @@ module AArch64
     # CSINV  <Xd>, <Xn>, <Xm>, <cond>
     class CSINV < Instruction
       def initialize rd, rn, rm, cond, sf
-        @rd   = rd
-        @rn   = rn
-        @rm   = rm
-        @cond = cond
-        @sf   = sf
+        @rd   = check_mask(rd, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @rm   = check_mask(rm, 0x1f)
+        @cond = check_mask(cond, 0x0f)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

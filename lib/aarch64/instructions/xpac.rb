@@ -7,8 +7,8 @@ module AArch64
     # XPACLRI
     class XPAC < Instruction
       def initialize rd, d
-        @rd = rd
-        @d  = d
+        @rd = check_mask(rd, 0x1f)
+        @d  = check_mask(d, 0x01)
       end
 
       def encode

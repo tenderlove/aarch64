@@ -6,10 +6,10 @@ module AArch64
     # MOVK  <Xd>, #<imm>{, LSL #<shift>}
     class MOVK < Instruction
       def initialize reg, imm, shift, sf
-        @reg   = reg
-        @imm   = imm
-        @shift = shift
-        @sf    = sf
+        @reg   = check_mask(reg, 0x1f)
+        @imm   = check_mask(imm, 0xffff)
+        @shift = check_mask(shift, 0x03)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

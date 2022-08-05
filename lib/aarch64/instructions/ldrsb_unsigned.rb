@@ -10,10 +10,10 @@ module AArch64
     # LDRSB  <Xt>, [<Xn|SP>{, #<pimm>}]
     class LDRSB_unsigned < Instruction
       def initialize rt, rn, imm12, opc
-        @rt    = rt
-        @rn    = rn
-        @imm12 = imm12
-        @opc   = opc
+        @rt    = check_mask(rt, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @imm12 = check_mask(imm12, 0xfff)
+        @opc   = check_mask(opc, 0x03)
       end
 
       def encode

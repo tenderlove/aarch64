@@ -5,9 +5,9 @@ module AArch64
     # SUBP  <Xd>, <Xn|SP>, <Xm|SP>
     class SUBP < Instruction
       def initialize xd, xn, xm
-        @xd = xd
-        @xn = xn
-        @xm = xm
+        @xd = check_mask(xd, 0x1f)
+        @xn = check_mask(xn, 0x1f)
+        @xm = check_mask(xm, 0x1f)
       end
 
       def encode

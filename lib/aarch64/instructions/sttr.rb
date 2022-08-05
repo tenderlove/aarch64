@@ -6,10 +6,10 @@ module AArch64
     # STTR  <Xt>, [<Xn|SP>{, #<simm>}]
     class STTR < Instruction
       def initialize rt, rn, imm9, size
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @size = size
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @size = check_mask(size, 0x03)
       end
 
       def encode

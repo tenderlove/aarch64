@@ -6,10 +6,10 @@ module AArch64
     # STXR  <Ws>, <Xt>, [<Xn|SP>{,#0}]
     class STXR < Instruction
       def initialize rs, rt, rn, size
-        @rs   = rs
-        @rt   = rt
-        @rn   = rn
-        @size = size
+        @rs   = check_mask(rs, 0x1f)
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @size = check_mask(size, 0x03)
       end
 
       def encode

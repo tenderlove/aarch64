@@ -6,11 +6,11 @@ module AArch64
     # UBFM  <Xd>, <Xn>, #<immr>, #<imms>
     class UBFM < Instruction
       def initialize rd, rn, immr, imms, sf
-        @rd   = rd
-        @rn   = rn
-        @immr = immr
-        @imms = imms
-        @sf   = sf
+        @rd   = check_mask(rd, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @immr = check_mask(immr, 0x3f)
+        @imms = check_mask(imms, 0x3f)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

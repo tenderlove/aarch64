@@ -6,10 +6,10 @@ module AArch64
     # MOVN  <Xd>, #<imm>{, LSL #<shift>}
     class MOVN < Instruction
       def initialize rd, imm16, hw, sf
-        @rd    = rd
-        @imm16 = imm16
-        @hw    = hw
-        @sf    = sf
+        @rd    = check_mask(rd, 0x1f)
+        @imm16 = check_mask(imm16, 0xffff)
+        @hw    = check_mask(hw, 0x03)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

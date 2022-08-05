@@ -5,9 +5,9 @@ module AArch64
     # LDTRB  <Wt>, [<Xn|SP>{, #<simm>}]
     class LDTRB < Instruction
       def initialize rt, rn, imm9
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
       end
 
       def encode

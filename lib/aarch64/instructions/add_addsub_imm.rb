@@ -5,11 +5,11 @@ module AArch64
     # ADD  <Wd|WSP>, <Wn|WSP>, #<imm>{, <shift>}
     class ADD_addsub_imm < Instruction
       def initialize rd, rn, imm12, sh, sf
-        @rd    = rd
-        @rn    = rn
-        @imm12 = imm12
-        @sh    = sh
-        @sf    = sf
+        @rd    = check_mask(rd, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @imm12 = check_mask(imm12, 0xfff)
+        @sh    = check_mask(sh, 0x01)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

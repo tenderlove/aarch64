@@ -6,10 +6,10 @@ module AArch64
     # LDURSH  <Xt>, [<Xn|SP>{, #<simm>}]
     class LDURSH < Instruction
       def initialize rt, rn, imm9, opc
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @opc  = opc
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @opc  = check_mask(opc, 0x03)
       end
 
       def encode

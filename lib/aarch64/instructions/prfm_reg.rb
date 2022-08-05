@@ -5,11 +5,11 @@ module AArch64
     # PRFM  (<prfop>|#<imm5>), [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     class PRFM_reg < Instruction
       def initialize rt, rn, rm, option, s
-        @rt     = rt
-        @rn     = rn
-        @rm     = rm
-        @option = option
-        @s      = s
+        @rt     = check_mask(rt, 0x1f)
+        @rn     = check_mask(rn, 0x1f)
+        @rm     = check_mask(rm, 0x1f)
+        @option = check_mask(option, 0x07)
+        @s      = check_mask(s, 0x01)
       end
 
       def encode

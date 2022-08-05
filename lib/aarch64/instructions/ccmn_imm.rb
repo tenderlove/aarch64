@@ -6,11 +6,11 @@ module AArch64
     # CCMN  <Xn>, #<imm>, #<nzcv>, <cond>
     class CCMN_imm < Instruction
       def initialize rn, imm, nzcv, cond, sf
-        @rn   = rn
-        @imm  = imm
-        @nzcv = nzcv
-        @cond = cond
-        @sf   = sf
+        @rn   = check_mask(rn, 0x1f)
+        @imm  = check_mask(imm, 0x1f)
+        @nzcv = check_mask(nzcv, 0x0f)
+        @cond = check_mask(cond, 0x0f)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

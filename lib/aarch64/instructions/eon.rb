@@ -6,12 +6,12 @@ module AArch64
     # EON  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class EON < Instruction
       def initialize rd, rn, rm, shift, imm, sf
-        @rd    = rd
-        @rn    = rn
-        @rm    = rm
-        @shift = shift
-        @imm   = imm
-        @sf    = sf
+        @rd    = check_mask(rd, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @rm    = check_mask(rm, 0x1f)
+        @shift = check_mask(shift, 0x03)
+        @imm   = check_mask(imm, 0x3f)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

@@ -6,12 +6,12 @@ module AArch64
     # EOR  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class EOR_log_shift < Instruction
       def initialize rd, rn, rm, shift, imm6, sf
-        @rd    = rd
-        @rn    = rn
-        @rm    = rm
-        @shift = shift
-        @imm6  = imm6
-        @sf    = sf
+        @rd    = check_mask(rd, 0x1f)
+        @rn    = check_mask(rn, 0x1f)
+        @rm    = check_mask(rm, 0x1f)
+        @shift = check_mask(shift, 0x03)
+        @imm6  = check_mask(imm6, 0x3f)
+        @sf    = check_mask(sf, 0x01)
       end
 
       def encode

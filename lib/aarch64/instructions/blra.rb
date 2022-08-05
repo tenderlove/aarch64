@@ -8,10 +8,10 @@ module AArch64
     # BLRAB  <Xn>, <Xm|SP>
     class BLRA < Instruction
       def initialize rn, rm, z, m
-        @rn = rn
-        @rm = rm
-        @z  = z
-        @m  = m
+        @rn = check_mask(rn, 0x1f)
+        @rm = check_mask(rm, 0x1f)
+        @z  = check_mask(z, 0x01)
+        @m  = check_mask(m, 0x01)
       end
 
       def encode

@@ -5,8 +5,8 @@ module AArch64
     # STGM  <Xt>, [<Xn|SP>]
     class STGM < Instruction
       def initialize xt, xn
-        @xt = xt
-        @xn = xn
+        @xt = check_mask(xt, 0x1f)
+        @xn = check_mask(xn, 0x1f)
       end
 
       def encode

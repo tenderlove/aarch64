@@ -5,10 +5,10 @@ module AArch64
     # SUBG  <Xd|SP>, <Xn|SP>, #<uimm6>, #<uimm4>
     class SUBG < Instruction
       def initialize xd, xn, uimm6, uimm4
-        @xd    = xd
-        @xn    = xn
-        @uimm6 = uimm6
-        @uimm4 = uimm4
+        @xd    = check_mask(xd, 0x1f)
+        @xn    = check_mask(xn, 0x1f)
+        @uimm6 = check_mask(uimm6, 0x3f)
+        @uimm4 = check_mask(uimm4, 0x0f)
       end
 
       def encode

@@ -6,12 +6,12 @@ module AArch64
     # EOR  <Xd|SP>, <Xn>, #<imm>
     class EOR_log_imm < Instruction
       def initialize rd, rn, n, immr, imms, sf
-        @rd   = rd
-        @rn   = rn
-        @n    = n
-        @immr = immr
-        @imms = imms
-        @sf   = sf
+        @rd   = check_mask(rd, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @n    = check_mask(n, 0x01)
+        @immr = check_mask(immr, 0x3f)
+        @imms = check_mask(imms, 0x3f)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

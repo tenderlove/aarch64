@@ -6,11 +6,11 @@ module AArch64
     # STLXP  <Ws>, <Xt1>, <Xt2>, [<Xn|SP>{,#0}]
     class STLXP < Instruction
       def initialize rs, rt, rt2, rn, sz
-        @rs  = rs
-        @rt  = rt
-        @rt2 = rt2
-        @rn  = rn
-        @sz  = sz
+        @rs  = check_mask(rs, 0x1f)
+        @rt  = check_mask(rt, 0x1f)
+        @rt2 = check_mask(rt2, 0x1f)
+        @rn  = check_mask(rn, 0x1f)
+        @sz  = check_mask(sz, 0x01)
       end
 
       def encode

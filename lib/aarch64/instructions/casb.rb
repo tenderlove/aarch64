@@ -8,11 +8,11 @@ module AArch64
     # CASLB  <Ws>, <Wt>, [<Xn|SP>{,#0}]
     class CASB < Instruction
       def initialize rs, rt, rn, l, o0
-        @rs = rs
-        @rt = rt
-        @rn = rn
-        @l  = l
-        @o0 = o0
+        @rs = check_mask(rs, 0x1f)
+        @rt = check_mask(rt, 0x1f)
+        @rn = check_mask(rn, 0x1f)
+        @l  = check_mask(l, 0x01)
+        @o0 = check_mask(o0, 0x01)
       end
 
       def encode

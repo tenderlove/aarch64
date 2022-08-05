@@ -12,12 +12,12 @@ module AArch64
     # LDSMINL  <Xs>, <Xt>, [<Xn|SP>]
     class LDSMIN < Instruction
       def initialize rs, rt, rn, size, a, r
-        @rs   = rs
-        @rt   = rt
-        @rn   = rn
-        @size = size
-        @a    = a
-        @r    = r
+        @rs   = check_mask(rs, 0x1f)
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @size = check_mask(size, 0x03)
+        @a    = check_mask(a, 0x01)
+        @r    = check_mask(r, 0x01)
       end
 
       def encode

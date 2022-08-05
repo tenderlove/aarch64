@@ -8,11 +8,11 @@ module AArch64
     # LDR  <Xt>, [<Xn|SP>, #<simm>]!
     class LDR_imm_gen < Instruction
       def initialize rt, rn, imm9, size, mode
-        @rt   = rt
-        @rn   = rn
-        @imm9 = imm9
-        @size = size
-        @mode = mode
+        @rt   = check_mask(rt, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @imm9 = check_mask(imm9, 0x1ff)
+        @size = check_mask(size, 0x03)
+        @mode = check_mask(mode, 0x03)
       end
 
       def encode

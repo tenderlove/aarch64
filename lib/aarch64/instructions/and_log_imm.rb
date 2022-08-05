@@ -6,12 +6,12 @@ module AArch64
     # AND  <Xd|SP>, <Xn>, #<imm>
     class AND_log_imm < Instruction
       def initialize rd, rn, immr, imms, n, sf
-        @rd   = rd
-        @rn   = rn
-        @immr = immr
-        @imms = imms
-        @n    = n
-        @sf   = sf
+        @rd   = check_mask(rd, 0x1f)
+        @rn   = check_mask(rn, 0x1f)
+        @immr = check_mask(immr, 0x3f)
+        @imms = check_mask(imms, 0x3f)
+        @n    = check_mask(n, 0x01)
+        @sf   = check_mask(sf, 0x01)
       end
 
       def encode

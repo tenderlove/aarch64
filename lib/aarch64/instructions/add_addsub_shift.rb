@@ -6,12 +6,12 @@ module AArch64
     # ADD  <Xd>, <Xn>, <Xm>{, <shift> #<amount>}
     class ADD_addsub_shift < Instruction
       def initialize xd, xn, xm, shift, amount, sf
-        @xd     = xd
-        @xn     = xn
-        @xm     = xm
-        @shift  = shift
-        @amount = amount
-        @sf     = sf
+        @xd     = check_mask(xd, 0x1f)
+        @xn     = check_mask(xn, 0x1f)
+        @xm     = check_mask(xm, 0x1f)
+        @shift  = check_mask(shift, 0x03)
+        @amount = check_mask(amount, 0x3f)
+        @sf     = check_mask(sf, 0x01)
       end
 
       def encode
