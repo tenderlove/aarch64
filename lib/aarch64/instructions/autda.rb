@@ -5,17 +5,14 @@ module AArch64
     # AUTDA  <Xd>, <Xn|SP>
     # AUTDZA  <Xd>
     class AUTDA < Instruction
-      def initialize d, n
-        @d = d
-        @n = n
+      def initialize z, rd, rn
+        @z  = z
+        @rd = rd
+        @rn = rn
       end
 
       def encode
-        if @n.integer?
-          AUTDA(1, @n, @d)
-        else
-          AUTDA(0, @n, @d)
-        end
+        AUTDA(@z, @rn, @rd)
       end
 
       private

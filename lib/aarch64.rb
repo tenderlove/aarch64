@@ -313,11 +313,15 @@ module AArch64
     end
 
     def autda d, n
-      a AUTDA.new(d, n)
+      if n.integer?
+        a AUTDA.new(1, d, n)
+      else
+        a AUTDA.new(0, d, n)
+      end
     end
 
     def autdza d
-      a AUTDA.new(d, 0b11111)
+      a AUTDA.new(1, d, 0b11111)
     end
 
     def autdb d, n
