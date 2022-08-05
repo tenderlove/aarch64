@@ -337,11 +337,15 @@ module AArch64
     end
 
     def autia d, n
-      a AUTIA.new(d, n)
+      if n.integer?
+        a AUTIA.new(1, d, n)
+      else
+        a AUTIA.new(0, d, n)
+      end
     end
 
     def autiza d
-      a AUTIA.new(d, 0b11111)
+      a AUTIA.new(1, d, 0b11111)
     end
 
     def autia1716
