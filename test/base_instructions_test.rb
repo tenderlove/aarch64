@@ -8475,7 +8475,7 @@ class BaseInstructionsTest < AArch64::Test
 
   def test_SUBP
     # SUBP  <Xd>, <Xn|SP>, <Xm|SP>
-    assert_bytes [0x43, 0, 0xc3, 0x9a] do |asm|
+    assert_bytes [65, 0, 0xc3, 0x9a] do |asm|
       asm.subp x1, x2, x3
     end
   end
