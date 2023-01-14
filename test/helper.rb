@@ -1,3 +1,5 @@
+ENV["MT_NO_PLUGINS"] = "1"
+
 require "aarch64"
 require "aarch64/parser"
 require "minitest/autorun"

@@ -532,11 +532,11 @@ rule
     ;
 
   load_to_w
-    : Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    : Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
     ;
 
   load_to_x
-    : Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    : Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
     ;
 
   w_load_insns
@@ -579,8 +579,14 @@ rule
     ;
 
   reg_reg_load
-    : x_x_load RSQ { result = ThreeArg.new(*val[0]) }
-    | w_w_load RSQ { result = ThreeArg.new(*val[0]) }
+    : x_x_load RSQ {
+        reg, reg1, l = *val[0]
+        result = ThreeArg.new(reg, reg1, [l])
+      }
+    | w_w_load RSQ {
+        reg, reg1, l = *val[0]
+        result = ThreeArg.new(reg, reg1, [l])
+      }
     ;
 
   ldaxp
@@ -617,11 +623,11 @@ rule
     | ldp_signed_offset BANG { result = FourArg.new(*val[0], :!) }
     | reg_reg_load COMMA imm {
         rt1, rt2, rn = *val[0].to_a
-        result = FourArg.new(rt1, rt2, [rn], val[2])
+        result = FourArg.new(rt1, rt2, rn, val[2])
       }
     | reg_reg_load {
         rt1, rt2, rn = *val[0].to_a
-        result = ThreeArg.new(rt1, rt2, [rn])
+        result = ThreeArg.new(rt1, rt2, rn)
       }
     ;
 
@@ -690,12 +696,12 @@ rule
 
   ldtr_32
     : Wd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
-    | Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Wd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
     ;
 
   ldtr_64
     : Xd COMMA read_reg_imm RSQ { result = TwoArg.new(val[0], val[2]) }
-    | Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA read_reg RSQ { result = TwoArg.new(val[0], [val[2]]) }
     ;
 
   ldtr_32s
@@ -728,21 +734,21 @@ rule
     ;
 
   ldxp
-    : LDXP Wd COMMA Wd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
-    | LDXP Xd COMMA Xd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], val[5]) }
+    : LDXP Wd COMMA Wd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], [val[5]]) }
+    | LDXP Xd COMMA Xd COMMA read_reg RSQ { @asm.ldxp(val[1], val[3], [val[5]]) }
     ;
 
   ldxr
-    : LDXR Wd COMMA read_reg RSQ { @asm.ldxr(val[1], val[3]) }
-    | LDXR Xd COMMA read_reg RSQ { @asm.ldxr(val[1], val[3]) }
+    : LDXR Wd COMMA read_reg RSQ { @asm.ldxr(val[1], [val[3]]) }
+    | LDXR Xd COMMA read_reg RSQ { @asm.ldxr(val[1], [val[3]]) }
     ;
 
   ldxrb
-    : LDXRB Wd COMMA read_reg RSQ { @asm.ldxrb(val[1], val[3]) }
+    : LDXRB Wd COMMA read_reg RSQ { @asm.ldxrb(val[1], [val[3]]) }
     ;
 
   ldxrh
-    : LDXRH Wd COMMA read_reg RSQ { @asm.ldxrh(val[1], val[3]) }
+    : LDXRH Wd COMMA read_reg RSQ { @asm.ldxrh(val[1], [val[3]]) }
     ;
 
   lsl
@@ -852,16 +858,16 @@ rule
     ;
 
   stlr
-    : STLR Wd COMMA read_reg RSQ { @asm.stlr(val[1], val[3]) }
-    | STLR Xd COMMA read_reg RSQ { @asm.stlr(val[1], val[3]) }
+    : STLR Wd COMMA read_reg RSQ { @asm.stlr(val[1], [val[3]]) }
+    | STLR Xd COMMA read_reg RSQ { @asm.stlr(val[1], [val[3]]) }
     ;
 
   stlrb
-    : STLRB Wd COMMA read_reg RSQ { @asm.stlrb(val[1], val[3]) }
+    : STLRB Wd COMMA read_reg RSQ { @asm.stlrb(val[1], [val[3]]) }
     ;
 
   stlrh
-    : STLRH Wd COMMA read_reg RSQ { @asm.stlrh(val[1], val[3]) }
+    : STLRH Wd COMMA read_reg RSQ { @asm.stlrh(val[1], [val[3]]) }
     ;
 
   smaddl_params
@@ -872,17 +878,20 @@ rule
 
   stlxp_body
     : Wd COMMA Xd COMMA Xd COMMA read_reg RSQ {
-        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+        wd, xd1, xd2, r = *val.values_at(0, 2, 4, 6)
+        result = FourArg.new(wd, xd1, xd2, [r])
       }
     | Wd COMMA Wd COMMA Wd COMMA read_reg RSQ {
-        result = FourArg.new(*val.values_at(0, 2, 4, 6))
+        wd, wd1, wd2, r = *val.values_at(0, 2, 4, 6)
+        result = FourArg.new(wd, wd1, wd2, [r])
       }
     ;
 
   stlxr_body
     : wd_wd_read_reg
     | Wd COMMA Xd COMMA read_reg RSQ {
-        result = ThreeArg.new(*val.values_at(0, 2, 4))
+        wd, xd, rd = *val.values_at(0, 2, 4)
+        result = ThreeArg.new(wd, xd, [rd])
       }
     ;
 
@@ -898,7 +907,8 @@ rule
         FourArg.new(*val[1].to_a, :!).apply(@asm, val[0])
       }
     | STP reg_reg_read_reg RSQ COMMA imm {
-        FourArg.new(*val[1].to_a, val[4]).apply(@asm, val[0])
+        rt, rt2, rn = *val[1].to_a
+        FourArg.new(rt, rt2, [rn], val[4]).apply(@asm, val[0])
       }
     | STP reg_reg_read_reg RSQ {
         a, b, c = *val[1].to_a
@@ -917,7 +927,7 @@ rule
         result = ThreeArg.new(val[0], val[2], :!)
       }
     | register COMMA read_reg RSQ COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[5])
+        result = ThreeArg.new(val[0], [val[2]], val[5])
       }
     | register COMMA read_reg RSQ {
         result = TwoArg.new(val[0], [val[2]])
@@ -951,7 +961,7 @@ rule
         result = TwoArg.new(val[0], [val[2]])
       }
     | Wd COMMA read_reg RSQ COMMA imm {
-        result = ThreeArg.new(val[0], val[2], val[5])
+        result = ThreeArg.new(val[0], [val[2]], val[5])
       }
     ;
 
@@ -991,31 +1001,31 @@ rule
 
   stxp
     : STXP wd_wd_wd COMMA read_reg RSQ {
-        FourArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        FourArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     | STXP wd_xd_xd COMMA read_reg RSQ {
-        FourArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        FourArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     ;
 
   stxr
     : STXR wd_wd COMMA read_reg RSQ {
-        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        ThreeArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     | STXR wd_xd COMMA read_reg RSQ {
-        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        ThreeArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     ;
 
   stxrb
     : STXRB wd_wd COMMA read_reg RSQ {
-        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        ThreeArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     ;
 
   stxrh
     : STXRH wd_wd COMMA read_reg RSQ {
-        ThreeArg.new(*val[1].to_a, val[3]).apply(@asm, val[0])
+        ThreeArg.new(*val[1].to_a, [val[3]]).apply(@asm, val[0])
       }
     ;
 
@@ -1075,7 +1085,7 @@ rule
 
   wd_wd_read_reg
     : Wd COMMA Wd COMMA read_reg RSQ {
-        result = ThreeArg.new(*val.values_at(0, 2, 4))
+        result = ThreeArg.new(val[0], val[2], [val[4]])
       }
     ;
 

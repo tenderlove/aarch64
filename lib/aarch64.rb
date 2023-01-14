@@ -6,7 +6,9 @@ require "aarch64/utils"
 
 module AArch64
   module Registers
-    class Register < Struct.new(:to_i, :sp?, :zr?)
+    class Register < ClassGen.pos(:to_i, :sp, :zr)
+      alias sp? sp
+      alias zr? zr
       def integer?; false; end
     end
 
@@ -78,7 +80,7 @@ module AArch64
   end
 
   module Extends
-    class Extend < Struct.new(:amount, :type, :name)
+    class Extend < ClassGen.pos(:amount, :type, :name)
       def extend?; true; end
       def shift?; false; end
     end
@@ -99,7 +101,7 @@ module AArch64
   end
 
   module Shifts
-    class Shift < Struct.new(:amount, :type, :name)
+    class Shift < ClassGen.pos(:amount, :type, :name)
       def extend?; false; end
       def shift?; true; end
     end

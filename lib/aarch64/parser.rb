@@ -144,7 +144,7 @@ module AArch64
       end
     end
 
-    class FourArg < Struct.new(:a, :b, :c, :d)
+    class FourArg < ClassGen.pos(:a, :b, :c, :d)
       def apply asm, name
         asm.public_send(name, a, b, c, d)
       end

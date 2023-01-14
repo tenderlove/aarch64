@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 module AArch64
+  module ClassGen
+    def self.pos *names
+      Class.new do
+        attr_reader(*names)
+        sig = names.map { "#{_1}" }.join(", ")
+        init = names.map { "@#{_1} = #{_1}" }.join(";")
+        class_eval("def initialize #{sig}; #{init}; end")
+      end
+    end
+  end
+
   module Utils
-    EncodedMask = Struct.new(:n, :immr, :imms)
+    EncodedMask = ClassGen.pos(:n, :immr, :imms)
 
     MAX_INT_64 = 0xFFFFFFFFFFFFFFFF
 
