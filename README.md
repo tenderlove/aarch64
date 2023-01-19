@@ -50,7 +50,7 @@ asm.movk AArch64::Registers::X0, 0xF00D, lsl: 16
 asm.ret
 
 # Write the instructions to a JIT buffer
-jit_buffer.writable!
+jit_buffer.writeable!
 asm.write_to jit_buffer
 jit_buffer.executable!
 
