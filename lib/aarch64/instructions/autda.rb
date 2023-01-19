@@ -11,7 +11,7 @@ module AArch64
         @rn = check_mask(rn, 0x1f)
       end
 
-      def encode
+      def encode _
         AUTDA(@z, @rn, @rd)
       end
 

@@ -4,7 +4,7 @@ module AArch64
     # Debug restore process state
     # DRPS
     class DRPS < Instruction
-      def encode
+      def encode _
         0b1101011_0101_11111_000000_11111_00000
       end
     end

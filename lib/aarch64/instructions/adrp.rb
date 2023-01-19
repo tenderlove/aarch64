@@ -9,7 +9,7 @@ module AArch64
         @label = label
       end
 
-      def encode
+      def encode _
         label = @label / 4096
         ADRP(label & 0x3, check_mask(label >> 2, 0x7ffff), @xd)
       end

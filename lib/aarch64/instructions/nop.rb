@@ -4,7 +4,7 @@ module AArch64
     # No Operation
     # NOP
     class NOP < Instruction
-      def encode
+      def encode _
         0b1101010100_0_00_011_0010_0000_000_11111
       end
     end

@@ -13,7 +13,7 @@ module AArch64
         @s      = check_mask(s, 0x01)
       end
 
-      def encode
+      def encode _
         STRB_reg(@rm, @option, @s, @rn, @rt)
       end
 

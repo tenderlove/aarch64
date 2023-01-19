@@ -13,7 +13,7 @@ module AArch64
         @opc  = check_mask(opc, 0x03)
       end
 
-      def encode
+      def encode _
         STNP_gen(@opc, @imm7, @rt2, @rn, @rt)
       end
 

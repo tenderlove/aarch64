@@ -9,7 +9,7 @@ module AArch64
         @ll  = check_mask(ll, 0x03)
       end
 
-      def encode
+      def encode _
         DCPS(@imm, @ll)
       end
 

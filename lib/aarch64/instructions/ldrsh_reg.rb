@@ -14,7 +14,7 @@ module AArch64
         @opc    = check_mask(opc, 0x03)
       end
 
-      def encode
+      def encode _
         LDRSH_reg(@opc, @rm, @option, @s, @rn, @rt)
       end
 

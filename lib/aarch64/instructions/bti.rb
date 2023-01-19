@@ -8,7 +8,7 @@ module AArch64
         @target = check_mask(target, 0x03)
       end
 
-      def encode
+      def encode _
         BTI(@target)
       end
 

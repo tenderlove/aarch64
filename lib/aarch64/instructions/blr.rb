@@ -8,7 +8,7 @@ module AArch64
         @n = check_mask(n, 0x1f)
       end
 
-      def encode
+      def encode _
         BLR(@n)
       end
 

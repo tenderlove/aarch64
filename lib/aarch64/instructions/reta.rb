@@ -9,7 +9,7 @@ module AArch64
         @m = check_mask(m, 0x01)
       end
 
-      def encode
+      def encode _
         RETA(@m)
       end
 

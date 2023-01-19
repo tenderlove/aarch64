@@ -8,7 +8,7 @@ module AArch64
         @rd = check_mask(rd, 0x1f)
       end
 
-      def encode
+      def encode _
         WFET(@rd)
       end
 

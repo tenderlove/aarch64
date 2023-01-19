@@ -10,7 +10,7 @@ module AArch64
         @sz = check_mask(sz, 0x01)
       end
 
-      def encode
+      def encode _
         SETF(@sz, @rn)
       end
 

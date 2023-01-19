@@ -10,7 +10,7 @@ module AArch64
         @imm12 = check_mask(imm12, 0xfff)
       end
 
-      def encode
+      def encode _
         PRFM_imm(@imm12, @rn, @rt)
       end
 

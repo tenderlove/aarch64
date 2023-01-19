@@ -127,6 +127,18 @@ module AArch64
     include Instructions
     include Registers
 
+    class Immediate
+      def initialize offset
+        @offset = offset
+        freeze
+      end
+
+      def unwrap_label
+        @offset
+      end
+      def immediate?; true; end
+    end
+
     class Label
       attr_reader :offset
 
@@ -148,6 +160,7 @@ module AArch64
         @offset
       end
 
+      def immediate?; false; end
       def integer?; false; end
     end
 
@@ -267,9 +280,7 @@ module AArch64
     end
 
     def adr xd, label
-      if label.integer?
-        label = wrap_offset_with_label label
-      end
+      label = Immediate.new(label) if label.integer?
       a ADR.new(xd, label)
     end
 
@@ -2821,7 +2832,7 @@ module AArch64
     end
 
     def to_binary
-      @insns.map(&:encode).pack("L<*")
+      @insns.map.with_index { _1.encode(_2) }.pack("L<*")
     end
 
     private
@@ -2832,9 +2843,7 @@ module AArch64
     end
 
     def wrap_offset_with_label offset
-      label = Label.new :none
-      label.set_offset offset / 4
-      label
+      Immediate.new(offset / 4)
     end
   end
 end

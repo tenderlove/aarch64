@@ -13,7 +13,7 @@ module AArch64
         @sf   = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         CCMP_reg(@sf, @rm, @cond, @rn, @nzcv)
       end
 

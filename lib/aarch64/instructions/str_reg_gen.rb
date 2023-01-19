@@ -14,7 +14,7 @@ module AArch64
         @size   = check_mask(size, 0x03)
       end
 
-      def encode
+      def encode _
         STR_reg_gen(@size, @rm, @option, @s, @rn, @rt)
       end
 

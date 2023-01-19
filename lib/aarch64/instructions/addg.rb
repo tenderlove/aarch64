@@ -11,7 +11,7 @@ module AArch64
         @imm4 = check_mask(imm4, 0x0f)
       end
 
-      def encode
+      def encode _
         ADDG(@imm6, @imm4, @xn, @xd)
       end
 

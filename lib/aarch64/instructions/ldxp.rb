@@ -12,7 +12,7 @@ module AArch64
         @sz  = check_mask(sz, 0x01)
       end
 
-      def encode
+      def encode _
         LDXP(@sz, @rt2, @rn, @rt)
       end
 

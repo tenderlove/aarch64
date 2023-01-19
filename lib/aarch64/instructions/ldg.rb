@@ -10,7 +10,7 @@ module AArch64
         @imm9 = check_mask(imm9, 0x1ff)
       end
 
-      def encode
+      def encode _
         LDG(@imm9, @xn, @xt)
       end
 

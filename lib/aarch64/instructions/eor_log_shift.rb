@@ -14,7 +14,7 @@ module AArch64
         @sf    = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         EOR_log_shift(@sf, @shift, @rm, @imm6, @rn, @rd)
       end
 

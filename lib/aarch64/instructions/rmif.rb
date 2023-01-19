@@ -10,7 +10,7 @@ module AArch64
         @mask = check_mask(mask, 0x0f)
       end
 
-      def encode
+      def encode _
         RMIF(@imm6, @rn, @mask)
       end
 

@@ -16,7 +16,7 @@ module AArch64
         @s    = check_mask(s, 0x01)
       end
 
-      def encode
+      def encode _
         LDRA(@m, @s, @imm9, @w, @rn, @rt)
       end
 

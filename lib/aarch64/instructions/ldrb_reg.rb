@@ -13,7 +13,7 @@ module AArch64
         @option = check_mask(option, 0x07)
       end
 
-      def encode
+      def encode _
         LDRB_reg(@rm, @option, @s, @rn, @rt)
       end
 

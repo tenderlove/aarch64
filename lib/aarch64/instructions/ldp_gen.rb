@@ -18,7 +18,7 @@ module AArch64
         @opc  = check_mask(opc, 0x03)
       end
 
-      def encode
+      def encode _
         LDP_gen(@opc, @mode, @imm7, @rt2, @rn, @rt)
       end
 

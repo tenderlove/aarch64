@@ -3,8 +3,12 @@ module AArch64
     class Instruction
       private
 
-      def unwrap_label label
-        label.unwrap_label
+      def unwrap_label label, position
+        if label.immediate?
+          label.unwrap_label
+        else
+          label.unwrap_label - position
+        end
       end
 
       def check_mask val, mask

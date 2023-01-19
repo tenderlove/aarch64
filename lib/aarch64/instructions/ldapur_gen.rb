@@ -13,7 +13,7 @@ module AArch64
         @simm = check_mask(simm, 0x1ff)
       end
 
-      def encode
+      def encode _
         LDAPUR_gen(@size, @opc, @simm, @rn, @rt)
       end
 

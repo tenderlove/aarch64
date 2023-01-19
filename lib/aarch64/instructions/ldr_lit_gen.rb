@@ -11,8 +11,8 @@ module AArch64
         @size  = check_mask(size, 0x3)
       end
 
-      def encode
-        LDR_lit_gen(@size, check_mask(unwrap_label(@imm19), 0x7ffff), @rt)
+      def encode pos
+        LDR_lit_gen(@size, check_mask(unwrap_label(@imm19, pos), 0x7ffff), @rt)
       end
 
       private

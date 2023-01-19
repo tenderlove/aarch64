@@ -15,7 +15,7 @@ module AArch64
         @mode = check_mask(mode, 0x03)
       end
 
-      def encode
+      def encode _
         LDR_imm_gen(@size, @imm9, @mode, @rn, @rt)
       end
 

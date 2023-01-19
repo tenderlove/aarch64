@@ -14,7 +14,7 @@ module AArch64
         @sf     = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         BIC_log_shift(@sf, @shift, @m, @amount, @n, @d)
       end
 

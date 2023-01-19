@@ -12,7 +12,7 @@ module AArch64
         @op2 = check_mask(op2, 0x07)
       end
 
-      def encode
+      def encode _
         SYSL(@op1, @cn, @cm, @op2, @xt)
       end
 

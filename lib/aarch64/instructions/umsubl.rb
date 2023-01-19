@@ -11,7 +11,7 @@ module AArch64
         @xa = check_mask(xa, 0x1f)
       end
 
-      def encode
+      def encode _
         UMSUBL(@wm, @xa, @wn, @xd)
       end
 

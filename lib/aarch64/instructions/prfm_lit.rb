@@ -9,8 +9,8 @@ module AArch64
         @rt    = check_mask(rt, 0x1f)
       end
 
-      def encode
-        PRFM_lit(check_mask(unwrap_label(@label), 0x7ffff), @rt)
+      def encode pos
+        PRFM_lit(check_mask(unwrap_label(@label, pos), 0x7ffff), @rt)
       end
 
       private

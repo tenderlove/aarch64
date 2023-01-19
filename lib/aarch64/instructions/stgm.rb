@@ -9,7 +9,7 @@ module AArch64
         @xn = check_mask(xn, 0x1f)
       end
 
-      def encode
+      def encode _
         STGM(@xn, @xt)
       end
 

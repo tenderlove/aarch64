@@ -14,7 +14,7 @@ module AArch64
         @sf     = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         SUB_addsub_ext(@sf, @rm, @extend, @amount, @rn, @rd)
       end
 

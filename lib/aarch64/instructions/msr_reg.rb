@@ -13,7 +13,7 @@ module AArch64
         @rt  = check_mask(rt, 0x1f)
       end
 
-      def encode
+      def encode _
         MSR_reg(@o0, @op1, @crn, @crm, @op2, @rt)
       end
 

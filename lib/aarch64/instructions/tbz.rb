@@ -11,8 +11,8 @@ module AArch64
         @sf    = check_mask(sf, 0x1)
       end
 
-      def encode
-        TBZ(@sf, @imm, check_mask(unwrap_label(@label), 0x3fff), @rt)
+      def encode pos
+        TBZ(@sf, @imm, check_mask(unwrap_label(@label, pos), 0x3fff), @rt)
       end
 
       private

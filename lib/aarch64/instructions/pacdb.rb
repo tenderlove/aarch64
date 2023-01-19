@@ -11,7 +11,7 @@ module AArch64
         @z  = check_mask(z, 0x01)
       end
 
-      def encode
+      def encode _
         PACDB(@z, @rn, @rd)
       end
 

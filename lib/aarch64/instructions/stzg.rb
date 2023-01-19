@@ -13,7 +13,7 @@ module AArch64
         @opt  = check_mask(opt, 0x03)
       end
 
-      def encode
+      def encode _
         STZG(@imm9, @opt, @xn, @xt)
       end
 

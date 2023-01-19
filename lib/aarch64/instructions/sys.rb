@@ -12,7 +12,7 @@ module AArch64
         @xt  = check_mask(xt, 0x1f)
       end
 
-      def encode
+      def encode _
         SYS(@op1, @cn, @cm, @op2, @xt)
       end
 

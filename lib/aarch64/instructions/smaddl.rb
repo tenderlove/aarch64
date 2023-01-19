@@ -11,7 +11,7 @@ module AArch64
         @ra = check_mask(ra, 0x1f)
       end
 
-      def encode
+      def encode _
         SMADDL(@rm, @ra, @rn, @rd)
       end
 

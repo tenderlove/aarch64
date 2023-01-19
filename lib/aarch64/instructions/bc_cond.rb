@@ -9,8 +9,8 @@ module AArch64
         @label = label
       end
 
-      def encode
-        BC_cond(check_mask(unwrap_label(@label), 0x7ffff), @cond)
+      def encode pos
+        BC_cond(check_mask(unwrap_label(@label, pos), 0x7ffff), @cond)
       end
 
       private

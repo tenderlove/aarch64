@@ -11,7 +11,7 @@ module AArch64
         @uimm4 = check_mask(uimm4, 0x0f)
       end
 
-      def encode
+      def encode _
         SUBG(@uimm6, @uimm4, @xn, @xd)
       end
 

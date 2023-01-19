@@ -15,7 +15,7 @@ module AArch64
         @o0 = check_mask(o0, 0x01)
       end
 
-      def encode
+      def encode _
         CASB(@l, @rs, @o0, @rn, @rt)
       end
 

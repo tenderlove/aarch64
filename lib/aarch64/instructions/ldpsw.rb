@@ -14,7 +14,7 @@ module AArch64
         @mode = check_mask(mode, 0x07)
       end
 
-      def encode
+      def encode _
         LDPSW(@mode, @imm7, @rt2, @rn, @rt)
       end
 

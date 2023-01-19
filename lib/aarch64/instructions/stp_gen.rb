@@ -18,7 +18,7 @@ module AArch64
         @option = check_mask(option, 0x07)
       end
 
-      def encode
+      def encode _
         STP_gen(@opc, @option, @imm7, @rt2, @rn, @rt)
       end
 

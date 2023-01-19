@@ -10,7 +10,7 @@ module AArch64
         @rn = check_mask(rn, 0x1f)
       end
 
-      def encode
+      def encode _
         STLXRB(@rs, @rn, @rt)
       end
 

@@ -13,7 +13,7 @@ module AArch64
         @opc = check_mask(opc, 0x03)
       end
 
-      def encode
+      def encode _
         LDNP_gen(@opc, @imm, @rt2, @rn, @rt1)
       end
 

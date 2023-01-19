@@ -10,7 +10,7 @@ module AArch64
         @rm = check_mask(rm, 0x1f)
       end
 
-      def encode
+      def encode _
         IRG(@rm, @rn, @rd)
       end
 

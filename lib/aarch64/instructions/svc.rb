@@ -8,7 +8,7 @@ module AArch64
         @imm = check_mask(imm, 0xffff)
       end
 
-      def encode
+      def encode _
         SVC(@imm)
       end
 

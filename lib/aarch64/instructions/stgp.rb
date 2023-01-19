@@ -14,7 +14,7 @@ module AArch64
         @option = check_mask(option, 0x03)
       end
 
-      def encode
+      def encode _
         STGP(@option, @simm7, @xt2, @xn, @xt)
       end
 

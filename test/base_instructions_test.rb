@@ -387,6 +387,64 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "b #8"
   end
 
+  def test_b_first
+    label = asm.make_label :foo
+    asm.b label
+    asm.put_label label
+    asm.ret
+
+    jit_buffer = StringIO.new
+    asm.write_to jit_buffer
+
+    b = disasm(jit_buffer.string)[0]
+    ret = disasm(jit_buffer.string).last
+    expected = ret.address - b.address
+    assert_equal "b", b.mnemonic
+    assert_equal expected, b.op_str[/[^#]+$/].to_i(16)
+  end
+
+  def test_b_first_with_others
+    label = asm.make_label :foo
+    asm.b label
+    asm.mov x0, 2
+    asm.mov x0, 3
+    asm.put_label label
+    asm.ret
+
+    jit_buffer = StringIO.new
+    asm.write_to jit_buffer
+
+    b = disasm(jit_buffer.string)[0]
+    ret = disasm(jit_buffer.string).last
+    expected = ret.address - b.address
+    assert_equal "b", b.mnemonic
+    assert_equal 12, b.op_str[/[^#]+$/].to_i(16)
+    assert_equal expected, b.op_str[/[^#]+$/].to_i(16)
+  end
+
+  def test_b_not_first
+    label = asm.make_label :foo
+    asm.mov x0, 1
+    asm.mov x0, 1
+    asm.mov x0, 1
+    asm.mov x0, 1
+    asm.b label
+    asm.mov x0, 2
+    asm.mov x0, 3
+    asm.put_label label
+    asm.ret
+
+    jit_buffer = StringIO.new
+    asm.write_to jit_buffer
+
+    # capstone turns the jump targets in to absolute targets,
+    # so to test the target is correct we need to compare the address
+    # of the target against the address from the branch instruction
+    b = disasm(jit_buffer.string).find { |insn| insn.mnemonic == "b" }
+    ret = disasm(jit_buffer.string).last
+    assert_equal ret.address, b.op_str[/[^#]+$/].to_i(16)
+  end
+
   def test_b_with_label
     label = asm.make_label :foo
     asm.b label

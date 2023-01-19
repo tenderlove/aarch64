@@ -14,7 +14,7 @@ module AArch64
         @m  = check_mask(m, 0x01)
       end
 
-      def encode
+      def encode _
         BLRA(@z, @m, @rn, @rm)
       end
 

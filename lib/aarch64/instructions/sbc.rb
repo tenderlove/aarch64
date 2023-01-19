@@ -12,7 +12,7 @@ module AArch64
         @sf = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         SBC(@sf, @rm, @rn, @rd)
       end
 

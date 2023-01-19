@@ -9,7 +9,7 @@ module AArch64
         @imm = check_mask(imm, 0x0f)
       end
 
-      def encode
+      def encode _
         DSB(@imm)
       end
 

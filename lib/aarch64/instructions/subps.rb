@@ -10,7 +10,7 @@ module AArch64
         @xm = check_mask(xm, 0x1f)
       end
 
-      def encode
+      def encode _
         SUBPS(@xm, @xn, @xd)
       end
 

@@ -8,7 +8,7 @@ module AArch64
         @reg = check_mask(reg, 0x1f)
       end
 
-      def encode
+      def encode _
         RET(@reg)
       end
 

@@ -12,7 +12,7 @@ module AArch64
         @size = check_mask(size, 0x03)
       end
 
-      def encode
+      def encode _
         STUR_gen(@size, @imm9, @rn, @rt)
       end
 

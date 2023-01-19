@@ -11,7 +11,7 @@ module AArch64
         @d  = check_mask(d, 0x01)
       end
 
-      def encode
+      def encode _
         XPAC(@d, @rd)
       end
 

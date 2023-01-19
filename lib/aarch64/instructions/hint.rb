@@ -9,7 +9,7 @@ module AArch64
         @op2 = check_mask(op2, 0x07)
       end
 
-      def encode
+      def encode _
         HINT(@crm, @op2)
       end
 

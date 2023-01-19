@@ -8,7 +8,7 @@ module AArch64
         @imm16 = check_mask(imm16, 0xffff)
       end
 
-      def encode
+      def encode _
         SMC(@imm16)
       end
 

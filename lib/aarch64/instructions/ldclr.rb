@@ -20,7 +20,7 @@ module AArch64
         @size = check_mask(size, 0x03)
       end
 
-      def encode
+      def encode _
         LDCLR(@size, @a, @r, @rs, @rn, @rt)
       end
 

@@ -12,7 +12,7 @@ module AArch64
         @size = check_mask(size, 0x03)
       end
 
-      def encode
+      def encode _
         STXR(@size, @rs, @rn, @rt)
       end
 

@@ -20,7 +20,7 @@ module AArch64
         @r    = check_mask(r, 0x01)
       end
 
-      def encode
+      def encode _
         LDUMIN(@size, @a, @r, @rs, @rn, @rt)
       end
 

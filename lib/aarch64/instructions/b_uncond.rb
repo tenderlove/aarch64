@@ -8,8 +8,8 @@ module AArch64
         @label = label
       end
 
-      def encode
-        B_uncond(check_mask(unwrap_label(@label), 0x3ffffff))
+      def encode pos
+        B_uncond(check_mask(unwrap_label(@label, pos), 0x3ffffff))
       end
 
       private

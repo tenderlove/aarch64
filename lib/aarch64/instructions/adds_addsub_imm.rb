@@ -13,7 +13,7 @@ module AArch64
         @sf    = check_mask(sf, 0x01)
       end
 
-      def encode
+      def encode _
         ADDS_addsub_imm(@sf, @shift, @imm, @n, @d)
       end
 

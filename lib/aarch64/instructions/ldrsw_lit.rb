@@ -9,8 +9,8 @@ module AArch64
         @imm19 = imm19
       end
 
-      def encode
-        LDRSW_lit(check_mask(unwrap_label(@imm19), 0x7ffff), @rt)
+      def encode pos
+        LDRSW_lit(check_mask(unwrap_label(@imm19, pos), 0x7ffff), @rt)
       end
 
       private

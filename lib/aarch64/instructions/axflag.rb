@@ -4,7 +4,7 @@ module AArch64
     # Convert floating-point condition flags from Arm to external format
     # AXFLAG
     class AXFLAG < Instruction
-      def encode
+      def encode _
         0b1101010100_0_00_000_0100_0000_010_11111
       end
     end

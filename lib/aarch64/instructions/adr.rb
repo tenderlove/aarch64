@@ -9,9 +9,13 @@ module AArch64
         @label = label
       end
 
-      def encode
-        label = unwrap_label(@label)
-        ADR(label & 0x3, check_mask(label, 0x7ffff), @xd)
+      def encode position
+        label = if @label.immediate?
+                  @label.unwrap_label
+                else
+                  unwrap_label(@label, position) * 4
+                end
+        ADR(label & 0x3, check_mask(label >> 2, 0x7ffff), @xd)
       end
 
       private
