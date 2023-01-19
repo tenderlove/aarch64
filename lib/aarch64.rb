@@ -174,7 +174,7 @@ module AArch64
 
     # Puts the label at the current position.  Labels can only be placed once.
     def put_label label
-      label.set_offset(@insns.length * 4)
+      label.set_offset(@insns.length)
       self
     end
 
@@ -2833,7 +2833,7 @@ module AArch64
 
     def wrap_offset_with_label offset
       label = Label.new :none
-      label.set_offset offset
+      label.set_offset offset / 4
       label
     end
   end

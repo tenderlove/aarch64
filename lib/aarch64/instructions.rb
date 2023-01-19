@@ -4,7 +4,7 @@ module AArch64
       private
 
       def unwrap_label label
-        label.unwrap_label / 4
+        label.unwrap_label
       end
 
       def check_mask val, mask
