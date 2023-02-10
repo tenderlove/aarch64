@@ -8872,6 +8872,18 @@ class BaseInstructionsTest < AArch64::Test
       asm.tbnz w3, 5, label
       asm.put_label label
     end
+
+    assert_one_insn "tbnz x0, #0x20, #4" do |asm|
+      label = asm.make_label :foo
+      asm.tbnz x0, 32, label
+      asm.put_label label
+    end
+
+    assert_one_insn "tbnz w0, #0, #4" do |asm|
+      label = asm.make_label :foo
+      asm.tbnz x0, 0, label
+      asm.put_label label
+    end
   end
 
   def test_TBZ
