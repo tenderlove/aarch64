@@ -10,6 +10,7 @@ module AArch64
       alias sp? sp
       alias zr? zr
       def integer?; false; end
+      def register?; true; end
     end
 
     class XRegister < Register
@@ -2722,7 +2723,13 @@ module AArch64
       if label.integer?
         label = wrap_offset_with_label label
       end
-      a TBZ.new(rt, imm, label, rt.sf)
+
+      sf = 0
+      if imm > 31
+        sf = 1
+        imm -= 32
+      end
+      a TBZ.new(rt, imm, label, sf)
     end
 
     def tlbi tlbi_op, xt = XZR

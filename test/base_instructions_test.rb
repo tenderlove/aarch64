@@ -2774,6 +2774,12 @@ class BaseInstructionsTest < AArch64::Test
     end
   end
 
+  def test_ldb_x30
+    assert_bytes [0xfe,0x7b,0xc1,0xa8] do |asm|
+      asm.ldp  x30, x30, [sp], 16
+    end
+  end
+
   def test_LDP_gen
     # LDP  <Wt1>, <Wt2>, [<Xn|SP>], #<imm>
     # LDP  <Xt1>, <Xt2>, [<Xn|SP>], #<imm>
@@ -8876,6 +8882,12 @@ class BaseInstructionsTest < AArch64::Test
     assert_one_insn "tbz w3, #5, #4" do |asm|
       label = asm.make_label :foo
       asm.tbz w3, 5, label
+      asm.put_label label
+    end
+
+    assert_one_insn "tbz x0, #0x20, #4" do |asm|
+      label = asm.make_label :foo
+      asm.tbz x0, 32, label
       asm.put_label label
     end
   end
