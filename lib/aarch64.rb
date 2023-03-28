@@ -23,6 +23,7 @@ module AArch64
       def opc; 0b10; end
       def opc2; 0b11; end
       def opc3; 0b10; end
+      def name; "X#{to_i}"; end
     end
 
     class WRegister < Register
@@ -35,6 +36,7 @@ module AArch64
       def opc; 0b11; end
       def opc2; 0b10; end
       def opc3; 0b00; end
+      def name; "W#{to_i}"; end
     end
 
     31.times { |i|
