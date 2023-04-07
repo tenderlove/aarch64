@@ -2842,6 +2842,12 @@ module AArch64
       a YIELD.new
     end
 
+    ##
+    # Yields the offset in the instructions
+    def patch_location
+      yield @insns.length * 4
+    end
+
     def write_to io
       io.write to_binary
     end
