@@ -70,6 +70,32 @@ asm.movk X0, 0xF00D, lsl: 16
 asm.ret
 ```
 
+Here is another example of the same assembly, but using the built-in ARM64
+assembly parser:
+
+```ruby
+require "jit_buffer"
+require "aarch64/parser"
+
+parser = AArch64::Parser.new
+asm = parser.parse <<~eoasm
+  movz x0, 0xCAFE
+  movk x0, 0xF00D, lsl #16
+  ret
+eoasm
+
+# create a JIT buffer
+jit_buffer = JITBuffer.new 4096
+
+# Write the instructions to a JIT buffer
+jit_buffer.writeable!
+asm.write_to jit_buffer
+jit_buffer.executable!
+
+# Execute the JIT buffer
+p jit_buffer.to_function([], -Fiddle::TYPE_INT).call.to_s(16) # => f00dcafe
+```
+
 ## Hacking / Contributing
 
 Hacking on this gem should be similar to most.  Just do:
