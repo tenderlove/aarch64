@@ -3,11 +3,11 @@ require "aarch64/parser"
 
 class ParserTest < AArch64::Test
   def test_parse
-    assert_round_trip "movz x0, 0xCAFE", output: ["movz x0, #0xcafe"]
-    assert_round_trip "movz x0, #0xcafe"
-    assert_round_trip "movz x0, #0xcafe, lsl #16"
-    assert_round_trip "movz w0, #0xcafe"
-    assert_round_trip "movz w0, #0xcafe, lsl #16"
+    assert_bytes "movz x0, 0xCAFE", [0xc0, 0x5f, 0x99, 0xd2]
+    assert_bytes "movz x0, #0xcafe", [0xc0, 0x5f, 0x99, 0xd2]
+    assert_bytes "movz x0, #0xcafe, lsl #16", [0xc0, 0x5f, 0xb9, 0xd2]
+    assert_bytes "movz w0, #0xcafe", [0xc0, 0x5f, 0x99, 0x52]
+    assert_bytes "movz w0, #0xcafe, lsl #16", [0xc0, 0x5f, 0xb9, 0x52]
   end
 
   def test_autda

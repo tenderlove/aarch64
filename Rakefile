@@ -205,3 +205,43 @@ task "autotest" do
     end
   end
 end
+
+# Make a test from the assembly in stdin.
+#   $ echo "brk #0x1" | rake make_test
+#     assert_bytes [0x20, 00, 0x20, 0xd4] do |asm|
+#       asm.brk #0x1
+#     end
+task :make_test do
+  require "odinflex/mach-o"
+  require "tempfile"
+
+  begin
+    asm = $stdin.read
+    bin = Tempfile.new("bin")
+    source = Tempfile.new("asm")
+    source.puts ".global _start"
+    source.puts ".align 2"
+    source.puts "_start:"
+    source.puts
+    source.write asm
+    source.flush
+    system("as -o #{bin.path} #{source.path}")
+
+    my_macho = OdinFlex::MachO.new bin
+    my_macho.each do |section|
+      if section.section? && section.sectname == "__text"
+        bin.seek(section.offset, IO::SEEK_SET)
+        (section.size / 4).times do
+          bytes = bin.read(4).unpack("C4").map { |x| sprintf("%#02x", x) }.join(", ")
+          puts "assert_bytes [#{bytes}] do |asm|"
+          puts "  asm.#{asm}"
+          puts "end"
+        end
+        #p section.start_pos
+      end
+    end
+  ensure
+    bin.unlink
+    source.unlink
+  end
+end

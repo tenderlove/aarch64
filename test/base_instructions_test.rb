@@ -287,7 +287,7 @@ class BaseInstructionsTest < AArch64::Test
     end
 
     # SYS #<op1>, C7, <Cm>, #<op2>, <Xt>
-    assert_one_insn "sys #0, c7, c9, #0, x1" do |asm|
+    assert_bytes [0x1, 0x79, 0x8, 0xd5] do |asm|
       asm.at :s1e1rp, X1
     end
   end
@@ -326,17 +326,17 @@ class BaseInstructionsTest < AArch64::Test
       asm.autiza X1
     end
     # AUTIA1716
-    assert_one_insn "hint #0xc" do |asm|
+    assert_one_insn "autia1716" do |asm|
       asm.autia1716
     end
 
     # AUTIASP
-    assert_one_insn "hint #0x1d" do |asm|
+    assert_one_insn "autiasp" do |asm|
       asm.autiasp
     end
 
     # AUTIAZ
-    assert_one_insn "hint #0x1c" do |asm|
+    assert_one_insn "autiaz" do |asm|
       asm.autiaz
     end
   end
@@ -360,17 +360,17 @@ class BaseInstructionsTest < AArch64::Test
     end
 
     # AUTIB1716
-    assert_one_insn "hint #0xe" do |asm|
+    assert_one_insn "autib1716" do |asm|
       asm.autib1716
     end
 
     # AUTIBSP
-    assert_one_insn "hint #0x1f" do |asm|
+    assert_one_insn "autibsp" do |asm|
       asm.autibsp
     end
 
     # AUTIBZ
-    assert_one_insn "hint #0x1e" do |asm|
+    assert_one_insn "autibz" do |asm|
       asm.autibz
     end
   end
@@ -711,13 +711,14 @@ class BaseInstructionsTest < AArch64::Test
 
   def test_BRK
     # BRK  #<imm>
-    asm.brk 1
-    assert_one_insn "brk #0x1"
+    assert_bytes [0x20, 00, 0x20, 0xd4] do |asm|
+      asm.brk 0x1
+    end
   end
 
   def test_BTI
     # BTI  {<targets>}
-    assert_one_insn "hint #0x20" do |asm|
+    assert_one_insn "bti" do |asm|
       asm.bti :c
     end
   end
@@ -4655,22 +4656,21 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MOVZ
-    asm.movz X0, 0x2a
-    assert_one_insn "movz x0, #0x2a"
-    # MOVZ
-    assert_bytes [0x02,0x00,0xa0,0x52] do |asm|
-      asm.movz     w2, 0, lsl(16)
+    assert_bytes [0x40, 0x5, 0x80, 0xd2] do |asm|
+      asm.movz X0, 0x2a
     end
   end
 
   def test_movz_shift
-    asm.movz X0, 0x2a, lsl: 16
-    assert_one_insn "movz x0, #0x2a, lsl #16"
+    assert_bytes [0x40, 0x5, 0xa0, 0xd2] do |asm|
+      asm.movz X0, 0x2a, lsl: 16
+    end
   end
 
   def test_movz_with_w
-    asm.movz W0, 0x2a
-    assert_one_insn "movz w0, #0x2a"
+    assert_bytes [0x40, 0x5, 0x80, 82] do |asm|
+      asm.movz W0, 0x2a
+    end
   end
 
   def test_MRS
