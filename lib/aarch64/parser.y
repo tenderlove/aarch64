@@ -14,8 +14,8 @@ rule
     | adcs
     | ADD add_body { val[1].apply(@asm, val[0]) }
     | ADDS add_body { val[1].apply(@asm, val[0]) }
-    | ADR Xd COMMA imm { @asm.adr(val[1], val[3]) }
-    | ADRP Xd COMMA imm { @asm.adrp(val[1], val[3]) }
+    | ADR Xd COMMA imm_or_label { @asm.adr(val[1], val[3]) }
+    | ADRP Xd COMMA imm_or_label { @asm.adrp(val[1], val[3]) }
     | AND and_body { val[1].apply(@asm, val[0]) }
     | ANDS and_body { val[1].apply(@asm, val[0]) }
     | asr  { val[0].apply(@asm, :asr) }
@@ -30,8 +30,8 @@ rule
     | blr
     | br
     | BRK imm { @asm.brk(val[1]) }
-    | CBNZ reg_imm { val[1].apply(@asm, val[0]) }
-    | CBZ reg_imm { val[1].apply(@asm, val[0]) }
+    | CBNZ reg_imm_or_label { val[1].apply(@asm, val[0]) }
+    | CBZ reg_imm_or_label { val[1].apply(@asm, val[0]) }
     | cinc
     | cinv
     | clrex
@@ -133,8 +133,8 @@ rule
     | SXTW xd_wd { val[1].apply(@asm, :sxtw) }
     | sys
     | sysl
-    | TBZ reg_imm_imm { val[1].apply(@asm, val[0]) }
-    | TBNZ reg_imm_imm { val[1].apply(@asm, val[0]) }
+    | TBZ reg_imm_imm_or_label { val[1].apply(@asm, val[0]) }
+    | TBNZ reg_imm_imm_or_label { val[1].apply(@asm, val[0]) }
     | tlbi
     | tst
     | UBFIZ ubfiz_body { val[1].apply(@asm, val[0]) }
@@ -150,6 +150,7 @@ rule
     | WFE { @asm.wfe }
     | WFI { @asm.wfi }
     | YIELD { @asm.yield }
+    | LABEL_CREATE { register_label(val[0]) }
     ;
 
   adc
@@ -280,8 +281,8 @@ rule
   at: AT at_op COMMA Xd { @asm.at(val[1].to_sym, val[3]) };
 
   b
-    : B imm { @asm.b(val[1]) }
-    | B DOT cond imm { @asm.b(val[3], cond: val[2]) }
+    : B imm_or_label { @asm.b(val[1]) }
+    | B DOT cond imm_or_label { @asm.b(val[3], cond: val[2]) }
     ;
 
   bfi
@@ -313,7 +314,7 @@ rule
     | AUTDA Xd COMMA SP { @asm.autda(val[1], val[3]) }
     ;
 
-  bl : BL imm { @asm.bl(val[1]) } ;
+  bl : BL imm_or_label { @asm.bl(val[1]) } ;
   blr : BLR Xd { @asm.blr(val[1]) } ;
   br : BR Xd { @asm.br(val[1]) } ;
 
@@ -1048,11 +1049,11 @@ rule
       }
     ;
 
-  reg_imm_imm
-    : Xd COMMA imm COMMA imm {
+  reg_imm_imm_or_label
+    : Xd COMMA imm COMMA imm_or_label {
         result = ThreeArg.new(val[0], val[2], val[4])
       }
-    | Wd COMMA imm COMMA imm {
+    | Wd COMMA imm COMMA imm_or_label {
         result = ThreeArg.new(val[0], val[2], val[4])
       }
     ;
@@ -1194,6 +1195,11 @@ rule
     | Xd COMMA imm { result = TwoArg.new(val[0], val[2]) }
     ;
 
+  reg_imm_or_label
+    : Wd COMMA imm_or_label { result = TwoArg.new(val[0], val[2]) }
+    | Xd COMMA imm_or_label { result = TwoArg.new(val[0], val[2]) }
+    ;
+
   reg_reg_imm
     : Wd COMMA Wd COMMA imm {
         result = ThreeArg.new(val[0], val[2], val[4])
@@ -1230,6 +1236,11 @@ rule
   imm
     : '#' NUMBER { result = val[1] }
     | NUMBER     { result = val[0] }
+    ;
+
+  imm_or_label
+    : LABEL { result = label_for(val[0]) }
+    | imm
     ;
 
   xt: Xd | XZR;

@@ -2,6 +2,14 @@ require "helper"
 require "aarch64/parser"
 
 class ParserTest < AArch64::Test
+
+  def test_parse_error
+    error = assert_raises(Racc::ParseError) do
+      parse "mov x1, x0\nmov x1, #2 // comments not supported"
+    end
+    assert_equal 'parse error on value "/" (error) on line 2 at pos 23/48', error.message
+  end
+
   def test_parse
     assert_bytes "movz x0, 0xCAFE", [0xc0, 0x5f, 0x99, 0xd2]
     assert_bytes "movz x0, #0xcafe", [0xc0, 0x5f, 0x99, 0xd2]
@@ -16,16 +24,20 @@ class ParserTest < AArch64::Test
     assert_bytes "autda x1, x2", [0x41, 0x18, 0xc1, 0xda]
   end
 
-  def assert_bytes input, bytes
+  def parse input
     parser = AArch64::Parser.new
     begin
       asm = parser.parse input
     rescue Racc::ParseError
-      puts input
       raise
     end
     io = StringIO.new
     asm.write_to io
+    io
+  end
+
+  def assert_bytes input, bytes
+    io = parse input
     assert_equal bytes, io.string.bytes, ->() {
       pos          = 32.times.map { |i| (i % 0x10).to_s(16) }.join.reverse
       actual_bin   = sprintf("%032b", io.string.unpack1("L<"))
@@ -42,10 +54,7 @@ class ParserTest < AArch64::Test
   end
 
   def assert_round_trip input, output: [input]
-    parser = AArch64::Parser.new
-    asm = parser.parse input
-    io = StringIO.new
-    asm.write_to io
+    io = parse input
     assert_equal output, disasm(io.string).map { |x|
       "#{x.mnemonic} #{x.op_str}"
     }
@@ -56,6 +65,85 @@ class ParserTest < AArch64::Test
     assert_bytes "add x8, sp, #1, lsl #12", [0xe8, 0x07, 0x40, 0x91]
     assert_bytes "add sp, sp, #1, lsl #12", [0xff, 0x07, 0x40, 0x91]
     assert_bytes "add x8, x10, #1", [0x48, 0x5, 00, 0x91]
+  end
+
+  def test_labels_already_defined
+    error = assert_raises(RuntimeError) do
+      parse "start:\nstart:\n"
+    end
+    assert_equal "symbol 'start' is already defined", error.message
+  end
+
+  def test_labels_empty
+    assert_bytes "start:\n", []
+    assert_bytes <<~ASM, []
+      start:
+      end:
+    ASM
+  end
+
+  def test_labels_not_defined
+    examples = [
+      "b label",
+      "b.eq label",
+      "b.lo label",
+      "b.lt label",
+      "b.hs label",
+      "b.gt label",
+      "b.le label",
+      "b.ne label",
+      "b.mi label",
+      "b.ge label",
+      "b.pl label",
+      "b.ls label",
+      "b.hi label",
+      "b.vc label",
+      "b.vs label",
+      "cbz x0, label",
+      "cbz w0, label",
+      "cbnz w0, label",
+      "cbnz x0, label",
+      "tbz w1, #1, label",
+      "tbz x1, #1, label",
+      "tbnz w1, #1, label",
+      "tbnz x1, #1, label",
+      "bl label",
+    ]
+    examples.each do |instruction|
+      error = assert_raises(RuntimeError) do
+        parse instruction
+      end
+      assert_match 'Label "label" not defined', error.message
+    end
+  end
+
+  def test_labels_branch
+    assert_bytes <<~ASM, [0x00, 0x04, 0x00, 0x91, 0xff, 0xff, 0xff, 0x17]
+      loop:
+        add x0, x0, #1
+        b loop
+    ASM
+    assert_bytes <<~ASM, [0x20, 0x00, 0x80, 0xd2, 0xe0, 0xff, 0xff, 0x10]
+      label:
+        mov x0, #1
+        adr x0, label
+    ASM
+  end
+
+  def test_labels_forward_reference
+    assert_bytes "b label\nlabel:", [0x01, 0x00, 0x00, 0x14]
+    assert_bytes "b.eq label\nlabel:", [0x20, 0x00, 0x00, 0x54]
+    assert_bytes "cbz w1, label\nlabel:", [0x21, 0x00, 0x00, 0x34]
+    assert_bytes "cbz x1, label\nlabel:", [0x21, 0x00, 0x00, 0xb4]
+    assert_bytes "cbnz w1, label\nlabel:", [0x21, 0x00, 0x00, 0x35]
+    assert_bytes "cbnz x1, label\nlabel:", [0x21, 0x00, 0x00, 0xb5]
+    assert_bytes "tbz w1, #1, label\nlabel:", [0x21, 0x00, 0x08, 0x36]
+    assert_bytes "tbz x1, #1, label\nlabel:", [0x21, 0x00, 0x08, 0x36]
+    assert_bytes "tbnz w1, #1, label\nlabel:", [0x21, 0x00, 0x08, 0x37]
+    assert_bytes "tbnz x1, #1, label\nlabel:", [0x21, 0x00, 0x08, 0x37]
+    assert_bytes "bl label\nlabel:", [0x01, 0x00, 0x00, 0x94]
+    assert_bytes "adr x0, label\nlabel:", [0x20, 0x00, 0x00, 0x10]
+    assert_bytes "adrp x0, label\nlabel:", [0x00, 0x00, 0x00, 0x90]
   end
 
   def test_bls

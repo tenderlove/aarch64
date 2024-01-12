@@ -288,6 +288,7 @@ module AArch64
     end
 
     def adrp xd, label
+      label = Immediate.new(label) if label.integer?
       a ADRP.new(xd, label)
     end
 
