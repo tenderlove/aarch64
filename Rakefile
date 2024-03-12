@@ -162,7 +162,7 @@ end
 
 rule ".tab.rb" => [".y"] do |t|
   puts "#" * 90
-  sh "gel exec racc -E -v #{t.source}"
+  sh "gel exec racc -v #{t.source}"
   puts "#" * 90
 end
 

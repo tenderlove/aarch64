@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/tenderlove/aarch64"
   s.license     = "Apache-2.0"
 
+  s.add_runtime_dependency 'racc', '~> 1.6'
   s.add_development_dependency 'hatstone', '~> 1.0.0'
   s.add_development_dependency 'jit_buffer', '~> 1.0.0'
   s.add_development_dependency 'minitest', '~> 5.15'
   s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'racc', '~> 1.6'
   s.add_development_dependency 'odinflex', '~> 1.0'
 end
