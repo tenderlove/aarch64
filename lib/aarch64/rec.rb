@@ -117,8 +117,8 @@ module AArch64
     end
 
     def parse_ADD
-      @scan.next_token
-      add_body "add"
+      expect { |tok| tok.first == :ADD }
+      add_body ADD
     end
 
     def add_body nm
@@ -134,9 +134,9 @@ module AArch64
           expect { |tok| tok.first == :LSL }
           expect { |tok| tok.first == '#' }
           lsl = @scan.next_token.last
-          ADD_addsub_imm.new(d, n, m, lsl / 12, d.sf)
+          nm::ADDSUB_imm.new(d, n, m, lsl / 12, d.sf)
         else
-          ADD_addsub_imm.new(d, n, m, 0, d.sf)
+          nm::ADDSUB_imm.new(d, n, m, 0, d.sf)
         end
       else
         m = @scan.next_token.last
@@ -152,7 +152,7 @@ module AArch64
               amount = @scan.next_token.last
             end
             extend = Utils.sub_decode_extend32(modifier)
-            ADD_addsub_ext.new(d, n, m, extend, amount, d.sf)
+            nm::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
           else
             modifier = @scan.next_token.last.to_sym
 
@@ -164,7 +164,7 @@ module AArch64
                 amount = @scan.next_token.last
               end
               extend = Utils.sub_decode_extend32(modifier)
-              ADD_addsub_ext.new(d, n, m, extend, amount, d.sf)
+              nm::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
             when :lsl, :lsr, :asr
               shift = [:lsl, :lsr, :asr].index(modifier)
 
@@ -174,11 +174,11 @@ module AArch64
                 expect { |tok| tok.first == '#' }
                 amount = @scan.next_token.last
               end
-              ADD_addsub_shift.new(d, n, m, shift, amount, d.sf)
+              nm::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
             end
           end
         else
-          ADD_addsub_shift.new(d, n, m, 0, 0, d.sf)
+          nm::ADDSUB_shift.new(d, n, m, 0, 0, d.sf)
         end
       end
     end

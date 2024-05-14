@@ -216,14 +216,14 @@ module AArch64
     def add d, n, m, extend: nil, amount: 0, lsl: 0, shift: :lsl
       if extend
         extend = Utils.sub_decode_extend32(extend)
-        a ADD_addsub_ext.new(d, n, m, extend, amount, d.sf)
+        a ADD::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
           # add immediate
-          a ADD_addsub_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
+          a ADD::ADDSUB_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          a ADD_addsub_shift.new(d, n, m, shift, amount, d.sf)
+          a ADD::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end

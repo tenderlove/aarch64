@@ -32,9 +32,7 @@ module AArch64
 
     autoload :ADC, "aarch64/instructions/adc"
     autoload :ADCS, "aarch64/instructions/adcs"
-    autoload :ADD_addsub_ext, "aarch64/instructions/add_addsub_ext"
-    autoload :ADD_addsub_imm, "aarch64/instructions/add_addsub_imm"
-    autoload :ADD_addsub_shift, "aarch64/instructions/add_addsub_shift"
+    autoload :ADD, "aarch64/instructions/add"
     autoload :ADDG, "aarch64/instructions/addg"
     autoload :ADDS_addsub_ext, "aarch64/instructions/adds_addsub_ext"
     autoload :ADDS_addsub_imm, "aarch64/instructions/adds_addsub_imm"
