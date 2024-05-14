@@ -21,8 +21,8 @@ module AArch64
       len = expected.bytesize
       raise unless actual.bytesize == len
 
-      exp_out = ''
-      act_out = ''
+      exp_out = ''.dup
+      act_out = ''.dup
       len.times do |i|
         if expected[i] == actual[i]
           exp_out << expected[i]

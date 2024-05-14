@@ -2843,6 +2843,10 @@ module AArch64
       @insns.map.with_index { _1.encode(_2) }.pack("L<*")
     end
 
+    def << insn
+      a insn
+    end
+
     private
 
     def a insn
