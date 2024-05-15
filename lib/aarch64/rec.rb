@@ -25,7 +25,7 @@ module AArch64
     end
 
     def parse_ADC
-      @scan.next_token
+      next_token
       if @scan.peek.last.x?
         xd_xd_xd Instructions::ADC
       else
@@ -34,7 +34,7 @@ module AArch64
     end
 
     def parse_ADCS
-      @scan.next_token
+      next_token
       if @scan.peek.last.x?
         xd_xd_xd ADCS
       else
@@ -49,15 +49,15 @@ module AArch64
 
     def parse_ADDG
       expect(:ADDG)
-      d = @scan.next_token.last
+      d = next_token
       expect(:COMMA)
-      n = @scan.next_token.last
-      expect(:COMMA)
-      expect("#")
-      imm6 = @scan.next_token.last
+      n = next_token
       expect(:COMMA)
       expect("#")
-      imm4 = @scan.next_token.last
+      imm6 = next_token
+      expect(:COMMA)
+      expect("#")
+      imm4 = next_token
       ADDG.new(d, n, imm6 / 16, imm4)
     end
 
@@ -67,46 +67,45 @@ module AArch64
     end
 
     def add_body nm
-      d = @scan.next_token.last
+      d = next_token
       expect(:COMMA)
-      n = @scan.next_token.last
+      n = next_token
       expect(:COMMA)
       if at("#")
-        @scan.next_token
-        m = @scan.next_token.last
+        next_token
+        m = next_token
         if at(:COMMA)
           expect(:COMMA)
           expect(:LSL)
           expect("#")
-          lsl = @scan.next_token.last
+          lsl = next_token
           nm::ADDSUB_imm.new(d, n, m, lsl / 12, d.sf)
         else
           nm::ADDSUB_imm.new(d, n, m, 0, d.sf)
         end
       else
-        m = @scan.next_token.last
+        m = next_token
         if at(:COMMA)
           expect(:COMMA)
           amount = 0
 
           if n.sp? || m.sp?
-            modifier = @scan.next_token.last.to_sym
-            amoubt = 0
+            modifier = next_token.to_sym
             if at("#")
               expect("#")
-              amount = @scan.next_token.last
+              amount = next_token
             end
             extend = Utils.sub_decode_extend32(modifier)
             nm::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
           else
-            modifier = @scan.next_token.last.to_sym
+            modifier = next_token.to_sym
 
             case modifier
             when :uxtb, :uxth, :uxtw, :uxtx, :sxtb, :sxth, :sxtw, :sxtx
               # extend
               if at("#")
                 expect('#')
-                amount = @scan.next_token.last
+                amount = next_token
               end
               extend = Utils.sub_decode_extend32(modifier)
               nm::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
@@ -117,7 +116,7 @@ module AArch64
               # shift
               if at("#")
                 expect("#")
-                amount = @scan.next_token.last
+                amount = next_token
               end
               nm::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
             end
@@ -151,21 +150,25 @@ module AArch64
         p @scan.peek
         raise
       end
-      @scan.next_token
+      next_token
     end
 
     def expect_w
       raise if @scan.peek.last.x?
-      @scan.next_token.last
+      next_token
     end
 
     def expect_x
       raise unless @scan.peek.last.x?
-      @scan.next_token.last
+      next_token
     end
 
     def at tok
       @scan.peek.first == tok
+    end
+
+    def next_token
+      @scan.next_token.last
     end
   end
 end
