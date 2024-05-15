@@ -15,14 +15,11 @@ module AArch64
         tok = tok.first.to_s
 
         if respond_to?("parse_#{tok}")
-          if tok == "LABEL_CREATE"
-            send("parse_#{tok}")
-          else
-            @asm << send("parse_#{tok}")
+          if node = send("parse_#{tok}")
+            @asm << node
           end
           expect :EOL
         else
-          p tok
           return false
         end
       end
@@ -40,6 +37,7 @@ module AArch64
         @defined_labels[label_name] = (@labels[label_name] ||= @asm.make_label(label_name))
       end
       @asm.put_label(label)
+      false
     end
 
     def parse_ADC
@@ -111,13 +109,23 @@ module AArch64
       n = d.x? ? expect_x : expect_w
       expect(:COMMA)
 
-      if at("#")
+      m = if at("#")
         expect("#")
-        SBFM.new(d, n, next_token, d.size - 1, d.sf)
+        next_token
       else
-        m = d.x? ? expect_x : expect_w
-        ASRV.new(d, n, m, d.sf)
+        d.x? ? expect_x : expect_w
       end
+      @asm.asr d, n, m
+      false
+    end
+
+    def parse_AT
+      expect :AT
+      op = next_token.to_sym
+      expect :COMMA
+      d = next_token
+      @asm.at op, d
+      false
     end
 
     def and_body nm
