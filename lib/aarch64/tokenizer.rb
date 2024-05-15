@@ -11,6 +11,7 @@ module AArch64
       ADC
       ADCS
       ADD
+      ADDG
       ADDS
       ADR
       ADRP

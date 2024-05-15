@@ -121,6 +121,20 @@ module AArch64
       add_body ADD
     end
 
+    def parse_ADDG
+      expect { |tok| tok.first == :ADDG }
+      d = @scan.next_token.last
+      expect { |tok| tok.first == :COMMA }
+      n = @scan.next_token.last
+      expect { |tok| tok.first == :COMMA }
+      expect { |tok| tok.first == '#' }
+      imm6 = @scan.next_token.last
+      expect { |tok| tok.first == :COMMA }
+      expect { |tok| tok.first == '#' }
+      imm4 = @scan.next_token.last
+      ADDG.new(d, n, imm6 / 16, imm4)
+    end
+
     def add_body nm
       d = @scan.next_token.last
       expect { |tok| tok.first == :COMMA }

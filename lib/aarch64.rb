@@ -229,7 +229,7 @@ module AArch64
     end
 
     def addg xd, xn, imm6, imm4
-      a ADDG.new(xd, xn, imm6, imm4)
+      a ADDG.new(xd, xn, imm6 / 16, imm4)
     end
 
     def adds d, n, m, option = nil, extend: nil, amount: 0, lsl: 0, shift: :lsl

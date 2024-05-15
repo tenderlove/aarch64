@@ -82,9 +82,8 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_addg
-    skip "clang doesn't seem to support this one"
     asm.addg X0, X1, 16, 1
-    assert_one_insn "addg x0, x1, #4, #2"
+    assert_one_insn "addg x0, x1, #0x10, #1"
   end
 
   def test_ADDS_addsub_ext_32

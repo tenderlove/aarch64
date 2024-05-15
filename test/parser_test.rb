@@ -447,6 +447,10 @@ class ParserTest < AArch64::Test
     assert_bytes "add      xzr, x3, x5", [0x7f,0x00,0x05,0x8b]
   end
 
+  def test_addg
+    assert_bytes "addg x0, x1, #0x10, #1", [32, 4, 129, 145]
+  end
+
   def test_generated_adds
     assert_bytes "adds     w11, w13, w15", [0xab,0x01,0x0f,0x2b]
     assert_bytes "adds     w13, w23, #291, lsl #12", [0xed,0x8e,0x44,0x31]
