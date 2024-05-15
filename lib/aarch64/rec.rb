@@ -66,6 +66,58 @@ module AArch64
       add_body ADDS
     end
 
+    def parse_ADR
+      expect(:ADR)
+      adr_body ADR
+    end
+
+    def parse_ADRP
+      expect(:ADRP)
+      adr_body ADRP
+    end
+
+    def parse_AND
+      expect(:AND)
+      d = next_token
+      expect(:COMMA)
+      n = d.x? ? expect_x : expect_w
+      expect(:COMMA)
+
+      if at("#")
+        expect("#")
+        m = next_token
+        enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
+        AND_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
+      else
+        m = d.x? ? expect_x : expect_w
+        shift = :lsl
+        amount = 0
+
+        if at(:COMMA)
+          expect(:COMMA)
+          shift = next_token
+          if at("#")
+            expect("#")
+            amount = next_token
+          end
+        end
+        shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
+        AND_log_shift.new(d, n, m, shift, amount, d.sf)
+      end
+    end
+
+    def adr_body nm
+      reg = next_token
+      expect(:COMMA)
+      label = if at("#")
+        expect("#")
+        Assembler::Immediate.new(next_token)
+      else
+        next_token
+      end
+      nm.new(reg, label)
+    end
+
     def add_body nm
       d = next_token
       expect(:COMMA)
