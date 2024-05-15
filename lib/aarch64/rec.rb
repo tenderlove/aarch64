@@ -2,80 +2,6 @@ module AArch64
   class Rec
     include Instructions
 
-    class Insn
-      def initialize nm
-        @name = nm
-      end
-    end
-
-    class ThreeArg < Insn
-      def initialize nm, a, b, c
-        @nm = nm
-        @a = a
-        @b = b
-        @c = c
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c
-      end
-    end
-
-    class ThreeWithLsl < ThreeArg
-      def initialize nm, a, b, c, lsl
-        super(nm, a, b, c)
-        @lsl = lsl
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c, lsl: @lsl
-      end
-    end
-
-    class ThreeWithExtend < ThreeArg
-      def initialize nm, a, b, c, extend
-        super(nm, a, b, c)
-        @extend = extend
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c, extend: @extend.to_sym
-      end
-    end
-
-    class ThreeWithExtendAmount < ThreeWithExtend
-      def initialize nm, a, b, c, extend, amt
-        super(nm, a, b, c, extend)
-        @amt = amt
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c, extend: @extend, amount: @amt
-      end
-    end
-
-    class ThreeWithShift < ThreeArg
-      def initialize nm, a, b, c, shift
-        super(nm, a, b, c)
-        @shift = shift
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c, shift: @shift.to_sym
-      end
-    end
-
-    class ThreeWithShiftAmount < ThreeWithShift
-      def initialize nm, a, b, c, shift, amt
-        super(nm, a, b, c, shift)
-        @amt = amt
-      end
-
-      def apply asm
-        asm.public_send @nm, @a, @b, @c, shift: @shift, amount: @amt
-      end
-    end
-
     def initialize scan, asm
       @scan = scan
       @asm = asm
@@ -117,41 +43,41 @@ module AArch64
     end
 
     def parse_ADD
-      expect { |tok| tok.first == :ADD }
+      expect(:ADD)
       add_body ADD
     end
 
     def parse_ADDG
-      expect { |tok| tok.first == :ADDG }
+      expect(:ADDG)
       d = @scan.next_token.last
-      expect { |tok| tok.first == :COMMA }
+      expect(:COMMA)
       n = @scan.next_token.last
-      expect { |tok| tok.first == :COMMA }
-      expect { |tok| tok.first == '#' }
+      expect(:COMMA)
+      expect("#")
       imm6 = @scan.next_token.last
-      expect { |tok| tok.first == :COMMA }
-      expect { |tok| tok.first == '#' }
+      expect(:COMMA)
+      expect("#")
       imm4 = @scan.next_token.last
       ADDG.new(d, n, imm6 / 16, imm4)
     end
 
     def parse_ADDS
-      expect { |tok| tok.first == :ADDS }
+      expect(:ADDS)
       add_body ADDS
     end
 
     def add_body nm
       d = @scan.next_token.last
-      expect { |tok| tok.first == :COMMA }
+      expect(:COMMA)
       n = @scan.next_token.last
-      expect { |tok| tok.first == :COMMA }
-      if @scan.peek.first == '#'
+      expect(:COMMA)
+      if at("#")
         @scan.next_token
         m = @scan.next_token.last
-        if @scan.peek.first == :COMMA
-          expect { |tok| tok.first == :COMMA }
-          expect { |tok| tok.first == :LSL }
-          expect { |tok| tok.first == '#' }
+        if at(:COMMA)
+          expect(:COMMA)
+          expect(:LSL)
+          expect("#")
           lsl = @scan.next_token.last
           nm::ADDSUB_imm.new(d, n, m, lsl / 12, d.sf)
         else
@@ -159,15 +85,15 @@ module AArch64
         end
       else
         m = @scan.next_token.last
-        if @scan.peek.first == :COMMA
-          expect { |tok| tok.first == :COMMA }
+        if at(:COMMA)
+          expect(:COMMA)
           amount = 0
 
           if n.sp? || m.sp?
             modifier = @scan.next_token.last.to_sym
             amoubt = 0
-            if @scan.peek.first == '#'
-              expect { |tok| tok.first == '#' }
+            if at("#")
+              expect("#")
               amount = @scan.next_token.last
             end
             extend = Utils.sub_decode_extend32(modifier)
@@ -178,8 +104,8 @@ module AArch64
             case modifier
             when :uxtb, :uxth, :uxtw, :uxtx, :sxtb, :sxth, :sxtw, :sxtx
               # extend
-              if @scan.peek.first == '#'
-                expect { |tok| tok.first == '#' }
+              if at("#")
+                expect('#')
                 amount = @scan.next_token.last
               end
               extend = Utils.sub_decode_extend32(modifier)
@@ -189,8 +115,8 @@ module AArch64
 
               amount = 0
               # shift
-              if @scan.peek.first == '#'
-                expect { |tok| tok.first == '#' }
+              if at("#")
+                expect("#")
                 amount = @scan.next_token.last
               end
               nm::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
@@ -203,29 +129,43 @@ module AArch64
     end
 
     def wd_wd_wd nm
-      w1 = expect { |tok| !tok.last.x? }.last
-      expect { |tok| tok.first == :COMMA }
-      w2 = expect { |tok| !tok.last.x? }.last
-      expect { |tok| tok.first == :COMMA }
-      w3 = expect { |tok| !tok.last.x? }.last
+      w1 = expect_w
+      expect(:COMMA)
+      w2 = expect_w
+      expect(:COMMA)
+      w3 = expect_w
       nm.new(w1, w2, w3, w1.sf)
     end
 
     def xd_xd_xd nm
-      x1 = expect { |tok| tok.last.x? }.last
-      expect { |tok| tok.first == :COMMA }
-      x2 = expect { |tok| tok.last.x? }.last
-      expect { |tok| tok.first == :COMMA }
-      x3 = expect { |tok| tok.last.x? }.last
+      x1 = expect_x
+      expect(:COMMA)
+      x2 = expect_x
+      expect(:COMMA)
+      x3 = expect_x
       nm.new(x1, x2, x3, x1.sf)
     end
 
-    def expect
-      unless yield @scan.peek
+    def expect tok
+      unless @scan.peek.first == tok
         p @scan.peek
         raise
       end
       @scan.next_token
+    end
+
+    def expect_w
+      raise if @scan.peek.last.x?
+      @scan.next_token.last
+    end
+
+    def expect_x
+      raise unless @scan.peek.last.x?
+      @scan.next_token.last
+    end
+
+    def at tok
+      @scan.peek.first == tok
     end
   end
 end
