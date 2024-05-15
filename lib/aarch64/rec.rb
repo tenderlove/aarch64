@@ -22,6 +22,7 @@ module AArch64
           end
           expect :EOL
         else
+          p tok
           return false
         end
       end
@@ -101,6 +102,22 @@ module AArch64
     def parse_ANDS
       expect(:ANDS)
       and_body ANDS
+    end
+
+    def parse_ASR
+      expect(:ASR)
+      d = next_token
+      expect(:COMMA)
+      n = d.x? ? expect_x : expect_w
+      expect(:COMMA)
+
+      if at("#")
+        expect("#")
+        SBFM.new(d, n, next_token, d.size - 1, d.sf)
+      else
+        m = d.x? ? expect_x : expect_w
+        ASRV.new(d, n, m, d.sf)
+      end
     end
 
     def and_body nm
