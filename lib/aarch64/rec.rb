@@ -78,6 +78,10 @@ module AArch64
 
     def parse_AND
       expect(:AND)
+      and_body AND
+    end
+
+    def and_body nm
       d = next_token
       expect(:COMMA)
       n = d.x? ? expect_x : expect_w
@@ -87,7 +91,7 @@ module AArch64
         expect("#")
         m = next_token
         enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
-        AND_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
+        nm::LOG_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         m = d.x? ? expect_x : expect_w
         shift = :lsl
@@ -95,14 +99,14 @@ module AArch64
 
         if at(:COMMA)
           expect(:COMMA)
-          shift = next_token
+          shift = next_token.to_sym
           if at("#")
             expect("#")
             amount = next_token
           end
         end
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-        AND_log_shift.new(d, n, m, shift, amount, d.sf)
+        nm::LOG_shift.new(d, n, m, shift, amount, d.sf)
       end
     end
 
