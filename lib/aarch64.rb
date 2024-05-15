@@ -281,20 +281,20 @@ module AArch64
     def and d, n, m, shift: :lsl, amount: 0
       if m.integer?
         enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
-        a AND_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
+        a AND::LOG_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-        a AND_log_shift.new(d, n, m, shift, amount, d.sf)
+        a AND::LOG_shift.new(d, n, m, shift, amount, d.sf)
       end
     end
 
     def ands d, n, m, shift: :lsl, amount: 0
       if m.integer?
         enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
-        a ANDS_log_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
+        a ANDS::LOG_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
       else
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-        a ANDS_log_shift.new(d, n, m, shift, amount, d.sf)
+        a ANDS::LOG_shift.new(d, n, m, shift, amount, d.sf)
       end
     end
 

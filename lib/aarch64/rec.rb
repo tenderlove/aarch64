@@ -5,15 +5,22 @@ module AArch64
     def initialize scan, asm
       @scan = scan
       @asm = asm
+      @labels = {}
+      @defined_labels = {}
     end
 
     def instructions
-      tok = @scan.peek
-      tok = tok.first.to_s
-
       while !@scan.eof?
+        tok = @scan.peek
+        tok = tok.first.to_s
+
         if respond_to?("parse_#{tok}")
-          @asm << send("parse_#{tok}")
+          if tok == "LABEL_CREATE"
+            send("parse_#{tok}")
+          else
+            @asm << send("parse_#{tok}")
+          end
+          expect :EOL
         else
           return false
         end
@@ -22,6 +29,16 @@ module AArch64
       @asm
     rescue NotImplementedError
       return false
+    end
+
+    def parse_LABEL_CREATE
+      label_name = next_token
+      label = if @defined_labels[label_name]
+        raise "symbol '#{label_name}' is already defined"
+      else
+        @defined_labels[label_name] = (@labels[label_name] ||= @asm.make_label(label_name))
+      end
+      @asm.put_label(label)
     end
 
     def parse_ADC
@@ -81,6 +98,11 @@ module AArch64
       and_body AND
     end
 
+    def parse_ANDS
+      expect(:ANDS)
+      and_body ANDS
+    end
+
     def and_body nm
       d = next_token
       expect(:COMMA)
@@ -117,7 +139,8 @@ module AArch64
         expect("#")
         Assembler::Immediate.new(next_token)
       else
-        next_token
+        label_name = next_token
+        @labels[label_name] ||= @asm.make_label(label_name)
       end
       nm.new(reg, label)
     end
