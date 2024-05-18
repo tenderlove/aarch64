@@ -12,10 +12,10 @@ module AArch64
     def instructions
       while !@scan.eof?
         tok = @scan.peek
-        tok = tok.first.to_s
+        name = tok.first.to_s
 
-        if respond_to?("parse_#{tok}")
-          if node = send("parse_#{tok}")
+        if respond_to?("parse_#{name}")
+          if node = send("parse_#{name}")
             @asm << node
           end
           expect :EOL
@@ -120,7 +120,7 @@ module AArch64
     def parse_AT
       expect :AT
       op = next_token.to_sym
-      expect :COMMA
+      comma
       d = next_token
       @asm.at op, d
       false
@@ -239,11 +239,29 @@ module AArch64
       false
     end
 
+    def parse_CLS
+      expect :CLS
+      reg_reg { |d, n| @asm.cls d, n }
+    end
+
+    def parse_CLZ
+      expect :CLZ
+      reg_reg { |d, n| @asm.clz d, n }
+    end
+
+    def reg_reg
+      d = next_token
+      comma
+      n = srt d
+      yield d, n
+      false
+    end
+
     def cond_three
       d = next_token
-      expect :COMMA
+      comma
       n = d.x? ? expect_x : expect_w
-      expect :COMMA
+      comma
       yield d, n, cond
       false
     end
@@ -255,7 +273,7 @@ module AArch64
 
     def reg_imm_or_label
       rt = next_token
-      expect :COMMA
+      comma
       where = if at("#")
         expect "#"
         next_token
@@ -268,16 +286,16 @@ module AArch64
 
     def shifted nm
       d = next_token
-      expect :COMMA
+      comma
       n = d.x? ? expect_x : expect_w
-      expect :COMMA
+      comma
       m = d.x? ? expect_x : expect_w
 
       shift = :lsl
       amount = 0
 
       if at(:COMMA)
-        expect :COMMA
+        comma
         shift = expect_any([:LSL, :LSR, :ASR, :ROR]).to_sym
         expect "#"
         amount = next_token
@@ -289,12 +307,12 @@ module AArch64
 
     def bfi_body
       d = next_token
-      expect :COMMA
+      comma
       n = d.x? ? expect_x : expect_w
-      expect :COMMA
+      comma
       expect '#'
       lsb = next_token
-      expect :COMMA
+      comma
       expect '#'
       width = next_token
       yield d, n, lsb, width
@@ -458,6 +476,15 @@ module AArch64
 
     def get_label name
       @labels[label_name] ||= @asm.make_label(label_name)
+    end
+
+    # "same reg type"
+    def srt n
+      n.x? ? expect_x : expect_w
+    end
+
+    def comma
+      expect :COMMA
     end
   end
 end
