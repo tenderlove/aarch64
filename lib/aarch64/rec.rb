@@ -15,6 +15,9 @@ module AArch64
         name = tok.first.to_s
 
         if respond_to?("parse_#{name}")
+          if tok.first != :LABEL_CREATE
+            expect tok.first
+          end
           if node = send("parse_#{name}")
             @asm << node
           end
@@ -39,7 +42,6 @@ module AArch64
     end
 
     def parse_ADC
-      next_token
       if @scan.peek.last.x?
         xd_xd_xd Instructions::ADC
       else
@@ -48,7 +50,6 @@ module AArch64
     end
 
     def parse_ADCS
-      next_token
       if @scan.peek.last.x?
         xd_xd_xd ADCS
       else
@@ -57,12 +58,10 @@ module AArch64
     end
 
     def parse_ADD
-      expect(:ADD)
       add_body ADD
     end
 
     def parse_ADDG
-      expect(:ADDG)
       d = next_token
       expect(:COMMA)
       n = next_token
@@ -76,32 +75,26 @@ module AArch64
     end
 
     def parse_ADDS
-      expect(:ADDS)
       add_body ADDS
     end
 
     def parse_ADR
-      expect(:ADR)
       adr_body ADR
     end
 
     def parse_ADRP
-      expect(:ADRP)
       adr_body ADRP
     end
 
     def parse_AND
-      expect(:AND)
       and_body AND
     end
 
     def parse_ANDS
-      expect(:ANDS)
       and_body ANDS
     end
 
     def parse_ASR
-      expect(:ASR)
       d = next_token
       expect(:COMMA)
       n = d.x? ? expect_x : expect_w
@@ -118,7 +111,6 @@ module AArch64
     end
 
     def parse_AT
-      expect :AT
       op = next_token.to_sym
       comma
       d = next_token
@@ -127,7 +119,6 @@ module AArch64
     end
 
     def parse_B
-      expect :B
 
       cond = nil
       if at(:DOT)
@@ -155,29 +146,24 @@ module AArch64
     end
 
     def parse_BFI
-      expect :BFI
       bfi_body { |d, n, lsb, width| @asm.bfi d, n, lsb, width }
       false
     end
 
     def parse_BFXIL
-      expect :BFXIL
       bfi_body { |d, n, lsb, width| @asm.bfxil d, n, lsb, width }
       false
     end
 
     def parse_BIC
-      expect :BIC
       shifted BIC_log_shift
     end
 
     def parse_BICS
-      expect :BICS
       shifted BICS
     end
 
     def parse_BL
-      expect :BL
       val = if at("#")
         expect "#"
         next_token
@@ -190,46 +176,38 @@ module AArch64
     end
 
     def parse_BLR
-      expect :BLR
       @asm.blr(next_token)
       false
     end
 
     def parse_BR
-      expect :BR
       @asm.br(next_token)
       false
     end
 
     def parse_BRK
-      expect :BRK
       expect "#"
       @asm.brk(next_token)
       false
     end
 
     def parse_CBNZ
-      expect :CBNZ
       reg_imm_or_label { |rt, where| @asm.cbnz rt, where }
     end
 
     def parse_CBZ
-      expect :CBZ
       reg_imm_or_label { |rt, where| @asm.cbz rt, where }
     end
 
     def parse_CINC
-      expect :CINC
       cond_three { |d, n, cond| @asm.cinc d, n, cond }
     end
 
     def parse_CINV
-      expect :CINV
       cond_three { |d, n, cond| @asm.cinv d, n, cond }
     end
 
     def parse_CLREX
-      expect :CLREX
       if at("#")
         expect "#"
         @asm.clrex(next_token)
@@ -240,12 +218,10 @@ module AArch64
     end
 
     def parse_CLS
-      expect :CLS
       reg_reg { |d, n| @asm.cls d, n }
     end
 
     def parse_CLZ
-      expect :CLZ
       reg_reg { |d, n| @asm.clz d, n }
     end
 
