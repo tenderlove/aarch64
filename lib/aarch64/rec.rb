@@ -218,6 +218,41 @@ module AArch64
       reg_imm_or_label { |rt, where| @asm.cbz rt, where }
     end
 
+    def parse_CINC
+      expect :CINC
+      cond_three { |d, n, cond| @asm.cinc d, n, cond }
+    end
+
+    def parse_CINV
+      expect :CINV
+      cond_three { |d, n, cond| @asm.cinv d, n, cond }
+    end
+
+    def parse_CLREX
+      expect :CLREX
+      if at("#")
+        expect "#"
+        @asm.clrex(next_token)
+      else
+        @asm.clrex(15)
+      end
+      false
+    end
+
+    def cond_three
+      d = next_token
+      expect :COMMA
+      n = d.x? ? expect_x : expect_w
+      expect :COMMA
+      yield d, n, cond
+      false
+    end
+
+    def cond
+      expect_any([:EQ, :LO, :LT, :HS, :GT, :LE, :NE, :MI, :GE, :PL, :LS,
+        :HI, :VC, :VS]).to_sym
+    end
+
     def reg_imm_or_label
       rt = next_token
       expect :COMMA
