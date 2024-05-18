@@ -20,13 +20,11 @@ module AArch64
           end
           expect :EOL
         else
-          return false
+          raise NotImplementedError
         end
       end
 
       @asm
-    rescue NotImplementedError
-      return false
     end
 
     def parse_LABEL_CREATE
@@ -126,6 +124,145 @@ module AArch64
       d = next_token
       @asm.at op, d
       false
+    end
+
+    def parse_B
+      expect :B
+
+      cond = nil
+      if at(:DOT)
+        expect :DOT
+        cond = next_token.to_sym
+        label = if at("#")
+          expect "#"
+          next_token
+        else
+          label_name = next_token
+          @labels[label_name] ||= @asm.make_label(label_name)
+        end
+      else
+        label = if at("#")
+          expect "#"
+          next_token
+        else
+          label_name = next_token
+          @labels[label_name] ||= @asm.make_label(label_name)
+        end
+      end
+
+      @asm.b label, cond: cond
+      false
+    end
+
+    def parse_BFI
+      expect :BFI
+      bfi_body { |d, n, lsb, width| @asm.bfi d, n, lsb, width }
+      false
+    end
+
+    def parse_BFXIL
+      expect :BFXIL
+      bfi_body { |d, n, lsb, width| @asm.bfxil d, n, lsb, width }
+      false
+    end
+
+    def parse_BIC
+      expect :BIC
+      shifted BIC_log_shift
+    end
+
+    def parse_BICS
+      expect :BICS
+      shifted BICS
+    end
+
+    def parse_BL
+      expect :BL
+      val = if at("#")
+        expect "#"
+        next_token
+      else
+        raise NotImplementedError
+      end
+
+      @asm.bl val
+      false
+    end
+
+    def parse_BLR
+      expect :BLR
+      @asm.blr(next_token)
+      false
+    end
+
+    def parse_BR
+      expect :BR
+      @asm.br(next_token)
+      false
+    end
+
+    def parse_BRK
+      expect :BRK
+      expect "#"
+      @asm.brk(next_token)
+      false
+    end
+
+    def parse_CBNZ
+      expect :CBNZ
+      reg_imm_or_label { |rt, where| @asm.cbnz rt, where }
+    end
+
+    def parse_CBZ
+      expect :CBZ
+      reg_imm_or_label { |rt, where| @asm.cbz rt, where }
+    end
+
+    def reg_imm_or_label
+      rt = next_token
+      expect :COMMA
+      where = if at("#")
+        expect "#"
+        next_token
+      else
+        get_label next_token
+      end
+      yield rt, where
+      false
+    end
+
+    def shifted nm
+      d = next_token
+      expect :COMMA
+      n = d.x? ? expect_x : expect_w
+      expect :COMMA
+      m = d.x? ? expect_x : expect_w
+
+      shift = :lsl
+      amount = 0
+
+      if at(:COMMA)
+        expect :COMMA
+        shift = expect_any([:LSL, :LSR, :ASR, :ROR]).to_sym
+        expect "#"
+        amount = next_token
+      end
+
+      shift = [:lsl, :lsr, :asr, :ror].index(shift)
+      nm.new(d, n, m, shift, amount, d.sf)
+    end
+
+    def bfi_body
+      d = next_token
+      expect :COMMA
+      n = d.x? ? expect_x : expect_w
+      expect :COMMA
+      expect '#'
+      lsb = next_token
+      expect :COMMA
+      expect '#'
+      width = next_token
+      yield d, n, lsb, width
     end
 
     def and_body nm
@@ -257,6 +394,15 @@ module AArch64
       next_token
     end
 
+    def expect_any toks
+      tok = @scan.peek.first
+      unless toks.include?(tok)
+        p @scan.peek
+        raise
+      end
+      next_token
+    end
+
     def expect_w
       raise if @scan.peek.last.x?
       next_token
@@ -273,6 +419,10 @@ module AArch64
 
     def next_token
       @scan.next_token.last
+    end
+
+    def get_label name
+      @labels[label_name] ||= @asm.make_label(label_name)
     end
   end
 end
