@@ -233,6 +233,86 @@ module AArch64
       cmn_body SUBS
     end
 
+    def parse_CNEG
+      cond_three { |d, n, cond| @asm.cneg d, n, cond }
+    end
+
+    class_eval %w{ CSEL CSINV CSINC CCMN CCMP CSNEG }.map { |n|
+      <<-eorb
+    def parse_#{n}
+      cond_four { |d, n, m, cond| @asm.#{n.downcase} d, n, m, cond }
+    end
+      eorb
+    }.join("\n")
+
+    def parse_CSET
+      cond_two { |d, cond| @asm.cset d, cond }
+    end
+
+    def parse_CSETM
+      cond_two { |d, cond| @asm.csetm d, cond }
+    end
+
+    class_eval %w{ CRC32B CRC32H CRC32W CRC32CB CRC32CH CRC32CW }.map { |n|
+      <<-eorb
+    def parse_#{n}
+      wd_wd_wd { |d, n, m| @asm.#{n.downcase} d, n, m }
+    end
+      eorb
+    }.join("\n")
+
+    def parse_CRC32X
+      rd = expect_w
+      comma
+      rn = expect_w
+      comma
+      rm = expect_x
+      @asm.crc32x rd, rn, rm
+      false
+    end
+
+    def parse_CRC32CX
+      rd = expect_w
+      comma
+      rn = expect_w
+      comma
+      rm = expect_x
+      @asm.crc32cx rd, rn, rm
+      false
+    end
+
+    def parse_DC
+      op = expect_any([:IVAC, :ISW, :IGVAC, :IGSW, :IGDVAC, :IGDSW, :CSW, :CGSW,
+        :CGDSW, :CISW, :CIGSW, :CIGDSW, :ZVA, :GVA, :GZVA, :CVAC, :CGVAC,
+        :CGDVAC, :CVAU, :CVAP, :CGVAP, :CGDVAP, :CVADP, :CGVADP, :CGDVADP,
+        :CIVAC, :CIGVAC, :CIGDVAC]).to_sym
+      comma
+      xt = expect_x
+      @asm.dc op, xt
+      false
+    end
+
+    class_eval 3.times.map { |i|
+      "def parse_DCPS#{i + 1}; DCPS.new(0, #{i + 1}); end"
+    }.join("\n")
+
+    def parse_DMB
+      dmb_body DMB
+    end
+
+    def parse_DSB
+      dmb_body DSB
+    end
+
+    def dmb_body nm
+      if at("#")
+        expect("#")
+        nm.new(next_token)
+      else
+        nm.new(Utils.dmb2imm(next_token))
+      end
+    end
+
     def cmn_body nm
       rn = next_token
       comma
@@ -320,12 +400,30 @@ module AArch64
       false
     end
 
+    def cond_two
+      d = next_token
+      comma
+      yield d, cond
+      false
+    end
+
     def cond_three
       d = next_token
       comma
       n = d.x? ? expect_x : expect_w
       comma
       yield d, n, cond
+      false
+    end
+
+    def cond_four
+      d = next_token
+      comma
+      n = srt d
+      comma
+      m = srt d
+      comma
+      yield d, n, m, cond
       false
     end
 
@@ -484,13 +582,18 @@ module AArch64
       end
     end
 
-    def wd_wd_wd nm
+    def wd_wd_wd nm = nil
       w1 = expect_w
       expect(:COMMA)
       w2 = expect_w
       expect(:COMMA)
       w3 = expect_w
-      nm.new(w1, w2, w3, w1.sf)
+      if block_given?
+        yield w1, w2, w3
+        false
+      else
+        nm.new(w1, w2, w3, w1.sf)
+      end
     end
 
     def xd_xd_xd nm
