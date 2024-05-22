@@ -207,7 +207,29 @@ module AArch64
       cond_three { |d, n, cond| @asm.cinv d, n, cond }
     end
 
+    def parse_CLREX
+      if at("#")
+        expect "#"
+        @asm.clrex(next_token)
+      else
+        @asm.clrex(15)
+      end
+      false
+    end
+
+    def parse_CLS
+      reg_reg { |d, n| @asm.cls d, n }
+    end
+
+    def parse_CLZ
+      reg_reg { |d, n| @asm.clz d, n }
+    end
+
     def parse_CMN
+      cmn_body ADDS
+    end
+
+    def cmn_body nm
       rn = next_token
       comma
       if at("#")
@@ -222,7 +244,7 @@ module AArch64
           shift = next_token
         end
 
-        ADDS::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
+        nm::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
       else
         rm = expect_reg
 
@@ -252,7 +274,7 @@ module AArch64
           end
 
           extend = Utils.sub_decode_extend32(ext)
-          ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+          nm::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
         else
           # shifted
           shift = :lsl
@@ -269,7 +291,7 @@ module AArch64
               end
 
               extend = Utils.sub_decode_extend32(ext)
-              return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+              return nm::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
             else
               shift = expect_any([:LSL, :LSR, :ASR]).to_sym
 
@@ -281,27 +303,9 @@ module AArch64
           end
 
           shift = [:lsl, :lsr, :asr].index(shift)
-          ADDS::ADDSUB_shift.new(rn.zr, rn, rm, shift, amount, rn.zr.sf)
+          nm::ADDSUB_shift.new(rn.zr, rn, rm, shift, amount, rn.zr.sf)
         end
       end
-    end
-
-    def parse_CLREX
-      if at("#")
-        expect "#"
-        @asm.clrex(next_token)
-      else
-        @asm.clrex(15)
-      end
-      false
-    end
-
-    def parse_CLS
-      reg_reg { |d, n| @asm.cls d, n }
-    end
-
-    def parse_CLZ
-      reg_reg { |d, n| @asm.clz d, n }
     end
 
     def reg_reg
