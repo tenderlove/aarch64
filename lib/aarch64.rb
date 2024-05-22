@@ -2563,13 +2563,13 @@ module AArch64
                  else
                    Utils.sub_decode_extend32(extend)
                  end
-        a SUBS_addsub_ext.new(d, n, m, extend, amount, d.sf)
+        a SUBS::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          a SUBS_addsub_imm.new(d, n, m, lsl / 12, d.sf)
+          a SUBS::ADDSUB_imm.new(d, n, m, lsl / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          a SUBS_addsub_shift.new(d, n, m, shift, amount, d.sf)
+          a SUBS::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end
