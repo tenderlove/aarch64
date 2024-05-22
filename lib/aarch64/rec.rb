@@ -66,11 +66,9 @@ module AArch64
       expect(:COMMA)
       n = next_token
       expect(:COMMA)
-      expect("#")
-      imm6 = next_token
+      imm6 = expect(:NUMBER)
       expect(:COMMA)
-      expect("#")
-      imm4 = next_token
+      imm4 = expect(:NUMBER)
       ADDG.new(d, n, imm6 / 16, imm4)
     end
 
@@ -100,8 +98,7 @@ module AArch64
       n = d.x? ? expect_x : expect_w
       expect(:COMMA)
 
-      m = if at("#")
-        expect("#")
+      m = if at(:NUMBER)
         next_token
       else
         d.x? ? expect_x : expect_w
@@ -124,16 +121,14 @@ module AArch64
       if at(:DOT)
         expect :DOT
         cond = next_token.to_sym
-        label = if at("#")
-          expect "#"
+        label = if at(:NUMBER)
           next_token
         else
           label_name = next_token
           @labels[label_name] ||= @asm.make_label(label_name)
         end
       else
-        label = if at("#")
-          expect "#"
+        label = if at(:NUMBER)
           next_token
         else
           label_name = next_token
@@ -164,8 +159,7 @@ module AArch64
     end
 
     def parse_BL
-      val = if at("#")
-        expect "#"
+      val = if at(:NUMBER)
         next_token
       else
         raise NotImplementedError
@@ -186,8 +180,7 @@ module AArch64
     end
 
     def parse_BRK
-      expect "#"
-      @asm.brk(next_token)
+      @asm.brk(expect(:NUMBER))
       false
     end
 
@@ -208,8 +201,7 @@ module AArch64
     end
 
     def parse_CLREX
-      if at("#")
-        expect "#"
+      if at(:NUMBER)
         @asm.clrex(next_token)
       else
         @asm.clrex(15)
@@ -305,8 +297,7 @@ module AArch64
     end
 
     def dmb_body nm
-      if at("#")
-        expect("#")
+      if at(:NUMBER)
         nm.new(next_token)
       else
         nm.new(Utils.dmb2imm(next_token))
@@ -316,16 +307,14 @@ module AArch64
     def cmn_body nm
       rn = next_token
       comma
-      if at("#")
-        expect "#"
+      if at(:NUMBER)
         imm = next_token
         shift = 0
 
         if at(:COMMA)
           comma
           expect :LSL
-          expect "#"
-          shift = next_token
+          shift = expect(:NUMBER)
         end
 
         nm::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
@@ -342,16 +331,14 @@ module AArch64
 
             if at_extend
               ext = self.extend
-              if at("#")
-                expect "#"
+              if at(:NUMBER)
                 amount = next_token
               end
             else
               shift = expect_any([:LSL, :LSR, :ASR]).to_sym
               amount = 0
 
-              if at("#")
-                expect "#"
+              if at(:NUMBER)
                 amount = next_token
               end
             end
@@ -369,8 +356,7 @@ module AArch64
             if at_extend
               ext = self.extend
 
-              if at("#")
-                expect "#"
+              if at(:NUMBER)
                 amount = next_token
               end
 
@@ -379,8 +365,7 @@ module AArch64
             else
               shift = expect_any([:LSL, :LSR, :ASR]).to_sym
 
-              if at("#")
-                expect "#"
+              if at(:NUMBER)
                 amount = next_token
               end
             end
@@ -435,8 +420,7 @@ module AArch64
     def reg_imm_or_label
       rt = next_token
       comma
-      where = if at("#")
-        expect "#"
+      where = if at(:NUMBER)
         next_token
       else
         get_label next_token
@@ -458,8 +442,7 @@ module AArch64
       if at(:COMMA)
         comma
         shift = expect_any([:LSL, :LSR, :ASR, :ROR]).to_sym
-        expect "#"
-        amount = next_token
+        amount = expect :NUMBER
       end
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift)
@@ -485,8 +468,7 @@ module AArch64
       n = d.x? ? expect_x : expect_w
       expect(:COMMA)
 
-      if at("#")
-        expect("#")
+      if at(:NUMBER)
         m = next_token
         enc = Utils.encode_mask(m, d.size) || raise("Can't encode mask #{m}")
         nm::LOG_imm.new(d, n, enc.immr, enc.imms, enc.n, d.sf)
@@ -498,8 +480,7 @@ module AArch64
         if at(:COMMA)
           expect(:COMMA)
           shift = next_token.to_sym
-          if at("#")
-            expect("#")
+          if at(:NUMBER)
             amount = next_token
           end
         end
@@ -511,8 +492,7 @@ module AArch64
     def adr_body nm
       reg = next_token
       expect(:COMMA)
-      label = if at("#")
-        expect("#")
+      label = if at(:NUMBER)
         Assembler::Immediate.new(next_token)
       else
         label_name = next_token
@@ -526,14 +506,12 @@ module AArch64
       expect(:COMMA)
       n = next_token
       expect(:COMMA)
-      if at("#")
-        next_token
+      if at(:NUMBER)
         m = next_token
         if at(:COMMA)
           expect(:COMMA)
           expect(:LSL)
-          expect("#")
-          lsl = next_token
+          lsl = expect(:NUMBER)
           nm::ADDSUB_imm.new(d, n, m, lsl / 12, d.sf)
         else
           nm::ADDSUB_imm.new(d, n, m, 0, d.sf)
@@ -546,8 +524,7 @@ module AArch64
 
           if n.sp? || m.sp?
             modifier = next_token.to_sym
-            if at("#")
-              expect("#")
+            if at(:NUMBER)
               amount = next_token
             end
             extend = Utils.sub_decode_extend32(modifier)
@@ -558,8 +535,7 @@ module AArch64
             case modifier
             when :uxtb, :uxth, :uxtw, :uxtx, :sxtb, :sxth, :sxtw, :sxtx
               # extend
-              if at("#")
-                expect('#')
+              if at(:NUMBER)
                 amount = next_token
               end
               extend = Utils.sub_decode_extend32(modifier)
@@ -569,8 +545,7 @@ module AArch64
 
               amount = 0
               # shift
-              if at("#")
-                expect("#")
+              if at(:NUMBER)
                 amount = next_token
               end
               nm::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
