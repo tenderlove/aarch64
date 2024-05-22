@@ -207,6 +207,105 @@ module AArch64
       cond_three { |d, n, cond| @asm.cinv d, n, cond }
     end
 
+    def parse_CMN
+      rn = next_token
+      comma
+      if at("#")
+        expect "#"
+        imm = next_token
+        shift = 0
+
+        if at(:COMMA)
+          comma
+          expect :LSL
+          expect "#"
+          shift = next_token
+        end
+
+        return ADDS::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
+      else
+        if rn.sp?
+          rm = expect_reg
+          amount = 0
+          ext = rn.x? ? :uxtx : :uxtw
+
+          if at(:COMMA)
+            comma
+            if at_extend
+              ext = self.extend
+              if at("#")
+                expect "#"
+                amount = next_token
+              end
+            else
+              shift = expect_any([:LSL, :LSR, :ASR]).to_sym
+              amount = 0
+
+              if at("#")
+                expect "#"
+                amount = next_token
+              end
+
+              extend = Utils.sub_decode_extend32(ext)
+              return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+            end
+          end
+
+          extend = Utils.sub_decode_extend32(ext)
+          return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+        else
+          rm = expect_reg
+
+          if rm.x? != rn.x?
+            # extended
+            amount = 0
+            ext = rn.x? ? :uxtx : :uxtw
+
+            if at(:COMMA)
+              comma
+              ext = self.extend
+              if at("#")
+                expect "#"
+                amount = next_token
+              end
+            end
+
+            extend = Utils.sub_decode_extend32(ext)
+            return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+          else
+            # shifted
+            shift = :lsl
+            amount = 0
+
+            if at(:COMMA)
+              comma
+              if at_extend
+                ext = self.extend
+
+                if at("#")
+                  expect "#"
+                  amount = next_token
+                end
+
+                extend = Utils.sub_decode_extend32(ext)
+                return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+              else
+                shift = expect_any([:LSL, :LSR, :ASR]).to_sym
+
+                if at("#")
+                  expect "#"
+                  amount = next_token
+                end
+              end
+            end
+
+            shift = [:lsl, :lsr, :asr].index(shift)
+            return ADDS::ADDSUB_shift.new(rn.zr, rn, rm, shift, amount, rn.zr.sf)
+          end
+        end
+      end
+    end
+
     def parse_CLREX
       if at("#")
         expect "#"
@@ -432,6 +531,11 @@ module AArch64
       next_token
     end
 
+    def at_any toks
+      tok = @scan.peek.first
+      toks.include?(tok)
+    end
+
     def expect_w
       raise if @scan.peek.last.x?
       next_token
@@ -439,6 +543,11 @@ module AArch64
 
     def expect_x
       raise unless @scan.peek.last.x?
+      next_token
+    end
+
+    def expect_reg
+      raise unless @scan.peek.last.register?
       next_token
     end
 
@@ -461,6 +570,14 @@ module AArch64
 
     def comma
       expect :COMMA
+    end
+
+    def extend
+      expect_any([:UXTB, :UXTH, :UXTW, :UXTX, :SXTB, :SXTH, :SXTW, :SXTX]).to_sym
+    end
+
+    def at_extend
+      at_any([:UXTB, :UXTH, :UXTW, :UXTX, :SXTB, :SXTH, :SXTW, :SXTX])
     end
   end
 end
