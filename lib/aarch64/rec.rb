@@ -222,15 +222,18 @@ module AArch64
           shift = next_token
         end
 
-        return ADDS::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
+        ADDS::ADDSUB_imm.new(rn.zr, rn, imm, shift / 12, rn.zr.sf)
       else
-        if rn.sp?
-          rm = expect_reg
+        rm = expect_reg
+
+        if rm.x? != rn.x? || rn.sp?
+          # extended
           amount = 0
           ext = rn.x? ? :uxtx : :uxtw
 
           if at(:COMMA)
             comma
+
             if at_extend
               ext = self.extend
               if at("#")
@@ -245,63 +248,40 @@ module AArch64
                 expect "#"
                 amount = next_token
               end
-
-              extend = Utils.sub_decode_extend32(ext)
-              return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
             end
           end
 
           extend = Utils.sub_decode_extend32(ext)
-          return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+          ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
         else
-          rm = expect_reg
+          # shifted
+          shift = :lsl
+          amount = 0
 
-          if rm.x? != rn.x?
-            # extended
-            amount = 0
-            ext = rn.x? ? :uxtx : :uxtw
-
-            if at(:COMMA)
-              comma
+          if at(:COMMA)
+            comma
+            if at_extend
               ext = self.extend
+
+              if at("#")
+                expect "#"
+                amount = next_token
+              end
+
+              extend = Utils.sub_decode_extend32(ext)
+              return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
+            else
+              shift = expect_any([:LSL, :LSR, :ASR]).to_sym
+
               if at("#")
                 expect "#"
                 amount = next_token
               end
             end
-
-            extend = Utils.sub_decode_extend32(ext)
-            return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
-          else
-            # shifted
-            shift = :lsl
-            amount = 0
-
-            if at(:COMMA)
-              comma
-              if at_extend
-                ext = self.extend
-
-                if at("#")
-                  expect "#"
-                  amount = next_token
-                end
-
-                extend = Utils.sub_decode_extend32(ext)
-                return ADDS::ADDSUB_ext.new(rn.zr, rn, rm, extend, amount, rn.zr.sf)
-              else
-                shift = expect_any([:LSL, :LSR, :ASR]).to_sym
-
-                if at("#")
-                  expect "#"
-                  amount = next_token
-                end
-              end
-            end
-
-            shift = [:lsl, :lsr, :asr].index(shift)
-            return ADDS::ADDSUB_shift.new(rn.zr, rn, rm, shift, amount, rn.zr.sf)
           end
+
+          shift = [:lsl, :lsr, :asr].index(shift)
+          ADDS::ADDSUB_shift.new(rn.zr, rn, rm, shift, amount, rn.zr.sf)
         end
       end
     end
