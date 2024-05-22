@@ -296,6 +296,10 @@ module AArch64
       dmb_body DSB
     end
 
+    def parse_EOR
+      and_body EOR
+    end
+
     def dmb_body nm
       if at(:NUMBER)
         nm.new(next_token)

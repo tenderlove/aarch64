@@ -769,10 +769,10 @@ module AArch64
 
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)
-        a EOR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms, rd.sf)
+        a EOR::LOG_imm.new(rd, rn, encoding.immr, encoding.imms, encoding.n, rd.sf)
       else
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
-        a EOR_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
+        a EOR::LOG_shift.new(rd, rn, rm, shift, amount, rd.sf)
       end
     end
 
