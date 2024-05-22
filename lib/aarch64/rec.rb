@@ -300,6 +300,37 @@ module AArch64
       and_body EOR
     end
 
+    def parse_EON
+      shifted EON
+    end
+
+    def parse_EXTR
+      reg_reg_reg { |d, n, m|
+        comma
+        EXTR.new(d, n, m, expect(:NUMBER), d.sf)
+      }
+    end
+
+    def parse_IC
+      op = expect_any([:IALLUIS, :IALLU, :IVAU]).to_sym
+      xt = Registers::SP
+      if at(:COMMA)
+        comma
+        xt = next_token
+      end
+      @asm.ic(op, xt)
+      false
+    end
+
+    def parse_ISB
+      if at(:NUMBER)
+        @asm.isb(next_token)
+      else
+        @asm.isb
+      end
+      false
+    end
+
     def dmb_body nm
       if at(:NUMBER)
         nm.new(next_token)
@@ -381,12 +412,27 @@ module AArch64
       end
     end
 
+    def reg
+      d = expect_reg
+      yield d
+    end
+
     def reg_reg
       d = next_token
       comma
       n = srt d
       yield d, n
       false
+    end
+
+    def reg_reg_reg
+      reg { |d|
+        comma
+        reg { |n|
+          comma
+          reg { |m| yield d, n, m }
+        }
+      }
     end
 
     def cond_two
