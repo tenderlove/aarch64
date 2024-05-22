@@ -229,6 +229,10 @@ module AArch64
       cmn_body ADDS
     end
 
+    def parse_CMP
+      cmn_body SUBS
+    end
+
     def cmn_body nm
       rn = next_token
       comma
