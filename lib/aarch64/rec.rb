@@ -331,6 +331,35 @@ module AArch64
       false
     end
 
+    def parse_LDAXP
+      d = expect_reg
+      comma
+      n = srt d
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      LDAXP.new d, n, xn, d.sf
+    end
+
+    def parse_LDNP
+      rt1 = expect_reg
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      rt3 = expect_reg
+      val = if at(:COMMA)
+        comma
+        expect(:NUMBER)
+      else
+        0
+      end
+      expect :RSQ
+      @asm.ldnp rt1, rt2, [rt3, val]
+      false
+    end
+
     def dmb_body nm
       if at(:NUMBER)
         nm.new(next_token)
