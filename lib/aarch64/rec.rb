@@ -360,6 +360,46 @@ module AArch64
       false
     end
 
+    def parse_LDP
+      ldp_body { |rt1, rt2, rn, imm| @asm.ldp(rt1, rt2, rn, imm) }
+    end
+
+    def parse_LDPSW
+      ldp_body { |rt1, rt2, rn, imm| @asm.ldpsw(rt1, rt2, rn, imm) }
+    end
+
+    def ldp_body
+      rt1 = expect_reg
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      rt3 = expect_reg
+      if at(:COMMA)
+        comma
+        rt3 = [rt3, expect(:NUMBER)]
+      else
+        rt3 = [rt3]
+      end
+      expect :RSQ
+
+      imm = if at(:COMMA)
+        comma
+        expect(:NUMBER)
+      else
+        if at(:BANG)
+          expect :BANG
+          :!
+        else
+          nil
+        end
+      end
+
+      yield rt1, rt2, rt3, imm
+
+      false
+    end
+
     def dmb_body nm
       if at(:NUMBER)
         nm.new(next_token)
