@@ -2,6 +2,8 @@ ENV["MT_NO_PLUGINS"] = "1"
 
 require "rake/testtask"
 require "rake/clean"
+require "bundler"
+Bundler::GemHelper.install_tasks
 
 XML_FILE  = "tmp/onebigfile.xml"
 ISA_FILE  = "tmp/ISA_A64_xml_v88A-2021-12.tar.gz"
