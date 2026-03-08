@@ -1117,7 +1117,11 @@ module AArch64
           simm = rn[1] || 0
           if simm.integer?
             div = rt.size / 8
-            a LDR_imm_unsigned.new(rt, rn.first, simm / div, size)
+            if simm % div == 0
+              a LDR_imm_unsigned.new(rt, rn.first, simm / div, size)
+            else
+              a LDR_imm_gen.new(rt, rn.first, simm, size, 0b00)
+            end
           else
             rn, rm, option = *rn
             option ||= Shifts::Shift.new(0, 0, :lsl)
@@ -1216,7 +1220,11 @@ module AArch64
         xn, imm, option = *xn
         imm ||= 0
         if imm.integer?
-          a LDRH_unsigned.new(wt, xn, imm)
+          if imm % 2 == 0
+            a LDRH_unsigned.new(wt, xn, imm)
+          else
+            a LDUR_gen.new(wt, xn, imm, 0b01)
+          end
         else
           if option
             option_name = option ? option.name : :lsl
