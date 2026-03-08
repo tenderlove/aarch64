@@ -18,12 +18,14 @@ module AArch64
       instructions
     end
 
+    private
+
     def instructions
       while !@scan.eof?
         tok = @scan.peek
         name = tok.first.to_s
 
-        if respond_to?("parse_#{name}")
+        if respond_to?("parse_#{name}", true)
           if tok.first != :LABEL_CREATE
             expect tok.first
           end
@@ -1382,8 +1384,6 @@ module AArch64
     def parse_LDPSW
       ldp_body { |rt1, rt2, rn, imm| @asm.ldpsw(rt1, rt2, rn, imm) }
     end
-
-    private
 
     def ldp_body
       rt1 = expect_reg
