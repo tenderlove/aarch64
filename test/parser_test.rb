@@ -4,10 +4,10 @@ require "aarch64/parser"
 class ParserTest < AArch64::Test
 
   def test_parse_error
-    error = assert_raises(Racc::ParseError) do
+    error = assert_raises(AArch64::ParseError) do
       parse "mov x1, x0\nmov x1, #2 // comments not supported"
     end
-    assert_equal 'parse error on value "/" (error) on line 2 at pos 23/48', error.message
+    assert_equal 'parse error on value "/" (UNKNOWN_CHAR) on line 2 at pos 23/48', error.message
   end
 
   def test_parse
@@ -28,7 +28,7 @@ class ParserTest < AArch64::Test
     parser = AArch64::Parser.new
     begin
       asm = parser.parse input
-    rescue Racc::ParseError
+    rescue AArch64::ParseError
       raise
     end
     io = StringIO.new

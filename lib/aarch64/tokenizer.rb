@@ -427,6 +427,10 @@ module AArch64
         [:NUMBER, Integer(str[1, str.bytesize - 1])]
       elsif str = @scan.scan(/#-?(?:0|[1-9][0-9]*)/i)
         [:NUMBER, Integer(str[1, str.bytesize - 1])]
+      elsif str = @scan.scan(/-?0x[0-9A-F]+/i)
+        [:NUMBER, Integer(str)]
+      elsif str = @scan.scan(/-?[0-9]+/)
+        [:NUMBER, Integer(str)]
       elsif str = @scan.scan(/LSL/i)
         [:LSL, str]
       elsif str = @scan.scan(/#/)

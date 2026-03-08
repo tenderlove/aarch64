@@ -5,6 +5,8 @@ require "aarch64/system_registers/mrs_msr_64"
 require "aarch64/utils"
 
 module AArch64
+  class ParseError < StandardError; end
+
   module Registers
     class Register < ClassGen.pos(:to_i, :sp, :zr)
       def initialize(...)
@@ -1795,13 +1797,13 @@ module AArch64
 
       shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
 
-      a ORN_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
+      a ORN::LOG_shift.new(rd, rn, rm, shift, amount, rd.sf)
     end
 
     def orr rd, rn, rm, option = nil, shift: :lsl, amount: 0
       if rm.integer?
         encoding = Utils.encode_mask(rm, rd.size)
-        a ORR_log_imm.new(rd, rn, encoding.n, encoding.immr, encoding.imms, rd.sf)
+        a ORR::LOG_imm.new(rd, rn, encoding.immr, encoding.imms, encoding.n, rd.sf)
       else
         if option
           shift = option.name
@@ -1810,7 +1812,7 @@ module AArch64
 
         shift = [:lsl, :lsr, :asr, :ror].index(shift) || raise(NotImplementedError)
 
-        a ORR_log_shift.new(rd, rn, rm, shift, amount, rd.sf)
+        a ORR::LOG_shift.new(rd, rn, rm, shift, amount, rd.sf)
       end
     end
 
@@ -2603,13 +2605,13 @@ module AArch64
                  else
                    Utils.sub_decode_extend32(extend)
                  end
-        a SUB_addsub_ext.new(d, n, m, extend, amount, d.sf)
+        a SUB::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
       else
         if m.integer?
-          a SUB_addsub_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
+          a SUB::ADDSUB_imm.new(d, n, m, (lsl || 0) / 12, d.sf)
         else
           shift = [:lsl, :lsr, :asr].index(shift) || raise(NotImplementedError)
-          a SUB_addsub_shift.new(d, n, m, shift, amount, d.sf)
+          a SUB::ADDSUB_shift.new(d, n, m, shift, amount, d.sf)
         end
       end
     end

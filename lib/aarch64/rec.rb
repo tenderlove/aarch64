@@ -23,7 +23,16 @@ module AArch64
           end
           expect :EOL
         else
-          raise NotImplementedError
+          string = @scan.string
+          line_number = string.byteslice(0, @scan.pos).count("\n") + 1
+          val = tok.last
+          raise AArch64::ParseError, "parse error on value #{val.inspect} (#{name}) on line #{line_number} at pos #{@scan.pos}/#{string.bytesize}"
+        end
+      end
+
+      @labels.each do |name, label|
+        unless @defined_labels[name]
+          raise "Label #{name.inspect} not defined"
         end
       end
 
@@ -162,7 +171,8 @@ module AArch64
       val = if at(:NUMBER)
         next_token
       else
-        raise NotImplementedError
+        label_name = next_token
+        @labels[label_name] ||= @asm.make_label(label_name)
       end
 
       @asm.bl val
@@ -311,6 +321,1002 @@ module AArch64
       }
     end
 
+    def parse_AUTDA
+      xd = expect_x
+      comma
+      xn = next_token # can be Xd or SP
+      @asm.autda(xd, xn)
+      false
+    end
+
+    def parse_DRPS
+      @asm.drps
+      false
+    end
+
+    def parse_ERET
+      @asm.eret
+      false
+    end
+
+    def parse_HINT
+      @asm.hint(expect(:NUMBER))
+      false
+    end
+
+    def parse_HLT
+      @asm.hlt(expect(:NUMBER))
+      false
+    end
+
+    def parse_HVC
+      @asm.hvc(expect(:NUMBER))
+      false
+    end
+
+    def parse_LDAR
+      wd = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldar(wd, [xn])
+      false
+    end
+
+    def parse_LDARB
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldarb(wd, [xn])
+      false
+    end
+
+    def parse_LDARH
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldarh(wd, [xn])
+      false
+    end
+
+    def parse_LDAXR
+      rd = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldaxr(rd, [xn])
+      false
+    end
+
+    def parse_LDAXRB
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldaxrb(wd, [xn])
+      false
+    end
+
+    def parse_LDAXRH
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldaxrh(wd, [xn])
+      false
+    end
+
+    def parse_LDR
+      ldr_body { |rt, addr, imm| @asm.ldr(rt, addr, imm) }
+    end
+
+    def parse_LDRB
+      ldr_body { |rt, addr, imm| @asm.ldrb(rt, addr, imm) }
+    end
+
+    def parse_LDRH
+      ldr_body { |rt, addr, imm| @asm.ldrh(rt, addr, imm) }
+    end
+
+    def parse_LDRSB
+      ldr_body { |rt, addr, imm| @asm.ldrsb(rt, addr, imm) }
+    end
+
+    def parse_LDRSH
+      ldr_body { |rt, addr, imm| @asm.ldrsh(rt, addr, imm) }
+    end
+
+    def parse_LDRSW
+      ldr_body { |rt, addr, imm| @asm.ldrsw(rt, addr, imm) }
+    end
+
+    def parse_LDTR
+      ldtr_body { |rt, addr| @asm.ldtr(rt, addr) }
+    end
+
+    def parse_LDTRB
+      ldtr_body { |rt, addr| @asm.ldtrb(rt, addr) }
+    end
+
+    def parse_LDTRH
+      ldtr_body { |rt, addr| @asm.ldtrh(rt, addr) }
+    end
+
+    def parse_LDTRSB
+      ldtr_body { |rt, addr| @asm.ldtrsb(rt, addr) }
+    end
+
+    def parse_LDTRSH
+      ldtr_body { |rt, addr| @asm.ldtrsh(rt, addr) }
+    end
+
+    def parse_LDTRSW
+      ldtr_body { |rt, addr| @asm.ldtrsw(rt, addr) }
+    end
+
+    def parse_LDUR
+      ldtr_body { |rt, addr| @asm.ldur(rt, addr) }
+    end
+
+    def parse_LDURB
+      ldtr_body { |rt, addr| @asm.ldurb(rt, addr) }
+    end
+
+    def parse_LDURH
+      ldtr_body { |rt, addr| @asm.ldurh(rt, addr) }
+    end
+
+    def parse_LDURSB
+      ldtr_body { |rt, addr| @asm.ldursb(rt, addr) }
+    end
+
+    def parse_LDURSH
+      ldtr_body { |rt, addr| @asm.ldursh(rt, addr) }
+    end
+
+    def parse_LDURSW
+      ldtr_body { |rt, addr| @asm.ldursw(rt, addr) }
+    end
+
+    def parse_LDXP
+      rt1 = expect_reg
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldxp(rt1, rt2, [xn])
+      false
+    end
+
+    def parse_LDXR
+      rd = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldxr(rd, [xn])
+      false
+    end
+
+    def parse_LDXRB
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldxrb(wd, [xn])
+      false
+    end
+
+    def parse_LDXRH
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.ldxrh(wd, [xn])
+      false
+    end
+
+    def parse_LSL
+      d = next_token
+      comma
+      n = srt d
+      comma
+      m = if at(:NUMBER)
+        next_token
+      else
+        srt d
+      end
+      @asm.lsl d, n, m
+      false
+    end
+
+    def parse_LSR
+      d = next_token
+      comma
+      n = srt d
+      comma
+      m = if at(:NUMBER)
+        next_token
+      else
+        srt d
+      end
+      @asm.lsr d, n, m
+      false
+    end
+
+    def parse_MADD
+      reg_reg_reg { |d, n, m|
+        comma
+        ra = srt d
+        @asm.madd d, n, m, ra
+      }
+      false
+    end
+
+    def parse_MNEG
+      reg_reg_reg { |d, n, m| @asm.mneg d, n, m }
+      false
+    end
+
+    def parse_MOV
+      d = next_token
+      comma
+      if at(:NUMBER)
+        imm = next_token
+        @asm.mov d, imm
+      else
+        n = next_token
+        @asm.mov d, n
+      end
+      false
+    end
+
+    def parse_MOVK
+      movz_body { |d, imm, opts| @asm.movk(d, imm, **opts) }
+    end
+
+    def parse_MOVN
+      movz_body { |d, imm, opts| @asm.movn(d, imm, **opts) }
+    end
+
+    def parse_MOVZ
+      movz_body { |d, imm, opts| @asm.movz(d, imm, **opts) }
+    end
+
+    def parse_MRS
+      xd = expect_x
+      comma
+      sysreg = next_token
+      @asm.mrs(xd, sysreg)
+      false
+    end
+
+    def parse_MSR
+      sysreg = next_token
+      comma
+      xd = expect_x
+      @asm.msr(sysreg, xd)
+      false
+    end
+
+    def parse_MSUB
+      reg_reg_reg { |d, n, m|
+        comma
+        ra = srt d
+        @asm.msub d, n, m, ra
+      }
+      false
+    end
+
+    def parse_MUL
+      reg_reg_reg { |d, n, m| @asm.mul d, n, m }
+      false
+    end
+
+    def parse_MVN
+      d = next_token
+      comma
+      n = srt d
+      if at(:COMMA)
+        comma
+        shift = expect_any([:LSL, :LSR, :ASR, :ROR]).to_sym
+        amount = expect(:NUMBER)
+        @asm.mvn d, n, shift: shift, amount: amount
+      else
+        @asm.mvn d, n
+      end
+      false
+    end
+
+    def parse_NEG
+      d = next_token
+      comma
+      n = srt d
+      if at(:COMMA)
+        comma
+        shift = expect_any([:LSL, :LSR, :ASR]).to_sym
+        amount = expect(:NUMBER)
+        @asm.neg d, n, shift: shift, amount: amount
+      else
+        @asm.neg d, n
+      end
+      false
+    end
+
+    def parse_NEGS
+      d = next_token
+      comma
+      n = srt d
+      if at(:COMMA)
+        comma
+        shift = expect_any([:LSL, :LSR, :ASR]).to_sym
+        amount = expect(:NUMBER)
+        @asm.negs d, n, shift: shift, amount: amount
+      else
+        @asm.negs d, n
+      end
+      false
+    end
+
+    def parse_NGC
+      reg_reg { |d, n| @asm.ngc d, n }
+    end
+
+    def parse_NGCS
+      reg_reg { |d, n| @asm.ngcs d, n }
+    end
+
+    def parse_NOP
+      @asm.nop
+      false
+    end
+
+    def parse_ORN
+      shifted Instructions::ORN::LOG_shift
+    end
+
+    def parse_ORR
+      and_body Instructions::ORR
+    end
+
+    def parse_PRFM
+      op = if at(:PRFOP)
+        next_token.to_sym
+      else
+        expect(:NUMBER)
+      end
+      comma
+      if at(:LSQ)
+        expect :LSQ
+        xn = expect_reg
+        if at(:COMMA)
+          comma
+          if at(:NUMBER)
+            imm = next_token
+            expect :RSQ
+            @asm.prfm(op, [xn, imm])
+          else
+            # reg offset with optional extend
+            rm = next_token
+            if at(:COMMA)
+              comma
+              ext = expect_any([:LSL, :UXTW, :SXTW, :SXTX]).to_sym
+              amount = at(:NUMBER) ? next_token : nil
+              expect :RSQ
+              @asm.prfm(op, [xn, rm, Shifts::Shift.new(amount, 0, ext)])
+            else
+              expect :RSQ
+              @asm.prfm(op, [xn, rm])
+            end
+          end
+        else
+          expect :RSQ
+          @asm.prfm(op, [xn])
+        end
+      else
+        imm = expect(:NUMBER)
+        @asm.prfm(op, imm)
+      end
+      false
+    end
+
+    def parse_PRFUM
+      op = if at(:PRFOP)
+        next_token.to_sym
+      else
+        expect(:NUMBER)
+      end
+      comma
+      expect :LSQ
+      xn = expect_reg
+      if at(:COMMA)
+        comma
+        imm = expect(:NUMBER)
+        expect :RSQ
+        @asm.prfum(op, [xn, imm])
+      else
+        expect :RSQ
+        @asm.prfum(op, [xn])
+      end
+      false
+    end
+
+    def parse_PSSBB
+      @asm.pssbb
+      false
+    end
+
+    def parse_RBIT
+      reg_reg { |d, n| @asm.rbit d, n }
+    end
+
+    def parse_RET
+      if at(:EOL)
+        @asm.ret
+      else
+        @asm.ret(next_token)
+      end
+      false
+    end
+
+    def parse_REV
+      reg_reg { |d, n| @asm.rev d, n }
+    end
+
+    def parse_REV16
+      reg_reg { |d, n| @asm.rev16 d, n }
+    end
+
+    def parse_REV32
+      d = expect_x
+      comma
+      n = expect_x
+      @asm.rev32 d, n
+      false
+    end
+
+    def parse_ROR
+      d = next_token
+      comma
+      n = srt d
+      comma
+      m = if at(:NUMBER)
+        next_token
+      else
+        srt d
+      end
+      @asm.ror d, n, m
+      false
+    end
+
+    def parse_SBC
+      reg_reg_reg { |d, n, m| @asm.sbc d, n, m }
+      false
+    end
+
+    def parse_SBCS
+      reg_reg_reg { |d, n, m| @asm.sbcs d, n, m }
+      false
+    end
+
+    def parse_SBFIZ
+      bfi_body { |d, n, lsb, width| @asm.sbfiz d, n, lsb, width }
+      false
+    end
+
+    def parse_SBFX
+      bfi_body { |d, n, lsb, width| @asm.sbfx d, n, lsb, width }
+      false
+    end
+
+    def parse_SDIV
+      reg_reg_reg { |d, n, m| @asm.sdiv d, n, m }
+      false
+    end
+
+    def parse_SEV
+      @asm.sev
+      false
+    end
+
+    def parse_SEVL
+      @asm.sevl
+      false
+    end
+
+    def parse_SMADDL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      comma
+      xa = expect_x
+      @asm.smaddl xd, wn, wm, xa
+      false
+    end
+
+    def parse_SMC
+      @asm.smc(expect(:NUMBER))
+      false
+    end
+
+    def parse_SMNEGL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      @asm.smnegl xd, wn, wm
+      false
+    end
+
+    def parse_SMSUBL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      comma
+      xa = expect_x
+      @asm.smsubl xd, wn, wm, xa
+      false
+    end
+
+    def parse_SMULH
+      xd = expect_x
+      comma
+      xn = expect_x
+      comma
+      xm = expect_x
+      @asm.smulh xd, xn, xm
+      false
+    end
+
+    def parse_SMULL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      @asm.smull xd, wn, wm
+      false
+    end
+
+    def parse_SSBB
+      @asm.ssbb
+      false
+    end
+
+    def parse_STLR
+      rt = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlr(rt, [xn])
+      false
+    end
+
+    def parse_STLRB
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlrb(wd, [xn])
+      false
+    end
+
+    def parse_STLRH
+      wd = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlrh(wd, [xn])
+      false
+    end
+
+    def parse_STLXP
+      ws = expect_w
+      comma
+      rt1 = next_token
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlxp(ws, rt1, rt2, [xn])
+      false
+    end
+
+    def parse_STLXR
+      ws = expect_w
+      comma
+      rt = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlxr(ws, rt, [xn])
+      false
+    end
+
+    def parse_STLXRB
+      ws = expect_w
+      comma
+      wt = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlxrb(ws, wt, [xn])
+      false
+    end
+
+    def parse_STLXRH
+      ws = expect_w
+      comma
+      wt = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stlxrh(ws, wt, [xn])
+      false
+    end
+
+    def parse_STNP
+      rt1 = expect_reg
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      xn = expect_reg
+      val = if at(:COMMA)
+        comma
+        expect(:NUMBER)
+      else
+        0
+      end
+      expect :RSQ
+      @asm.stnp rt1, rt2, [xn, val]
+      false
+    end
+
+    def parse_STP
+      stp_body { |rt1, rt2, rn, imm| @asm.stp(rt1, rt2, rn, imm) }
+    end
+
+    def parse_STR
+      str_body { |rt, addr, imm| @asm.str(rt, addr, imm) }
+    end
+
+    def parse_STRB
+      str_body { |rt, addr, imm| @asm.strb(rt, addr, imm) }
+    end
+
+    def parse_STRH
+      str_body { |rt, addr, imm| @asm.strh(rt, addr, imm) }
+    end
+
+    def parse_STTR
+      ldtr_body { |rt, addr| @asm.sttr(rt, addr) }
+    end
+
+    def parse_STTRB
+      ldtr_body { |rt, addr| @asm.sttrb(rt, addr) }
+    end
+
+    def parse_STTRH
+      ldtr_body { |rt, addr| @asm.sttrh(rt, addr) }
+    end
+
+    def parse_STUR
+      ldtr_body { |rt, addr| @asm.stur(rt, addr) }
+    end
+
+    def parse_STURB
+      ldtr_body { |rt, addr| @asm.sturb(rt, addr) }
+    end
+
+    def parse_STURH
+      ldtr_body { |rt, addr| @asm.sturh(rt, addr) }
+    end
+
+    def parse_STXP
+      ws = expect_w
+      comma
+      rt1 = next_token
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stxp(ws, rt1, rt2, [xn])
+      false
+    end
+
+    def parse_STXR
+      ws = expect_w
+      comma
+      rt = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stxr(ws, rt, [xn])
+      false
+    end
+
+    def parse_STXRB
+      ws = expect_w
+      comma
+      wt = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stxrb(ws, wt, [xn])
+      false
+    end
+
+    def parse_STXRH
+      ws = expect_w
+      comma
+      wt = expect_w
+      comma
+      expect :LSQ
+      xn = expect_reg
+      expect :RSQ
+      @asm.stxrh(ws, wt, [xn])
+      false
+    end
+
+    def parse_SUB
+      add_body Instructions::SUB
+    end
+
+    def parse_SUBS
+      add_body Instructions::SUBS
+    end
+
+    def parse_SVC
+      @asm.svc(expect(:NUMBER))
+      false
+    end
+
+    def parse_SXTB
+      d = next_token
+      comma
+      n = expect_w
+      @asm.sxtb d, n
+      false
+    end
+
+    def parse_SXTH
+      d = next_token
+      comma
+      n = expect_w
+      @asm.sxth d, n
+      false
+    end
+
+    def parse_SXTW
+      d = expect_x
+      comma
+      n = expect_w
+      @asm.sxtw d, n
+      false
+    end
+
+    def parse_SYS
+      op1 = expect(:NUMBER)
+      comma
+      cn = next_token
+      comma
+      cm = next_token
+      comma
+      op2 = expect(:NUMBER)
+      if at(:COMMA)
+        comma
+        xt = expect_x
+        @asm.sys(op1, cn, cm, op2, xt)
+      else
+        @asm.sys(op1, cn, cm, op2)
+      end
+      false
+    end
+
+    def parse_SYSL
+      xd = expect_x
+      comma
+      op1 = expect(:NUMBER)
+      comma
+      cn = next_token
+      comma
+      cm = next_token
+      comma
+      op2 = expect(:NUMBER)
+      @asm.sysl(xd, op1, cn, cm, op2)
+      false
+    end
+
+    def parse_TBZ
+      rt = next_token
+      comma
+      imm = expect(:NUMBER)
+      comma
+      label = if at(:NUMBER)
+        next_token
+      else
+        get_label next_token
+      end
+      @asm.tbz rt, imm, label
+      false
+    end
+
+    def parse_TBNZ
+      rt = next_token
+      comma
+      imm = expect(:NUMBER)
+      comma
+      label = if at(:NUMBER)
+        next_token
+      else
+        get_label next_token
+      end
+      @asm.tbnz rt, imm, label
+      false
+    end
+
+    def parse_TLBI
+      op = next_token.to_sym
+      if at(:COMMA)
+        comma
+        xt = next_token
+        @asm.tlbi(op, xt)
+      else
+        @asm.tlbi(op)
+      end
+      false
+    end
+
+    def parse_TST
+      rn = next_token
+      comma
+      if at(:NUMBER)
+        imm = next_token
+        @asm.tst rn, imm
+      else
+        rm = srt rn
+        if at(:COMMA)
+          comma
+          shift = expect_any([:LSL, :LSR, :ASR, :ROR]).to_sym
+          amount = expect(:NUMBER)
+          @asm.tst rn, rm, shift: shift, amount: amount
+        else
+          @asm.tst rn, rm
+        end
+      end
+      false
+    end
+
+    def parse_UBFIZ
+      bfi_body { |d, n, lsb, width| @asm.ubfiz d, n, lsb, width }
+      false
+    end
+
+    def parse_UBFX
+      bfi_body { |d, n, lsb, width| @asm.ubfx d, n, lsb, width }
+      false
+    end
+
+    def parse_UDIV
+      reg_reg_reg { |d, n, m| @asm.udiv d, n, m }
+      false
+    end
+
+    def parse_UMADDL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      comma
+      xa = expect_x
+      @asm.umaddl xd, wn, wm, xa
+      false
+    end
+
+    def parse_UMNEGL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      @asm.umnegl xd, wn, wm
+      false
+    end
+
+    def parse_UMSUBL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      comma
+      xa = expect_x
+      @asm.umsubl xd, wn, wm, xa
+      false
+    end
+
+    def parse_UMULH
+      xd = expect_x
+      comma
+      xn = expect_x
+      comma
+      xm = expect_x
+      @asm.umulh xd, xn, xm
+      false
+    end
+
+    def parse_UMULL
+      xd = expect_x
+      comma
+      wn = expect_w
+      comma
+      wm = expect_w
+      @asm.umull xd, wn, wm
+      false
+    end
+
+    def parse_UXTB
+      wd = expect_w
+      comma
+      wn = expect_w
+      @asm.uxtb wd, wn
+      false
+    end
+
+    def parse_UXTH
+      wd = expect_w
+      comma
+      wn = expect_w
+      @asm.uxth wd, wn
+      false
+    end
+
+    def parse_WFE
+      @asm.wfe
+      false
+    end
+
+    def parse_WFI
+      @asm.wfi
+      false
+    end
+
+    def parse_YIELD
+      @asm.yield
+      false
+    end
+
     def parse_IC
       op = expect_any([:IALLUIS, :IALLU, :IVAU]).to_sym
       xt = Registers::SP
@@ -369,6 +1375,166 @@ module AArch64
     end
 
     def ldp_body
+      rt1 = expect_reg
+      comma
+      rt2 = srt rt1
+      comma
+      expect :LSQ
+      rt3 = expect_reg
+      if at(:COMMA)
+        comma
+        rt3 = [rt3, expect(:NUMBER)]
+      else
+        rt3 = [rt3]
+      end
+      expect :RSQ
+
+      imm = if at(:COMMA)
+        comma
+        expect(:NUMBER)
+      else
+        if at(:BANG)
+          expect :BANG
+          :!
+        else
+          nil
+        end
+      end
+
+      yield rt1, rt2, rt3, imm
+
+      false
+    end
+
+    def movz_body
+      d = next_token
+      comma
+      imm = expect(:NUMBER)
+      opts = {}
+      if at(:COMMA)
+        comma
+        expect :LSL
+        opts[:lsl] = expect(:NUMBER)
+      end
+      yield d, imm, opts
+      false
+    end
+
+    def ldr_body
+      rt = next_token
+      comma
+      if at(:LSQ)
+        expect :LSQ
+        xn = expect_reg
+        if at(:COMMA)
+          comma
+          if at(:NUMBER)
+            imm = next_token
+            expect :RSQ
+            if at(:BANG)
+              expect :BANG
+              # pre-index: ldr rt, [xn, imm]!
+              yield rt, [xn, imm], :!
+            else
+              # signed/unsigned offset: ldr rt, [xn, imm]
+              yield rt, [xn, imm]
+            end
+          else
+            # register offset
+            rm = next_token
+            if at(:COMMA)
+              comma
+              ext = expect_any([:LSL, :UXTW, :SXTW, :SXTX]).to_sym
+              amount = at(:NUMBER) ? next_token : nil
+              expect :RSQ
+              yield rt, [xn, rm, Shifts::Shift.new(amount, 0, ext)]
+            else
+              expect :RSQ
+              yield rt, [xn, rm]
+            end
+          end
+        else
+          expect :RSQ
+          if at(:COMMA)
+            comma
+            imm = expect(:NUMBER)
+            # post-index: ldr rt, [xn], imm
+            yield rt, [xn], imm
+          else
+            yield rt, [xn]
+          end
+        end
+      else
+        # literal
+        imm = expect(:NUMBER)
+        yield rt, imm
+      end
+      false
+    end
+
+    def ldtr_body
+      rt = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      if at(:COMMA)
+        comma
+        imm = expect(:NUMBER)
+        expect :RSQ
+        yield rt, [xn, imm]
+      else
+        expect :RSQ
+        yield rt, [xn]
+      end
+      false
+    end
+
+    def str_body
+      rt = next_token
+      comma
+      expect :LSQ
+      xn = expect_reg
+      if at(:COMMA)
+        comma
+        if at(:NUMBER)
+          imm = next_token
+          expect :RSQ
+          if at(:BANG)
+            expect :BANG
+            # pre-index
+            yield rt, [xn, imm], :!
+          else
+            yield rt, [xn, imm]
+          end
+        else
+          # register offset
+          rm = next_token
+          if at(:COMMA)
+            comma
+            ext = expect_any([:LSL, :UXTW, :SXTW, :SXTX]).to_sym
+            amount = at(:NUMBER) ? next_token : nil
+            expect :RSQ
+            yield rt, [xn, rm, Shifts::Shift.new(amount, 0, ext)]
+          else
+            expect :RSQ
+            yield rt, [xn, rm]
+          end
+        end
+      else
+        expect :RSQ
+        if at(:COMMA)
+          comma
+          imm = expect(:NUMBER)
+          # post-index
+          yield rt, [xn], imm
+        else
+          yield rt, [xn]
+        end
+      end
+      false
+    end
+
+    def stp_body
       rt1 = expect_reg
       comma
       rt2 = srt rt1
@@ -523,9 +1689,17 @@ module AArch64
     def cond_four
       d = next_token
       comma
-      n = srt d
+      n = if at(:NUMBER)
+        next_token
+      else
+        srt d
+      end
       comma
-      m = srt d
+      m = if at(:NUMBER)
+        next_token
+      else
+        srt d
+      end
       comma
       yield d, n, m, cond
       false
@@ -573,11 +1747,9 @@ module AArch64
       comma
       n = d.x? ? expect_x : expect_w
       comma
-      expect '#'
-      lsb = next_token
+      lsb = expect(:NUMBER)
       comma
-      expect '#'
-      width = next_token
+      width = expect(:NUMBER)
       yield d, n, lsb, width
     end
 
@@ -641,12 +1813,12 @@ module AArch64
           expect(:COMMA)
           amount = 0
 
-          if n.sp? || m.sp?
+          if d.sp? || n.sp? || m.sp?
             modifier = next_token.to_sym
             if at(:NUMBER)
               amount = next_token
             end
-            extend = Utils.sub_decode_extend32(modifier)
+            extend = m.x? ? Utils.sub_decode_extend64(modifier) : Utils.sub_decode_extend32(modifier)
             nm::ADDSUB_ext.new(d, n, m, extend, amount, d.sf)
           else
             modifier = next_token.to_sym
@@ -700,9 +1872,12 @@ module AArch64
     end
 
     def expect tok
-      unless @scan.peek.first == tok
-        p @scan.peek
-        raise
+      unless @scan.peek&.first == tok
+        string = @scan.string
+        line_number = string.byteslice(0, @scan.pos).count("\n") + 1
+        val = @scan.peek&.last
+        name = @scan.peek&.first
+        raise AArch64::ParseError, "parse error on value #{val.inspect} (#{name}) on line #{line_number} at pos #{@scan.pos}/#{string.bytesize}"
       end
       next_token
     end
@@ -745,7 +1920,7 @@ module AArch64
     end
 
     def get_label name
-      @labels[label_name] ||= @asm.make_label(label_name)
+      @labels[name] ||= @asm.make_label(name)
     end
 
     # "same reg type"
