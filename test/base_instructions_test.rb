@@ -2967,6 +2967,12 @@ class BaseInstructionsTest < AArch64::Test
     assert_bytes [0xa4,0x03,0x40,0xf9] do |asm|
       asm.ldr      x4, [x29]
     end
+    assert_bytes [0x4c, 0x11, 0x40, 0xf8] do |asm|
+      asm.ldr      x12, [x10, 0x1]
+    end
+    assert_bytes [0x4c, 0x91, 0x40, 0xf8] do |asm|
+      asm.ldr      x12, [x10, 0x9]
+    end
     assert_bytes [0x9e,0xfd,0x7f,0xf9] do |asm|
       asm.ldr      x30, [x12, 32760]
     end
@@ -3198,6 +3204,12 @@ class BaseInstructionsTest < AArch64::Test
     # LDRH  <Wt>, [<Xn|SP>, (<Wm>|<Xm>){, <extend> {<amount>}}]
     assert_bytes [0xe2,0x43,0x40,0x79] do |asm|
       asm.ldrh   w2, [sp, 32]
+    end
+    assert_bytes [0x4c, 0x11, 0x40, 0x78] do |asm|
+      asm.ldrh     w12, [x10, 0x1]
+    end
+    assert_bytes [0x4c, 0x91, 0x40, 0x78] do |asm|
+      asm.ldrh     w12, [x10, 0x9]
     end
     assert_bytes [0x82,0x00,0x40,0x79] do |asm|
       asm.ldrh     w2, [x4]
