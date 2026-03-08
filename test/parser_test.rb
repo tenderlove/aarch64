@@ -65,6 +65,7 @@ class ParserTest < AArch64::Test
     assert_bytes "add x8, sp, #1, lsl #12", [0xe8, 0x07, 0x40, 0x91]
     assert_bytes "add sp, sp, #1, lsl #12", [0xff, 0x07, 0x40, 0x91]
     assert_bytes "add x8, x10, #1", [0x48, 0x5, 00, 0x91]
+    assert_bytes "add x1, sp, x2", [0xe1, 0x63, 0x22, 0x8b]
   end
 
   def test_labels_already_defined
