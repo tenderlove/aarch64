@@ -1854,7 +1854,12 @@ module AArch64
             end
           end
         else
-          nm::ADDSUB_shift.new(d, n, m, 0, 0, d.sf)
+          if d.sp? || n.sp? || m.sp?
+            extend = m.x? ? Utils.sub_decode_extend64(:uxtx) : Utils.sub_decode_extend32(:uxtw)
+            nm::ADDSUB_ext.new(d, n, m, extend, 0, d.sf)
+          else
+            nm::ADDSUB_shift.new(d, n, m, 0, 0, d.sf)
+          end
         end
       end
     end
