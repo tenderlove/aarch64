@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ruby-versions:
+    uses: ruby/actions/.github/workflows/ruby_versions.yml@master
+    with:
+      engine: cruby
+
+  test:
+    needs: ruby-versions
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      matrix:
+        ruby: ${{ fromJson(needs.ruby-versions.outputs.versions) }}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby-pkgs@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          apt-get: "haveged libyaml-dev cmake g++"
+
+      - name: Build capstone 5 from source
+        run: |
+          git clone --depth 1 --branch 5.0.7 https://github.com/capstone-engine/capstone.git /tmp/capstone
+          cd /tmp/capstone
+          cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -DBUILD_SHARED_LIBS=ON
+          cmake --build build -j$(nproc)
+          sudo cmake --install build
+          sudo ldconfig
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run tests
+        run: bundle exec rake test
