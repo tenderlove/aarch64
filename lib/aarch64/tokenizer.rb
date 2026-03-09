@@ -1,6 +1,6 @@
 module AArch64
   class Tokenizer
-    SYS_REG_SCAN = Regexp.new(AArch64::SystemRegisters.constants.join("|"), true)
+    SYS_REG_SCAN = Regexp.new(AArch64::SystemRegisters.constants.sort_by { |c| -c.length }.join("|"), true)
 
     SYS_REG_MAP = Hash[AArch64::SystemRegisters.constants.map { |k|
       [k.to_s.downcase, AArch64::SystemRegisters.const_get(k)]
@@ -403,7 +403,7 @@ module AArch64
         [:Wd, AArch64::Registers.const_get(str.upcase)]
       elsif str = @scan.scan(/c\d+/i)
         [:Cd, AArch64::Names.const_get(str.upcase)]
-      elsif str = @scan.scan(/sp/i)
+      elsif str = @scan.scan(/sp(?![a-z0-9_])/i)
         [:SP, AArch64::Registers.const_get(str.upcase)]
       elsif str = @scan.scan(/xzr/i)
         [:Xd, AArch64::Registers.const_get(str.upcase)]
