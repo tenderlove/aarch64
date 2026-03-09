@@ -5373,7 +5373,6 @@ class BaseInstructionsTest < AArch64::Test
   end
 
   def test_MSR_imm
-    skip "Fixme!"
     # MSR  <pstatefield>, #<imm>
     assert_bytes [0xbf,0x40,0x00,0xd5] do |asm|
       asm.msr SPSel, 0

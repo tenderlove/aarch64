@@ -617,8 +617,13 @@ module AArch64
     def parse_MSR
       sysreg = next_token
       comma
-      xd = expect_x
-      @asm.msr(sysreg, xd)
+      if at(:NUMBER)
+        imm = next_token
+        @asm.msr(sysreg, imm)
+      else
+        xd = expect_x
+        @asm.msr(sysreg, xd)
+      end
       false
     end
 

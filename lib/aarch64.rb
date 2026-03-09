@@ -1752,7 +1752,7 @@ module AArch64
 
     def msr reg, rt
       if rt.integer?
-        raise NotImplementedError
+        a MSR_imm.new(reg.imm_op1, rt, reg.imm_op2)
       else
         o0 = case reg.op0
              when 2 then 0
